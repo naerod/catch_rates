@@ -138,8 +138,11 @@ const Calc = {
    * Independent of current UI state — considers all ball × HP × status combinations.
    */
   computeOptimalFastest(pokemon, balls) {
-    const candidates = this._allTechniques(pokemon, balls).filter(c => c.probability >= 0.95);
-    if (!candidates.length) return null;
+    const all = this._allTechniques(pokemon, balls);
+    if (!all.length) return null;
+    // Prefer techniques ≥95%, fallback to best available
+    const high = all.filter(c => c.probability >= 0.95);
+    const candidates = high.length ? high : all;
     candidates.sort((a, b) => {
       if (Math.abs(b.probability - a.probability) > 1e-9) return b.probability - a.probability;
       return this._techniqueComplexity(a.technique) - this._techniqueComplexity(b.technique);
@@ -151,8 +154,11 @@ const Calc = {
    * Find the cheapest technique: lowest expected Pokéyen cost, probability ≥ 75%.
    */
   computeOptimalCheapest(pokemon, balls) {
-    const candidates = this._allTechniques(pokemon, balls).filter(c => c.probability >= 0.75);
-    if (!candidates.length) return null;
+    const all = this._allTechniques(pokemon, balls);
+    if (!all.length) return null;
+    // Prefer techniques ≥75%, fallback to best available
+    const high = all.filter(c => c.probability >= 0.75);
+    const candidates = high.length ? high : all;
     candidates.sort((a, b) => {
       if (Math.abs(a.avgCost - b.avgCost) > 0.01) return a.avgCost - b.avgCost;
       if (Math.abs(b.probability - a.probability) > 1e-9) return b.probability - a.probability;

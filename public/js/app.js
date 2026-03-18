@@ -46,6 +46,7 @@ function showPage(page) {
   $('page-' + page).classList.add('active');
   document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
   if (page === 'events') loadEvents();
+  if (page === 'shiny' && shinyState.pokemon) updateShinyPanel();
   if (page === 'admin') initAdmin();
 }
 
@@ -205,6 +206,16 @@ async function ensureBalls() {
 async function updateResults() {
   if (!state.pokemon) return;
   await ensureBalls();
+
+  // Capture warnings
+  const warningsContainer = $('capture-warnings');
+  const warningsHtml = Warnings.renderWarnings(state.pokemon);
+  if (warningsHtml) {
+    warningsContainer.innerHTML = warningsHtml;
+    warningsContainer.style.display = '';
+  } else {
+    warningsContainer.style.display = 'none';
+  }
 
   // Quickable banner (Quick Ball at full HP, no status)
   const qbProb = Calc.probability(state.pokemon.catch_rate, 100, 5, 1);
@@ -667,6 +678,115 @@ function renderAdminEvents(events) {
       if (!form.contains(e.target)) dropdown.style.display = 'none';
     });
   });
+}
+
+/* ══════════════ SHINY HUNTER PAGE ══════════════ */
+const shinyState = { pokemon: null, tab: 'spots', charm: false };
+
+// Shiny search
+const shinySearchInput = $('shiny-search');
+const shinySearchDropdown = $('shiny-search-dropdown');
+const shinySearchClear = $('shiny-search-clear');
+let shinySearchTimer = null;
+
+shinySearchInput.addEventListener('input', () => {
+  const q = shinySearchInput.value.trim();
+  shinySearchClear.style.display = q ? '' : 'none';
+  clearTimeout(shinySearchTimer);
+  if (!q) { shinySearchDropdown.style.display = 'none'; return; }
+  shinySearchTimer = setTimeout(async () => {
+    const res = await fetch(`/api/pokemon/search?q=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    if (!data.length) { shinySearchDropdown.style.display = 'none'; return; }
+    shinySearchDropdown.innerHTML = data.map(p => `
+      <div class="search-item" data-id="${p.id}">
+        <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+        <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
+        <span class="search-item-name">${p.name}</span>
+      </div>
+    `).join('');
+    shinySearchDropdown.style.display = '';
+    shinySearchDropdown.querySelectorAll('.search-item').forEach(item => {
+      item.addEventListener('click', () => selectShinyPokemon(Number(item.dataset.id)));
+    });
+  }, 180);
+});
+
+shinySearchClear.addEventListener('click', () => {
+  shinySearchInput.value = '';
+  shinySearchClear.style.display = 'none';
+  shinySearchDropdown.style.display = 'none';
+  shinySearchInput.focus();
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#page-shiny .search-wrapper')) shinySearchDropdown.style.display = 'none';
+});
+
+async function selectShinyPokemon(id) {
+  const res = await fetch(`/api/pokemon/${id}`);
+  const p = await res.json();
+  shinyState.pokemon = p;
+  shinySearchInput.value = p.name;
+  shinySearchDropdown.style.display = 'none';
+
+  $('shiny-pokemon-sprite').src = sprite(p.id);
+  $('shiny-pokemon-id').textContent = String(p.id).padStart(3, '0');
+  $('shiny-pokemon-name').textContent = p.name;
+  $('shiny-pokemon-gen').textContent = `${i18n.t('gen_label')} ${p.generation}`;
+  $('shiny-pokemon-card').style.display = '';
+  $('shiny-tabs').style.display = '';
+  $('shiny-empty').style.display = 'none';
+
+  updateShinyPanel();
+}
+
+// Shiny tabs
+document.querySelectorAll('.shiny-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    shinyState.tab = tab.dataset.tab;
+    document.querySelectorAll('.shiny-tab').forEach(t => t.classList.toggle('active', t === tab));
+    updateShinyPanel();
+  });
+});
+
+function updateShinyPanel() {
+  const spotsPanel = $('shiny-panel-spots');
+  const calcPanel = $('shiny-panel-calc');
+
+  if (shinyState.tab === 'spots') {
+    spotsPanel.style.display = '';
+    calcPanel.style.display = 'none';
+    if (shinyState.pokemon) {
+      spotsPanel.innerHTML = Shiny.renderSpots(shinyState.pokemon.id);
+    }
+  } else {
+    spotsPanel.style.display = 'none';
+    calcPanel.style.display = '';
+    updateShinyCalc();
+  }
+}
+
+// Shiny charm toggle
+$('shiny-charm-toggle').addEventListener('click', () => {
+  shinyState.charm = !shinyState.charm;
+  const btn = $('shiny-charm-toggle');
+  btn.classList.toggle('active', shinyState.charm);
+  btn.querySelector('.toggle-label').textContent = shinyState.charm
+    ? i18n.t('shiny_charm') : i18n.t('shiny_no_charm');
+  updateShinyCalc();
+});
+
+// Calculator controls
+$('shiny-method').addEventListener('change', updateShinyCalc);
+$('shiny-time-input').addEventListener('input', updateShinyCalc);
+$('shiny-ball-price').addEventListener('input', updateShinyCalc);
+
+function updateShinyCalc() {
+  const method = $('shiny-method').value;
+  const timePerEnc = Number($('shiny-time-input').value) || 25;
+  const ballPrice = Number($('shiny-ball-price').value) || 200;
+  $('shiny-calc-output').innerHTML = Shiny.renderCalculator(method, shinyState.charm, timePerEnc, ballPrice);
 }
 
 /* ══════════════ URL param: auto-select ══════════════ */
