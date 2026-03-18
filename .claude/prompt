@@ -1,0 +1,37 @@
+Ok, on commence a arrvier à quelque chose de pas mal...
+Mais il y a des bugs, par exemple, si je prends "snorunt" pour tester, avec un catch-rate de 190, a 100% de HP, et non endormi, le taux de capture avec une simple pokeball (x1) devrait être =((65535/(255/(((3*100-2*1)/(3*100))*190*1*1))^0.25)/65535)^4 soit 24,84% or le site indique 0,38%. Puis si on test a 1HP, sans endormissement, et avec une pokeball le site devrait indiquer =((65535/(255/(((3*100-2*1)/(3*100))*190*1*1))^0.25)/65535)^4 soit 74,01%
+
+---
+
+Ok, c'est mieux, mais on a encore quelques problèmes ;
+1. Les images (des pokeballs) ne s'affichent pas. Pour corriger le problème j'ai créé un dossier "images" dans le dossier "db" du projet dans lequel j'ai envoyé l'intégralité des pokeballs existantes. Utilise ces fichiers pour l'afficher sur le site. En sachant qu'elles y sont toutes, n'utilisent que celles qui sont utiles.
+2. Renomme le résultat : BEST RATE en FASTEST, et MOST ECONOMICAL en ECONOMICAL.
+3. Trop d'info dans les résultats rapides ; Ca doit être plus simple. Le premier résultat doit indiquer quelle pokeball utiliser oui, mais aussi si il est nécessaire de l'endormir et/ou de le mettre à 1HP.
+4. Aucun intéret d'indiquer le multiplier de la pokeball, le cost/ball, le Avg Turns et le avg cost. Cette case doit seulement indiquer une technique de capture ("1HP + Sleep + Great ball" par exemple)
+5. Au lieu d'afficher Guaranteed!, indique simplement 100% de catch rate. Garde par contre les changements de couleurs en fonction des probabilitées
+6. Le résultat pour chaque pokeball (section en bas de page) doit être affiché uniquement si la section "more parameters" est développée
+
+--
+
+Je viens de tester, le site est pas mal, surtout visuellement, mais il reste des améliorations à faire, en voici quelques unes ;
+- Mets le site en anglais par défaut (toujours avec la possibilité de le passer en francais)
+- Ajoute un mode clair, en opposé au mode sombre, avec un bouton situé juste a coté du bouton FR/EN
+- Ajoute l'image des balls dans la suggestion finale (a l'heure actuelle, il y a juste du texte)
+
+Aussi, il y a un autre problème, beaucoup plus général car il s'agit d'un problème fonctionnel.
+Le but, c'est que, quand l'utilisateur rencontre un nouveau pokemon, il vienne le rechercher dans le site, avant même de faire quelconque action sur le jeu et qu'il ait directement les deux résultats ; capture la plus rapide ET capture la plus économique (quickball, false swpie + pokemball, attendre 10 tours puis timerball, etc...)
+Modifie le site en conséquence.
+Cela signifie les "filtres" (actuellement sous la forme de bouton poussoir) doivent être adaptés, ils ne doivent pas être obligatoire, mais plus optionnels, perfectionnistes, uniquement pour calculer le taux exact des catch rates (donc en dessous des deux premiers résultats).
+
+Ce qu'on peut faire, c'est l'organiser de cette manière ;
+1. Barre de recherche
+2. Si le pokemon est quickable (capturable avec un taux supérieur a 75% dès le 1er tour avec une quickball), afficher une ligne supplémentaire d'une couleur différente pour indiquer à l'utilisateur
+3. Résultat (affiché automatiquement)
+4. Menu déroulant "Plus de paramètres" pour passer vraiment sur un calculateur
+5. Sous ce menu déroulant, on retrouve nos filtres ;
+- Un slider pour les HP du pokemon avec avec 5 positions : 1% / 25% / 50% / 75% / 100% 
+- Les filtre suivants mis en avant SLEEP, et NIGHT TIME.
+- Sous une autre ligne en dessous d'autres filtres comme freeze, paralysis, poison, burn (en légèrement plus petits que les filtres SLEEP et NIGHT TIME)
+Et affiche le catch rates de chauqe pokeball sous un format visuel avec l'icone de chaque pokeball et un catch-rate affiché en pourcentage
+
+Modifie tout le dossiers en conséquence pour obtenir ce projet

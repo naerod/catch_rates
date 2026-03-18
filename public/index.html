@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>naerod's Catch Calculator — PokeMMO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">naerod's <span class="logo-accent">Catch Calc</span></span>
+        <span class="logo-sub">PokeMMO</span>
+      </div>
+      <nav id="main-nav">
+        <a href="#" class="nav-link active" data-page="calc" data-i18n="nav_calc">Calculator</a>
+        <a href="#" class="nav-link" data-page="events" data-i18n="nav_events">Events</a>
+        <a href="#" class="nav-link" data-page="admin" data-i18n="nav_admin">Admin</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" title="Toggle theme" aria-label="Toggle light/dark mode">☀️</button>
+        <button id="lang-toggle" class="btn-lang" title="Switch language">🌐 <span id="lang-label">FR</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="app">
+
+    <!-- ══════════════ CALCULATOR PAGE ══════════════ -->
+    <section id="page-calc" class="page active">
+      <div class="page-title">
+        <h1 data-i18n="calc_title">Catch Rate Calculator</h1>
+        <p class="subtitle" data-i18n="calc_subtitle">PokeMMO — Gen 3-5 formula</p>
+      </div>
+
+      <!-- 1. Search -->
+      <div class="search-wrapper">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="pokemon-search" autocomplete="off"
+            data-i18n-placeholder="search_placeholder" placeholder="Search Pokémon..." />
+          <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear">✕</button>
+        </div>
+        <div id="search-dropdown" class="search-dropdown" style="display:none"></div>
+      </div>
+
+      <!-- Pokémon card -->
+      <div id="pokemon-card" class="pokemon-card" style="display:none">
+        <img id="pokemon-sprite" src="" alt="" class="pokemon-sprite" />
+        <div class="pokemon-info">
+          <div class="pokemon-id">#<span id="pokemon-id-display"></span></div>
+          <div class="pokemon-name" id="pokemon-name-display"></div>
+          <div class="pokemon-meta">
+            <span class="badge badge-gen" id="pokemon-gen-badge"></span>
+            <span class="badge badge-rate" id="pokemon-rate-display"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Quickable banner -->
+      <div id="quickable-banner" class="quickable-banner" style="display:none">
+        <div class="qb-inner">
+          <img class="qb-ball-img" src="/ball-images/Dream_Quick_Ball_Sprite.png" alt="Quick Ball" />
+          <div class="qb-text">
+            <strong id="qb-title">Quick Ball recommended!</strong>
+            <span id="qb-desc">≥95% catch rate on turn 1 — throw it immediately!</span>
+          </div>
+          <div class="qb-rate-big" id="qb-rate-big">—</div>
+        </div>
+      </div>
+
+      <!-- 3. Result cards -->
+      <div id="result-cards" class="result-cards" style="display:none">
+        <div class="result-card best-card">
+          <div class="result-card-header">
+            <span class="result-title" data-i18n="best_title">⚡ Fastest</span>
+          </div>
+          <div class="result-ball-row">
+            <img id="best-ball-img" src="" alt="" class="result-ball-img" />
+            <div class="result-ball-name" id="best-ball-name">—</div>
+          </div>
+          <div class="result-rate-big" id="best-rate">—</div>
+          <div class="result-technique" id="best-technique"></div>
+        </div>
+
+        <div class="result-card cheap-card">
+          <div class="result-card-header">
+            <span class="result-title" data-i18n="cheap_title">💰 Economical</span>
+          </div>
+          <div class="result-ball-row">
+            <img id="cheap-ball-img" src="" alt="" class="result-ball-img" />
+            <div class="result-ball-name" id="cheap-ball-name">—</div>
+          </div>
+          <div class="result-rate-big" id="cheap-rate">—</div>
+          <div class="result-technique" id="cheap-technique"></div>
+        </div>
+      </div>
+
+      <!-- 4. More parameters (collapsible) -->
+      <div id="more-params-section" class="more-params-section" style="display:none">
+        <button class="expand-btn" id="expand-params">
+          <span>⚙️ <span data-i18n="more_params">More parameters</span></span>
+          <span class="expand-arrow" id="params-arrow">▼</span>
+        </button>
+
+        <div id="params-content" class="params-content" style="display:none">
+
+          <!-- HP Slider -->
+          <div class="param-group">
+            <label class="param-group-label" data-i18n="hp_label">Pokémon HP</label>
+            <div class="hp-slider-wrapper">
+              <input type="range" id="hp-slider" min="0" max="4" step="1" value="4" />
+              <div class="hp-slider-labels">
+                <span class="hp-label-item" data-idx="0">1%</span>
+                <span class="hp-label-item" data-idx="1">25%</span>
+                <span class="hp-label-item" data-idx="2">50%</span>
+                <span class="hp-label-item" data-idx="3">75%</span>
+                <span class="hp-label-item active" data-idx="4">100%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main status: Sleep + Night -->
+          <div class="param-group">
+            <div class="conditions-row primary-row">
+              <button class="toggle-btn status-btn status-sleep" id="toggle-sleep" data-status="sleep">
+                <span class="toggle-icon">💤</span>
+                <span class="toggle-label" data-i18n="param_sleep">Sleep</span>
+                <span class="toggle-mult">×2</span>
+              </button>
+              <button class="toggle-btn toggle-night" id="toggle-night" data-key="night">
+                <span class="toggle-icon">🌙</span>
+                <span class="toggle-label" data-i18n="param_night">Night</span>
+                <span class="toggle-mult">×2.5</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary status -->
+          <div class="param-group">
+            <div class="conditions-row secondary-row">
+              <button class="toggle-btn toggle-sm status-btn status-freeze" id="toggle-freeze" data-status="freeze">
+                <span class="toggle-icon">❄️</span>
+                <span class="toggle-label" data-i18n="param_freeze">Freeze</span>
+                <span class="toggle-mult">×2</span>
+              </button>
+              <button class="toggle-btn toggle-sm status-btn status-para" id="toggle-para" data-status="para">
+                <span class="toggle-icon">⚡</span>
+                <span class="toggle-label" data-i18n="param_para">Paralysis</span>
+                <span class="toggle-mult">×1.5</span>
+              </button>
+              <button class="toggle-btn toggle-sm status-btn status-poison" id="toggle-poison" data-status="poison">
+                <span class="toggle-icon">☠️</span>
+                <span class="toggle-label" data-i18n="param_poison">Poison</span>
+                <span class="toggle-mult">×1.5</span>
+              </button>
+              <button class="toggle-btn toggle-sm status-btn status-burn" id="toggle-burn" data-status="burn">
+                <span class="toggle-icon">🔥</span>
+                <span class="toggle-label" data-i18n="param_burn">Burn</span>
+                <span class="toggle-mult">×1.5</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 5. All balls visual grid -->
+      <div id="all-balls-section" class="all-balls-section" style="display:none">
+        <h3 class="all-balls-title" data-i18n="all_balls_title">All Pokéballs</h3>
+        <div id="all-balls-grid" class="all-balls-grid"></div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════ EVENTS PAGE ══════════════ -->
+    <section id="page-events" class="page">
+      <div class="page-title">
+        <h1 data-i18n="events_title">PokeMMO Events</h1>
+        <p class="subtitle" data-i18n="events_subtitle">Swarm Pokémon by event</p>
+      </div>
+      <div id="events-list" class="events-list">
+        <div class="loading-spinner">Loading...</div>
+      </div>
+    </section>
+
+    <!-- ══════════════ ADMIN PAGE ══════════════ -->
+    <section id="page-admin" class="page">
+      <div id="admin-login" class="admin-login-wrapper">
+        <div class="admin-login-card">
+          <h2 data-i18n="admin_login_title">Admin Login</h2>
+          <div id="login-error" class="alert alert-error" style="display:none"></div>
+          <div class="form-group">
+            <label data-i18n="label_username">Username</label>
+            <input type="text" id="login-username" autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label data-i18n="label_password">Password</label>
+            <input type="password" id="login-password" autocomplete="current-password" />
+          </div>
+          <button class="btn btn-primary" id="login-btn" data-i18n="btn_login">Login</button>
+        </div>
+      </div>
+
+      <div id="admin-dashboard" style="display:none">
+        <div class="admin-header">
+          <h2 data-i18n="admin_title">Admin Dashboard</h2>
+          <div class="admin-header-actions">
+            <button class="btn btn-outline" id="change-pw-btn" data-i18n="btn_change_pw">Change Password</button>
+            <button class="btn btn-danger-outline" id="logout-btn" data-i18n="btn_logout">Logout</button>
+          </div>
+        </div>
+
+        <div id="change-pw-modal" class="modal" style="display:none">
+          <div class="modal-content">
+            <h3 data-i18n="modal_change_pw">Change Password</h3>
+            <div id="pw-error" class="alert alert-error" style="display:none"></div>
+            <div id="pw-success" class="alert alert-success" style="display:none"></div>
+            <div class="form-group">
+              <label data-i18n="label_new_password">New Password</label>
+              <input type="password" id="new-password" />
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="save-pw-btn" data-i18n="btn_save">Save</button>
+              <button class="btn btn-outline" id="cancel-pw-btn" data-i18n="btn_cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h3 data-i18n="admin_create_event">Create Event</h3>
+          <div id="event-form-error" class="alert alert-error" style="display:none"></div>
+          <div class="admin-form">
+            <div class="form-group">
+              <label>Slug</label>
+              <input type="text" id="event-slug" placeholder="xmas-2025" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="label_name_en">Name (EN)</label>
+              <input type="text" id="event-name-en" placeholder="XMAS 2025" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="label_name_fr">Name (FR)</label>
+              <input type="text" id="event-name-fr" placeholder="Noël 2025" />
+            </div>
+            <div class="form-group form-group-inline">
+              <label><input type="checkbox" id="event-active" /> <span data-i18n="label_active">Active</span></label>
+            </div>
+            <button class="btn btn-primary" id="create-event-btn" data-i18n="btn_create_event">Create Event</button>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <h3 data-i18n="admin_events_list">Events</h3>
+          <div id="admin-events-list"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>naerod's Catch Calculator — PokeMMO community tool — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span></p>
+  </footer>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/calc.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
