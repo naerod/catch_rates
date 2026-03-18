@@ -126,6 +126,7 @@ function selectPokemon(p) {
 
   // Show sections (all-balls only visible when params are open)
   $('result-cards').style.display = '';
+  $('catch-stats-section').style.display = '';
   $('more-params-section').style.display = '';
   $('all-balls-section').style.display = paramsOpen ? '' : 'none';
 
@@ -251,6 +252,138 @@ async function updateResults() {
     const gridCheap = Calc.getCheapest(results);
     renderAllBallsGrid(results, gridBest, gridCheap);
   }
+
+  // ── Catch Stats: Average Cost & Average Turns ──
+  renderCatchStats(state.pokemon, state.balls);
+}
+
+/**
+ * Render catch statistics: average cost per ball and estimated turns.
+ * Uses optimal conditions: 1 HP + Sleep for best accuracy.
+ */
+function renderCatchStats(pokemon, balls) {
+  if (!pokemon || !balls.length) {
+    $('catch-stats-section').style.display = 'none';
+    return;
+  }
+  $('catch-stats-section').style.display = '';
+
+  const isGhost = Calc._isGhost(pokemon);
+  const isSleepImmune = Warnings.SLEEP_IMMUNE && Warnings.SLEEP_IMMUNE[pokemon.id];
+  const recoilMoves = (typeof RECOIL_DATA !== 'undefined' && RECOIL_DATA[pokemon.id])
+    ? RECOIL_DATA[pokemon.id].moves : [];
+  const hasRecoil = recoilMoves.length > 0;
+
+  // ── Average Cost calculation ──
+  // Compute at 1 HP + Sleep (optimal) for each ball
+  const statusMult = isSleepImmune ? 1 : 2; // sleep = ×2, or ×1 if immune
+  const hp = isGhost ? 100 : 1; // Ghost: can't False Swipe, use full HP
+
+  const costResults = [];
+  for (const ball of balls) {
+    if (ball.condition_key === 'love') continue; // Skip love ball (conditional)
+    if (ball.condition_key === 'bugwater' && !Calc._isBugOrWater(pokemon)) continue;
+
+    let mult = ball.multiplier;
+    let label = i18n.ballName(ball.key);
+    let note = null;
+
+    // Quick Ball: turn 1 at full HP, no status
+    if (ball.condition_key === 'quick') {
+      const prob = Calc.probability(pokemon.catch_rate, 100, mult, 1);
+      const avg = Calc.avgThrows(prob);
+      costResults.push({ key: ball.key, name: label, prob, avg, cost: ball.cost, avgCost: avg * ball.cost, note: i18n.t('cond_quick') });
+      continue;
+    }
+    // Timer Ball: after 10 turns
+    if (ball.condition_key === 'timer') note = i18n.t('cond_timer');
+    // Dusk Ball: night only
+    if (ball.condition_key === 'night') note = i18n.t('cond_night');
+
+    const prob = Calc.probability(pokemon.catch_rate, hp, mult, statusMult);
+    const avg = Calc.avgThrows(prob);
+    costResults.push({ key: ball.key, name: label, prob, avg, cost: ball.cost, avgCost: avg * ball.cost, note });
+  }
+
+  // Find cheapest
+  const cheapest = costResults.reduce((best, r) => (!best || r.avgCost < best.avgCost) ? r : best, null);
+
+  if (cheapest) {
+    $('catch-avg-cost-value').innerHTML = `
+      <img class="catch-stat-ball-img" src="${Calc.ballSprite(cheapest.key)}" alt="${cheapest.name}" />
+      <span>${cheapest.name} — ~${Calc.formatCost(cheapest.avgCost)}</span>`;
+
+    const detailRows = costResults
+      .sort((a, b) => a.avgCost - b.avgCost)
+      .slice(0, 5)
+      .map(r => {
+        const isBest = r.key === cheapest.key;
+        const noteSpan = r.note ? ` <span class="cost-note">${r.note}</span>` : '';
+        return `<div class="cost-detail-row${isBest ? ' cost-best' : ''}">
+          <img class="cost-ball-icon" src="${Calc.ballSprite(r.key)}" alt="${r.name}" />
+          <span class="cost-ball-name">${r.name}${noteSpan}</span>
+          <span class="cost-avg-balls">~${Calc.formatThrows(r.avg)} ${i18n.t('avg_balls')}</span>
+          <span class="cost-avg-price">${Calc.formatCost(r.avgCost)}</span>
+        </div>`;
+      }).join('');
+    $('catch-avg-cost-detail').innerHTML = detailRows;
+  }
+
+  // ── Average Turns calculation ──
+  // Strategy: False Swipe (1 turn) + Sleep move (1 turn) + ball throws
+  // Sleep lasts 1-3 turns (avg 2). Re-sleep needed periodically.
+  const optimalBall = Calc.computeOptimalFastest(pokemon, balls);
+  if (!optimalBall) return;
+
+  const catchProb = Calc.probability(pokemon.catch_rate, hp, optimalBall.multiplier, statusMult);
+  const avgBallThrows = Calc.avgThrows(catchProb);
+
+  let setupTurns = 0;
+  let setupNotes = [];
+
+  if (!isGhost) {
+    setupTurns += 1; // False Swipe
+    setupNotes.push(i18n.t('turns_false_swipe'));
+  } else {
+    setupNotes.push(i18n.t('turns_no_false_swipe'));
+  }
+
+  if (!isSleepImmune) {
+    setupTurns += 1; // Sleep move
+    setupNotes.push(i18n.t('turns_sleep_move'));
+  }
+
+  // Sleep cycles: sleep lasts avg 2 turns, need to re-sleep periodically
+  let reSleepTurns = 0;
+  if (!isSleepImmune) {
+    const avgSleepDuration = 2;
+    const sleepCycles = Math.ceil(avgBallThrows / avgSleepDuration);
+    reSleepTurns = Math.max(0, sleepCycles - 1);
+  }
+
+  const totalTurns = setupTurns + avgBallThrows + reSleepTurns;
+
+  $('catch-avg-turns-value').textContent = `~${Math.round(totalTurns)} ${i18n.t('turns_label')}`;
+
+  let detailHtml = `<div class="turns-detail">`;
+  detailHtml += `<span>${i18n.t('turns_setup')}: ${setupTurns} (${setupNotes.join(' + ')})</span>`;
+  detailHtml += `<span>${i18n.t('turns_ball_throws')}: ~${avgBallThrows.toFixed(1)}</span>`;
+  if (reSleepTurns > 0) {
+    detailHtml += `<span>${i18n.t('turns_resleep')}: ~${reSleepTurns}</span>`;
+  }
+  // Exception notes
+  if (isGhost) {
+    detailHtml += `<span class="turns-warn">👻 ${i18n.t('turns_ghost_note')}</span>`;
+  }
+  if (isSleepImmune) {
+    detailHtml += `<span class="turns-warn">🚫💤 ${i18n.t('turns_insomnia_note')}</span>`;
+  }
+  if (hasRecoil) {
+    const worstMove = recoilMoves[0]; // Already sorted by severity
+    detailHtml += `<span class="turns-warn">⚠️ ${i18n.t('turns_recoil_note').replace('{move}', worstMove.move)}</span>`;
+  }
+  detailHtml += `</div>`;
+  $('catch-avg-turns-detail').innerHTML = detailHtml;
 }
 
 function buildTechniqueChips(technique) {
@@ -681,7 +814,7 @@ function renderAdminEvents(events) {
 }
 
 /* ══════════════ SHINY HUNTER PAGE ══════════════ */
-const shinyState = { pokemon: null, tab: 'spots', charm: false };
+const shinyState = { pokemon: null, tab: 'spots', charm: false, donator: false, event: false };
 
 // Shiny search
 const shinySearchInput = $('shiny-search');
@@ -777,16 +910,56 @@ $('shiny-charm-toggle').addEventListener('click', () => {
   updateShinyCalc();
 });
 
+// Donator status toggle
+$('shiny-donator-toggle').addEventListener('click', () => {
+  shinyState.donator = !shinyState.donator;
+  const btn = $('shiny-donator-toggle');
+  btn.classList.toggle('active', shinyState.donator);
+  btn.querySelector('.toggle-label').textContent = shinyState.donator
+    ? i18n.t('shiny_donator') : i18n.t('shiny_donator_off');
+  updateShinyCalc();
+});
+
+// Event bonus toggle
+$('shiny-event-toggle').addEventListener('click', () => {
+  shinyState.event = !shinyState.event;
+  const btn = $('shiny-event-toggle');
+  btn.classList.toggle('active', shinyState.event);
+  btn.querySelector('.toggle-label').textContent = shinyState.event
+    ? i18n.t('shiny_event') : i18n.t('shiny_event_off');
+  updateShinyCalc();
+});
+
 // Calculator controls
 $('shiny-method').addEventListener('change', updateShinyCalc);
 $('shiny-time-input').addEventListener('input', updateShinyCalc);
 $('shiny-ball-price').addEventListener('input', updateShinyCalc);
 
+function getShinyBonuses() {
+  return { charm: shinyState.charm, donator: shinyState.donator, event: shinyState.event };
+}
+
 function updateShinyCalc() {
   const method = $('shiny-method').value;
   const timePerEnc = Number($('shiny-time-input').value) || 25;
   const ballPrice = Number($('shiny-ball-price').value) || 200;
-  $('shiny-calc-output').innerHTML = Shiny.renderCalculator(method, shinyState.charm, timePerEnc, ballPrice);
+  const bonuses = getShinyBonuses();
+  $('shiny-calc-output').innerHTML = Shiny.renderCalculator(method, bonuses, timePerEnc, ballPrice);
+
+  // Update effective rate display
+  const rateEl = $('shiny-effective-rate');
+  const hasAny = bonuses.charm || bonuses.donator || bonuses.event;
+  if (hasAny) {
+    const effRate = Shiny.effectiveRate(bonuses);
+    const labels = [];
+    if (bonuses.charm) labels.push(i18n.t('shiny_charm'));
+    if (bonuses.donator) labels.push(i18n.t('shiny_donator'));
+    if (bonuses.event) labels.push(i18n.t('shiny_event'));
+    rateEl.innerHTML = `<span class="eff-rate-label">${i18n.t('shiny_effective_rate')}:</span> <span class="eff-rate-value">1/${Math.round(1/effRate).toLocaleString()}</span> <span class="eff-rate-bonuses">(${labels.join(' + ')})</span>`;
+    rateEl.style.display = '';
+  } else {
+    rateEl.style.display = 'none';
+  }
 }
 
 /* ══════════════ URL param: auto-select ══════════════ */

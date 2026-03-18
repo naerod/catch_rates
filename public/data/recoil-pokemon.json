@@ -1,0 +1,4912 @@
+{
+  "1": {
+    "name": "Bulbasaur",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 27,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "2": {
+    "name": "Ivysaur",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 31,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "3": {
+    "name": "Venusaur",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 31,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "4": {
+    "name": "Charmander",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "6": {
+    "name": "Charizard",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 77,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "16": {
+    "name": "Pidgey",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "19": {
+    "name": "Rattata",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 31,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "20": {
+    "name": "Raticate",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 39,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "25": {
+    "name": "Pikachu",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "26": {
+    "name": "Raichu",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "29": {
+    "name": "Nidoran F",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "32": {
+    "name": "Nidoran M",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "35": {
+    "name": "Clefairy",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 49,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "37": {
+    "name": "Vulpix",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "39": {
+    "name": "Jigglypuff",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 53,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "40": {
+    "name": "Wigglytuff",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "41": {
+    "name": "Zubat",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "50": {
+    "name": "Diglett",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "56": {
+    "name": "Mankey",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 53,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "57": {
+    "name": "Primeape",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 63,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "58": {
+    "name": "Growlithe",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 56,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 34,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "59": {
+    "name": "Arcanine",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "62": {
+    "name": "Poliwrath",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "level-up",
+        "level": 1,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "66": {
+    "name": "Machop",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "level-up",
+        "level": 34,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "67": {
+    "name": "Machoke",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "level-up",
+        "level": 36,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "68": {
+    "name": "Machamp",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "level-up",
+        "level": 36,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "74": {
+    "name": "Geodude",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 29,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 43,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 46,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "75": {
+    "name": "Graveler",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 31,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 53,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 58,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "76": {
+    "name": "Golem",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 31,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 53,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 58,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "77": {
+    "name": "Ponyta",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 49,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 29,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "78": {
+    "name": "Rapidash",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 49,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 29,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "81": {
+    "name": "Magnemite",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "82": {
+    "name": "Magneton",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "83": {
+    "name": "Farfetchd",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 55,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "84": {
+    "name": "Doduo",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "86": {
+    "name": "Seel",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 37,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "87": {
+    "name": "Dewgong",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 39,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "88": {
+    "name": "Grimer",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 52,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "89": {
+    "name": "Muk",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 64,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "90": {
+    "name": "Shellder",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "91": {
+    "name": "Cloyster",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "92": {
+    "name": "Gastly",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "93": {
+    "name": "Haunter",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "94": {
+    "name": "Gengar",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "95": {
+    "name": "Onix",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 57,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "100": {
+    "name": "Voltorb",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 33,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 47,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "101": {
+    "name": "Electrode",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 35,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 57,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "102": {
+    "name": "Exeggcute",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "103": {
+    "name": "Exeggutor",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wood Hammer",
+        "method": "level-up",
+        "level": 37,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "104": {
+    "name": "Cubone",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 43,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "105": {
+    "name": "Marowak",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 53,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "109": {
+    "name": "Koffing",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 24,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 42,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 55,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "110": {
+    "name": "Weezing",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 24,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 46,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 65,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "111": {
+    "name": "Rhyhorn",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "112": {
+    "name": "Rhydon",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "113": {
+    "name": "Chansey",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 50,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 54,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 27,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "115": {
+    "name": "Kangaskhan",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "125": {
+    "name": "Electabuzz",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "127": {
+    "name": "Pinsir",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "level-up",
+        "level": 42,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "128": {
+    "name": "Tauros",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "133": {
+    "name": "Eevee",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 37,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 43,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "135": {
+    "name": "Jolteon",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "142": {
+    "name": "Aerodactyl",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "143": {
+    "name": "Snorlax",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "145": {
+    "name": "Zapdos",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "151": {
+    "name": "Mew",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "155": {
+    "name": "Cyndaquil",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 55,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "156": {
+    "name": "Quilava",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 64,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "157": {
+    "name": "Typhlosion",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 69,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "161": {
+    "name": "Sentret",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "163": {
+    "name": "Hoothoot",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 29,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "164": {
+    "name": "Noctowl",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 32,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "165": {
+    "name": "Ledyba",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 38,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "166": {
+    "name": "Ledian",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 48,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "170": {
+    "name": "Chinchou",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 23,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "171": {
+    "name": "Lanturn",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 23,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "172": {
+    "name": "Pichu",
+    "moves": [
+      {
+        "move": "Volt Tackle",
+        "method": "light-ball-egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "174": {
+    "name": "Igglybuff",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "175": {
+    "name": "Togepi",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 45,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "176": {
+    "name": "Togetic",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 45,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "179": {
+    "name": "Mareep",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 18,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "180": {
+    "name": "Flaaffy",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "181": {
+    "name": "Ampharos",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "183": {
+    "name": "Marill",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 27,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "184": {
+    "name": "Azumarill",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 33,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "185": {
+    "name": "Sudowoodo",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 46,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wood Hammer",
+        "method": "level-up",
+        "level": 1,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "187": {
+    "name": "Hoppip",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 49,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "188": {
+    "name": "Skiploom",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 60,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "189": {
+    "name": "Jumpluff",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 69,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "191": {
+    "name": "Sunkern",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 37,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "192": {
+    "name": "Sunflora",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 37,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "193": {
+    "name": "Yanma",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "198": {
+    "name": "Murkrow",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "200": {
+    "name": "Misdreavus",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "203": {
+    "name": "Girafarig",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "204": {
+    "name": "Pineco",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 6,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 34,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 45,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 12,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "205": {
+    "name": "Forretress",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 1,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 42,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 56,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 12,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "206": {
+    "name": "Dunsparce",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 34,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 38,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "207": {
+    "name": "Gligar",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "208": {
+    "name": "Steelix",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 57,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "209": {
+    "name": "Snubbull",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 37,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "210": {
+    "name": "Granbull",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 43,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "211": {
+    "name": "Qwilfish",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "213": {
+    "name": "Shuckle",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "214": {
+    "name": "Heracross",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "216": {
+    "name": "Teddiursa",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "218": {
+    "name": "Slugma",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "219": {
+    "name": "Magcargo",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "220": {
+    "name": "Swinub",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 32,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "221": {
+    "name": "Piloswine",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 32,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "222": {
+    "name": "Corsola",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      }
+    ]
+  },
+  "226": {
+    "name": "Mantine",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "227": {
+    "name": "Skarmory",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "231": {
+    "name": "Phanpy",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 42,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 10,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "234": {
+    "name": "Stantler",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 21,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "239": {
+    "name": "Elekid",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "240": {
+    "name": "Magby",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "241": {
+    "name": "Miltank",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "242": {
+    "name": "Blissey",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 50,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 54,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 27,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "243": {
+    "name": "Raikou",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "250": {
+    "name": "Ho Oh",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 15,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "251": {
+    "name": "Celebi",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 73,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "256": {
+    "name": "Combusken",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 54,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "257": {
+    "name": "Blaziken",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 66,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 49,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "258": {
+    "name": "Mudkip",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 28,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "259": {
+    "name": "Marshtomp",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "260": {
+    "name": "Swampert",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "261": {
+    "name": "Poochyena",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 45,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "262": {
+    "name": "Mightyena",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 52,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "273": {
+    "name": "Seedot",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 43,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "274": {
+    "name": "Nuzleaf",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "275": {
+    "name": "Shiftry",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "276": {
+    "name": "Taillow",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "280": {
+    "name": "Ralts",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "282": {
+    "name": "Gardevoir",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 1,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "290": {
+    "name": "Nincada",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "293": {
+    "name": "Whismur",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "299": {
+    "name": "Nosepass",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "300": {
+    "name": "Skitty",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 42,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "301": {
+    "name": "Delcatty",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "304": {
+    "name": "Aron",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "305": {
+    "name": "Lairon",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 62,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "306": {
+    "name": "Aggron",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 74,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "309": {
+    "name": "Electrike",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 49,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "310": {
+    "name": "Manectric",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 61,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "311": {
+    "name": "Plusle",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "312": {
+    "name": "Minun",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "313": {
+    "name": "Volbeat",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 45,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "316": {
+    "name": "Gulpin",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "317": {
+    "name": "Swalot",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "318": {
+    "name": "Carvanha",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 38,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "320": {
+    "name": "Wailmer",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "322": {
+    "name": "Numel",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 55,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "323": {
+    "name": "Camerupt",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "324": {
+    "name": "Torkoal",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "327": {
+    "name": "Spinda",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 46,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "333": {
+    "name": "Swablu",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 28,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "334": {
+    "name": "Altaria",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 28,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "335": {
+    "name": "Zangoose",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "336": {
+    "name": "Seviper",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "337": {
+    "name": "Lunatone",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 56,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "338": {
+    "name": "Solrock",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 56,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "339": {
+    "name": "Barboach",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "341": {
+    "name": "Corphish",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "343": {
+    "name": "Baltoy",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 21,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 60,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "344": {
+    "name": "Claydol",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 21,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 72,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "355": {
+    "name": "Duskull",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "358": {
+    "name": "Chimecho",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 57,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 33,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 22,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "359": {
+    "name": "Absol",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "362": {
+    "name": "Glalie",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "369": {
+    "name": "Relicanth",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 78,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 29,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "370": {
+    "name": "Luvdisc",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 14,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "371": {
+    "name": "Bagon",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 55,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "372": {
+    "name": "Shelgon",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 61,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "373": {
+    "name": "Salamence",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 70,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "374": {
+    "name": "Beldum",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 1,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "375": {
+    "name": "Metang",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 1,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "376": {
+    "name": "Metagross",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 1,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "377": {
+    "name": "Regirock",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 1,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "378": {
+    "name": "Regice",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 1,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "379": {
+    "name": "Registeel",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 1,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "380": {
+    "name": "Latias",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 85,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "381": {
+    "name": "Latios",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 85,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "382": {
+    "name": "Kyogre",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 80,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "385": {
+    "name": "Jirachi",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 50,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 40,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "387": {
+    "name": "Turtwig",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "389": {
+    "name": "Torterra",
+    "moves": [
+      {
+        "move": "Wood Hammer",
+        "method": "level-up",
+        "level": 1,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "390": {
+    "name": "Chimchar",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "391": {
+    "name": "Monferno",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 56,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "392": {
+    "name": "Infernape",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 68,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "396": {
+    "name": "Starly",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 41,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 37,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 29,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "397": {
+    "name": "Staravia",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 48,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 43,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 33,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "398": {
+    "name": "Staraptor",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 57,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 49,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 33,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "399": {
+    "name": "Bidoof",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 33,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "400": {
+    "name": "Bibarel",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 38,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "403": {
+    "name": "Shinx",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 45,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "404": {
+    "name": "Luxio",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 53,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "405": {
+    "name": "Luxray",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 63,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "408": {
+    "name": "Cranidos",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 46,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "409": {
+    "name": "Rampardos",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 58,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "410": {
+    "name": "Shieldon",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "411": {
+    "name": "Bastiodon",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "420": {
+    "name": "Cherubi",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "421": {
+    "name": "Cherrim",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 35,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "422": {
+    "name": "Shellos",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "425": {
+    "name": "Drifloon",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 46,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "426": {
+    "name": "Drifblim",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 56,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "427": {
+    "name": "Buneary",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 63,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "428": {
+    "name": "Lopunny",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 63,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "434": {
+    "name": "Stunky",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 49,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 43,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "435": {
+    "name": "Skuntank",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 61,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 51,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "437": {
+    "name": "Bronzong",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "438": {
+    "name": "Bonsly",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 46,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "439": {
+    "name": "Mime Jr",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "442": {
+    "name": "Spiritomb",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 43,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "443": {
+    "name": "Gible",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "444": {
+    "name": "Gabite",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "445": {
+    "name": "Garchomp",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "446": {
+    "name": "Munchlax",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "447": {
+    "name": "Riolu",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 55,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "449": {
+    "name": "Hippopotas",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 44,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "450": {
+    "name": "Hippowdon",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "458": {
+    "name": "Mantyke",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "459": {
+    "name": "Snover",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wood Hammer",
+        "method": "level-up",
+        "level": 36,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "460": {
+    "name": "Abomasnow",
+    "moves": [
+      {
+        "move": "Wood Hammer",
+        "method": "level-up",
+        "level": 36,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "462": {
+    "name": "Magnezone",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "463": {
+    "name": "Lickilicky",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "464": {
+    "name": "Rhyperior",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 41,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "466": {
+    "name": "Electivire",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "473": {
+    "name": "Mamoswine",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 32,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "476": {
+    "name": "Probopass",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "480": {
+    "name": "Uxie",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 76,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "481": {
+    "name": "Mesprit",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 76,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "482": {
+    "name": "Azelf",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 76,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "485": {
+    "name": "Heatran",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "492": {
+    "name": "Shaymin Land",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 91,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "494": {
+    "name": "Victini",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 81,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 65,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 73,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "498": {
+    "name": "Tepig",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 37,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 43,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "499": {
+    "name": "Pignite",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 44,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 52,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 28,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "500": {
+    "name": "Emboar",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 50,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 62,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 28,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "506": {
+    "name": "Lillipup",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "507": {
+    "name": "Herdier",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "508": {
+    "name": "Stoutland",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 15,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "522": {
+    "name": "Blitzle",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 39,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "523": {
+    "name": "Zebstrika",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 47,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "524": {
+    "name": "Roggenrola",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 40,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "525": {
+    "name": "Boldore",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 55,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "526": {
+    "name": "Gigalith",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 55,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "529": {
+    "name": "Drilbur",
+    "moves": [
+      {
+        "move": "Submission",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "531": {
+    "name": "Audino",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 30,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "543": {
+    "name": "Venipede",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 43,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "544": {
+    "name": "Whirlipede",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "545": {
+    "name": "Scolipede",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 55,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "546": {
+    "name": "Cottonee",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "548": {
+    "name": "Petilil",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "550": {
+    "name": "Basculin Red Striped",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 51,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 36,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "551": {
+    "name": "Sandile",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "554": {
+    "name": "Darumaka",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 33,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "egg",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "555": {
+    "name": "Darmanitan Standard",
+    "moves": [
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 33,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "556": {
+    "name": "Maractus",
+    "moves": [
+      {
+        "move": "Wood Hammer",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "559": {
+    "name": "Scraggy",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 53,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      }
+    ]
+  },
+  "560": {
+    "name": "Scrafty",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "level-up",
+        "level": 65,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      }
+    ]
+  },
+  "562": {
+    "name": "Yamask",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "566": {
+    "name": "Archen",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      }
+    ]
+  },
+  "568": {
+    "name": "Trubbish",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 47,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 25,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "569": {
+    "name": "Garbodor",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 59,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "570": {
+    "name": "Zorua",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "egg",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "577": {
+    "name": "Solosis",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "578": {
+    "name": "Duosion",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "579": {
+    "name": "Reuniclus",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "580": {
+    "name": "Ducklett",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 41,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "581": {
+    "name": "Swanna",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 47,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "582": {
+    "name": "Vanillite",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "583": {
+    "name": "Vanillish",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "584": {
+    "name": "Vanilluxe",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "585": {
+    "name": "Deerling",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 46,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "586": {
+    "name": "Sawsbuck",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 52,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "587": {
+    "name": "Emolga",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "588": {
+    "name": "Karrablast",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 56,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 37,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "594": {
+    "name": "Alomomola",
+    "moves": [
+      {
+        "move": "Healing Wish",
+        "method": "level-up",
+        "level": 57,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "595": {
+    "name": "Joltik",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "596": {
+    "name": "Galvantula",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "597": {
+    "name": "Ferroseed",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 38,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 55,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "598": {
+    "name": "Ferrothorn",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 38,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "level-up",
+        "level": 67,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "599": {
+    "name": "Klink",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "600": {
+    "name": "Klang",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "601": {
+    "name": "Klinklang",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "603": {
+    "name": "Eelektrik",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "level-up",
+        "level": 59,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "604": {
+    "name": "Eelektross",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "607": {
+    "name": "Litwick",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 33,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "608": {
+    "name": "Lampent",
+    "moves": [
+      {
+        "move": "Memento",
+        "method": "level-up",
+        "level": 33,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "615": {
+    "name": "Cryogonal",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "616": {
+    "name": "Shelmet",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 56,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Double-Edge",
+        "method": "egg",
+        "level": null,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "617": {
+    "name": "Accelgor",
+    "moves": [
+      {
+        "move": "Final Gambit",
+        "method": "level-up",
+        "level": 56,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "626": {
+    "name": "Bouffalant",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Head Charge",
+        "method": "level-up",
+        "level": 31,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "627": {
+    "name": "Rufflet",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 59,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "628": {
+    "name": "Braviary",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 63,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "629": {
+    "name": "Vullaby",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 59,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "630": {
+    "name": "Mandibuzz",
+    "moves": [
+      {
+        "move": "Brave Bird",
+        "method": "level-up",
+        "level": 63,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      }
+    ]
+  },
+  "633": {
+    "name": "Deino",
+    "moves": [
+      {
+        "move": "Head Smash",
+        "method": "egg",
+        "level": null,
+        "severity": "high",
+        "recoilType": "1/2 damage dealt"
+      }
+    ]
+  },
+  "636": {
+    "name": "Larvesta",
+    "moves": [
+      {
+        "move": "Double-Edge",
+        "method": "level-up",
+        "level": 50,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Flare Blitz",
+        "method": "level-up",
+        "level": 100,
+        "severity": "medium",
+        "recoilType": "1/3 damage dealt"
+      },
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 20,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      },
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "637": {
+    "name": "Volcarona",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "638": {
+    "name": "Cobalion",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "639": {
+    "name": "Terrakion",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "640": {
+    "name": "Virizion",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "642": {
+    "name": "Thundurus Incarnate",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "644": {
+    "name": "Zekrom",
+    "moves": [
+      {
+        "move": "Wild Charge",
+        "method": "machine",
+        "level": null,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "645": {
+    "name": "Landorus Incarnate",
+    "moves": [
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  },
+  "647": {
+    "name": "Keldeo Ordinary",
+    "moves": [
+      {
+        "move": "Take Down",
+        "method": "level-up",
+        "level": 19,
+        "severity": "low",
+        "recoilType": "1/4 damage dealt"
+      }
+    ]
+  },
+  "649": {
+    "name": "Genesect",
+    "moves": [
+      {
+        "move": "Self-Destruct",
+        "method": "level-up",
+        "level": 77,
+        "severity": "critical",
+        "recoilType": "KO"
+      },
+      {
+        "move": "Explosion",
+        "method": "machine",
+        "level": null,
+        "severity": "critical",
+        "recoilType": "KO"
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+# Prompt Claude Code — Patch #2 : Exceptions, Shiny Helper & Catch Calculator
+
+Copie-colle ce prompt dans Claude Code (VS Code) en étant positionné à la racine de ton projet (`C:\Users\Dorian\Documents\PROJECT CATCH RATES`).
+
+---
+
+## PROMPT
+
+```
+Tu es un développeur expert frontend. Tu vas intervenir sur mon site web Pokémon (catching/quickball calculator) pour un second round de corrections et d'améliorations.
+
+Analyse d'abord TOUT le code source du projet avant de commencer. Identifie le stack, l'architecture, et les fichiers modifiés lors du patch précédent (warnings.js, shiny helper page, i18n, etc.).
+
+Voici les 3 tâches à effectuer dans l'ordre.
+
+---
+
+## TÂCHE 1 — Corriger et compléter les avertissements de recoil moves
+
+Le système de warnings mis en place précédemment ne détecte pas tous les Pokémon à risque. Par exemple, Beldum peut apprendre Take Down et se KO lui-même, mais aucun avertissement ne s'affiche.
+
+### Problème
+Les données actuelles sont incomplètes. Il faut vérifier le POKÉDEX COMPLET DE LA GÉNÉRATION 5 (Black/White/B2W2) pour identifier TOUS les Pokémon qui peuvent apprendre un move à recoil, que ce soit par level-up, CT/CS, tuteur de move, ou egg move.
+
+### Liste exhaustive des moves à recoil à détecter
+
+Voici la liste COMPLÈTE des moves qui infligent du recoil au lanceur (le Pokémon sauvage peut se KO avec) :
+
+1. **Brave Bird** — recoil 1/3 des dégâts infligés
+2. **Double-Edge** — recoil 1/3 des dégâts infligés
+3. **Flare Blitz** — recoil 1/3 des dégâts infligés
+4. **Head Charge** — recoil 1/4 des dégâts infligés
+5. **Head Smash** — recoil 1/2 des dégâts infligés (très dangereux)
+6. **Light of Ruin** — recoil 1/2 des dégâts infligés
+7. **Shadow End** — recoil 1/2 des PV max
+8. **Shadow Rush** — recoil 1/16 des PV max
+9. **Struggle** — recoil 1/4 des PV max (tous les Pokémon, quand ils n'ont plus de PP)
+10. **Submission** — recoil 1/4 des dégâts infligés
+11. **Take Down** — recoil 1/4 des dégâts infligés
+12. **Volt Tackle** — recoil 1/3 des dégâts infligés
+13. **Wild Charge** — recoil 1/4 des dégâts infligés
+14. **Wood Hammer** — recoil 1/3 des dégâts infligés
+15. **Wave Crash** — recoil 1/3 des dégâts infligés
+
+Et aussi les moves d'autodestruction (KO instantané du lanceur) :
+16. **Explosion** — le lanceur tombe KO
+17. **Self-Destruct** — le lanceur tombe KO
+18. **Memento** — le lanceur tombe KO
+19. **Healing Wish** — le lanceur tombe KO
+20. **Final Gambit** — le lanceur tombe KO
+21. **Misty Explosion** — le lanceur tombe KO
+
+### Instructions
+
+1. **Scanner le Pokédex Gen 5 complet** : Pour CHAQUE Pokémon disponible dans le jeu (Gen 1 à Gen 5, soit les 649 premiers), vérifier via PokeAPI (`/pokemon/{id}/moves` ou `/pokemon/{id}` → `moves[]`) s'il peut apprendre un des moves listés ci-dessus dans sa génération 5 (game_indices: black-white, black-2-white-2)
+2. **Générer/mettre à jour un fichier de données** `recoil-pokemon.json` ou intégrer dans le `warnings.js` existant, avec pour chaque Pokémon concerné :
+   ```json
+   {
+     "pokemon_id": 374,
+     "name": "Beldum",
+     "recoil_moves": [
+       { "move": "Take Down", "method": "level-up", "level": 20, "recoil_type": "1/4 damage dealt", "severity": "medium" }
+     ]
+   }
+   ```
+3. **Severity rating** :
+   - 🔴 `critical` : Explosion, Self-Destruct, Memento, Healing Wish, Final Gambit → KO garanti
+   - 🟠 `high` : Head Smash, Shadow End, Light of Ruin → recoil ≥ 1/2
+   - 🟡 `medium` : Brave Bird, Double-Edge, Flare Blitz, Volt Tackle, Wood Hammer, Wave Crash → recoil 1/3
+   - 🟢 `low` : Take Down, Submission, Head Charge, Wild Charge, Shadow Rush → recoil 1/4 ou moins
+
+4. **Affichage dans l'interface** :
+   - Le badge warning doit indiquer le move ET sa sévérité
+   - Exemple pour Beldum : "⚠️ RECOIL — Take Down (1/4 dégâts, risque moyen)"
+   - Exemple pour Geodude : "💀 SUICIDE — Self-Destruct (KO garanti !)"
+   - Si un Pokémon a PLUSIEURS moves à risque, les lister tous, triés par sévérité décroissante
+
+5. **Struggle** : NE PAS afficher de warning pour Struggle car tous les Pokémon peuvent l'utiliser — c'est un cas à part que le joueur doit gérer lui-même
+
+---
+
+## TÂCHE 2 — Améliorer la page "Shiny Hunter Helper"
+
+La page Shiny Hunter existe déjà. Il faut ajouter des bonus de shiny rate sous forme de boutons toggles cliquables.
+
+### 2a) Boutons de bonus existants et nouveaux
+
+Le site a déjà un bouton toggle pour le **Shiny Charm** (+10% shiny rate). Il faut ajouter :
+
+1. **Donator Status** — Toggle ON/OFF
+   - Bonus : +5% de shiny rate supplémentaire
+   - Label : "Donator Status (+5%)"
+   - Icône suggestion : 💎 ou ⭐
+   - Quand activé, recalculer automatiquement tous les taux et estimations affichés
+
+2. **Event Bonus** — Toggle ON/OFF
+   - Bonus : +5% de shiny rate supplémentaire
+   - Label : "Event Bonus — Shiny Wars / Lunar Year (+5%)"
+   - Icône suggestion : 🎉 ou 🎊
+   - Quand activé, recalculer automatiquement tous les taux et estimations affichés
+
+### 2b) Calcul des taux cumulatifs
+
+Les bonus sont ADDITIFS. Le calcul doit être :
+- Base shiny rate : 1/30000 (PokeMMO)
+- Shiny Charm : +10% → 1/30000 × 1.10
+- Donator Status : +5% → multiplicateur × 1.05
+- Event Bonus : +5% → multiplicateur × 1.05
+
+Si les 3 sont actifs : 1/30000 × 1.10 × 1.05 × 1.05 = 1/30000 × 1.21275
+
+**IMPORTANT** : Vérifie le shiny rate de base utilisé dans le code actuel. Si c'est 1/8192 (jeux officiels) ou 1/30000 (PokeMMO), adapte en conséquence. Le principe des bonus en % reste le même.
+
+### 2c) UX des toggles
+
+- Les 3 boutons (Shiny Charm, Donator, Event) doivent être alignés côte à côte ou empilés proprement
+- Design cohérent avec le bouton Shiny Charm existant (même style, même taille)
+- Afficher le taux effectif combiné en temps réel en dessous des toggles :
+  "Shiny rate effectif : 1/XXXXX (bonus actifs : Shiny Charm + Donator)"
+- Quand un toggle change, TOUS les calculs de la page se mettent à jour (temps estimé, coût, etc.)
+
+---
+
+## TÂCHE 3 — Ajouter des infos dans la page principale "Catch Rate Calculator"
+
+Sur la page principale du calculateur de catch rate, après qu'un Pokémon est recherché, ajouter deux nouvelles informations :
+
+### 3a) Average Cost (Coût moyen de capture)
+
+Calculer et afficher le coût moyen en PokéYen pour capturer le Pokémon, en prenant en compte :
+
+- **Le prix de chaque type de Pokéball** :
+  - Poké Ball : 200¥
+  - Great Ball : 600¥
+  - Ultra Ball : 1200¥
+  - (+ toutes les autres balls disponibles dans le jeu avec leurs prix respectifs)
+  
+- **Le catch rate de chaque ball** pour ce Pokémon spécifique (données déjà présentes dans le site)
+
+- **Formule** : Pour chaque ball, calculer :
+  ```
+  avg_balls_needed = 1 / catch_probability
+  avg_cost = avg_balls_needed × ball_price
+  ```
+  
+- **Affichage** :
+  - Montrer le coût moyen pour chaque type de ball
+  - Mettre en SURBRILLANCE / HIGHLIGHT la ball avec le meilleur rapport coût/efficacité (coût moyen le plus bas)
+  - Format : "Ultra Ball : ~3.2 balls en moyenne → ~3,840¥"
+  - Ajouter une ligne "💰 Meilleur rapport qualité/prix : [Ball] — ~X,XXX¥ en moyenne"
+
+### 3b) Average Turns (Nombre de tours moyen)
+
+Calculer et afficher le nombre de tours moyen nécessaires pour capturer le Pokémon. Le calcul doit prendre en compte la stratégie optimale :
+
+- **Tour 1** : False Swipe (réduire à 1 HP) — 1 tour
+- **Tour 2** : Move de sommeil (Spore, Hypnosis, Sleep Powder, etc.) — 1 tour
+- **Sommeil** : dure entre 1 et 3 tours → moyenne = 2 tours
+- **Lancer de balls** : nombre moyen de balls = 1 / catch_probability (avec Pokémon à 1HP + endormi)
+
+- **Formule du nombre de tours moyen** :
+  ```
+  turns_setup = 1 (False Swipe) + 1 (Sleep move) = 2 tours de setup
+  
+  avg_catch_turns = 1 / catch_probability_at_1hp_asleep
+  
+  # Mais le sommeil dure 2 tours en moyenne, donc il faut ré-endormir
+  sleep_cycles = ceil(avg_catch_turns / 2)  # nombre de fois qu'il faut ré-endormir
+  re_sleep_turns = max(0, sleep_cycles - 1)  # le premier sommeil est inclus dans le setup
+  
+  total_avg_turns = turns_setup + avg_catch_turns + re_sleep_turns
+  ```
+
+- **Affichage** :
+  - "⏱️ Tours estimés : ~X tours en moyenne"
+  - Détail en tooltip ou en dessous :
+    - "Setup : 2 tours (False Swipe + Sleep)"
+    - "Lancers de balls : ~X tours"
+    - "Ré-endormissements : ~X tours"
+  
+- **Exceptions à prendre en compte** (lien avec Tâche 1 et le système de warnings) :
+  - Si le Pokémon a Insomnia/Vital Spirit → pas de phase sleep, juste False Swipe + lancers
+  - Si le Pokémon est type Spectre → pas de False Swipe, noter "False Swipe impossible" et calculer sans la phase de réduction de HP (ou suggérer Soak)
+  - Si le Pokémon a des recoil moves → ajouter une note "⚠️ Le Pokémon peut se KO avec [move] — capture plus urgente"
+
+---
+
+## CONTRAINTES GÉNÉRALES
+
+- Ne casse rien de l'existant (le bug fix du patch 1 doit toujours marcher)
+- Reste cohérent avec le stack et le style visuel actuel
+- Les données de recoil moves (Tâche 1) doivent être sourcées depuis PokeAPI pour la Gen 5 — ne PAS hardcoder manuellement, génère un script ou un fichier JSON complet
+- La localisation i18n mise en place au patch 1 doit s'appliquer aussi aux nouveaux éléments (noms de moves traduits si possible, sinon garder les noms anglais des moves qui sont universellement reconnus)
+- Commente les calculs complexes (formules de catch rate, recoil severity, etc.)
+- Fais un git diff résumé à la fin pour review
+
+Commence par lister les fichiers modifiés au patch 1, comprends l'architecture actuelle, puis attaque tâche par tâche.
+```

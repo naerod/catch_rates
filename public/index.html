@@ -108,6 +108,26 @@
         </div>
       </div>
 
+      <!-- 3b. Catch stats: Average Cost & Average Turns -->
+      <div id="catch-stats-section" class="catch-stats-section" style="display:none">
+        <div id="catch-avg-turns" class="catch-stat-card">
+          <div class="catch-stat-header">
+            <span class="catch-stat-icon">⏱️</span>
+            <span class="catch-stat-title" data-i18n="avg_turns_title">Estimated Turns</span>
+          </div>
+          <div id="catch-avg-turns-value" class="catch-stat-value">—</div>
+          <div id="catch-avg-turns-detail" class="catch-stat-detail"></div>
+        </div>
+        <div id="catch-avg-cost" class="catch-stat-card">
+          <div class="catch-stat-header">
+            <span class="catch-stat-icon">💰</span>
+            <span class="catch-stat-title" data-i18n="avg_cost_title">Best Value Ball</span>
+          </div>
+          <div id="catch-avg-cost-value" class="catch-stat-value">—</div>
+          <div id="catch-avg-cost-detail" class="catch-stat-detail"></div>
+        </div>
+      </div>
+
       <!-- 4. More parameters (collapsible) -->
       <div id="more-params-section" class="more-params-section" style="display:none">
         <button class="expand-btn" id="expand-params">
@@ -248,13 +268,24 @@
               <option value="egg" data-i18n="shiny_egg">Egg (Breeding)</option>
             </select>
           </div>
-          <div class="shiny-calc-row">
-            <label data-i18n="shiny_charm">Shiny Charm</label>
-            <button class="toggle-btn shiny-charm-btn" id="shiny-charm-toggle">
-              <span class="toggle-icon">✨</span>
-              <span class="toggle-label" data-i18n="shiny_no_charm">No Charm</span>
-            </button>
+          <div class="shiny-calc-row shiny-bonus-row">
+            <label data-i18n="shiny_bonuses_label">Bonuses</label>
+            <div class="shiny-bonus-toggles">
+              <button class="toggle-btn shiny-charm-btn" id="shiny-charm-toggle">
+                <span class="toggle-icon">✨</span>
+                <span class="toggle-label" data-i18n="shiny_no_charm">No Charm</span>
+              </button>
+              <button class="toggle-btn shiny-bonus-btn" id="shiny-donator-toggle">
+                <span class="toggle-icon">💎</span>
+                <span class="toggle-label" data-i18n="shiny_donator_off">Donator Off</span>
+              </button>
+              <button class="toggle-btn shiny-bonus-btn" id="shiny-event-toggle">
+                <span class="toggle-icon">🎉</span>
+                <span class="toggle-label" data-i18n="shiny_event_off">Event Off</span>
+              </button>
+            </div>
           </div>
+          <div id="shiny-effective-rate" class="shiny-effective-rate" style="display:none"></div>
           <div class="shiny-calc-row">
             <label data-i18n="shiny_time_per_enc">Time per encounter (sec)</label>
             <input type="number" id="shiny-time-input" class="shiny-input" value="25" min="5" max="300" />
@@ -354,6 +385,7 @@
 
   <script src="/js/i18n.js"></script>
   <script src="/js/calc.js"></script>
+  <script src="/js/recoil-data.js"></script>
   <script src="/js/warnings.js"></script>
   <script src="/js/shiny.js"></script>
   <script src="/js/app.js"></script>

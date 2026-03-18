@@ -7,7 +7,10 @@ const Shiny = {
 
   // PokeMMO shiny rate
   BASE_RATE: 1 / 30000,
-  CHARM_RATE: 1 / 27500,
+  // Bonus multipliers (additive percentage bonuses applied to the base rate)
+  CHARM_BONUS: 1.10,     // Shiny Charm: +10%
+  DONATOR_BONUS: 1.05,   // Donator Status: +5%
+  EVENT_BONUS: 1.05,     // Event Bonus (Shiny Wars / Lunar Year): +5%
 
   // Encounter methods multiplier (Pokemon seen per encounter)
   METHODS: {
@@ -226,10 +229,28 @@ const Shiny = {
   },
 
   /**
-   * Calculate expected encounters to find a shiny
+   * Compute the effective shiny rate given active bonuses.
+   * Bonuses are multiplicative: base × charm × donator × event
+   * @param {Object} bonuses - { charm: bool, donator: bool, event: bool }
+   * @returns {number} effective shiny rate (e.g. 1/24793)
    */
-  avgEncounters(method, hasCharm) {
-    const rate = hasCharm ? this.CHARM_RATE : this.BASE_RATE;
+  effectiveRate(bonuses) {
+    let multiplier = 1;
+    if (bonuses.charm)   multiplier *= this.CHARM_BONUS;
+    if (bonuses.donator) multiplier *= this.DONATOR_BONUS;
+    if (bonuses.event)   multiplier *= this.EVENT_BONUS;
+    return this.BASE_RATE * multiplier;
+  },
+
+  /**
+   * Calculate expected encounters to find a shiny
+   * @param {string} method - horde5, single, etc.
+   * @param {Object} bonuses - { charm, donator, event }
+   */
+  avgEncounters(method, bonuses) {
+    // Support legacy boolean argument (backwards compat)
+    if (typeof bonuses === 'boolean') bonuses = { charm: bonuses, donator: false, event: false };
+    const rate = this.effectiveRate(bonuses);
     const m = this.METHODS[method];
     if (!m) return Infinity;
     // Each encounter checks m.pokemon Pokemon for shiny
@@ -240,26 +261,20 @@ const Shiny = {
   /**
    * Calculate total estimated time in seconds
    */
-  estimatedTime(method, hasCharm, customTime) {
+  estimatedTime(method, bonuses, customTime) {
     const m = this.METHODS[method];
     if (!m) return Infinity;
     const timePerEnc = customTime || m.timePerEnc;
-    return this.avgEncounters(method, hasCharm) * timePerEnc;
+    return this.avgEncounters(method, bonuses) * timePerEnc;
   },
 
   /**
    * Calculate total estimated cost
-   * @param method - horde5, single, etc.
-   * @param hasCharm - Shiny Charm toggle
-   * @param ballPrice - price per ball
-   * @param repelPrice - repel cost per encounter (if using repels)
    */
-  estimatedCost(method, hasCharm, ballPrice, repelPrice) {
-    const enc = this.avgEncounters(method, hasCharm);
+  estimatedCost(method, bonuses, ballPrice, repelPrice) {
+    const enc = this.avgEncounters(method, bonuses);
     const m = this.METHODS[method];
     if (!m) return Infinity;
-    // Average ball cost: 1 ball per Pokemon seen per encounter that isn't shiny ≈ 1 ball per encounter
-    // Plus repel cost
     return enc * (ballPrice + repelPrice);
   },
 
@@ -308,25 +323,42 @@ const Shiny = {
 
   /**
    * Render the cost calculator
+   * @param {string} method
+   * @param {Object} bonuses - { charm, donator, event }
+   * @param {number} timePerEnc
+   * @param {number} ballPrice
    */
-  renderCalculator(method, hasCharm, timePerEnc, ballPrice) {
+  renderCalculator(method, bonuses, timePerEnc, ballPrice) {
+    // Support legacy boolean argument
+    if (typeof bonuses === 'boolean') bonuses = { charm: bonuses, donator: false, event: false };
     const m = this.METHODS[method];
     if (!m) return '';
 
-    const rate = hasCharm ? this.CHARM_RATE : this.BASE_RATE;
-    const avgEnc = this.avgEncounters(method, hasCharm);
+    const effectiveRate = this.effectiveRate(bonuses);
+    const hasAnyBonus = bonuses.charm || bonuses.donator || bonuses.event;
+    const avgEnc = this.avgEncounters(method, bonuses);
     const time = avgEnc * (timePerEnc || m.timePerEnc);
     const repelCost = 350; // Max Repel ≈ 350¥ per use, ~3 encounters
     const totalCost = avgEnc * (ballPrice + repelCost / 3);
+
+    // Build active bonuses label
+    const activeBonuses = [];
+    if (bonuses.charm)   activeBonuses.push(i18n.t('shiny_charm'));
+    if (bonuses.donator) activeBonuses.push(i18n.t('shiny_donator'));
+    if (bonuses.event)   activeBonuses.push(i18n.t('shiny_event'));
 
     return `<div class="shiny-calc-results">
       <div class="calc-row">
         <span class="calc-label">${i18n.t('shiny_base_rate')}</span>
         <span class="calc-value">1/${Math.round(1/this.BASE_RATE).toLocaleString()}</span>
       </div>
-      ${hasCharm ? `<div class="calc-row">
-        <span class="calc-label">${i18n.t('shiny_rate_with_charm')}</span>
-        <span class="calc-value">1/${Math.round(1/this.CHARM_RATE).toLocaleString()}</span>
+      ${hasAnyBonus ? `<div class="calc-row">
+        <span class="calc-label">${i18n.t('shiny_effective_rate')}</span>
+        <span class="calc-value calc-value-bonus">1/${Math.round(1/effectiveRate).toLocaleString()}</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">${i18n.t('shiny_active_bonuses')}</span>
+        <span class="calc-value calc-value-bonus">${activeBonuses.join(' + ')}</span>
       </div>` : ''}
       <div class="calc-row">
         <span class="calc-label">${i18n.t('shiny_pokemon_per_encounter')}</span>
