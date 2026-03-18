@@ -68,7 +68,7 @@ const Calc = {
         conditionNote = 'love';
       } else if (condition_key === 'bugwater') {
         conditionMet = this._isBugOrWater(pokemon);
-        conditionNote = conditionMet ? 'bugwater' : null;
+        conditionNote = 'bugwater';
       } else if (condition_key === 'timer') {
         conditionNote = 'timer';
       }

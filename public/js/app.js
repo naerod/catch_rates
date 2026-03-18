@@ -285,7 +285,11 @@ function renderAllBallsGrid(results, best, cheap) {
 
   grid.innerHTML = results.map(r => {
     const name = i18n.ballName(r.key);
-    const unavailable = r.conditionMet === false;
+
+    // Quick Ball: gray out if HP has been changed or a status is active (not turn 1 anymore)
+    const isQuickBallInvalid = r.key === 'quick_ball' && (state.hp !== 100 || state.status !== 'none');
+    const unavailable = r.conditionMet === false || isQuickBallInvalid;
+
     const pct = unavailable ? null : r.probability;
 
     let rateText, rateClass;
@@ -302,7 +306,6 @@ function renderAllBallsGrid(results, best, cheap) {
 
     const isBest = best && r.key === best.key && !unavailable;
     const isCheap = cheap && r.key === cheap.key && !unavailable;
-    // Don't show same badge twice on same ball
     const showBestTag = isBest;
     const showCheapTag = isCheap && !(isBest && isCheap);
 
@@ -312,8 +315,11 @@ function renderAllBallsGrid(results, best, cheap) {
     if (isBest) itemClass += ' ball-best';
     else if (isCheap) itemClass += ' ball-cheapest';
 
-    const condLabel = getCondLabel(r);
+    const condLabel = getCondLabel(r, state.pokemon);
     const condHtml = condLabel ? `<span class="ball-grid-cond">${condLabel}</span>` : '';
+
+    // State parameter chips (only for non-unavailable balls)
+    const stateChips = !unavailable ? buildGridStateChips(r) : '';
 
     const bestTag = showBestTag ? `<span class="ball-tag ball-tag-best">BEST</span>` : '';
     const cheapTag = showCheapTag ? `<span class="ball-tag ball-tag-cheap">CHEAP</span>` : '';
@@ -324,16 +330,53 @@ function renderAllBallsGrid(results, best, cheap) {
         <img class="ball-grid-img" src="${Calc.ballSprite(r.key)}" alt="${name}" loading="lazy" />
         <span class="ball-grid-name">${name}</span>
         <span class="ball-grid-rate ${rateClass}">${rateText}</span>
+        ${stateChips}
         ${condHtml}
       </div>
     `;
   }).join('');
 }
 
-function getCondLabel(r) {
+function buildGridStateChips(r) {
+  const chips = [];
+  // HP chip
+  if (state.hp < 100) {
+    const label = state.hp === 1 ? i18n.t('technique_1hp') : `${state.hp}%`;
+    chips.push(`<span class="ball-state-chip chip-1hp">${label}</span>`);
+  }
+  // Status chip
+  const statusChipMap = {
+    sleep:  { label: () => i18n.t('technique_sleep'),  cls: 'chip-sleep'  },
+    freeze: { label: () => i18n.t('technique_freeze'), cls: 'chip-freeze' },
+    para:   { label: () => i18n.t('technique_para'),   cls: 'chip-para'   },
+    poison: { label: () => i18n.t('technique_poison'), cls: 'chip-poison' },
+    burn:   { label: () => i18n.t('technique_burn'),   cls: 'chip-burn'   },
+  };
+  if (state.status !== 'none' && statusChipMap[state.status]) {
+    const s = statusChipMap[state.status];
+    chips.push(`<span class="ball-state-chip ${s.cls}">${s.label()}</span>`);
+  }
+  // Night chip (only for dusk ball)
+  if (r.key === 'duskball' && state.night) {
+    chips.push(`<span class="ball-state-chip chip-night">${i18n.t('technique_night')}</span>`);
+  }
+  if (!chips.length) return '';
+  return `<div class="ball-state-chips">${chips.join('')}</div>`;
+}
+
+function getCondLabel(r, pokemon) {
   if (r.conditionNote === 'quick')    return i18n.t('cond_quick');
   if (r.conditionNote === 'love')     return i18n.t('cond_love');
-  if (r.conditionNote === 'bugwater') return i18n.t('cond_bugwater');
+  if (r.conditionNote === 'bugwater') {
+    // Show the pokemon's actual type(s) instead of generic "Type Bug/Water"
+    if (pokemon) {
+      const t1 = pokemon.type1 ? pokemon.type1.charAt(0).toUpperCase() + pokemon.type1.slice(1) : null;
+      const t2 = pokemon.type2 ? pokemon.type2.charAt(0).toUpperCase() + pokemon.type2.slice(1) : null;
+      const typeStr = (t1 && t2) ? `${t1}/${t2}` : (t1 || '');
+      return `Type ${typeStr}`;
+    }
+    return i18n.t('cond_bugwater');
+  }
   if (r.conditionNote === 'timer')    return i18n.t('cond_timer');
   if (r.conditionMet === false)       return i18n.t('cond_night');
   return null;
@@ -362,12 +405,10 @@ async function loadEvents() {
   const detailed = await Promise.all(
     events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
   );
-  const lang = i18n.lang;
-
   container.innerHTML = detailed.map(ev => `
     <div class="event-card">
       <div class="event-card-header">
-        <span class="event-name">${lang === 'fr' ? ev.name_fr : ev.name_en}</span>
+        <span class="event-name">${i18n.lang === 'fr' ? ev.name_fr : ev.name_en}</span>
         <span class="event-active-badge">${ev.active ? i18n.t('event_active') : i18n.t('event_inactive')}</span>
       </div>
       <div class="event-pokemon-grid">
