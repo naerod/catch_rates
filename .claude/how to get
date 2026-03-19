@@ -1,0 +1,16 @@
+git clone = première fois
+
+cd C:\Users\TonUser\Documents
+git clone https://github.com/naerod/catch_rates.git
+cd catch_rates
+npm install
+npm run seed
+npm start
+
+git pull = mettre à jour un dossier existant.
+
+powershellcd C:\chemin\vers\catch_rates
+git pull
+npm install
+npm run seed
+npm start
