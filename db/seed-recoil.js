@@ -2,7 +2,7 @@
    seed-recoil.js — Imports self-damaging move data from CSV
    into the pokemon_recoil_moves table.
 
-   Source of truth: .claude/fichiers/pokemon_recoil_moves_gen_1_to_5_and_6.csv
+   Source of truth: db/pokemon_recoil_moves_gen_1_to_5_and_6.csv
    Columns: Pokémon, Dex #, Move, Level, Recoil Type
 
    Recoil Type values:
@@ -17,7 +17,7 @@ const path = require('path');
 const fs = require('fs');
 
 const DB_PATH  = path.join(__dirname, 'catchrates.db');
-const CSV_PATH = path.join(__dirname, '..', '.claude', 'fichiers', 'pokemon_recoil_moves_gen_1_to_5_and_6.csv');
+const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv');
 
 (async () => {
   if (!fs.existsSync(DB_PATH)) {
