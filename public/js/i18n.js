@@ -87,6 +87,7 @@ const translations = {
     warn_recoil_high: "🔴 RECOIL — {moves} (1/2 damage, high risk)",
     warn_recoil_medium: "🟠 RECOIL — {moves} (1/3 damage, medium risk)",
     warn_recoil_low: "🟡 RECOIL — {moves} (1/4 damage, low risk)",
+    if_min_level: "if ≥ Lv.",
   },
   fr: {
     nav_calc: 'Calculateur', nav_events: 'Événements', nav_admin: 'Admin',
@@ -131,6 +132,7 @@ const translations = {
     warn_recoil_high: "🔴 RECOIL — {moves} (1/2 dégâts, risque élevé)",
     warn_recoil_medium: "🟠 RECOIL — {moves} (1/3 dégâts, risque moyen)",
     warn_recoil_low: "🟡 RECOIL — {moves} (1/4 dégâts, faible risque)",
+    if_min_level: "si ≥ Niv.",
     nav_shiny: "Chasseur Shiny",
     shiny_title: "Assistant Chasse Shiny", shiny_subtitle: "Meilleurs spots & calculateur de coût",
     shiny_search_pokemon: "Chercher un Pokémon pour la chasse shiny...",

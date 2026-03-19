@@ -57,6 +57,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
 /* ══════════════ SEARCH ══════════════ */
 let searchTimer = null;
+let activeSearchIndex = -1;
 const searchInput = $('pokemon-search');
 const searchDropdown = $('search-dropdown');
 const searchClear = $('search-clear');
@@ -70,8 +71,33 @@ searchInput.addEventListener('input', () => {
 });
 
 searchInput.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { searchDropdown.style.display = 'none'; searchInput.blur(); }
+  if (e.key === 'Escape') {
+    searchDropdown.style.display = 'none';
+    searchInput.blur();
+    return;
+  }
+  const items = searchDropdown.querySelectorAll('.search-item');
+  if (!items.length || searchDropdown.style.display === 'none') return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    activeSearchIndex = Math.min(activeSearchIndex + 1, items.length - 1);
+    _updateSearchActive(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    activeSearchIndex = Math.max(activeSearchIndex - 1, -1);
+    _updateSearchActive(items);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const idx = activeSearchIndex >= 0 ? activeSearchIndex : 0;
+    if (items[idx]) selectPokemonById(Number(items[idx].dataset.id));
+  }
 });
+
+function _updateSearchActive(items) {
+  items.forEach((el, i) => el.classList.toggle('active', i === activeSearchIndex));
+  if (activeSearchIndex >= 0) items[activeSearchIndex].scrollIntoView({ block: 'nearest' });
+}
 
 searchClear.addEventListener('click', () => {
   searchInput.value = '';
@@ -92,6 +118,7 @@ async function fetchSearch(q) {
 
 function renderDropdown(pokemon) {
   if (!pokemon.length) { searchDropdown.style.display = 'none'; return; }
+  activeSearchIndex = -1;
   searchDropdown.innerHTML = pokemon.map(p => `
     <div class="search-item" data-id="${p.id}">
       <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
@@ -367,7 +394,7 @@ function renderAllBallsGrid(results, best, cheap) {
 
     let itemClass = 'ball-grid-item';
     if (unavailable) itemClass += ' ball-unavailable';
-    else if (r.guaranteed) itemClass += ' ball-guaranteed';
+    else if (r.guaranteed && r.conditionNote !== 'love') itemClass += ' ball-guaranteed';
     if (isBest) itemClass += ' ball-best';
     else if (isCheap) itemClass += ' ball-cheapest';
 

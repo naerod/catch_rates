@@ -143,7 +143,17 @@ const Calc = {
     // Prefer techniques ≥95%, fallback to best available
     const high = all.filter(c => c.probability >= 0.95);
     const candidates = high.length ? high : all;
+
+    // If a non-timer technique achieves ≥90%, deprioritize Timer Ball techniques
+    const bestNonTimerProb = candidates
+      .filter(c => !c.technique.timer)
+      .reduce((max, c) => Math.max(max, c.probability), 0);
+    const timerPenalty = bestNonTimerProb >= 0.9;
+
     candidates.sort((a, b) => {
+      const aTimer = a.technique.timer;
+      const bTimer = b.technique.timer;
+      if (timerPenalty && aTimer !== bTimer) return aTimer ? 1 : -1;
       if (Math.abs(b.probability - a.probability) > 1e-9) return b.probability - a.probability;
       return this._techniqueComplexity(a.technique) - this._techniqueComplexity(b.technique);
     });
