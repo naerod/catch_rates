@@ -117,6 +117,8 @@ catch_rates/
 │   ├── index.html              # Point d'entrée SPA — structure HTML complète
 │   │                             → 4 pages : Calculator, Events, Shiny Helper, Admin
 │   │                             → Navigation par onglets (SPA sans router)
+│   │                             → Layout grille 3 colonnes (1fr auto 1fr) pour panneau historique
+│   │                             → Panneau historique (aside) dans la colonne droite
 │   │                             Langage : HTML5
 │   │
 │   ├── css/
@@ -149,6 +151,7 @@ catch_rates/
 │   │   │
 │   │   ├── app.js              # Logique UI principale
 │   │   │                         → Objet `state` global (pokemon, balls, hp, status, night, page)
+│   │   │                         → Historique de recherche persistant (localStorage, max 15 entrées)
 │   │   │                         → Gestion thème Dark/Light (localStorage)
 │   │   │                         → Navigation SPA (4 pages)
 │   │   │                         → Recherche Pokémon avec autocomplétion (debounce 180ms)
@@ -323,6 +326,7 @@ catch_rates/
 
 ### Page 1 : Calculator (page principale)
 - Recherche Pokémon avec autocomplétion en temps réel
+- **Bouton Historique** (icône horloge SVG) à côté de la barre de recherche, ouvre/ferme le panneau historique
 - Affiche la carte Pokémon (sprite, nom, ID, génération, catch rate)
 - **Bannière Quick Ball** : si le Pokémon est "quickable" (≥75% de capture au tour 1 avec Quick Ball)
 - **2 cartes résultat automatiques** :
@@ -334,6 +338,13 @@ catch_rates/
   - Slider HP (1% / 25% / 50% / 75% / 100%)
   - Toggles : Sleep (×2), Night (×2.5), Freeze (×2), Paralysis (×1.5), Poison (×1.5), Burn (×1.5)
   - Grille visuelle de toutes les balls avec leur catch rate dans les conditions choisies
+- **Panneau Historique** (colonne droite desktop, overlay plein écran mobile) :
+  - Persisté en `localStorage` (clé `catchCalc_history`), max 15 entrées
+  - Chaque entrée : sprite réduit, nom du Pokémon, badge meilleure ball "Fastest" (icône + %)
+  - Clic sur une entrée → charge le Pokémon dans le calculateur (+ ferme le modal sur mobile)
+  - Si un Pokémon déjà présent est reconsulté, il remonte en première position
+  - Bouton "Effacer l'historique" vide le localStorage et le DOM instantanément
+  - Layout via grille CSS `1fr auto 1fr` : la carte principale reste centrée, le panneau est dans la colonne droite (la colonne gauche est réservée pour un usage futur)
 
 ### Page 2 : Events
 - Liste des événements PokeMMO (XMAS 2024, LNY 2025, etc.)

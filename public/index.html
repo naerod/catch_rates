@@ -32,6 +32,9 @@
     </div>
   </header>
 
+  <!-- LAYOUT WRAPPER (3-col grid: empty | main | history) -->
+  <div class="layout-grid">
+
   <!-- MAIN -->
   <main id="app">
 
@@ -44,11 +47,19 @@
 
       <!-- 1. Search -->
       <div class="search-wrapper">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="pokemon-search" autocomplete="off"
-            data-i18n-placeholder="search_placeholder" placeholder="Search Pokémon..." />
-          <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear">✕</button>
+        <div class="search-row">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="pokemon-search" autocomplete="off"
+              data-i18n-placeholder="search_placeholder" placeholder="Search Pokémon..." />
+            <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear">✕</button>
+          </div>
+          <button class="btn-icon history-toggle-btn" id="history-toggle" title="History" aria-label="Toggle history">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </button>
         </div>
         <div id="search-dropdown" class="search-dropdown" style="display:none"></div>
       </div>
@@ -360,6 +371,28 @@
     </section>
 
   </main>
+
+  <!-- HISTORY PANEL (right column on desktop, overlay on mobile) -->
+  <aside id="history-panel" class="history-panel">
+    <div class="history-panel-inner">
+      <div class="history-header">
+        <h3 class="history-title" data-i18n="history_title">History</h3>
+        <div class="history-header-actions">
+          <button class="btn btn-sm btn-danger-outline" id="history-clear-btn" data-i18n="history_clear">Clear history</button>
+          <button class="btn-icon history-close-btn" id="history-close-btn" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="history-list" class="history-list">
+        <p class="history-empty" data-i18n="history_empty">No history yet</p>
+      </div>
+    </div>
+  </aside>
+
+  </div><!-- /.layout-grid -->
 
   <footer>
     <p>naerod's Catch Calculator — PokeMMO community tool — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span></p>

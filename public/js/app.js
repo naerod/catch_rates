@@ -144,7 +144,7 @@ async function selectPokemonById(id) {
   selectPokemon(p, warnings);
 }
 
-function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves: [] }) {
+async function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves: [] }) {
   state.pokemon = p;
   state.recoilWarnings = recoilWarnings;
   searchInput.value = p.name;
@@ -163,7 +163,12 @@ function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves: [] }
   $('more-params-section').style.display = '';
   $('all-balls-section').style.display = paramsOpen ? '' : 'none';
 
-  updateResults();
+  await updateResults();
+
+  // Add to history with the best (fastest) result
+  await ensureBalls();
+  const optBest = Calc.computeOptimalFastest(p, state.balls);
+  addToHistory(p, optBest);
 }
 
 /* ══════════════ HP SLIDER ══════════════ */
@@ -472,6 +477,7 @@ document.addEventListener('langchange', () => {
     $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${state.pokemon.catch_rate}`;
     updateResults();
   }
+  renderHistory();
 });
 
 /* ══════════════ EVENTS PAGE ══════════════ */
@@ -900,6 +906,98 @@ function updateShinyCalc() {
     rateEl.style.display = 'none';
   }
 }
+
+/* ══════════════ HISTORY ══════════════ */
+const HISTORY_KEY = 'catchCalc_history';
+const HISTORY_MAX = 15;
+let historyData = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+
+const historyPanel = $('history-panel');
+const historyListEl = $('history-list');
+
+// Toggle panel
+$('history-toggle').addEventListener('click', () => {
+  historyPanel.classList.toggle('open');
+  renderHistory();
+});
+
+// Close (mobile)
+$('history-close-btn').addEventListener('click', () => {
+  historyPanel.classList.remove('open');
+});
+
+// Close overlay on backdrop click (mobile)
+historyPanel.addEventListener('click', e => {
+  if (e.target === historyPanel) historyPanel.classList.remove('open');
+});
+
+// Clear history
+$('history-clear-btn').addEventListener('click', () => {
+  historyData = [];
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+});
+
+function addToHistory(pokemon, bestResult) {
+  // Remove existing entry for this pokemon
+  historyData = historyData.filter(h => h.id !== pokemon.id);
+
+  const entry = {
+    id: pokemon.id,
+    name: pokemon.name,
+    spriteUrl: sprite(pokemon.id),
+    bestBallKey: bestResult ? bestResult.key : null,
+    bestBallPercent: bestResult ? bestResult.probability : null,
+  };
+
+  // Insert at front
+  historyData.unshift(entry);
+
+  // Cap at max
+  if (historyData.length > HISTORY_MAX) historyData.length = HISTORY_MAX;
+
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(historyData));
+  renderHistory();
+}
+
+function renderHistory() {
+  if (!historyData.length) {
+    historyListEl.innerHTML = `<p class="history-empty" data-i18n="history_empty">${i18n.t('history_empty')}</p>`;
+    return;
+  }
+
+  historyListEl.innerHTML = historyData.map(h => {
+    let badgeHtml = '';
+    if (h.bestBallKey && h.bestBallPercent != null) {
+      const pct = h.bestBallPercent >= 1 ? '100%' : (h.bestBallPercent * 100).toFixed(1) + '%';
+      badgeHtml = `
+        <div class="history-item-badge">
+          <img src="${Calc.ballSprite(h.bestBallKey)}" alt="${h.bestBallKey}" />
+          <span>${pct}</span>
+        </div>`;
+    }
+    return `
+      <div class="history-item" data-id="${h.id}">
+        <img class="history-item-sprite" src="${h.spriteUrl}" alt="${h.name}" />
+        <div class="history-item-info">
+          <div class="history-item-name">${h.name}</div>
+          ${badgeHtml}
+        </div>
+      </div>`;
+  }).join('');
+
+  historyListEl.querySelectorAll('.history-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const id = Number(item.dataset.id);
+      selectPokemonById(id);
+      // Close mobile overlay
+      if (window.innerWidth <= 680) historyPanel.classList.remove('open');
+    });
+  });
+}
+
+// Initial render
+renderHistory();
 
 /* ══════════════ URL param: auto-select ══════════════ */
 (async () => {
