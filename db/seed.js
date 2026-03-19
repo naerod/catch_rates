@@ -143,6 +143,52 @@ function getGeneration(id) {
 
   console.log('Events seeded.');
 
+  // ── Recoil Moves ────────────────────────────────────────────────────────────
+  const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv');
+  db.run(`
+    CREATE TABLE IF NOT EXISTS pokemon_recoil_moves (
+      id           INTEGER PRIMARY KEY AUTOINCREMENT,
+      dex_number   INTEGER NOT NULL,
+      pokemon_name TEXT    NOT NULL,
+      move_name    TEXT    NOT NULL,
+      level        INTEGER NOT NULL,
+      recoil_type  TEXT    NOT NULL
+    );
+  `);
+  db.run('DELETE FROM pokemon_recoil_moves');
+
+  if (fs.existsSync(CSV_PATH)) {
+    const csv   = fs.readFileSync(CSV_PATH, 'utf8').replace(/^\uFEFF/, '');
+    const lines = csv.split('\n').map(l => l.replace(/\r$/, '')).filter(l => l.trim());
+    console.log(`Recoil CSV: ${lines.length - 1} data lines`);
+
+    const insertRecoil = db.prepare(
+      'INSERT INTO pokemon_recoil_moves (dex_number, pokemon_name, move_name, level, recoil_type) VALUES (?, ?, ?, ?, ?)'
+    );
+    let recoilCount = 0;
+    for (let i = 1; i < lines.length; i++) {
+      const parts = lines[i].split(',');
+      if (parts.length < 5) continue;
+      const pokemonName = parts[0].trim();
+      const dexNumber   = parseInt(parts[1].trim(), 10);
+      const moveName    = parts[2].trim();
+      const level       = parseInt(parts[3].trim(), 10);
+      const recoilType  = parts.slice(4).join(',').trim();
+      if (isNaN(dexNumber) || isNaN(level) || !moveName) continue;
+      insertRecoil.run([dexNumber, pokemonName, moveName, level, recoilType]);
+      recoilCount++;
+    }
+    insertRecoil.free();
+
+    const chk = db.prepare('SELECT COUNT(*) as cnt FROM pokemon_recoil_moves');
+    chk.step();
+    const { cnt } = chk.getAsObject();
+    chk.free();
+    console.log(`Inserted ${recoilCount} recoil entries (${cnt} rows in table).`);
+  } else {
+    console.warn(`Recoil CSV not found — skipping (${CSV_PATH})`);
+  }
+
   // Save to disk
   const data = db.export();
   fs.writeFileSync(DB_PATH, Buffer.from(data));

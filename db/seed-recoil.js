@@ -1,16 +1,10 @@
-/* ═══════════════════════════════════════════════════════════════
-   seed-recoil.js — Imports self-damaging move data from CSV
-   into the pokemon_recoil_moves table.
+/* ════════════════════════════════════════════
+   seed-recoil.js — Seeds the pokemon_recoil_moves table
+   from: db/pokemon_recoil_moves_gen_1_to_5_and_6.csv
 
-   Source of truth: db/pokemon_recoil_moves_gen_1_to_5_and_6.csv
-   Columns: Pokémon, Dex #, Move, Level, Recoil Type
-
-   Recoil Type values:
-     "User faints"  → SUICIDE category (Self-Destruct, Explosion, Memento, etc.)
-     "1/4 damage"   → RECOIL category
-     "1/3 damage"   → RECOIL category
-     "1/2 damage"   → RECOIL category
-   ═══════════════════════════════════════════════════════════════ */
+   Run standalone:  npm run seed:recoil
+   Also called by:  npm run seed (via seed.js)
+   ════════════════════════════════════════════ */
 
 const initSqlJs = require('sql.js');
 const path = require('path');
@@ -21,11 +15,11 @@ const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv
 
 (async () => {
   if (!fs.existsSync(DB_PATH)) {
-    console.error('Database not found. Run: npm run seed');
+    console.error('DB not found. Run: npm run seed first.');
     process.exit(1);
   }
   if (!fs.existsSync(CSV_PATH)) {
-    console.error('CSV file not found at:', CSV_PATH);
+    console.error('CSV not found:', CSV_PATH);
     process.exit(1);
   }
 
@@ -33,62 +27,62 @@ const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv
   const fileBuffer = fs.readFileSync(DB_PATH);
   const db = new SQL.Database(fileBuffer);
 
-  // Drop and recreate to allow re-running this script safely
-  db.run('DROP TABLE IF EXISTS pokemon_recoil_moves');
+  // Create table
   db.run(`
-    CREATE TABLE pokemon_recoil_moves (
+    CREATE TABLE IF NOT EXISTS pokemon_recoil_moves (
       id           INTEGER PRIMARY KEY AUTOINCREMENT,
-      pokemon_name TEXT    NOT NULL,
       dex_number   INTEGER NOT NULL,
+      pokemon_name TEXT    NOT NULL,
       move_name    TEXT    NOT NULL,
       level        INTEGER NOT NULL,
       recoil_type  TEXT    NOT NULL
-    )
+    );
   `);
-  db.run('CREATE INDEX idx_recoil_dex ON pokemon_recoil_moves (dex_number)');
+  db.run('DELETE FROM pokemon_recoil_moves');
 
-  // Parse CSV (UTF-8, comma-separated, no quoting)
-  // Header line is skipped (line 1: Pokémon,Dex #,Move,Level,Recoil Type)
-  const csvText = fs.readFileSync(CSV_PATH, 'utf8');
-  const lines   = csvText.split('\n').slice(1); // skip header
+  // Parse CSV (strip BOM, handle \r\n)
+  const csv   = fs.readFileSync(CSV_PATH, 'utf8').replace(/^\uFEFF/, '');
+  const lines = csv.split('\n').map(l => l.replace(/\r$/, '')).filter(l => l.trim());
+
+  console.log(`CSV resolved: ${CSV_PATH}`);
+  console.log(`Lines to parse (excl. header): ${lines.length - 1}`);
 
   const insert = db.prepare(
-    'INSERT INTO pokemon_recoil_moves (pokemon_name, dex_number, move_name, level, recoil_type) VALUES (?, ?, ?, ?, ?)'
+    'INSERT INTO pokemon_recoil_moves (dex_number, pokemon_name, move_name, level, recoil_type) VALUES (?, ?, ?, ?, ?)'
   );
-
   let count = 0;
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
+  let skipped = 0;
 
-    // Split on comma — field values never contain commas in this CSV
-    const parts = trimmed.split(',');
-    if (parts.length < 5) continue;
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split(',');
+    if (parts.length < 5) { skipped++; continue; }
 
     const pokemonName = parts[0].trim();
     const dexNumber   = parseInt(parts[1].trim(), 10);
     const moveName    = parts[2].trim();
     const level       = parseInt(parts[3].trim(), 10);
-    // Recoil Type may be "1/4 damage", "1/3 damage", etc. — safe as-is
     const recoilType  = parts.slice(4).join(',').trim();
 
-    if (!pokemonName || isNaN(dexNumber) || !moveName || isNaN(level) || !recoilType) {
-      console.warn('Skipping malformed row:', trimmed);
-      continue;
-    }
+    if (isNaN(dexNumber) || isNaN(level) || !moveName) { skipped++; continue; }
 
-    insert.run([pokemonName, dexNumber, moveName, level, recoilType]);
+    insert.run([dexNumber, pokemonName, moveName, level, recoilType]);
     count++;
   }
-
   insert.free();
-  console.log(`Inserted ${count} recoil move records.`);
 
-  // Save updated DB back to disk
+  if (skipped > 0) console.warn(`  Skipped ${skipped} malformed lines.`);
+  console.log(`Inserted ${count} recoil move entries.`);
+
+  // Verify
+  const stmt = db.prepare('SELECT COUNT(*) as cnt FROM pokemon_recoil_moves');
+  stmt.step();
+  const { cnt } = stmt.getAsObject();
+  stmt.free();
+  console.log(`Table pokemon_recoil_moves: ${cnt} rows confirmed.`);
+
+  // Save
   const data = db.export();
   fs.writeFileSync(DB_PATH, Buffer.from(data));
   db.close();
-
-  console.log('Recoil data seeded successfully!');
-  console.log('Restart the server (npm start) to apply changes.');
+  console.log('Recoil data saved to DB.');
 })();
