@@ -73,6 +73,30 @@ app.get('/api/pokemon/:id', (req, res) => {
   res.json(row);
 });
 
+// ─── Recoil Warnings ──────────────────────────────────────────────────────────
+// Returns SUICIDE and RECOIL move lists for a given Pokémon (by Pokédex #).
+// Requires the pokemon_recoil_moves table (run: npm run seed:recoil).
+app.get('/api/pokemon/:id/recoil-warnings', (req, res) => {
+  // Moves that instantly KO the user → SUICIDE category
+  const SUICIDE_MOVES = new Set([
+    'Self-Destruct', 'Explosion', 'Memento',
+    'Healing Wish', 'Final Gambit', 'Misty Explosion'
+  ]);
+
+  try {
+    const rows = dbAll(
+      'SELECT move_name, level FROM pokemon_recoil_moves WHERE dex_number = ? ORDER BY level ASC',
+      [req.params.id]
+    );
+    const suicideMoves = rows.filter(r => SUICIDE_MOVES.has(r.move_name));
+    const recoilMoves  = rows.filter(r => !SUICIDE_MOVES.has(r.move_name));
+    res.json({ suicideMoves, recoilMoves });
+  } catch (_e) {
+    // Table doesn't exist yet (seed:recoil not run) — return empty
+    res.json({ suicideMoves: [], recoilMoves: [] });
+  }
+});
+
 // ─── Pokéballs ─────────────────────────────────────────────────────────────────
 app.get('/api/pokeballs', (req, res) => {
   res.json(dbAll('SELECT * FROM pokeballs ORDER BY sort_order'));

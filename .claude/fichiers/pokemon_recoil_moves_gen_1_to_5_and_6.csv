@@ -1,0 +1,298 @@
+Pokémon,Dex #,Move,Level,Recoil Type
+Abomasnow,460,Wood Hammer,1,1/3 damage
+Accelgor,617,Final Gambit,56,User faints
+Aggron,306,Take Down,29,1/4 damage
+Aggron,306,Double-Edge,63,1/3 damage
+Alomomola,594,Healing Wish,57,User faints
+Amaura,698,Take Down,26,1/4 damage
+Arcanine,59,Flare Blitz,1,1/3 damage
+Archen,566,Double-Edge,48,1/3 damage
+Archeops,567,Double-Edge,51,1/3 damage
+Aromatisse,683,Healing Wish,57,User faints
+Aron,304,Take Down,29,1/4 damage
+Aron,304,Double-Edge,50,1/3 damage
+Audino,531,Healing Wish,50,User faints
+Aurorus,699,Take Down,26,1/4 damage
+Avalugg,713,Take Down,30,1/4 damage
+Avalugg,713,Double-Edge,46,1/3 damage
+Bagon,371,Head Smash,46,1/2 damage
+Baltoy,343,Self-Destruct,31,User faints
+Basculin,550,Memento,34,User faints
+Basculin,550,Head Smash,46,1/2 damage
+Basculin,550,Final Gambit,50,User faints
+Bastiodon,411,Take Down,19,1/4 damage
+Beartic,614,Double-Edge,45,1/3 damage
+Beldum,374,Take Down,20,1/4 damage
+Bergmite,712,Take Down,30,1/4 damage
+Bergmite,712,Double-Edge,43,1/3 damage
+Blissey,242,Healing Wish,46,User faints
+Blitzle,522,Take Down,25,1/4 damage
+Blitzle,522,Wild Charge,36,1/4 damage
+Boldore,525,Explosion,48,User faints
+Bouffalant,626,Take Down,31,1/4 damage
+Bouffalant,626,Head Charge,50,1/4 damage
+Bouffalant,626,Double-Edge,56,1/3 damage
+Braviary,628,Brave Bird,57,1/3 damage
+Camerupt,323,Take Down,29,1/4 damage
+Camerupt,323,Double-Edge,46,1/3 damage
+Carracosta,565,Take Down,28,1/4 damage
+Chandelure,609,Memento,1,User faints
+Chansey,113,Healing Wish,46,User faints
+Chesnaught,652,Take Down,41,1/4 damage
+Chespin,650,Take Down,35,1/4 damage
+Chimecho,358,Healing Wish,46,User faints
+Claydol,344,Self-Destruct,31,User faints
+Claydol,344,Explosion,45,User faints
+Conkeldurr,534,Submission,37,1/4 damage
+Cottonee,546,Memento,46,User faints
+Cranidos,408,Take Down,19,1/4 damage
+Cranidos,408,Double-Edge,43,1/3 damage
+Cranidos,408,Head Smash,46,1/2 damage
+Crobat,169,Brave Bird,51,1/3 damage
+Cubchoo,613,Double-Edge,41,1/3 damage
+Cubone,104,Take Down,27,1/4 damage
+Cubone,104,Double-Edge,43,1/3 damage
+Cyndaquil,155,Take Down,31,1/4 damage
+Cyndaquil,155,Double-Edge,46,1/3 damage
+Cyndaquil,155,Flare Blitz,49,1/3 damage
+Darmanitan,555,Flare Blitz,33,1/3 damage
+Darumaka,554,Flare Blitz,33,1/3 damage
+Deerling,585,Take Down,24,1/4 damage
+Deerling,585,Double-Edge,37,1/3 damage
+Dewgong,87,Take Down,31,1/4 damage
+Dewgong,87,Double-Edge,47,1/3 damage
+Dodrio,85,Brave Bird,50,1/3 damage
+Doduo,84,Brave Bird,45,1/3 damage
+Donphan,232,Take Down,31,1/4 damage
+Donphan,232,Double-Edge,46,1/3 damage
+Drifblim,426,Explosion,50,User faints
+Drifloon,425,Explosion,44,User faints
+Drilbur,529,Submission,33,1/4 damage
+Eevee,133,Take Down,29,1/4 damage
+Eevee,133,Double-Edge,37,1/3 damage
+Electrode,101,Self-Destruct,22,User faints
+Electrode,101,Explosion,36,User faints
+Emboar,500,Take Down,28,1/4 damage
+Emboar,500,Flare Blitz,50,1/3 damage
+Emolga,587,Wild Charge,50,1/4 damage
+Entei,244,Flare Blitz,78,1/3 damage
+Excadrill,530,Submission,33,1/4 damage
+Exeggutor,103,Wood Hammer,47,1/3 damage
+Exploud,295,Take Down,32,1/4 damage
+Farfetch'd,83,Brave Bird,49,1/3 damage
+Fearow,22,Take Down,29,1/4 damage
+Ferroseed,597,Self-Destruct,35,User faints
+Ferroseed,597,Explosion,52,User faints
+Ferrothorn,598,Explosion,1,User faints
+Flareon,136,Flare Blitz,71,1/3 damage
+Fletchinder,662,Flare Blitz,46,1/3 damage
+Forretress,205,Self-Destruct,1,User faints
+Forretress,205,Explosion,46,User faints
+Furfrou,676,Take Down,33,1/4 damage
+Gardevoir,282,Healing Wish,53,User faints
+Geodude,74,Take Down,15,1/4 damage
+Geodude,74,Self-Destruct,19,User faints
+Geodude,74,Double-Edge,31,1/3 damage
+Geodude,74,Explosion,35,User faints
+Gigalith,526,Explosion,48,User faints
+Girafarig,203,Take Down,32,1/4 damage
+Girafarig,203,Double-Edge,46,1/3 damage
+Glalie,362,Self-Destruct,51,User faints
+Glalie,362,Explosion,59,User faints
+Gogoat,673,Take Down,26,1/4 damage
+Gogoat,673,Double-Edge,50,1/3 damage
+Golbat,42,Brave Bird,51,1/3 damage
+Golem,76,Take Down,15,1/4 damage
+Golem,76,Self-Destruct,19,User faints
+Golem,76,Double-Edge,33,1/3 damage
+Golem,76,Explosion,40,User faints
+Graveler,75,Take Down,15,1/4 damage
+Graveler,75,Self-Destruct,19,User faints
+Graveler,75,Double-Edge,33,1/3 damage
+Graveler,75,Explosion,40,User faints
+Grimer,88,Memento,44,User faints
+Growlithe,58,Take Down,34,1/4 damage
+Growlithe,58,Double-Edge,43,1/3 damage
+Growlithe,58,Flare Blitz,45,1/3 damage
+Gurdurr,533,Submission,37,1/4 damage
+Happiny,440,Healing Wish,1,User faints
+Heatmor,631,Flare Blitz,56,1/3 damage
+Herdier,507,Take Down,15,1/4 damage
+Herdier,507,Double-Edge,47,1/3 damage
+Hippopotas,449,Take Down,25,1/4 damage
+Hippowdon,450,Take Down,25,1/4 damage
+Ho-Oh,250,Brave Bird,71,1/3 damage
+Honchkrow,430,Brave Bird,55,1/3 damage
+Jigglypuff,39,Take Down,29,1/4 damage
+Jigglypuff,39,Double-Edge,37,1/3 damage
+Jirachi,385,Healing Wish,70,User faints
+Kangaskhan,115,Double-Edge,46,1/3 damage
+Koffing,109,Self-Destruct,33,User faints
+Koffing,109,Explosion,42,User faints
+Lairon,305,Take Down,29,1/4 damage
+Lairon,305,Double-Edge,56,1/3 damage
+Lampent,608,Memento,61,User faints
+Larvesta,636,Take Down,30,1/4 damage
+Larvesta,636,Flare Blitz,100,1/3 damage
+Latias,380,Healing Wish,55,User faints
+Latios,381,Memento,55,User faints
+Lillipup,506,Take Down,15,1/4 damage
+Lillipup,506,Double-Edge,40,1/3 damage
+Litleo,667,Take Down,28,1/4 damage
+Litwick,607,Memento,55,User faints
+Loudred,294,Take Down,32,1/4 damage
+Lunatone,337,Self-Destruct,45,User faints
+Lunatone,337,Explosion,53,User faints
+Luvdisc,370,Healing Wish,46,User faints
+Luxio,404,Take Down,38,1/4 damage
+Luxio,404,Wild Charge,56,1/4 damage
+Luxray,405,Take Down,42,1/4 damage
+Luxray,405,Wild Charge,63,1/4 damage
+Machamp,68,Submission,33,1/4 damage
+Machoke,67,Submission,33,1/4 damage
+Machop,66,Submission,33,1/4 damage
+Mamoswine,473,Take Down,28,1/4 damage
+Mandibuzz,630,Brave Bird,57,1/3 damage
+Marowak,105,Take Down,27,1/4 damage
+Marowak,105,Double-Edge,49,1/3 damage
+Metagross,376,Take Down,20,1/4 damage
+Metang,375,Take Down,20,1/4 damage
+Mienfoo,619,Double-Edge,49,1/3 damage
+Mienshao,620,Double-Edge,56,1/3 damage
+Miltank,241,Take Down,26,1/4 damage
+Miltank,241,Double-Edge,50,1/3 damage
+Muk,89,Memento,49,User faints
+Murkrow,198,Brave Bird,55,1/3 damage
+Nidoran?,29,Take Down,37,1/4 damage
+Nidoran?,29,Double-Edge,45,1/3 damage
+Nidoran?,32,Take Down,37,1/4 damage
+Nidoran?,32,Double-Edge,45,1/3 damage
+Nidorina,30,Take Down,43,1/4 damage
+Nidorina,30,Double-Edge,50,1/3 damage
+Nidorino,33,Take Down,43,1/4 damage
+Nidorino,33,Double-Edge,50,1/3 damage
+Nosepass,299,Double-Edge,46,1/3 damage
+Numel,322,Take Down,29,1/4 damage
+Numel,322,Double-Edge,43,1/3 damage
+Nuzleaf,274,Explosion,49,User faints
+Phanpy,231,Take Down,33,1/4 damage
+Pidgeot,18,Brave Bird,56,1/3 damage
+Pidgeotto,17,Brave Bird,50,1/3 damage
+Pidgey,16,Brave Bird,45,1/3 damage
+Pignite,499,Take Down,28,1/4 damage
+Pignite,499,Flare Blitz,47,1/3 damage
+Piloswine,221,Take Down,28,1/4 damage
+Piloswine,221,Double-Edge,52,1/3 damage
+Pineco,204,Self-Destruct,6,User faints
+Pineco,204,Explosion,42,User faints
+Ponyta,77,Take Down,33,1/4 damage
+Ponyta,77,Double-Edge,45,1/3 damage
+Ponyta,77,Flare Blitz,49,1/3 damage
+Probopass,476,Double-Edge,1,1/3 damage
+Pyroar,668,Take Down,28,1/4 damage
+Quilava,156,Take Down,35,1/4 damage
+Quilava,156,Double-Edge,53,1/3 damage
+Quilava,156,Flare Blitz,56,1/3 damage
+Quilladin,651,Take Down,39,1/4 damage
+Qwilfish,211,Memento,45,User faints
+Rampardos,409,Take Down,19,1/4 damage
+Rampardos,409,Double-Edge,52,1/3 damage
+Rampardos,409,Head Smash,58,1/2 damage
+Rapidash,78,Take Down,33,1/4 damage
+Rapidash,78,Double-Edge,49,1/3 damage
+Rapidash,78,Flare Blitz,53,1/3 damage
+Raticate,20,Take Down,16,1/4 damage
+Raticate,20,Double-Edge,39,1/3 damage
+Rattata,19,Take Down,16,1/4 damage
+Rattata,19,Double-Edge,34,1/3 damage
+Relicanth,369,Head Smash,57,1/2 damage
+Rhydon,112,Take Down,30,1/4 damage
+Rhydon,112,Double-Edge,49,1/3 damage
+Rhyhorn,111,Take Down,30,1/4 damage
+Rhyhorn,111,Double-Edge,45,1/3 damage
+Rhyperior,464,Take Down,30,1/4 damage
+Rhyperior,464,Double-Edge,49,1/3 damage
+Roggenrola,524,Explosion,40,User faints
+Rufflet,627,Brave Bird,51,1/3 damage
+Sawk,539,Double-Edge,49,1/3 damage
+Sawsbuck,586,Take Down,24,1/4 damage
+Sawsbuck,586,Double-Edge,37,1/3 damage
+Scrafty,560,Head Smash,53,1/2 damage
+Scraggy,559,Head Smash,49,1/2 damage
+Sealeo,364,Double-Edge,37,1/3 damage
+Seedot,273,Self-Destruct,43,User faints
+Seel,86,Take Down,31,1/4 damage
+Seel,86,Double-Edge,43,1/3 damage
+Shedinja,292,Final Gambit,45,User faints
+Shelgon,372,Head Smash,50,1/2 damage
+Shieldon,410,Take Down,19,1/4 damage
+Shiftry,275,Explosion,1,User faints
+Shinx,403,Take Down,33,1/4 damage
+Shinx,403,Double-Edge,42,1/3 damage
+Shinx,403,Wild Charge,49,1/4 damage
+Skarmory,227,Brave Bird,50,1/3 damage
+Skiddo,672,Take Down,26,1/4 damage
+Skiddo,672,Double-Edge,45,1/3 damage
+Skuntank,435,Memento,46,User faints
+Snorlax,143,Take Down,33,1/4 damage
+Snorlax,143,Double-Edge,49,1/3 damage
+Snover,459,Wood Hammer,41,1/3 damage
+Solrock,338,Self-Destruct,45,User faints
+Solrock,338,Explosion,53,User faints
+Spearow,21,Take Down,29,1/4 damage
+Spheal,363,Double-Edge,37,1/3 damage
+Stantler,234,Take Down,33,1/4 damage
+Stantler,234,Double-Edge,49,1/3 damage
+Staraptor,398,Final Gambit,1,User faints
+Staraptor,398,Brave Bird,49,1/3 damage
+Staravia,397,Brave Bird,41,1/3 damage
+Starly,396,Brave Bird,37,1/3 damage
+Stoutland,508,Take Down,15,1/4 damage
+Stoutland,508,Double-Edge,59,1/3 damage
+Stunfisk,618,Flare Blitz,55,1/3 damage
+Stunky,434,Memento,42,User faints
+Sudowoodo,185,Wood Hammer,1,1/3 damage
+Swellow,277,Brave Bird,38,1/3 damage
+Swellow,277,Double-Edge,49,1/3 damage
+Swinub,220,Take Down,28,1/4 damage
+Swinub,220,Double-Edge,44,1/3 damage
+Taillow,276,Brave Bird,38,1/3 damage
+Taillow,276,Double-Edge,43,1/3 damage
+Talonflame,663,Brave Bird,1,1/3 damage
+Talonflame,663,Flare Blitz,49,1/3 damage
+Tauros,128,Take Down,29,1/4 damage
+Tauros,128,Double-Edge,50,1/3 damage
+Tepig,498,Take Down,27,1/4 damage
+Tepig,498,Flare Blitz,43,1/3 damage
+Throh,538,Submission,33,1/4 damage
+Timburr,532,Submission,34,1/4 damage
+Tirtouga,564,Take Down,28,1/4 damage
+Torkoal,324,Explosion,55,User faints
+Torterra,389,Wood Hammer,57,1/3 damage
+Trevenant,709,Wood Hammer,55,1/3 damage
+Typhlosion,157,Take Down,35,1/4 damage
+Typhlosion,157,Double-Edge,57,1/3 damage
+Typhlosion,157,Flare Blitz,60,1/3 damage
+Tyrantrum,697,Take Down,26,1/4 damage
+Tyrantrum,697,Head Smash,75,1/2 damage
+Tyrunt,696,Take Down,26,1/4 damage
+Victini,494,Final Gambit,73,User faints
+Volcanion,721,Take Down,40,1/4 damage
+Volcanion,721,Explosion,50,User faints
+Volcarona,637,Take Down,30,1/4 damage
+Volcarona,637,Flare Blitz,100,1/3 damage
+Voltorb,100,Self-Destruct,22,User faints
+Voltorb,100,Explosion,36,User faints
+Vullaby,629,Brave Bird,51,1/3 damage
+Wailmer,320,Double-Edge,47,1/3 damage
+Wailord,321,Double-Edge,49,1/3 damage
+Walrein,365,Double-Edge,37,1/3 damage
+Weezing,110,Self-Destruct,33,User faints
+Weezing,110,Explosion,45,User faints
+Whimsicott,547,Memento,1,User faints
+Whismur,293,Take Down,32,1/4 damage
+Wigglytuff,40,Take Down,1,1/4 damage
+Xerneas,716,Take Down,35,1/4 damage
+Zebstrika,523,Take Down,25,1/4 damage
+Zebstrika,523,Wild Charge,42,1/4 damage
+Zubat,41,Brave Bird,45,1/3 damage

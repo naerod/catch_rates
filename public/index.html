@@ -93,6 +93,7 @@
           </div>
           <div class="result-rate-big" id="best-rate">—</div>
           <div class="result-technique" id="best-technique"></div>
+          <div class="result-avg-stats" id="best-avg-stats" style="display:none"></div>
         </div>
 
         <div class="result-card cheap-card">
@@ -105,26 +106,7 @@
           </div>
           <div class="result-rate-big" id="cheap-rate">—</div>
           <div class="result-technique" id="cheap-technique"></div>
-        </div>
-      </div>
-
-      <!-- 3b. Catch stats: Average Cost & Average Turns -->
-      <div id="catch-stats-section" class="catch-stats-section" style="display:none">
-        <div id="catch-avg-turns" class="catch-stat-card">
-          <div class="catch-stat-header">
-            <span class="catch-stat-icon">⏱️</span>
-            <span class="catch-stat-title" data-i18n="avg_turns_title">Estimated Turns</span>
-          </div>
-          <div id="catch-avg-turns-value" class="catch-stat-value">—</div>
-          <div id="catch-avg-turns-detail" class="catch-stat-detail"></div>
-        </div>
-        <div id="catch-avg-cost" class="catch-stat-card">
-          <div class="catch-stat-header">
-            <span class="catch-stat-icon">💰</span>
-            <span class="catch-stat-title" data-i18n="avg_cost_title">Best Value Ball</span>
-          </div>
-          <div id="catch-avg-cost-value" class="catch-stat-value">—</div>
-          <div id="catch-avg-cost-detail" class="catch-stat-detail"></div>
+          <div class="result-avg-stats" id="cheap-avg-stats" style="display:none"></div>
         </div>
       </div>
 
@@ -385,7 +367,6 @@
 
   <script src="/js/i18n.js"></script>
   <script src="/js/calc.js"></script>
-  <script src="/js/recoil-data.js"></script>
   <script src="/js/warnings.js"></script>
   <script src="/js/shiny.js"></script>
   <script src="/js/app.js"></script>

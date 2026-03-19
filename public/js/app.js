@@ -6,10 +6,11 @@
 const state = {
   pokemon: null,
   balls: [],
-  hp: 100,          // Actual HP value: 1 | 25 | 50 | 75 | 100
-  status: 'none',   // none | sleep | freeze | para | poison | burn
+  hp: 100,             // Actual HP value: 1 | 25 | 50 | 75 | 100
+  status: 'none',      // none | sleep | freeze | para | poison | burn
   night: false,
-  page: 'calc'
+  page: 'calc',
+  recoilWarnings: null // { suicideMoves: [], recoilMoves: [] } — fetched from API
 };
 
 const HP_VALUES = [1, 25, 50, 75, 100];
@@ -106,13 +107,19 @@ function renderDropdown(pokemon) {
 }
 
 async function selectPokemonById(id) {
-  const res = await fetch(`/api/pokemon/${id}`);
-  const p = await res.json();
-  selectPokemon(p);
+  // Fetch Pokémon data and recoil warnings in parallel
+  const [pokemonRes, warningsRes] = await Promise.all([
+    fetch(`/api/pokemon/${id}`),
+    fetch(`/api/pokemon/${id}/recoil-warnings`)
+  ]);
+  const p = await pokemonRes.json();
+  const warnings = await warningsRes.json();
+  selectPokemon(p, warnings);
 }
 
-function selectPokemon(p) {
+function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves: [] }) {
   state.pokemon = p;
+  state.recoilWarnings = recoilWarnings;
   searchInput.value = p.name;
   searchDropdown.style.display = 'none';
 
@@ -126,7 +133,6 @@ function selectPokemon(p) {
 
   // Show sections (all-balls only visible when params are open)
   $('result-cards').style.display = '';
-  $('catch-stats-section').style.display = '';
   $('more-params-section').style.display = '';
   $('all-balls-section').style.display = paramsOpen ? '' : 'none';
 
@@ -208,13 +214,14 @@ async function updateResults() {
   if (!state.pokemon) return;
   await ensureBalls();
 
-  // Capture warnings
+  // Capture warnings (SUICIDE / RECOIL — data from API via state.recoilWarnings)
   const warningsContainer = $('capture-warnings');
-  const warningsHtml = Warnings.renderWarnings(state.pokemon);
+  const warningsHtml = Warnings.renderWarnings(state.recoilWarnings);
   if (warningsHtml) {
     warningsContainer.innerHTML = warningsHtml;
     warningsContainer.style.display = '';
   } else {
+    warningsContainer.innerHTML = '';
     warningsContainer.style.display = 'none';
   }
 
@@ -252,138 +259,31 @@ async function updateResults() {
     const gridCheap = Calc.getCheapest(results);
     renderAllBallsGrid(results, gridBest, gridCheap);
   }
-
-  // ── Catch Stats: Average Cost & Average Turns ──
-  renderCatchStats(state.pokemon, state.balls);
 }
 
+
 /**
- * Render catch statistics: average cost per ball and estimated turns.
- * Uses optimal conditions: 1 HP + Sleep for best accuracy.
+ * Compute avg turns and avg cost for a result card.
+ * Formula:
+ *   - Quick Ball: turns = avgThrows (no setup, no sleep)
+ *   - Others: turns = 2 (False Swipe + Sleep) + avgThrows + re_sleep_turns
+ *             re_sleep_turns = max(0, ceil(avgThrows/2) - 1)
+ *   - cost = r.avgCost (already = avgThrows × ball_price)
  */
-function renderCatchStats(pokemon, balls) {
-  if (!pokemon || !balls.length) {
-    $('catch-stats-section').style.display = 'none';
-    return;
-  }
-  $('catch-stats-section').style.display = '';
+function computeAvgStats(r) {
+  if (!r || !isFinite(r.avgThrows) || r.avgThrows <= 0) return null;
+  const avgBalls = r.avgThrows;
 
-  const isGhost = Calc._isGhost(pokemon);
-  const isSleepImmune = Warnings.SLEEP_IMMUNE && Warnings.SLEEP_IMMUNE[pokemon.id];
-  const recoilMoves = (typeof RECOIL_DATA !== 'undefined' && RECOIL_DATA[pokemon.id])
-    ? RECOIL_DATA[pokemon.id].moves : [];
-  const hasRecoil = recoilMoves.length > 0;
-
-  // ── Average Cost calculation ──
-  // Compute at 1 HP + Sleep (optimal) for each ball
-  const statusMult = isSleepImmune ? 1 : 2; // sleep = ×2, or ×1 if immune
-  const hp = isGhost ? 100 : 1; // Ghost: can't False Swipe, use full HP
-
-  const costResults = [];
-  for (const ball of balls) {
-    if (ball.condition_key === 'love') continue; // Skip love ball (conditional)
-    if (ball.condition_key === 'bugwater' && !Calc._isBugOrWater(pokemon)) continue;
-
-    let mult = ball.multiplier;
-    let label = i18n.ballName(ball.key);
-    let note = null;
-
-    // Quick Ball: turn 1 at full HP, no status
-    if (ball.condition_key === 'quick') {
-      const prob = Calc.probability(pokemon.catch_rate, 100, mult, 1);
-      const avg = Calc.avgThrows(prob);
-      costResults.push({ key: ball.key, name: label, prob, avg, cost: ball.cost, avgCost: avg * ball.cost, note: i18n.t('cond_quick') });
-      continue;
-    }
-    // Timer Ball: after 10 turns
-    if (ball.condition_key === 'timer') note = i18n.t('cond_timer');
-    // Dusk Ball: night only
-    if (ball.condition_key === 'night') note = i18n.t('cond_night');
-
-    const prob = Calc.probability(pokemon.catch_rate, hp, mult, statusMult);
-    const avg = Calc.avgThrows(prob);
-    costResults.push({ key: ball.key, name: label, prob, avg, cost: ball.cost, avgCost: avg * ball.cost, note });
+  if (r.technique && r.technique.quick) {
+    // Quick Ball: throw on turn 1, no setup needed
+    return { turns: Math.round(avgBalls), cost: r.avgCost };
   }
 
-  // Find cheapest
-  const cheapest = costResults.reduce((best, r) => (!best || r.avgCost < best.avgCost) ? r : best, null);
-
-  if (cheapest) {
-    $('catch-avg-cost-value').innerHTML = `
-      <img class="catch-stat-ball-img" src="${Calc.ballSprite(cheapest.key)}" alt="${cheapest.name}" />
-      <span>${cheapest.name} — ~${Calc.formatCost(cheapest.avgCost)}</span>`;
-
-    const detailRows = costResults
-      .sort((a, b) => a.avgCost - b.avgCost)
-      .slice(0, 5)
-      .map(r => {
-        const isBest = r.key === cheapest.key;
-        const noteSpan = r.note ? ` <span class="cost-note">${r.note}</span>` : '';
-        return `<div class="cost-detail-row${isBest ? ' cost-best' : ''}">
-          <img class="cost-ball-icon" src="${Calc.ballSprite(r.key)}" alt="${r.name}" />
-          <span class="cost-ball-name">${r.name}${noteSpan}</span>
-          <span class="cost-avg-balls">~${Calc.formatThrows(r.avg)} ${i18n.t('avg_balls')}</span>
-          <span class="cost-avg-price">${Calc.formatCost(r.avgCost)}</span>
-        </div>`;
-      }).join('');
-    $('catch-avg-cost-detail').innerHTML = detailRows;
-  }
-
-  // ── Average Turns calculation ──
-  // Strategy: False Swipe (1 turn) + Sleep move (1 turn) + ball throws
-  // Sleep lasts 1-3 turns (avg 2). Re-sleep needed periodically.
-  const optimalBall = Calc.computeOptimalFastest(pokemon, balls);
-  if (!optimalBall) return;
-
-  const catchProb = Calc.probability(pokemon.catch_rate, hp, optimalBall.multiplier, statusMult);
-  const avgBallThrows = Calc.avgThrows(catchProb);
-
-  let setupTurns = 0;
-  let setupNotes = [];
-
-  if (!isGhost) {
-    setupTurns += 1; // False Swipe
-    setupNotes.push(i18n.t('turns_false_swipe'));
-  } else {
-    setupNotes.push(i18n.t('turns_no_false_swipe'));
-  }
-
-  if (!isSleepImmune) {
-    setupTurns += 1; // Sleep move
-    setupNotes.push(i18n.t('turns_sleep_move'));
-  }
-
-  // Sleep cycles: sleep lasts avg 2 turns, need to re-sleep periodically
-  let reSleepTurns = 0;
-  if (!isSleepImmune) {
-    const avgSleepDuration = 2;
-    const sleepCycles = Math.ceil(avgBallThrows / avgSleepDuration);
-    reSleepTurns = Math.max(0, sleepCycles - 1);
-  }
-
-  const totalTurns = setupTurns + avgBallThrows + reSleepTurns;
-
-  $('catch-avg-turns-value').textContent = `~${Math.round(totalTurns)} ${i18n.t('turns_label')}`;
-
-  let detailHtml = `<div class="turns-detail">`;
-  detailHtml += `<span>${i18n.t('turns_setup')}: ${setupTurns} (${setupNotes.join(' + ')})</span>`;
-  detailHtml += `<span>${i18n.t('turns_ball_throws')}: ~${avgBallThrows.toFixed(1)}</span>`;
-  if (reSleepTurns > 0) {
-    detailHtml += `<span>${i18n.t('turns_resleep')}: ~${reSleepTurns}</span>`;
-  }
-  // Exception notes
-  if (isGhost) {
-    detailHtml += `<span class="turns-warn">👻 ${i18n.t('turns_ghost_note')}</span>`;
-  }
-  if (isSleepImmune) {
-    detailHtml += `<span class="turns-warn">🚫💤 ${i18n.t('turns_insomnia_note')}</span>`;
-  }
-  if (hasRecoil) {
-    const worstMove = recoilMoves[0]; // Already sorted by severity
-    detailHtml += `<span class="turns-warn">⚠️ ${i18n.t('turns_recoil_note').replace('{move}', worstMove.move)}</span>`;
-  }
-  detailHtml += `</div>`;
-  $('catch-avg-turns-detail').innerHTML = detailHtml;
+  // Standard technique: 2 setup turns (False Swipe + Sleep) + throws + re-sleeps
+  const sleepCycles   = Math.ceil(avgBalls / 2);
+  const reSleepTurns  = Math.max(0, sleepCycles - 1);
+  const totalTurns    = 2 + avgBalls + reSleepTurns;
+  return { turns: Math.round(totalTurns), cost: r.avgCost };
 }
 
 function buildTechniqueChips(technique) {
@@ -422,6 +322,18 @@ function renderResultCard(type, r) {
   rateEl.className = rateClass;
 
   $(`${type}-technique`).innerHTML = buildTechniqueChips(r.technique);
+
+  // ── Avg stats line: "~X turns · ~X,XXX¥ avg cost" ──
+  const avgStatsEl = $(`${type}-avg-stats`);
+  if (avgStatsEl) {
+    const stats = computeAvgStats(r);
+    if (stats) {
+      avgStatsEl.textContent = `~${stats.turns} ${i18n.t('turns_label')} · ~${Calc.formatCost(stats.cost)} avg cost`;
+      avgStatsEl.style.display = '';
+    } else {
+      avgStatsEl.style.display = 'none';
+    }
+  }
 }
 
 function renderAllBallsGrid(results, best, cheap) {

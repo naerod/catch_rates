@@ -319,29 +319,27 @@ main {
   line-height: 1.35;
 }
 
-/* Danger — suicide moves (red) */
-.warn-danger {
-  background: rgba(239,68,68,0.08);
-  border-color: rgba(239,68,68,0.35);
+/* SUICIDE — moves that instantly KO the user (red) */
+.warn-suicide {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.5);
   color: #fca5a5;
 }
-[data-theme="light"] .warn-danger { color: #b91c1c; }
-
-/* Warning — recoil / weather / flee (yellow) */
-.warn-warning {
-  background: rgba(234,179,8,0.08);
-  border-color: rgba(234,179,8,0.35);
-  color: #fde68a;
+[data-theme="light"] .warn-suicide {
+  background: rgba(239,68,68,0.08);
+  color: #b91c1c;
 }
-[data-theme="light"] .warn-warning { color: #92400e; }
 
-/* Info — ghost / sleep immune (purple) */
-.warn-info {
-  background: rgba(168,85,247,0.08);
-  border-color: rgba(168,85,247,0.35);
-  color: #d8b4fe;
+/* RECOIL — moves that deal recoil damage (orange) */
+.warn-recoil {
+  background: rgba(249,115,22,0.12);
+  border-color: rgba(249,115,22,0.5);
+  color: #fdba74;
 }
-[data-theme="light"] .warn-info { color: #6b21a8; }
+[data-theme="light"] .warn-recoil {
+  background: rgba(249,115,22,0.08);
+  color: #c2410c;
+}
 
 /* ══════════════ QUICKABLE BANNER ══════════════ */
 .quickable-banner {
@@ -448,6 +446,18 @@ main {
   gap: 0.35rem;
   justify-content: center;
   min-height: 1.4rem;
+}
+
+/* Avg turns + cost summary line inside result cards */
+.result-avg-stats {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(128,128,128,0.12);
+  font-weight: 400;
+  line-height: 1.4;
 }
 .technique-chip {
   font-size: 0.72rem;

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "seed": "node db/seed.js"
+    "seed": "node db/seed.js",
+    "seed:recoil": "node db/seed-recoil.js"
   },
   "dependencies": {
     "sql.js": "^1.12.0",
