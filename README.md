@@ -21,13 +21,6 @@ npm start
 - Admin panel to manage events
 - PokeMMO event pages (XMAS 2024, LNY 2025...)
 
-## Default Admin Credentials
-
-- **Username:** `naerod`
-- **Password:** `admin123`
-
-> **⚠️ Change the password immediately after first login!**
-
 ## Environment Variables
 
 | Variable | Default | Description |
