@@ -679,8 +679,21 @@ const i18n = {
     localStorage.setItem('lang', lang);
     this.applyAll();
     document.documentElement.lang = lang;
-    const sel = document.getElementById('lang-select');
-    if (sel) sel.value = lang;
+    this._updateDropdownSelected(lang);
+  },
+
+  _updateDropdownSelected(lang) {
+    const opt = LANG_OPTIONS.find(o => o.code === lang);
+    if (!opt) return;
+    const container = document.getElementById('lang-select');
+    if (!container) return;
+    const flagEl = container.querySelector('.lang-flag');
+    const labelEl = container.querySelector('.lang-label');
+    if (flagEl) flagEl.textContent = opt.flag;
+    if (labelEl) labelEl.textContent = opt.label;
+    container.querySelectorAll('.lang-dropdown li').forEach(li => {
+      li.setAttribute('aria-selected', li.dataset.code === lang ? 'true' : 'false');
+    });
   },
 
   applyAll() {
@@ -700,17 +713,37 @@ const i18n = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Build the language dropdown
-  const sel = document.getElementById('lang-select');
-  if (sel) {
+  const container = document.getElementById('lang-select');
+  if (container) {
+    const list = container.querySelector('.lang-dropdown');
+
     LANG_OPTIONS.forEach(opt => {
-      const option = document.createElement('option');
-      option.value = opt.code;
-      option.textContent = `${opt.flag} ${opt.label}`;
-      sel.appendChild(option);
+      const li = document.createElement('li');
+      li.dataset.code = opt.code;
+      li.setAttribute('role', 'option');
+      li.innerHTML = `<span class="lang-flag">${opt.flag}</span><span class="lang-label">${opt.label}</span>`;
+      li.addEventListener('click', e => {
+        e.stopPropagation();
+        i18n.setLang(opt.code);
+        container.classList.remove('open');
+      });
+      list.appendChild(li);
     });
-    sel.value = i18n.lang;
-    sel.addEventListener('change', () => i18n.setLang(sel.value));
+
+    container.addEventListener('click', e => {
+      container.classList.toggle('open');
+    });
+
+    document.addEventListener('click', e => {
+      if (!container.contains(e.target)) container.classList.remove('open');
+    });
+
+    container.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') container.classList.toggle('open');
+      if (e.key === 'Escape') container.classList.remove('open');
+    });
+
+    i18n._updateDropdownSelected(i18n.lang);
   }
   i18n.applyAll();
 });

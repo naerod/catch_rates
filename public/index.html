@@ -27,7 +27,14 @@
       </nav>
       <div class="header-actions">
         <button id="theme-toggle" class="btn-icon" title="Toggle theme" aria-label="Toggle light/dark mode">☀️</button>
-        <select id="lang-select" class="lang-select" title="Select language" aria-label="Language"></select>
+        <div id="lang-select" class="lang-select-custom" role="combobox" aria-label="Language" tabindex="0">
+          <div class="lang-selected">
+            <span class="lang-flag"></span>
+            <span class="lang-label"></span>
+            <span class="lang-arrow">▾</span>
+          </div>
+          <ul class="lang-dropdown" role="listbox"></ul>
+        </div>
       </div>
     </div>
   </header>

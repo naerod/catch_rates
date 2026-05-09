@@ -141,24 +141,66 @@ a { color: var(--accent); text-decoration: none; }
 }
 .btn-icon:hover { border-color: var(--accent); color: var(--accent); }
 
-.lang-select {
+.lang-select-custom {
+  position: relative;
   background: var(--bg3);
   border: 1px solid var(--card-border);
   color: var(--text-dim);
-  padding: 0 0.5rem;
   height: 36px;
   border-radius: var(--radius);
   cursor: pointer;
   font-size: 0.85rem;
   font-family: var(--font-body);
-  transition: all 0.2s;
-  appearance: none;
-  -webkit-appearance: none;
+  transition: border-color 0.2s, color 0.2s;
+  min-width: 140px;
   max-width: 175px;
   outline: none;
+  user-select: none;
+  z-index: 100;
 }
-.lang-select:hover, .lang-select:focus { border-color: var(--accent); color: var(--accent); }
-.lang-select option { background: var(--bg3); color: var(--text); }
+.lang-select-custom:hover,
+.lang-select-custom:focus,
+.lang-select-custom.open { border-color: var(--accent); color: var(--accent); }
+.lang-selected {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.5rem;
+  height: 100%;
+}
+.lang-selected .lang-flag { font-size: 1.1rem; line-height: 1; }
+.lang-selected .lang-label { flex: 1; }
+.lang-selected .lang-arrow { font-size: 0.7rem; opacity: 0.6; transition: transform 0.15s; }
+.lang-select-custom.open .lang-arrow { transform: rotate(180deg); }
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: var(--bg3);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  min-width: 100%;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  z-index: 200;
+}
+.lang-select-custom.open .lang-dropdown { display: block; }
+.lang-dropdown li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text);
+  transition: background 0.1s;
+}
+.lang-dropdown li:hover { background: var(--bg2); color: var(--accent); }
+.lang-dropdown li[aria-selected="true"] { color: var(--accent); }
+.lang-dropdown li .lang-flag { font-size: 1.1rem; line-height: 1; }
 
 /* ══════════════ LAYOUT GRID ══════════════ */
 .layout-grid {
