@@ -49,8 +49,9 @@ function getGeneration(id) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       slug TEXT NOT NULL UNIQUE,
       name_en TEXT NOT NULL,
-      name_fr TEXT NOT NULL,
-      active INTEGER DEFAULT 0,
+      name_fr TEXT NOT NULL DEFAULT '',
+      active INTEGER DEFAULT 1,
+      sort_order INTEGER DEFAULT 0,
       created_at TEXT DEFAULT (datetime('now'))
     );
   `);
@@ -67,7 +68,8 @@ function getGeneration(id) {
     CREATE TABLE IF NOT EXISTS admin_users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,
-      password_hash TEXT NOT NULL
+      password_hash TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'manager'
     );
   `);
 
@@ -104,14 +106,14 @@ function getGeneration(id) {
 
   // Seed admin user (SHA-256 of 'admin123')
   const passwordHash = crypto.createHash('sha256').update('admin123').digest('hex');
-  db.run('INSERT OR IGNORE INTO admin_users (username, password_hash) VALUES (?, ?)', ['naerod', passwordHash]);
+  db.run('INSERT OR IGNORE INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', ['naerod', passwordHash, 'admin']);
   console.log('Admin user created (naerod / admin123).');
 
   // Seed events
-  db.run("INSERT OR IGNORE INTO events (slug, name_en, name_fr, active) VALUES (?, ?, ?, ?)",
-    ['xmas-2024', 'XMAS 2024', 'Noel 2024', 1]);
-  db.run("INSERT OR IGNORE INTO events (slug, name_en, name_fr, active) VALUES (?, ?, ?, ?)",
-    ['lny-2025', 'LNY 2025', 'Nouvel An Lunaire 2025', 1]);
+  db.run("INSERT OR IGNORE INTO events (slug, name_en, name_fr, active, sort_order) VALUES (?, ?, ?, ?, ?)",
+    ['xmas-2024', 'XMAS 2024', '', 1, 0]);
+  db.run("INSERT OR IGNORE INTO events (slug, name_en, name_fr, active, sort_order) VALUES (?, ?, ?, ?, ?)",
+    ['lny-2025', 'LNY 2025', '', 1, 1]);
 
   const getEventId = (slug) => {
     const stmt = db.prepare('SELECT id FROM events WHERE slug = ?');

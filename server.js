@@ -53,6 +53,11 @@ function requireAuth(req, res, next) {
   res.status(401).json({ error: 'Unauthorized' });
 }
 
+function requireAdmin(req, res, next) {
+  if (req.session && req.session.adminRole === 'admin') return next();
+  res.status(403).json({ error: 'Forbidden' });
+}
+
 // ─── Pokémon ───────────────────────────────────────────────────────────────────
 app.get('/api/pokemon/search', (req, res) => {
   const q = req.query.q || '';
@@ -104,7 +109,7 @@ app.get('/api/pokeballs', (req, res) => {
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 app.get('/api/events', (req, res) => {
-  res.json(dbAll('SELECT * FROM events ORDER BY created_at DESC'));
+  res.json(dbAll('SELECT * FROM events ORDER BY sort_order ASC, created_at DESC'));
 });
 
 app.get('/api/events/:slug', (req, res) => {
@@ -129,7 +134,8 @@ app.post('/api/admin/login', (req, res) => {
   if (!user) return res.status(401).json({ error: 'Invalid credentials' });
   req.session.adminId = user.id;
   req.session.adminUsername = user.username;
-  res.json({ success: true, username: user.username });
+  req.session.adminRole = user.role;
+  res.json({ success: true, username: user.username, role: user.role });
 });
 
 app.post('/api/admin/logout', (req, res) => {
@@ -138,16 +144,24 @@ app.post('/api/admin/logout', (req, res) => {
 
 app.get('/api/admin/check', (req, res) => {
   if (req.session && req.session.adminId) {
-    res.json({ authenticated: true, username: req.session.adminUsername });
+    res.json({ authenticated: true, username: req.session.adminUsername, role: req.session.adminRole });
   } else {
     res.json({ authenticated: false });
   }
 });
 
 // ─── Admin Events ──────────────────────────────────────────────────────────────
+app.put('/api/admin/events/reorder', requireAuth, (req, res) => {
+  const { ids } = req.body;
+  if (!Array.isArray(ids)) return res.status(400).json({ error: 'ids must be an array' });
+  ids.forEach((id, i) => dbRun('UPDATE events SET sort_order=? WHERE id=?', [i, id]));
+  saveDb();
+  res.json({ success: true });
+});
+
 app.post('/api/admin/events', requireAuth, (req, res) => {
   const { slug, name_en, name_fr, active } = req.body;
-  if (!slug || !name_en || !name_fr) return res.status(400).json({ error: 'Missing fields' });
+  if (!slug || !name_en) return res.status(400).json({ error: 'Missing fields' });
   try {
     const result = dbRun(
       'INSERT INTO events (slug, name_en, name_fr, active) VALUES (?, ?, ?, ?)',
@@ -202,6 +216,53 @@ app.post('/api/admin/change-password', requireAuth, (req, res) => {
   if (!password || password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
   const hash = crypto.createHash('sha256').update(password).digest('hex');
   dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hash, req.session.adminId]);
+  saveDb();
+  res.json({ success: true });
+});
+
+// ─── Admin Users ───────────────────────────────────────────────────────────────
+app.get('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
+  res.json(dbAll('SELECT id, username, role, created_at FROM admin_users ORDER BY id'));
+});
+
+app.post('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
+  const { username, password, role } = req.body;
+  if (!username || !password || !['admin', 'manager'].includes(role))
+    return res.status(400).json({ error: 'Missing or invalid fields' });
+  if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
+  const hash = crypto.createHash('sha256').update(password).digest('hex');
+  try {
+    const result = dbRun('INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', [username, hash, role]);
+    saveDb();
+    res.json({ id: result.lastInsertRowid, username, role });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.put('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
+  const { username, role, password } = req.body;
+  if (!username || !['admin', 'manager'].includes(role))
+    return res.status(400).json({ error: 'Missing or invalid fields' });
+  try {
+    if (password) {
+      if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
+      const hash = crypto.createHash('sha256').update(password).digest('hex');
+      dbRun('UPDATE admin_users SET username=?, role=?, password_hash=? WHERE id=?', [username, role, hash, req.params.id]);
+    } else {
+      dbRun('UPDATE admin_users SET username=?, role=? WHERE id=?', [username, role, req.params.id]);
+    }
+    saveDb();
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.delete('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
+  if (Number(req.params.id) === req.session.adminId)
+    return res.status(400).json({ error: 'Cannot delete your own account' });
+  dbRun('DELETE FROM admin_users WHERE id=?', [req.params.id]);
   saveDb();
   res.json({ success: true });
 });

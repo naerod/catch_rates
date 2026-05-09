@@ -22,19 +22,11 @@
       <nav id="main-nav">
         <a href="#" class="nav-link active" data-page="calc" data-i18n="nav_calc">Calculator</a>
         <a href="#" class="nav-link" data-page="events" data-i18n="nav_events">Events</a>
-        <a href="#" class="nav-link" data-page="shiny" data-i18n="nav_shiny">Shiny Helper</a>
         <a href="#" class="nav-link" data-page="admin" data-i18n="nav_admin">Admin</a>
       </nav>
       <div class="header-actions">
         <button id="theme-toggle" class="btn-icon" title="Toggle theme" aria-label="Toggle light/dark mode">☀️</button>
-        <div id="lang-select" class="lang-select-custom" role="combobox" aria-label="Language" tabindex="0">
-          <div class="lang-selected">
-            <span class="lang-flag"></span>
-            <span class="lang-label"></span>
-            <span class="lang-arrow">▾</span>
-          </div>
-          <ul class="lang-dropdown" role="listbox"></ul>
-        </div>
+        <select id="lang-select" class="lang-select" title="Select language" aria-label="Language"></select>
       </div>
     </div>
   </header>
@@ -216,94 +208,6 @@
       </div>
     </section>
 
-    <!-- ══════════════ SHINY HUNTER PAGE ══════════════ -->
-    <section id="page-shiny" class="page">
-      <div class="page-title">
-        <h1 data-i18n="shiny_title">Shiny Hunter Helper</h1>
-        <p class="subtitle" data-i18n="shiny_subtitle">Best spots & cost calculator</p>
-      </div>
-
-      <!-- Search -->
-      <div class="search-wrapper">
-        <div class="search-box">
-          <span class="search-icon">✨</span>
-          <input type="text" id="shiny-search" autocomplete="off"
-            data-i18n-placeholder="shiny_search_pokemon" placeholder="Search Pokémon for shiny hunting..." />
-          <button class="search-clear" id="shiny-search-clear" style="display:none" aria-label="Clear">✕</button>
-        </div>
-        <div id="shiny-search-dropdown" class="search-dropdown" style="display:none"></div>
-      </div>
-
-      <!-- Pokemon card (reused style) -->
-      <div id="shiny-pokemon-card" class="pokemon-card" style="display:none">
-        <img id="shiny-pokemon-sprite" src="" alt="" class="pokemon-sprite" />
-        <div class="pokemon-info">
-          <div class="pokemon-id">#<span id="shiny-pokemon-id"></span></div>
-          <div class="pokemon-name" id="shiny-pokemon-name"></div>
-          <div class="pokemon-meta">
-            <span class="badge badge-gen" id="shiny-pokemon-gen"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <div id="shiny-tabs" class="shiny-tabs" style="display:none">
-        <button class="shiny-tab active" data-tab="spots" data-i18n="shiny_tab_spots">Best Spots</button>
-        <button class="shiny-tab" data-tab="calc" data-i18n="shiny_tab_calc">Cost Calculator</button>
-      </div>
-
-      <!-- Spots panel -->
-      <div id="shiny-panel-spots" class="shiny-panel" style="display:none"></div>
-
-      <!-- Calculator panel -->
-      <div id="shiny-panel-calc" class="shiny-panel" style="display:none">
-        <div class="shiny-calc-controls">
-          <div class="shiny-calc-row">
-            <label data-i18n="shiny_method">Method</label>
-            <select id="shiny-method" class="shiny-select">
-              <option value="horde5" data-i18n="shiny_horde5">Horde (×5)</option>
-              <option value="horde3" data-i18n="shiny_horde3">Horde (×3)</option>
-              <option value="single" data-i18n="shiny_single">Single</option>
-              <option value="fishing" data-i18n="shiny_fishing">Fishing</option>
-              <option value="egg" data-i18n="shiny_egg">Egg (Breeding)</option>
-            </select>
-          </div>
-          <div class="shiny-calc-row shiny-bonus-row">
-            <label data-i18n="shiny_bonuses_label">Bonuses</label>
-            <div class="shiny-bonus-toggles">
-              <button class="toggle-btn shiny-charm-btn" id="shiny-charm-toggle">
-                <span class="toggle-icon">✨</span>
-                <span class="toggle-label" data-i18n="shiny_no_charm">No Charm</span>
-              </button>
-              <button class="toggle-btn shiny-bonus-btn" id="shiny-donator-toggle">
-                <span class="toggle-icon">💎</span>
-                <span class="toggle-label" data-i18n="shiny_donator_off">Donator Off</span>
-              </button>
-              <button class="toggle-btn shiny-bonus-btn" id="shiny-event-toggle">
-                <span class="toggle-icon">🎉</span>
-                <span class="toggle-label" data-i18n="shiny_event_off">Event Off</span>
-              </button>
-            </div>
-          </div>
-          <div id="shiny-effective-rate" class="shiny-effective-rate" style="display:none"></div>
-          <div class="shiny-calc-row">
-            <label data-i18n="shiny_time_per_enc">Time per encounter (sec)</label>
-            <input type="number" id="shiny-time-input" class="shiny-input" value="25" min="5" max="300" />
-          </div>
-          <div class="shiny-calc-row">
-            <label data-i18n="shiny_ball_price">Ball price (¥)</label>
-            <input type="number" id="shiny-ball-price" class="shiny-input" value="200" min="100" max="10000" />
-          </div>
-        </div>
-        <div id="shiny-calc-output"></div>
-      </div>
-
-      <!-- Empty state -->
-      <div id="shiny-empty" class="shiny-empty-state">
-        <p data-i18n="shiny_no_pokemon">Select a Pokémon to see shiny hunting spots</p>
-      </div>
-    </section>
-
     <!-- ══════════════ ADMIN PAGE ══════════════ -->
     <section id="page-admin" class="page">
       <div id="admin-login" class="admin-login-wrapper">
@@ -326,6 +230,7 @@
         <div class="admin-header">
           <h2 data-i18n="admin_title">Admin Dashboard</h2>
           <div class="admin-header-actions">
+            <button class="btn btn-outline" id="manage-users-btn" style="display:none">Manage Users</button>
             <button class="btn btn-outline" id="change-pw-btn" data-i18n="btn_change_pw">Change Password</button>
             <button class="btn btn-danger-outline" id="logout-btn" data-i18n="btn_logout">Logout</button>
           </div>
@@ -347,32 +252,61 @@
           </div>
         </div>
 
-        <div class="admin-section">
-          <h3 data-i18n="admin_create_event">Create Event</h3>
-          <div id="event-form-error" class="alert alert-error" style="display:none"></div>
-          <div class="admin-form">
-            <div class="form-group">
-              <label>Slug</label>
-              <input type="text" id="event-slug" placeholder="xmas-2025" />
+        <!-- Users section (admin only) -->
+        <div id="admin-users-section" style="display:none">
+          <div class="admin-section">
+            <div class="admin-section-header">
+              <h3>User Management</h3>
+              <button class="btn btn-sm btn-outline" id="back-to-events-btn">← Back</button>
             </div>
-            <div class="form-group">
-              <label data-i18n="label_name_en">Name (EN)</label>
-              <input type="text" id="event-name-en" placeholder="XMAS 2025" />
+            <div id="users-list"></div>
+            <div id="users-form-error" class="alert alert-error" style="display:none;margin-top:.75rem"></div>
+            <div id="add-user-form" style="display:none" class="admin-inline-form">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="new-user-username" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="new-user-password" autocomplete="new-password" />
+              </div>
+              <div class="form-group">
+                <label>Role</label>
+                <select id="new-user-role" class="input-select">
+                  <option value="manager">Manager</option>
+                  <option value="admin">Administrator</option>
+                </select>
+              </div>
+              <div style="display:flex;gap:.5rem;margin-top:.25rem">
+                <button class="btn btn-primary btn-sm" id="add-user-btn">Add User</button>
+                <button class="btn btn-outline btn-sm" id="cancel-add-user-btn">Cancel</button>
+              </div>
             </div>
-            <div class="form-group">
-              <label data-i18n="label_name_fr">Name (FR)</label>
-              <input type="text" id="event-name-fr" placeholder="Noël 2025" />
-            </div>
-            <div class="form-group form-group-inline">
-              <label><input type="checkbox" id="event-active" /> <span data-i18n="label_active">Active</span></label>
-            </div>
-            <button class="btn btn-primary" id="create-event-btn" data-i18n="btn_create_event">Create Event</button>
+            <button class="btn btn-outline btn-sm" id="show-add-user-btn" style="margin-top:.75rem">+ Add User</button>
           </div>
         </div>
 
-        <div class="admin-section">
-          <h3 data-i18n="admin_events_list">Events</h3>
-          <div id="admin-events-list"></div>
+        <div id="admin-events-view">
+          <div class="admin-section">
+            <h3 data-i18n="admin_create_event">Create Event</h3>
+            <div id="event-form-error" class="alert alert-error" style="display:none"></div>
+            <div class="admin-form">
+              <div class="form-group">
+                <label>Slug</label>
+                <input type="text" id="event-slug" placeholder="xmas-2025" />
+              </div>
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="event-name-en" placeholder="XMAS 2025" />
+              </div>
+              <button class="btn btn-primary" id="create-event-btn" data-i18n="btn_create_event">Create Event</button>
+            </div>
+          </div>
+
+          <div class="admin-section">
+            <h3 data-i18n="admin_events_list">Events</h3>
+            <div id="admin-events-list"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -408,7 +342,6 @@
   <script src="/js/i18n.js"></script>
   <script src="/js/calc.js"></script>
   <script src="/js/warnings.js"></script>
-  <script src="/js/shiny.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

@@ -47,7 +47,6 @@ function showPage(page) {
   $('page-' + page).classList.add('active');
   document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
   if (page === 'events') loadEvents();
-  if (page === 'shiny' && shinyState.pokemon) updateShinyPanel();
   if (page === 'admin') initAdmin();
 }
 
@@ -497,8 +496,8 @@ async function loadEvents() {
   container.innerHTML = detailed.map(ev => `
     <div class="event-card">
       <div class="event-card-header">
-        <span class="event-name">${i18n.lang === 'fr' ? ev.name_fr : ev.name_en}</span>
-        <span class="event-active-badge">${ev.active ? i18n.t('event_active') : i18n.t('event_inactive')}</span>
+        <span class="event-name">${ev.name_en}</span>
+        <button class="btn btn-sm btn-outline event-edit-btn">Edit</button>
       </div>
       <div class="event-pokemon-grid">
         ${(ev.pokemon || []).map(p => `
@@ -518,13 +517,20 @@ async function loadEvents() {
       selectPokemonById(Number(item.dataset.id));
     });
   });
+
+  container.querySelectorAll('.event-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => showPage('admin'));
+  });
 }
 
 /* ══════════════ ADMIN ══════════════ */
+let currentAdminRole = null;
+
 async function initAdmin() {
   const res = await fetch('/api/admin/check');
   const data = await res.json();
   if (data.authenticated) {
+    currentAdminRole = data.role;
     showAdminDashboard();
     loadAdminEvents();
   } else {
@@ -536,6 +542,7 @@ async function initAdmin() {
 function showAdminDashboard() {
   $('admin-login').style.display = 'none';
   $('admin-dashboard').style.display = '';
+  $('manage-users-btn').style.display = currentAdminRole === 'admin' ? '' : 'none';
 }
 
 $('login-btn').addEventListener('click', async () => {
@@ -548,6 +555,8 @@ $('login-btn').addEventListener('click', async () => {
     body: JSON.stringify({ username, password })
   });
   if (res.ok) {
+    const data = await res.json();
+    currentAdminRole = data.role;
     showAdminDashboard();
     loadAdminEvents();
   } else {
@@ -560,10 +569,151 @@ $('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') $(
 
 $('logout-btn').addEventListener('click', async () => {
   await fetch('/api/admin/logout', { method: 'POST' });
+  currentAdminRole = null;
   $('admin-dashboard').style.display = 'none';
   $('admin-login').style.display = '';
   $('login-username').value = '';
   $('login-password').value = '';
+});
+
+// ── Users section ────────────────────────────────────────────────────────────
+function showUsersSection() {
+  $('admin-events-view').style.display = 'none';
+  $('admin-users-section').style.display = '';
+  $('add-user-form').style.display = 'none';
+  $('show-add-user-btn').style.display = '';
+  loadUsersList();
+}
+
+function showEventsSection() {
+  $('admin-users-section').style.display = 'none';
+  $('admin-events-view').style.display = '';
+}
+
+$('manage-users-btn').addEventListener('click', showUsersSection);
+$('back-to-events-btn').addEventListener('click', showEventsSection);
+
+async function loadUsersList() {
+  const res = await fetch('/api/admin/users');
+  if (!res.ok) {
+    const d = await res.json().catch(() => ({}));
+    $('users-list').innerHTML = `<p style="color:var(--red)">Error ${res.status}: ${d.error || 'Failed to load users'}</p>`;
+    return;
+  }
+  const users = await res.json();
+  const roleLabel = r => r === 'admin' ? 'Administrator' : 'Manager';
+  $('users-list').innerHTML = users.map(u => `
+    <div class="admin-user-row" data-uid="${u.id}">
+      <div class="aur-info">
+        <span class="aur-name">${u.username}</span>
+        <span class="aur-role ${u.role === 'admin' ? 'role-admin' : 'role-manager'}">${roleLabel(u.role)}</span>
+      </div>
+      <div class="aur-actions">
+        <button class="btn btn-sm btn-outline edit-user-btn" data-id="${u.id}" data-username="${u.username}" data-role="${u.role}">Edit</button>
+        <button class="btn btn-sm btn-danger delete-user-btn" data-id="${u.id}" data-username="${u.username}">Delete</button>
+      </div>
+      <div class="aur-edit-form" id="edit-form-${u.id}" style="display:none">
+        <div class="aur-edit-fields">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="ef-username" value="${u.username}" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label>New Password <span style="color:var(--text-muted);font-size:.8em">(leave empty to keep)</span></label>
+            <input type="password" class="ef-password" autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <select class="ef-role input-select">
+              <option value="manager" ${u.role === 'manager' ? 'selected' : ''}>Manager</option>
+              <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Administrator</option>
+            </select>
+          </div>
+          <div class="aur-edit-actions">
+            <button class="btn btn-sm btn-primary save-edit-btn" data-id="${u.id}">Save</button>
+            <button class="btn btn-sm btn-outline cancel-edit-btn" data-id="${u.id}">Cancel</button>
+          </div>
+          <div class="ef-error alert alert-error" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  `).join('') || '<p style="color:var(--text-muted)">No users.</p>';
+
+  $('users-list').querySelectorAll('.edit-user-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // close any other open form
+      $('users-list').querySelectorAll('.aur-edit-form').forEach(f => f.style.display = 'none');
+      document.getElementById(`edit-form-${btn.dataset.id}`).style.display = '';
+    });
+  });
+
+  $('users-list').querySelectorAll('.cancel-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(`edit-form-${btn.dataset.id}`).style.display = 'none';
+    });
+  });
+
+  $('users-list').querySelectorAll('.save-edit-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const form = document.getElementById(`edit-form-${btn.dataset.id}`);
+      const username = form.querySelector('.ef-username').value.trim();
+      const password = form.querySelector('.ef-password').value;
+      const role = form.querySelector('.ef-role').value;
+      const errEl = form.querySelector('.ef-error');
+      errEl.style.display = 'none';
+      const r = await fetch(`/api/admin/users/${btn.dataset.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, role, password: password || undefined })
+      });
+      if (r.ok) { loadUsersList(); }
+      else { const d = await r.json(); errEl.textContent = d.error; errEl.style.display = ''; }
+    });
+  });
+
+  $('users-list').querySelectorAll('.delete-user-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm(`Delete user "${btn.dataset.username}"?`)) return;
+      const r = await fetch(`/api/admin/users/${btn.dataset.id}`, { method: 'DELETE' });
+      if (r.ok) { loadUsersList(); }
+      else { const d = await r.json(); alert(d.error); }
+    });
+  });
+}
+
+$('show-add-user-btn').addEventListener('click', () => {
+  $('add-user-form').style.display = '';
+  $('show-add-user-btn').style.display = 'none';
+  $('new-user-username').focus();
+});
+$('cancel-add-user-btn').addEventListener('click', () => {
+  $('add-user-form').style.display = 'none';
+  $('show-add-user-btn').style.display = '';
+  $('users-form-error').style.display = 'none';
+});
+
+$('add-user-btn').addEventListener('click', async () => {
+  const username = $('new-user-username').value.trim();
+  const password = $('new-user-password').value;
+  const role = $('new-user-role').value;
+  $('users-form-error').style.display = 'none';
+  const res = await fetch('/api/admin/users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password, role })
+  });
+  if (res.ok) {
+    $('new-user-username').value = '';
+    $('new-user-password').value = '';
+    $('new-user-role').value = 'manager';
+    $('add-user-form').style.display = 'none';
+    $('show-add-user-btn').style.display = '';
+    loadUsersList();
+  } else {
+    const d = await res.json();
+    $('users-form-error').textContent = d.error;
+    $('users-form-error').style.display = '';
+  }
 });
 
 $('change-pw-btn').addEventListener('click', () => {
@@ -596,10 +746,9 @@ $('save-pw-btn').addEventListener('click', async () => {
 $('create-event-btn').addEventListener('click', async () => {
   const slug = $('event-slug').value.trim();
   const name_en = $('event-name-en').value.trim();
-  const name_fr = $('event-name-fr').value.trim();
-  const active = $('event-active').checked;
+  const active = true;
   $('event-form-error').style.display = 'none';
-  if (!slug || !name_en || !name_fr) {
+  if (!slug || !name_en) {
     $('event-form-error').textContent = 'All fields required.';
     $('event-form-error').style.display = '';
     return;
@@ -607,13 +756,11 @@ $('create-event-btn').addEventListener('click', async () => {
   const res = await fetch('/api/admin/events', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slug, name_en, name_fr, active })
+    body: JSON.stringify({ slug, name_en, name_fr: '', active })
   });
   if (res.ok) {
     $('event-slug').value = '';
     $('event-name-en').value = '';
-    $('event-name-fr').value = '';
-    $('event-active').checked = false;
     loadAdminEvents();
   } else {
     const d = await res.json();
@@ -635,21 +782,18 @@ function renderAdminEvents(events) {
   const container = $('admin-events-list');
   if (!events.length) { container.innerHTML = '<p style="color:var(--text-muted)">No events yet.</p>'; return; }
 
-  container.innerHTML = events.map(ev => `
+  container.innerHTML = events.map((ev, idx) => `
     <div class="admin-event-row" data-event-id="${ev.id}">
       <div class="admin-event-top">
+        <div class="aer-order-btns">
+          <button class="btn-order move-up-btn" data-idx="${idx}" ${idx === 0 ? 'disabled' : ''}>▲</button>
+          <button class="btn-order move-down-btn" data-idx="${idx}" ${idx === events.length - 1 ? 'disabled' : ''}>▼</button>
+        </div>
         <div class="admin-event-info">
-          <div class="aei-name">${ev.name_en} / ${ev.name_fr}</div>
-          <div class="aei-slug">${ev.slug} — ${ev.active
-            ? '<span style="color:var(--green)">Active</span>'
-            : '<span style="color:var(--text-muted)">Inactive</span>'
-          }</div>
+          <div class="aei-name">${ev.name_en}</div>
+          <div class="aei-slug">${ev.slug}</div>
         </div>
         <div class="admin-event-actions">
-          <button class="btn btn-sm ${ev.active ? 'btn-success-outline' : 'btn-outline'} toggle-active-btn"
-            data-id="${ev.id}" data-active="${ev.active}">
-            ${ev.active ? 'Deactivate' : 'Activate'}
-          </button>
           <button class="btn btn-sm btn-danger delete-event-btn" data-id="${ev.id}">
             ${i18n.t('btn_delete')}
           </button>
@@ -672,19 +816,24 @@ function renderAdminEvents(events) {
     </div>
   `).join('');
 
-  // Toggle active
-  container.querySelectorAll('.toggle-active-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const id = btn.dataset.id;
-      const active = btn.dataset.active === '1' ? 0 : 1;
-      const ev = events.find(e => e.id == id);
-      await fetch(`/api/admin/events/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug: ev.slug, name_en: ev.name_en, name_fr: ev.name_fr, active })
-      });
-      loadAdminEvents();
+
+  // Reorder arrows
+  const reorder = async (fromIdx, toIdx) => {
+    const reordered = [...events];
+    const [moved] = reordered.splice(fromIdx, 1);
+    reordered.splice(toIdx, 0, moved);
+    await fetch('/api/admin/events/reorder', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: reordered.map(e => e.id) })
     });
+    loadAdminEvents();
+  };
+  container.querySelectorAll('.move-up-btn').forEach(btn => {
+    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) - 1));
+  });
+  container.querySelectorAll('.move-down-btn').forEach(btn => {
+    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) + 1));
   });
 
   // Delete event
@@ -758,154 +907,7 @@ function renderAdminEvents(events) {
   });
 }
 
-/* ══════════════ SHINY HUNTER PAGE ══════════════ */
-const shinyState = { pokemon: null, tab: 'spots', charm: false, donator: false, event: false };
 
-// Shiny search
-const shinySearchInput = $('shiny-search');
-const shinySearchDropdown = $('shiny-search-dropdown');
-const shinySearchClear = $('shiny-search-clear');
-let shinySearchTimer = null;
-
-shinySearchInput.addEventListener('input', () => {
-  const q = shinySearchInput.value.trim();
-  shinySearchClear.style.display = q ? '' : 'none';
-  clearTimeout(shinySearchTimer);
-  if (!q) { shinySearchDropdown.style.display = 'none'; return; }
-  shinySearchTimer = setTimeout(async () => {
-    const res = await fetch(`/api/pokemon/search?q=${encodeURIComponent(q)}`);
-    const data = await res.json();
-    if (!data.length) { shinySearchDropdown.style.display = 'none'; return; }
-    shinySearchDropdown.innerHTML = data.map(p => `
-      <div class="search-item" data-id="${p.id}">
-        <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
-        <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
-        <span class="search-item-name">${p.name}</span>
-      </div>
-    `).join('');
-    shinySearchDropdown.style.display = '';
-    shinySearchDropdown.querySelectorAll('.search-item').forEach(item => {
-      item.addEventListener('click', () => selectShinyPokemon(Number(item.dataset.id)));
-    });
-  }, 180);
-});
-
-shinySearchClear.addEventListener('click', () => {
-  shinySearchInput.value = '';
-  shinySearchClear.style.display = 'none';
-  shinySearchDropdown.style.display = 'none';
-  shinySearchInput.focus();
-});
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('#page-shiny .search-wrapper')) shinySearchDropdown.style.display = 'none';
-});
-
-async function selectShinyPokemon(id) {
-  const res = await fetch(`/api/pokemon/${id}`);
-  const p = await res.json();
-  shinyState.pokemon = p;
-  shinySearchInput.value = p.name;
-  shinySearchDropdown.style.display = 'none';
-
-  $('shiny-pokemon-sprite').src = sprite(p.id);
-  $('shiny-pokemon-id').textContent = String(p.id).padStart(3, '0');
-  $('shiny-pokemon-name').textContent = p.name;
-  $('shiny-pokemon-gen').textContent = `${i18n.t('gen_label')} ${p.generation}`;
-  $('shiny-pokemon-card').style.display = '';
-  $('shiny-tabs').style.display = '';
-  $('shiny-empty').style.display = 'none';
-
-  updateShinyPanel();
-}
-
-// Shiny tabs
-document.querySelectorAll('.shiny-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    shinyState.tab = tab.dataset.tab;
-    document.querySelectorAll('.shiny-tab').forEach(t => t.classList.toggle('active', t === tab));
-    updateShinyPanel();
-  });
-});
-
-function updateShinyPanel() {
-  const spotsPanel = $('shiny-panel-spots');
-  const calcPanel = $('shiny-panel-calc');
-
-  if (shinyState.tab === 'spots') {
-    spotsPanel.style.display = '';
-    calcPanel.style.display = 'none';
-    if (shinyState.pokemon) {
-      spotsPanel.innerHTML = Shiny.renderSpots(shinyState.pokemon.id);
-    }
-  } else {
-    spotsPanel.style.display = 'none';
-    calcPanel.style.display = '';
-    updateShinyCalc();
-  }
-}
-
-// Shiny charm toggle
-$('shiny-charm-toggle').addEventListener('click', () => {
-  shinyState.charm = !shinyState.charm;
-  const btn = $('shiny-charm-toggle');
-  btn.classList.toggle('active', shinyState.charm);
-  btn.querySelector('.toggle-label').textContent = shinyState.charm
-    ? i18n.t('shiny_charm') : i18n.t('shiny_no_charm');
-  updateShinyCalc();
-});
-
-// Donator status toggle
-$('shiny-donator-toggle').addEventListener('click', () => {
-  shinyState.donator = !shinyState.donator;
-  const btn = $('shiny-donator-toggle');
-  btn.classList.toggle('active', shinyState.donator);
-  btn.querySelector('.toggle-label').textContent = shinyState.donator
-    ? i18n.t('shiny_donator') : i18n.t('shiny_donator_off');
-  updateShinyCalc();
-});
-
-// Event bonus toggle
-$('shiny-event-toggle').addEventListener('click', () => {
-  shinyState.event = !shinyState.event;
-  const btn = $('shiny-event-toggle');
-  btn.classList.toggle('active', shinyState.event);
-  btn.querySelector('.toggle-label').textContent = shinyState.event
-    ? i18n.t('shiny_event') : i18n.t('shiny_event_off');
-  updateShinyCalc();
-});
-
-// Calculator controls
-$('shiny-method').addEventListener('change', updateShinyCalc);
-$('shiny-time-input').addEventListener('input', updateShinyCalc);
-$('shiny-ball-price').addEventListener('input', updateShinyCalc);
-
-function getShinyBonuses() {
-  return { charm: shinyState.charm, donator: shinyState.donator, event: shinyState.event };
-}
-
-function updateShinyCalc() {
-  const method = $('shiny-method').value;
-  const timePerEnc = Number($('shiny-time-input').value) || 25;
-  const ballPrice = Number($('shiny-ball-price').value) || 200;
-  const bonuses = getShinyBonuses();
-  $('shiny-calc-output').innerHTML = Shiny.renderCalculator(method, bonuses, timePerEnc, ballPrice);
-
-  // Update effective rate display
-  const rateEl = $('shiny-effective-rate');
-  const hasAny = bonuses.charm || bonuses.donator || bonuses.event;
-  if (hasAny) {
-    const effRate = Shiny.effectiveRate(bonuses);
-    const labels = [];
-    if (bonuses.charm) labels.push(i18n.t('shiny_charm'));
-    if (bonuses.donator) labels.push(i18n.t('shiny_donator'));
-    if (bonuses.event) labels.push(i18n.t('shiny_event'));
-    rateEl.innerHTML = `<span class="eff-rate-label">${i18n.t('shiny_effective_rate')}:</span> <span class="eff-rate-value">1/${Math.round(1/effRate).toLocaleString()}</span> <span class="eff-rate-bonuses">(${labels.join(' + ')})</span>`;
-    rateEl.style.display = '';
-  } else {
-    rateEl.style.display = 'none';
-  }
-}
 
 /* ══════════════ HISTORY ══════════════ */
 const HISTORY_KEY = 'catchCalc_history';
