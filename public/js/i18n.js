@@ -653,16 +653,16 @@ const translations = {
 };
 
 const LANG_OPTIONS = [
-  { code: 'en', label: 'English',            flag: '🇬🇧' },
-  { code: 'fr', label: 'Français',           flag: '🇫🇷' },
-  { code: 'ja', label: '日本語',              flag: '🇯🇵' },
-  { code: 'pt', label: 'Português',          flag: '🇧🇷' },
-  { code: 'es', label: 'Español',            flag: '🇪🇸' },
-  { code: 'ko', label: '한국어',              flag: '🇰🇷' },
-  { code: 'zh', label: '中文',               flag: '🇨🇳' },
-  { code: 'de', label: 'Deutsch',            flag: '🇩🇪' },
-  { code: 'it', label: 'Italiano',           flag: '🇮🇹' },
-  { code: 'id', label: 'Bahasa Indonesia',   flag: '🇮🇩' },
+  { code: 'en', label: 'English',            fi: 'gb' },
+  { code: 'fr', label: 'Français',           fi: 'fr' },
+  { code: 'ja', label: '日本語',              fi: 'jp' },
+  { code: 'pt', label: 'Português',          fi: 'br' },
+  { code: 'es', label: 'Español',            fi: 'es' },
+  { code: 'ko', label: '한국어',              fi: 'kr' },
+  { code: 'zh', label: '中文',               fi: 'cn' },
+  { code: 'de', label: 'Deutsch',            fi: 'de' },
+  { code: 'it', label: 'Italiano',           fi: 'it' },
+  { code: 'id', label: 'Bahasa Indonesia',   fi: 'id' },
 ];
 
 const i18n = {
@@ -689,7 +689,7 @@ const i18n = {
     if (!container) return;
     const flagEl = container.querySelector('.lang-flag');
     const labelEl = container.querySelector('.lang-label');
-    if (flagEl) flagEl.textContent = opt.flag;
+    if (flagEl) { flagEl.className = `lang-flag fi fi-${opt.fi}`; flagEl.textContent = ''; }
     if (labelEl) labelEl.textContent = opt.label;
     container.querySelectorAll('.lang-dropdown li').forEach(li => {
       li.setAttribute('aria-selected', li.dataset.code === lang ? 'true' : 'false');
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li');
       li.dataset.code = opt.code;
       li.setAttribute('role', 'option');
-      li.innerHTML = `<span class="lang-flag">${opt.flag}</span><span class="lang-label">${opt.label}</span>`;
+      li.innerHTML = `<span class="fi fi-${opt.fi}"></span><span class="lang-label">${opt.label}</span>`;
       li.addEventListener('click', e => {
         e.stopPropagation();
         i18n.setLang(opt.code);
