@@ -20,7 +20,7 @@
   <header id="header">
     <div class="header-inner">
       <div class="logo">
-        <span class="logo-icon">⚡</span>
+        <img src="/logo.png" alt="CatchR" class="logo-img" />
         <span class="logo-text"><span class="logo-accent">CatchR</span></span>
         <span class="logo-sub">PokeMMO</span>
       </div>
@@ -31,7 +31,11 @@
       </nav>
       <div class="header-actions">
         <button id="theme-toggle" class="btn-icon" title="Toggle theme" aria-label="Toggle light/dark mode">☀️</button>
-        <select id="lang-select" class="lang-select" title="Select language" aria-label="Language"></select>
+        <div id="lang-select" class="lang-select" role="listbox" tabindex="0" aria-label="Select language">
+          <span class="lang-flag"></span>
+          <span class="lang-label"></span>
+          <ul class="lang-dropdown" role="listbox"></ul>
+        </div>
       </div>
     </div>
   </header>
