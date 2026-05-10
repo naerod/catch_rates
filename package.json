@@ -1,7 +1,7 @@
 {
-  "name": "pokecalc",
+  "name": "catchr",
   "version": "1.0.0",
-  "description": "naerod's Catch Rate Calculator for PokeMMO",
+  "description": "CatchR \u2014 Catch Rate Calculator for PokeMMO",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

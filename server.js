@@ -284,6 +284,6 @@ app.get('*', (req, res) => {
   db.run('PRAGMA foreign_keys = ON;');
 
   app.listen(PORT, () => {
-    console.log(`naerod's Catch Calculator running at http://localhost:${PORT}`);
+    console.log(`CatchR running at http://localhost:${PORT}`);
   });
 })();
