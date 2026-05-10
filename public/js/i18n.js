@@ -689,7 +689,7 @@ const i18n = {
     if (!container) return;
     const flagEl = container.querySelector('.lang-flag');
     const labelEl = container.querySelector('.lang-label');
-    if (flagEl) { flagEl.className = `lang-flag fi fi-${opt.fi}`; flagEl.textContent = ''; }
+    if (flagEl) { flagEl.innerHTML = `<img src="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${opt.fi}.svg" alt="" class="lang-flag-img" />`; }
     if (labelEl) labelEl.textContent = opt.label;
     container.querySelectorAll('.lang-dropdown li').forEach(li => {
       li.setAttribute('aria-selected', li.dataset.code === lang ? 'true' : 'false');
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li');
       li.dataset.code = opt.code;
       li.setAttribute('role', 'option');
-      li.innerHTML = `<span class="fi fi-${opt.fi}"></span><span class="lang-label">${opt.label}</span>`;
+      li.innerHTML = `<img src="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${opt.fi}.svg" alt="" class="lang-flag-img" /><span class="lang-label">${opt.label}</span>`;
       li.addEventListener('click', e => {
         e.stopPropagation();
         i18n.setLang(opt.code);
