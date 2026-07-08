@@ -47,16 +47,95 @@ app.use(session({
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 
+// ─── OIDC Config ──────────────────────────────────────────────────────────────
+const OIDC_ISSUER     = (process.env.OIDC_ISSUER || 'https://auth.naerod.com/application/o/catchr').replace(/\/$/, '');
+const OIDC_CLIENT_ID  = process.env.OIDC_CLIENT_ID;
+const OIDC_CLIENT_SECRET = process.env.OIDC_CLIENT_SECRET;
+const OIDC_REDIRECT_URI  = process.env.OIDC_REDIRECT_URI || 'https://catchr.naerod.com/auth/callback';
+const CATCHR_GROUPS   = ['catchr-users', 'catchr-event-managers', 'catchr-admins'];
+
 // ─── Auth middleware ───────────────────────────────────────────────────────────
 function requireAuth(req, res, next) {
-  if (req.session && req.session.adminId) return next();
+  if (req.session?.adminId) return next();
+  const groups = req.session?.oidcUser?.groups || [];
+  if (groups.some(g => ['catchr-event-managers', 'catchr-admins'].includes(g))) return next();
   res.status(401).json({ error: 'Unauthorized' });
 }
 
 function requireAdmin(req, res, next) {
-  if (req.session && req.session.adminRole === 'admin') return next();
+  if (req.session?.adminRole === 'admin') return next();
+  if ((req.session?.oidcUser?.groups || []).includes('catchr-admins')) return next();
   res.status(403).json({ error: 'Forbidden' });
 }
+
+// ─── OIDC Routes ──────────────────────────────────────────────────────────────
+app.get('/auth/login', (req, res) => {
+  const state        = crypto.randomBytes(16).toString('hex');
+  const codeVerifier = crypto.randomBytes(32).toString('base64url');
+  const codeChallenge = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
+  req.session.oidcState        = state;
+  req.session.oidcCodeVerifier = codeVerifier;
+  req.session.oidcRedirect     = req.query.rd || '/';
+  const params = new URLSearchParams({
+    response_type: 'code', client_id: OIDC_CLIENT_ID,
+    redirect_uri: OIDC_REDIRECT_URI, scope: 'openid email profile',
+    state, code_challenge: codeChallenge, code_challenge_method: 'S256',
+  });
+  res.redirect(`${OIDC_ISSUER}/authorize/?${params}`);
+});
+
+app.get('/auth/callback', async (req, res) => {
+  const { code, state } = req.query;
+  if (!code || state !== req.session.oidcState) return res.redirect('/');
+  const { oidcCodeVerifier: codeVerifier, oidcRedirect: redirect = '/' } = req.session;
+  delete req.session.oidcState;
+  delete req.session.oidcCodeVerifier;
+  delete req.session.oidcRedirect;
+  try {
+    const tokenRes = await fetch(`${OIDC_ISSUER}/token/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code', code,
+        redirect_uri: OIDC_REDIRECT_URI, client_id: OIDC_CLIENT_ID,
+        client_secret: OIDC_CLIENT_SECRET, code_verifier: codeVerifier,
+      }),
+    });
+    if (!tokenRes.ok) throw new Error(`Token exchange: ${tokenRes.status}`);
+    const { access_token } = await tokenRes.json();
+    const userRes = await fetch(`${OIDC_ISSUER}/userinfo/`, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
+    if (!userRes.ok) throw new Error(`Userinfo: ${userRes.status}`);
+    const u = await userRes.json();
+    req.session.oidcUser = {
+      sub: u.sub, username: u.preferred_username,
+      name: u.name, email: u.email, groups: u.groups || [],
+    };
+    res.redirect(redirect);
+  } catch (e) {
+    console.error('[OIDC] Callback error:', e.message);
+    res.redirect('/');
+  }
+});
+
+app.get('/auth/logout', (req, res) => {
+  const endSession = `${OIDC_ISSUER}/end-session/?redirect_uri=${encodeURIComponent('https://catchr.naerod.com')}`;
+  req.session.destroy(() => res.redirect(endSession));
+});
+
+app.get('/api/auth/me', (req, res) => {
+  if (!req.session?.oidcUser) return res.json({ authenticated: false });
+  const { username, name, email, groups } = req.session.oidcUser;
+  const isAdmin        = groups.includes('catchr-admins');
+  const isEventManager = groups.some(g => ['catchr-event-managers', 'catchr-admins'].includes(g));
+  const isUser         = groups.some(g => CATCHR_GROUPS.includes(g));
+  res.json({
+    authenticated: true, username, name, email,
+    role: isAdmin ? 'admin' : isEventManager ? 'event-manager' : isUser ? 'user' : 'none',
+    isAdmin, isEventManager, isUser,
+  });
+});
 
 // ─── Pokémon ───────────────────────────────────────────────────────────────────
 app.get('/api/pokemon/search', (req, res) => {

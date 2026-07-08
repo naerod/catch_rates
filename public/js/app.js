@@ -523,10 +523,59 @@ async function loadEvents() {
   });
 }
 
+/* ══════════════ USER SESSION (OIDC) ══════════════ */
+let currentOidcUser = null;
+
+async function initUserSession() {
+  try {
+    const res = await fetch('/api/auth/me');
+    const data = await res.json();
+    if (data.authenticated) {
+      currentOidcUser = data;
+      $('sso-login-btn').style.display = 'none';
+      $('user-menu').style.display = '';
+      $('user-display-name').textContent = data.username;
+      $('user-email').textContent = data.email;
+      if (data.isEventManager || data.isAdmin) {
+        $('nav-admin-link').style.display = '';
+      }
+    } else {
+      $('sso-login-btn').style.display = '';
+      $('user-menu').style.display = 'none';
+    }
+  } catch (_) {
+    $('sso-login-btn').style.display = '';
+  }
+}
+
+$('sso-login-btn').addEventListener('click', () => {
+  window.location.href = '/auth/login?rd=' + encodeURIComponent(window.location.pathname);
+});
+
+$('user-menu-btn').addEventListener('click', () => {
+  const dd = $('user-dropdown');
+  dd.style.display = dd.style.display === 'none' ? '' : 'none';
+});
+
+document.addEventListener('click', e => {
+  if (!$('user-menu').contains(e.target)) $('user-dropdown').style.display = 'none';
+});
+
+initUserSession();
+
 /* ══════════════ ADMIN ══════════════ */
 let currentAdminRole = null;
 
 async function initAdmin() {
+  // 1. Check OIDC session first (event-manager or admin)
+  if (currentOidcUser?.isEventManager || currentOidcUser?.isAdmin) {
+    currentAdminRole = currentOidcUser.isAdmin ? 'admin' : 'manager';
+    $('change-pw-btn')?.style && ($('change-pw-btn').style.display = 'none');
+    showAdminDashboard();
+    loadAdminEvents();
+    return;
+  }
+  // 2. Fallback: legacy username/password session
   const res = await fetch('/api/admin/check');
   const data = await res.json();
   if (data.authenticated) {
@@ -568,6 +617,10 @@ $('login-btn').addEventListener('click', async () => {
 $('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') $('login-btn').click(); });
 
 $('logout-btn').addEventListener('click', async () => {
+  if (currentOidcUser) {
+    window.location.href = '/auth/logout';
+    return;
+  }
   await fetch('/api/admin/logout', { method: 'POST' });
   currentAdminRole = null;
   $('admin-dashboard').style.display = 'none';

@@ -5,6 +5,7 @@
 const translations = {
   en: {
     nav_calc: 'Calculator', nav_events: 'Events', nav_admin: 'Admin',
+    btn_sso_login: 'Sign in', btn_sso_logout: 'Sign out', btn_sso_admin: 'Sign in with Authentik', or: 'or',
     calc_title: "Catch Rate Calculator", calc_subtitle: "PokeMMO — Gen 3-5 formula",
     search_placeholder: "Search Pokémon...", catch_rate_label: "Catch Rate", gen_label: "Gen",
     quickable_title: "Quick Ball recommended!", quickable_desc: "≥95% catch rate on turn 1 — throw it immediately!",
@@ -95,6 +96,7 @@ const translations = {
   },
   fr: {
     nav_calc: 'Calculateur', nav_events: 'Événements', nav_admin: 'Admin',
+    btn_sso_login: 'Connexion', btn_sso_logout: 'Déconnexion', btn_sso_admin: 'Se connecter avec Authentik', or: 'ou',
     calc_title: "Calculateur de Taux de Capture", calc_subtitle: "PokeMMO — Formule Gen 3-5",
     search_placeholder: "Rechercher un Pokémon...", catch_rate_label: "Taux de capture", gen_label: "Gén",
     quickable_title: "Quick Ball recommandée !", quickable_desc: "≥95% de capture au tour 1 — lancez-la immédiatement !",
