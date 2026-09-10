@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJYLED9YZK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-MJYLED9YZK");
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CatchR — Changelog</title>
+  <script>
+    // Thème appliqué avant le rendu (évite le flash clair/sombre)
+    try { document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark'); } catch (e) {}
+  </script>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .cl-main { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .cl-back { display: inline-flex; align-items: center; gap: .35rem; color: var(--text-dim); font-size: .9rem; margin-bottom: 1.25rem; }
+    .cl-back:hover { color: var(--accent); }
+    .cl-main h1 { font-family: var(--font-head); font-size: 1.8rem; margin: 0 0 .25rem; display: flex; align-items: center; gap: .5rem; color: var(--text); }
+    .cl-sub { color: var(--text-muted); margin: 0 0 2rem; }
+    .cl-entry { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+    .cl-entry.latest { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-glow); }
+    .cl-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    .cl-v { font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; color: var(--accent); }
+    .cl-now { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: .1rem .5rem; }
+    .cl-date { margin-left: auto; color: var(--text-muted); font-size: .85rem; }
+    .cl-title { margin: .2rem 0 .6rem; color: var(--text-dim); font-weight: 600; }
+    .cl-entry ul { margin: 0; padding-left: 1.2rem; color: var(--text); line-height: 1.55; }
+    .cl-entry li + li { margin-top: .3rem; }
+    .cl-err { color: var(--text-muted); }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <img src="/logo.png" alt="CatchR" class="logo-img" />
+        <span class="logo-text"><span class="logo-accent">CatchR</span></span>
+        <span class="logo-sub">PokeMMO</span>
+      </a>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle light/dark mode"><span class="material-symbols-outlined">light_mode</span></button>
+        <div id="lang-select" class="lang-select" role="listbox" tabindex="0" aria-label="Select language">
+          <span class="lang-flag"></span>
+          <span class="lang-label"></span>
+          <ul class="lang-dropdown" role="listbox"></ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="cl-main">
+    <a href="/" class="cl-back"><span class="material-symbols-outlined">arrow_back</span><span data-i18n="cl_back">Back to the calculator</span></a>
+    <h1><span class="material-symbols-outlined">history</span><span data-i18n="cl_title">Changelog</span></h1>
+    <p class="cl-sub" data-i18n="cl_sub">Every change to CatchR, version by version.</p>
+    <div id="cl-list"></div>
+  </main>
+
+  <footer>
+    <p>CatchR — PokeMMO community tool — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span>
+      · <a href="/changelog" class="ver-badge" id="ver-badge">v—</a></p>
+  </footer>
+
+  <script src="/js/i18n.js"></script>
+  <script>
+    // Libellés propres à cette page, dans les 10 langues du site.
+    const CL_I18N = {
+      en: { cl_title: 'Changelog', cl_sub: 'Every change to CatchR, version by version.', cl_back: 'Back to the calculator', cl_now: 'current', cl_err: 'Could not load the changelog.' },
+      fr: { cl_title: 'Journal des versions', cl_sub: 'Toutes les évolutions de CatchR, version par version.', cl_back: 'Retour au calculateur', cl_now: 'actuelle', cl_err: 'Impossible de charger le journal des versions.' },
+      ja: { cl_title: '更新履歴', cl_sub: 'CatchR のすべての変更をバージョンごとに。', cl_back: '計算機に戻る', cl_now: '現在', cl_err: '更新履歴を読み込めませんでした。' },
+      pt: { cl_title: 'Registro de alterações', cl_sub: 'Todas as mudanças do CatchR, versão por versão.', cl_back: 'Voltar à calculadora', cl_now: 'atual', cl_err: 'Não foi possível carregar o registro.' },
+      es: { cl_title: 'Registro de cambios', cl_sub: 'Todos los cambios de CatchR, versión por versión.', cl_back: 'Volver a la calculadora', cl_now: 'actual', cl_err: 'No se pudo cargar el registro.' },
+      ko: { cl_title: '변경 내역', cl_sub: 'CatchR의 모든 변경 사항을 버전별로.', cl_back: '계산기로 돌아가기', cl_now: '현재', cl_err: '변경 내역을 불러올 수 없습니다.' },
+      zh: { cl_title: '更新日志', cl_sub: 'CatchR 的所有更新，按版本列出。', cl_back: '返回计算器', cl_now: '当前', cl_err: '无法加载更新日志。' },
+      de: { cl_title: 'Änderungsprotokoll', cl_sub: 'Alle Änderungen an CatchR, Version für Version.', cl_back: 'Zurück zum Rechner', cl_now: 'aktuell', cl_err: 'Das Änderungsprotokoll konnte nicht geladen werden.' },
+      it: { cl_title: 'Registro delle modifiche', cl_sub: 'Tutte le novità di CatchR, versione per versione.', cl_back: 'Torna al calcolatore', cl_now: 'attuale', cl_err: 'Impossibile caricare il registro.' },
+      id: { cl_title: 'Catatan perubahan', cl_sub: 'Semua perubahan CatchR, versi demi versi.', cl_back: 'Kembali ke kalkulator', cl_now: 'saat ini', cl_err: 'Gagal memuat catatan perubahan.' }
+    };
+    Object.keys(CL_I18N).forEach(l => { translations[l] = Object.assign(translations[l] || {}, CL_I18N[l]); });
+
+    // Thème : même stockage (localStorage 'theme') que le calculateur.
+    const themeBtn = document.getElementById('theme-toggle');
+    function paintTheme() {
+      const t = document.documentElement.getAttribute('data-theme');
+      themeBtn.firstElementChild.textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
+    }
+    themeBtn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paintTheme();
+    });
+    paintTheme();
+
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let CL = null;
+    function render() {
+      const box = document.getElementById('cl-list');
+      if (!CL) { box.innerHTML = `<p class="cl-err">${esc(i18n.t('cl_err'))}</p>`; return; }
+      // Contenu rédigé en FR et EN : les autres langues retombent sur l'anglais.
+      const l = i18n.lang === 'fr' ? 'fr' : 'en';
+      box.innerHTML = CL.versions.map((e, i) => `
+        <div class="cl-entry${i === 0 ? ' latest' : ''}">
+          <div class="cl-head">
+            <span class="cl-v">v${esc(e.v)}</span>
+            ${i === 0 ? `<span class="cl-now">${esc(i18n.t('cl_now'))}</span>` : ''}
+            <span class="cl-date">${esc(e.date || '')}</span>
+          </div>
+          ${e.title ? `<p class="cl-title">${esc(e.title[l] || e.title.en || '')}</p>` : ''}
+          <ul>${(e[l] || e.en || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+        </div>`).join('');
+    }
+    document.addEventListener('langchange', render);
+    fetch('/changelog.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null).catch(() => null)
+      .then(d => { CL = d; render(); });
+  </script>
+  <script src="/js/version-badge.js"></script>
+</body>
+</html>

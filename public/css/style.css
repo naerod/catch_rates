@@ -1223,3 +1223,8 @@ footer {
 
 .admin-login-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--text-dim); font-size: 0.8rem; margin: 0.75rem 0; }
 .admin-login-divider::before, .admin-login-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+
+/* Badge de version (pied de page) → /changelog */
+.ver-badge { color: var(--text-dim); }
+.ver-badge:hover { color: var(--accent); }
+.btn-icon .material-symbols-outlined { font-size: 20px; }

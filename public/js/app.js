@@ -23,7 +23,7 @@ const themeBtn = $('theme-toggle');
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  themeBtn.innerHTML = `<span class="material-symbols-outlined">${theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>`;
   localStorage.setItem('theme', theme);
 }
 

@@ -347,6 +347,11 @@ app.delete('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
 });
 
 // ─── Serve SPA ─────────────────────────────────────────────────────────────────
+// Journal des versions (pas de .html dans les URL publiques)
+app.get('/changelog', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'changelog.html'));
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
