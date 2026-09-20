@@ -1,0 +1,95 @@
+{
+  "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
+  "versions": [
+    {
+      "v": "1.4",
+      "date": "2026-09-19",
+      "title": {
+        "fr": "Journal des versions",
+        "en": "Changelog"
+      },
+      "fr": [
+        "Mesure d'audience Umami auto-hébergée, sans cookie ni bandeau RGPD (remplace Google Analytics)."
+      ],
+      "en": [
+        "Self-hosted Umami analytics, cookie-free and with no GDPR banner (replaces Google Analytics)."
+      ]
+    },
+    {
+      "v": "1.3",
+      "date": "2026-09-10",
+      "title": {
+        "fr": "Journal des versions",
+        "en": "Changelog"
+      },
+      "fr": [
+        "Nouvelle page Journal des versions, accessible depuis le numéro de version en bas de page.",
+        "Icônes du menu compte et du bouton de thème affichées correctement.",
+        "Hébergement déplacé sur un serveur dédié aux sites (27 août) : même adresse, rien à faire côté joueurs."
+      ],
+      "en": [
+        "New Changelog page, reachable from the version number at the bottom of the page.",
+        "Account menu and theme button icons now display properly.",
+        "Hosting moved to a server dedicated to websites (August 27): same address, nothing to do for players."
+      ]
+    },
+    {
+      "v": "1.2",
+      "date": "2026-07-08",
+      "title": {
+        "fr": "Connexion",
+        "en": "Sign-in"
+      },
+      "fr": [
+        "Connexion avec un compte naerod (SSO) : l'administration des événements et des utilisateurs passe par ce compte.",
+        "Mesure d'audience anonyme (Google Analytics) pour savoir quelles langues et quels outils sont utilisés.",
+        "Logo manquant rétabli."
+      ],
+      "en": [
+        "Sign-in with a naerod account (SSO): event and user administration now go through this account.",
+        "Anonymous audience measurement (Google Analytics) to learn which languages and tools are used.",
+        "Missing logo restored."
+      ]
+    },
+    {
+      "v": "1.1",
+      "date": "2026-05-10",
+      "title": {
+        "fr": "CatchR",
+        "en": "CatchR"
+      },
+      "fr": [
+        "Le calculateur devient CatchR : nouveau nom, nouveau logo, favicons pour tous les appareils.",
+        "Sélecteur de langue avec drapeaux, lisible sur tous les systèmes (les drapeaux emoji ne s'affichaient pas sous Windows).",
+        "Administration : gestion des utilisateurs, rôles, réordonnancement des événements.",
+        "Retrait de l'assistant shiny."
+      ],
+      "en": [
+        "The calculator becomes CatchR: new name, new logo, favicons for every device.",
+        "Language picker with flags that render on every system (emoji flags did not show on Windows).",
+        "Administration: user management, roles, event reordering.",
+        "Shiny helper removed."
+      ]
+    },
+    {
+      "v": "1.0",
+      "date": "2026-03-19",
+      "title": {
+        "fr": "Lancement",
+        "en": "Launch"
+      },
+      "fr": [
+        "Calculateur de capture pour PokeMMO (formule Gen 3-5) : 650 Pokémon et 8 types de Poké Balls avec leurs conditions propres à PokeMMO.",
+        "Deux stratégies proposées automatiquement : la plus rapide et la plus économique en Pokéyen.",
+        "Coût moyen en tours et alertes sur les attaques à contrecoup ou suicidaires.",
+        "Interface traduite en 10 langues."
+      ],
+      "en": [
+        "Catch calculator for PokeMMO (Gen 3-5 formula): 650 Pokémon and 8 Poké Ball types with their PokeMMO-specific conditions.",
+        "Two strategies suggested automatically: the fastest and the cheapest in Pokéyen.",
+        "Average cost in turns and warnings for recoil or self-KO moves.",
+        "Interface translated into 10 languages."
+      ]
+    }
+  ]
+}
