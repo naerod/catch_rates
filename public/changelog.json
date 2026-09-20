@@ -2,6 +2,28 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.5",
+      "date": "2026-09-20",
+      "title": {
+        "fr": "Barre de navigation commune",
+        "en": "Shared navigation bar"
+      },
+      "fr": [
+        "La barre du haut est désormais la barre commune à tous les sites naerod : elle évolue partout en même temps.",
+        "Elle reprend les couleurs et la police de CatchR, en thème clair comme en thème sombre.",
+        "Menu de navigation repliable sur mobile.",
+        "Libellés et textes de lecteur d'écran de la barre traduits dans les 10 langues du site.",
+        "La page Journal des versions utilise la même barre que le calculateur."
+      ],
+      "en": [
+        "The top bar is now the bar shared by every naerod site: it evolves everywhere at once.",
+        "It picks up CatchR's colours and font, in both light and dark themes.",
+        "Collapsible navigation menu on mobile.",
+        "Bar labels and screen-reader texts translated into all 10 site languages.",
+        "The Changelog page now uses the same bar as the calculator."
+      ]
+    },
+    {
       "v": "1.4.1",
       "date": "2026-09-20",
       "title": {
