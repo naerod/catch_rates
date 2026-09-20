@@ -654,18 +654,10 @@ const translations = {
   },
 };
 
-const LANG_OPTIONS = [
-  { code: 'en', label: 'English',            fi: 'gb' },
-  { code: 'fr', label: 'Français',           fi: 'fr' },
-  { code: 'ja', label: '日本語',              fi: 'jp' },
-  { code: 'pt', label: 'Português',          fi: 'br' },
-  { code: 'es', label: 'Español',            fi: 'es' },
-  { code: 'ko', label: '한국어',              fi: 'kr' },
-  { code: 'zh', label: '中文',               fi: 'cn' },
-  { code: 'de', label: 'Deutsch',            fi: 'de' },
-  { code: 'it', label: 'Italiano',           fi: 'it' },
-  { code: 'id', label: 'Bahasa Indonesia',   fi: 'id' },
-];
+/* La liste des langues et le selecteur vivent dans <naerod-header>
+   (depot naerod-ui). Ce fichier ne garde que le dictionnaire de catchr :
+   le contenu reste au site, l interface est partagee. */
+
 
 const i18n = {
   lang: localStorage.getItem('lang') || 'en',
@@ -681,21 +673,6 @@ const i18n = {
     localStorage.setItem('lang', lang);
     this.applyAll();
     document.documentElement.lang = lang;
-    this._updateDropdownSelected(lang);
-  },
-
-  _updateDropdownSelected(lang) {
-    const opt = LANG_OPTIONS.find(o => o.code === lang);
-    if (!opt) return;
-    const container = document.getElementById('lang-select');
-    if (!container) return;
-    const flagEl = container.querySelector('.lang-flag');
-    const labelEl = container.querySelector('.lang-label');
-    if (flagEl) { flagEl.innerHTML = `<img src="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${opt.fi}.svg" alt="" class="lang-flag-img" />`; }
-    if (labelEl) labelEl.textContent = opt.label;
-    container.querySelectorAll('.lang-dropdown li').forEach(li => {
-      li.setAttribute('aria-selected', li.dataset.code === lang ? 'true' : 'false');
-    });
   },
 
   applyAll() {
@@ -714,38 +691,16 @@ const i18n = {
   }
 };
 
+/* ── Pont avec <naerod-header> ──
+   Le header pilote le choix de langue et interroge le site pour traduire ses
+   propres libelles (nav_calc, btn_login…). Aucune chaine n est dupliquee. */
+document.addEventListener('naerod:langchange', e => i18n.setLang(e.detail.lang));
+
+document.addEventListener('naerod:i18n', e => {
+  const v = translations[i18n.lang]?.[e.detail.key] ?? translations.en?.[e.detail.key];
+  if (v) e.detail.text = v;
+});
+
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('lang-select');
-  if (container) {
-    const list = container.querySelector('.lang-dropdown');
-
-    LANG_OPTIONS.forEach(opt => {
-      const li = document.createElement('li');
-      li.dataset.code = opt.code;
-      li.setAttribute('role', 'option');
-      li.innerHTML = `<img src="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/flags/4x3/${opt.fi}.svg" alt="" class="lang-flag-img" /><span class="lang-label">${opt.label}</span>`;
-      li.addEventListener('click', e => {
-        e.stopPropagation();
-        i18n.setLang(opt.code);
-        container.classList.remove('open');
-      });
-      list.appendChild(li);
-    });
-
-    container.addEventListener('click', e => {
-      container.classList.toggle('open');
-    });
-
-    document.addEventListener('click', e => {
-      if (!container.contains(e.target)) container.classList.remove('open');
-    });
-
-    container.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') container.classList.toggle('open');
-      if (e.key === 'Escape') container.classList.remove('open');
-    });
-
-    i18n._updateDropdownSelected(i18n.lang);
-  }
   i18n.applyAll();
 });

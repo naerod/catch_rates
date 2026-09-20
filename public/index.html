@@ -20,39 +20,11 @@
 <body>
 
   <!-- HEADER -->
-  <header id="header">
-    <div class="header-inner">
-      <div class="logo">
-        <img src="/logo.png" alt="CatchR" class="logo-img" />
-        <span class="logo-text"><span class="logo-accent">CatchR</span></span>
-        <span class="logo-sub">PokeMMO</span>
-      </div>
-      <nav id="main-nav">
-        <a href="#" class="nav-link active" data-page="calc" data-i18n="nav_calc">Calculator</a>
-        <a href="#" class="nav-link" data-page="events" data-i18n="nav_events">Events</a>
-        <a href="#" class="nav-link" id="nav-admin-link" data-page="admin" data-i18n="nav_admin" style="display:none">Admin</a>
-      </nav>
-      <div class="header-actions">
-        <button id="sso-login-btn" class="btn btn-outline btn-sm" data-i18n="btn_sso_login" style="display:none">Sign in</button>
-        <div id="user-menu" class="user-menu" style="display:none">
-          <button id="user-menu-btn" class="btn-icon user-avatar" title="Account">
-            <span class="material-symbols-outlined">account_circle</span>
-            <span id="user-display-name"></span>
-          </button>
-          <div id="user-dropdown" class="user-dropdown" style="display:none">
-            <span id="user-email" class="user-email"></span>
-            <a href="/auth/logout" class="user-action" data-i18n="btn_sso_logout">Sign out</a>
-          </div>
-        </div>
-        <button id="theme-toggle" class="btn-icon" title="Toggle theme" aria-label="Toggle light/dark mode"><span class="material-symbols-outlined">light_mode</span></button>
-        <div id="lang-select" class="lang-select" role="listbox" tabindex="0" aria-label="Select language">
-          <span class="lang-flag"></span>
-          <span class="lang-label"></span>
-          <ul class="lang-dropdown" role="listbox"></ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- En-tete unifie de l ecosysteme naerod : servi depuis static.dorianjulien.com,
+       jamais copie ici. Toute evolution de la barre se fait dans le depot
+       naerod-ui et se propage a tous les sites. Le site ne pilote que ses
+       couleurs, via les variables --nrd-* de son :root. -->
+  <naerod-header site="catchr" active="calc" sticky></naerod-header>
 
   <!-- LAYOUT WRAPPER (3-col grid: empty | main | history) -->
   <div class="layout-grid">
@@ -368,6 +340,7 @@
       · <a href="/changelog" class="ver-badge" id="ver-badge">v—</a></p>
   </footer>
 
+  <script type="module" src="https://static.dorianjulien.com/ui/header/v1.js"></script>
   <script src="/js/i18n.js"></script>
   <script src="/js/calc.js"></script>
   <script src="/js/warnings.js"></script>

@@ -64,6 +64,23 @@
   --toggle-bg: #e2e8f0;
 }
 
+/* ── Contrat de couleurs de <naerod-header> (depot naerod-ui) ──
+   Le header partage ne connait QUE ces variables. On y mappe la DA de catchr :
+   il suit donc automatiquement les deux themes, sans code specifique.
+   C est le seul point de contact entre le site et la barre. */
+:root {
+  --nrd-font: var(--font-body);
+  --nrd-fg: var(--text);
+  --nrd-muted: var(--text-dim);
+  --nrd-bg: var(--bg3);
+  --nrd-card: var(--card);
+  --nrd-border: var(--card-border);
+  --nrd-accent: var(--accent);
+  --nrd-on-accent: #001018;
+  --nrd-danger: var(--red);
+  --nrd-header-bg: var(--bg2);
+}
+
 html { font-size: 16px; scroll-behavior: smooth; }
 
 body {

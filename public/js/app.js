@@ -19,40 +19,36 @@ const $ = id => document.getElementById(id);
 const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
 /* ══════════════ THEME ══════════════ */
-const themeBtn = $('theme-toggle');
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  themeBtn.innerHTML = `<span class="material-symbols-outlined">${theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>`;
-  localStorage.setItem('theme', theme);
-}
-
-function initTheme() {
-  const saved = localStorage.getItem('theme') || 'dark';
-  applyTheme(saved);
-}
-
-themeBtn.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  applyTheme(current === 'dark' ? 'light' : 'dark');
-});
-
-initTheme();
+/* Le bouton, la persistance et l attribut data-theme sont geres par
+   <naerod-header> (depot naerod-ui). Le site n a plus rien a faire : il mappe
+   ses couleurs sur les variables --nrd-* dans style.css, c est tout. */
 
 /* ══════════════ NAVIGATION ══════════════ */
+/* Les liens de nav vivent dans le header partage : il emet naerod:navigate
+   plutot que de naviguer lui-meme, le routage reste au site. */
+document.addEventListener('naerod:navigate', e => {
+  e.preventDefault();          // on revendique le routage, sinon le header
+  showPage(e.detail.page);     // renverrait vers l accueil (cas /changelog)
+});
+
+// Arrivee depuis une autre page (ex. /changelog#events) : ouvrir la bonne vue.
+addEventListener('DOMContentLoaded', () => {
+  const p = location.hash.slice(1);
+  if (p && document.getElementById('page-' + p)) showPage(p);
+});
+
 function showPage(page) {
   state.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  // L etat actif de la nav appartient au header partage : on le lui declare.
+  document.querySelector('naerod-header')?.setAttribute('active', page);
   $('page-' + page).classList.add('active');
-  document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
+
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();
 }
 
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', e => { e.preventDefault(); showPage(link.dataset.page); });
-});
+
 
 /* ══════════════ SEARCH ══════════════ */
 let searchTimer = null;
@@ -524,44 +520,17 @@ async function loadEvents() {
 }
 
 /* ══════════════ USER SESSION (OIDC) ══════════════ */
+/* <naerod-header> appelle /api/auth/me, affiche le bouton de connexion ou le
+   menu de compte, et publie le resultat. Le site n en garde que ce dont la
+   page Admin a besoin. */
 let currentOidcUser = null;
 
-async function initUserSession() {
-  try {
-    const res = await fetch('/api/auth/me');
-    const data = await res.json();
-    if (data.authenticated) {
-      currentOidcUser = data;
-      $('sso-login-btn').style.display = 'none';
-      $('user-menu').style.display = '';
-      $('user-display-name').textContent = data.username;
-      $('user-email').textContent = data.email;
-      if (data.isEventManager || data.isAdmin) {
-        $('nav-admin-link').style.display = '';
-      }
-    } else {
-      $('sso-login-btn').style.display = '';
-      $('user-menu').style.display = 'none';
-    }
-  } catch (_) {
-    $('sso-login-btn').style.display = '';
-  }
-}
-
-$('sso-login-btn').addEventListener('click', () => {
-  window.location.href = '/auth/login?rd=' + encodeURIComponent(window.location.pathname);
+document.addEventListener('naerod:user', e => {
+  currentOidcUser = e.detail.user;
+  // L utilisateur arrive de façon asynchrone : si la page Admin est deja
+  // ouverte, on la reevalue avec la session maintenant connue.
+  if (state.page === 'admin') initAdmin();
 });
-
-$('user-menu-btn').addEventListener('click', () => {
-  const dd = $('user-dropdown');
-  dd.style.display = dd.style.display === 'none' ? '' : 'none';
-});
-
-document.addEventListener('click', e => {
-  if (!$('user-menu').contains(e.target)) $('user-dropdown').style.display = 'none';
-});
-
-initUserSession();
 
 /* ══════════════ ADMIN ══════════════ */
 let currentAdminRole = null;

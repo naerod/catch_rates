@@ -39,23 +39,9 @@
   <script defer src="https://umami.naerod.com/s.js" data-website-id="70965d58-5f61-4e31-88ca-8496e3d6df93"></script>
 </head>
 <body>
-  <header id="header">
-    <div class="header-inner">
-      <a class="logo" href="/">
-        <img src="/logo.png" alt="CatchR" class="logo-img" />
-        <span class="logo-text"><span class="logo-accent">CatchR</span></span>
-        <span class="logo-sub">PokeMMO</span>
-      </a>
-      <div class="header-actions">
-        <button id="theme-toggle" class="btn-icon" aria-label="Toggle light/dark mode"><span class="material-symbols-outlined">light_mode</span></button>
-        <div id="lang-select" class="lang-select" role="listbox" tabindex="0" aria-label="Select language">
-          <span class="lang-flag"></span>
-          <span class="lang-label"></span>
-          <ul class="lang-dropdown" role="listbox"></ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- En-tete unifie (depot naerod-ui) — cette page servait auparavant sa
+       propre copie du header : c est exactement ce qu on supprime. -->
+  <naerod-header site="catchr"></naerod-header>
 
   <main class="cl-main">
     <a href="/" class="cl-back"><span class="material-symbols-outlined">arrow_back</span><span data-i18n="cl_back">Back to the calculator</span></a>
@@ -70,6 +56,7 @@
   </footer>
 
   <script src="/js/i18n.js"></script>
+  <script type="module" src="https://static.dorianjulien.com/ui/header/v1.js"></script>
   <script>
     // Libellés propres à cette page, dans les 10 langues du site.
     const CL_I18N = {
@@ -86,19 +73,7 @@
     };
     Object.keys(CL_I18N).forEach(l => { translations[l] = Object.assign(translations[l] || {}, CL_I18N[l]); });
 
-    // Thème : même stockage (localStorage 'theme') que le calculateur.
-    const themeBtn = document.getElementById('theme-toggle');
-    function paintTheme() {
-      const t = document.documentElement.getAttribute('data-theme');
-      themeBtn.firstElementChild.textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
-    }
-    themeBtn.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      paintTheme();
-    });
-    paintTheme();
+    // Theme et langue : entierement geres par <naerod-header>.
 
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     let CL = null;
