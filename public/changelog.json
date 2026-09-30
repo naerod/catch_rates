@@ -2,6 +2,24 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.5.1",
+      "date": "2026-09-21",
+      "title": {
+        "fr": "Journal des versions commun",
+        "en": "Shared changelog"
+      },
+      "fr": [
+        "Le Journal des versions est désormais la brique commune à tous les sites naerod : il évolue partout en même temps.",
+        "Titres, états et libellés du journal traduits dans les 10 langues du site (le contenu des entrées reste en français et en anglais).",
+        "Dates affichées dans la langue choisie."
+      ],
+      "en": [
+        "The Changelog is now the building block shared by every naerod site: it evolves everywhere at once.",
+        "Changelog headings, states and labels translated into all 10 site languages (entry contents stay in French and English).",
+        "Dates shown in the selected language."
+      ]
+    },
+    {
       "v": "1.5",
       "date": "2026-09-20",
       "title": {
