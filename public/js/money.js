@@ -94,6 +94,77 @@ const Money = (() => {
     return `<div class="gym-between">${heal}${swaps}</div>`;
   }
 
+  /* ── Calculateur de charm : quel objet de gains choisir selon les prix du marche ── */
+  const CHARMS = [
+    { id: 'none', mult: 1, nameKey: 'charm_none' },
+    { id: 'amulet_coin', mult: 1.5, nameKey: 'charm_amulet' },
+    { id: 'riches_75', mult: 1.75, nameKey: 'charm_r75' },
+    { id: 'riches_100', mult: 2, nameKey: 'charm_r100' },
+  ];
+  const CHARM_STORE = 'money.charm';
+  const charm = { donator: false, sel: {}, prices: {} };           // sel : arenes cochees/decochees par rapport au guide ; prices : prix saisis a la main
+  try { Object.assign(charm, JSON.parse(localStorage.getItem(CHARM_STORE)) || {}); } catch { /* stockage indisponible */ }
+  let market = null;                                               // { fetchedAt, prices } renvoye par /api/prices
+  let marketState = 'idle';                                        // idle | loading | ok | error
+  const saveCharm = () => { try { localStorage.setItem(CHARM_STORE, JSON.stringify(charm)); } catch { /* idem */ } };
+  const money = n => new Intl.NumberFormat(i18n.lang).format(Math.round(n));
+  const gymKey = (r, g) => `${r.id}/${g.id}`;
+  const gymOn = (r, g) => (gymKey(r, g) in charm.sel ? charm.sel[gymKey(r, g)] : !g.optional);   // par defaut : toutes les arenes du guide
+
+  function charmCalc() {
+    const base = data.regions.reduce((s, r) => s + r.gyms.reduce((a, g) => a + (gymOn(r, g) ? g.profit : 0), 0), 0) * (charm.donator ? 1.05 : 1);
+    const rows = CHARMS.map(c => {
+      const price = c.id === 'none' ? 0 : (charm.prices[c.id] ?? market?.prices?.[c.id]?.price ?? null);
+      const gain = base * c.mult;
+      return { ...c, price, gain, net: price == null ? null : gain - price, custom: c.id !== 'none' && charm.prices[c.id] != null };
+    });
+    const priced = rows.filter(r => r.net != null);
+    const best = priced.length ? priced.reduce((a, b) => (b.net > a.net ? b : a)) : null;
+    return { base, rows, best, count: data.regions.reduce((s, r) => s + r.gyms.filter(g => gymOn(r, g)).length, 0) };
+  }
+
+  async function loadMarket() {
+    if (marketState === 'loading' || marketState === 'ok') return;
+    marketState = 'loading';
+    try {
+      const res = await fetch('/api/prices');
+      if (!res.ok) throw new Error(res.status);
+      market = await res.json(); marketState = 'ok';
+    } catch { marketState = 'error'; }
+    if (data && state.method) { infoBar(); charmPanel(); }
+  }
+
+  function charmButton() {
+    const c = charmCalc();
+    const label = c.best && c.best.id !== 'none' ? `${t(c.best.nameKey)} · ${money(c.best.net)} ¥` : marketState === 'error' ? t('charm_unavailable') : t('charm_title');
+    return `<button type="button" class="charm-btn" popovertarget="money-charm" aria-label="${esc(t('charm_title'))}">${icon('savings')}<span>${esc(label)}</span></button>`;
+  }
+
+  function charmPanel() {
+    const panel = $('money-charm');
+    if (!panel || !data) return;
+    const c = charmCalc();
+    const rows = c.rows.map(r => `<tr class="${c.best && c.best.id === r.id ? 'is-best' : ''}">` +
+      `<th scope="row">${esc(t(r.nameKey))}${c.best && c.best.id === r.id ? `<span class="best-chip">${icon('check_circle')}${esc(t('charm_best'))}</span>` : ''}</th>` +
+      `<td>×${r.mult}</td>` +
+      `<td>${r.id === 'none' ? '—' : `<span class="price-field"><input type="number" min="0" step="100" inputmode="numeric" data-price="${r.id}" aria-label="${esc(t('charm_price'))} — ${esc(t(r.nameKey))}" value="${r.price ?? ''}">` +
+        (r.custom ? `<button type="button" class="btn-icon-sm" data-price-reset="${r.id}" title="${esc(t('charm_use_market'))}" aria-label="${esc(t('charm_use_market'))}">${icon('sync')}</button>` : '') + '</span>'}</td>` +
+      `<td>${money(r.gain)}</td><td class="net">${r.net == null ? '—' : money(r.net)}</td></tr>`).join('');
+    const status = marketState === 'ok' ? `${esc(t('charm_updated'))} ${new Date(market.fetchedAt).toLocaleTimeString(i18n.lang, { hour: '2-digit', minute: '2-digit' })}`
+      : marketState === 'error' ? esc(t('charm_error')) : esc(t('charm_loading'));
+    const gyms = data.regions.map(r => `<fieldset class="charm-region"><legend>${esc(r.name)}</legend>` +
+      r.gyms.map(g => `<label class="charm-gym"><input type="checkbox" data-gym="${gymKey(r, g)}"${gymOn(r, g) ? ' checked' : ''}><span>${esc(g.name)}</span><small>${money(g.profit)}</small></label>`).join('') + '</fieldset>').join('');
+    panel.innerHTML =
+      `<div class="charm-head"><h3>${icon('savings')}${esc(t('charm_title'))}</h3>` +
+      `<button type="button" class="btn-icon-sm" popovertarget="money-charm" popovertargetaction="hide" aria-label="${esc(t('charm_close'))}">${icon('close')}</button></div>` +
+      `<label class="tc-toggle"><input type="checkbox" id="charm-donator"${charm.donator ? ' checked' : ''}><span>${esc(t('charm_donator'))}</span></label>` +
+      `<table class="charm-table"><thead><tr><th></th><th></th><th>${esc(t('charm_price'))}</th><th>${esc(t('charm_gain'))}</th><th>${esc(t('charm_net'))}</th></tr></thead><tbody>${rows}</tbody></table>` +
+      `<p class="charm-status">${status} · <a href="https://pokemmohub.com/items/amulet-coin/" target="_blank" rel="noopener">pokemmohub</a></p>` +
+      `<h4>${esc(t('charm_gyms'))} <small>(${c.count} · ${money(c.base)} ¥)</small></h4><div class="charm-gyms">${gyms}</div>` +
+      `<div class="charm-foot"><button type="button" class="btn btn-outline" id="charm-reset">${icon('restart_alt')}${esc(t('charm_reset'))}</button></div>`;
+  }
+  function charmRefresh() { saveCharm(); infoBar(); charmPanel(); }
+
   /* ── Rendu des blocs ── */
   /* ── Favoris : memorises dans le navigateur ; les favoris passent en tete du menu ── */
   let favs = [];
@@ -144,13 +215,15 @@ const Money = (() => {
   function infoBar() {
     $('money-team').innerHTML = data.team.map(id => `<li data-mon="${id}" title="${esc(name(data.mons, id))}">${monSprite(id, false)}</li>`).join('');
     $('money-team').setAttribute('aria-label', t('gr_team'));
-    const total = new Intl.NumberFormat(i18n.lang).format(data.total);
+    const calc = charmCalc();
+    const total = money(calc.rows.find(r => r.id === 'amulet_coin').gain);
     const stock = data.stock.map(x => `<span class="info-stock"><b>${x.qty}</b>${esc(t('item_' + x.item))}</span>`).join('');
     $('money-info').innerHTML =
       `<span class="info-item info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></span>` +
       `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span><span class="info-stocks">${stock}</span></span>` +
       `<span class="info-item">${icon('flight')}${esc(t('gr_ocarina'))}</span>` +
-      (data.requires ? `<span class="info-item is-require">${icon('warning')}${esc(t('gr_requires'))}</span>` : '');
+      (data.requires ? `<span class="info-item is-require">${icon('warning')}${esc(t('gr_requires'))}</span>` : '') +
+      `<span class="info-item info-charm">${charmButton()}</span>`;
   }
 
   function regionTabs() {
@@ -320,14 +393,14 @@ const Money = (() => {
       const res = await fetch(METHODS[0].src);
       if (!res.ok) throw new Error(res.status);
       data = await res.json();
-      restore(); renderAll(false); persist();
+      restore(); renderAll(false); persist(); loadMarket();
     } catch { showError(); }
     loading = false;
   }
 
   function enter(method) {
     view(method);
-    if (data) { restore(); renderAll(false); persist(); } else load();
+    if (data) { restore(); renderAll(false); persist(); loadMarket(); } else load();
   }
 
   /* fresh = clic dans la barre (menu) ; sinon lien profond (#money/gym-rerun/...) */
@@ -383,6 +456,26 @@ const Money = (() => {
     }, { passive: true });
     stageBox.addEventListener('click', e => {
       const it = e.target.closest('.lin-item'); if (it && !it.classList.contains('is-current') && !it.classList.contains('is-hidden')) goTo(state.region, +it.dataset.i);
+    });
+    const panel = $('money-charm');
+    panel.addEventListener('beforetoggle', e => {                    // se place sous le bouton, a droite de l'ecran
+      if (e.newState !== 'open') return;
+      const b = document.querySelector('.charm-btn');
+      panel.style.setProperty('--charm-top', `${(b ? b.getBoundingClientRect().bottom : 120) + 8}px`);
+      charmPanel();
+    });
+    panel.addEventListener('change', e => {
+      const el = e.target;
+      if (el.id === 'charm-donator') charm.donator = el.checked;
+      else if (el.dataset.gym) charm.sel[el.dataset.gym] = el.checked;
+      else if (el.dataset.price) { const v = parseInt(el.value, 10); if (Number.isFinite(v) && v >= 0) charm.prices[el.dataset.price] = v; else delete charm.prices[el.dataset.price]; }
+      else return;
+      charmRefresh();
+    });
+    panel.addEventListener('click', e => {
+      const r = e.target.closest('[data-price-reset]');
+      if (r) { delete charm.prices[r.dataset.priceReset]; charmRefresh(); }
+      if (e.target.closest('#charm-reset')) { charm.sel = {}; charm.prices = {}; charm.donator = false; charmRefresh(); }
     });
     let resizeTimer;
     addEventListener('resize', () => {

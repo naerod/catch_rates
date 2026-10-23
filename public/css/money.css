@@ -247,3 +247,50 @@
   .money-info { gap: 0.25rem 1rem; }
   .info-team { margin-left: 0; flex-wrap: wrap; }
 }
+
+/* ── Calculateur de charm ── */
+.info-charm { margin-left: auto; }
+.charm-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 34px; padding: 0.15rem 0.75rem; cursor: pointer;
+  background: var(--accent-glow); color: var(--accent); border: 1px solid var(--accent); border-radius: var(--radius);
+  font: 600 0.85rem var(--font-head); transition: background 0.18s;
+}
+.charm-btn:hover { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+.charm-btn:focus-visible, .btn-icon-sm:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.charm-panel {
+  position: fixed; inset: auto 1rem auto auto; top: var(--charm-top, 140px); margin: 0; width: min(600px, calc(100vw - 2rem));
+  max-height: calc(100dvh - var(--charm-top, 140px) - 1rem); overflow: auto; padding: 1rem;
+  background: var(--card); color: var(--text); border: 1px solid var(--accent); border-radius: var(--radius-lg); box-shadow: var(--shadow);
+}
+.charm-panel:popover-open { animation: stage-in 0.2s ease-out; }
+.charm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.charm-head h3 { display: inline-flex; align-items: center; gap: 0.5rem; font: 700 1.25rem var(--font-head); color: var(--accent); }
+.btn-icon-sm {
+  display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; background: transparent; color: var(--text-dim);
+  border: 0; border-radius: 50%; cursor: pointer;
+}
+.btn-icon-sm:hover { background: var(--bg4); color: var(--text); }
+.charm-table { width: 100%; margin: 0.75rem 0 0.25rem; border-collapse: collapse; font-size: 0.9rem; }
+.charm-table th, .charm-table td { padding: 0.35rem 0.5rem; text-align: right; border-bottom: 1px solid var(--card-border); font-variant-numeric: tabular-nums; }
+.charm-table th:first-child, .charm-table td:first-child { text-align: left; }
+.charm-table thead th { font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.charm-table tbody th { font-weight: 600; }
+.charm-table tr.is-best { background: var(--accent-glow); }
+.charm-table tr.is-best .net { color: var(--accent); font-weight: 700; }
+.best-chip { display: inline-flex; align-items: center; gap: 0.2rem; margin-left: 0.5rem; padding: 0 0.4rem; border-radius: 1em; background: var(--accent); color: var(--on-accent); font-size: 0.7rem; font-weight: 700; }
+.best-chip .material-symbols-outlined { font-size: 14px; }
+.price-field { display: inline-flex; align-items: center; gap: 0.15rem; }
+.price-field input { width: 7.5rem; padding: 0.25rem 0.4rem; text-align: right; background: var(--input-bg); color: var(--text); border: 1px solid var(--card-border); border-radius: 6px; font: inherit; }
+.price-field input:focus-visible { outline: 2px solid var(--accent); }
+.charm-status { margin: 0.25rem 0 0.75rem; font-size: 0.8rem; color: var(--text-muted); }
+.charm-panel h4 { margin-bottom: 0.5rem; font: 700 1rem var(--font-head); }
+.charm-panel h4 small { font-weight: 500; color: var(--text-muted); }
+.charm-gyms { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
+.charm-region { padding: 0.4rem 0.6rem; border: 1px solid var(--card-border); border-radius: var(--radius); }
+.charm-region legend { padding: 0 0.3rem; font: 600 0.8rem var(--font-head); color: var(--text-dim); }
+.charm-gym { display: flex; align-items: center; gap: 0.4rem; min-height: 26px; font-size: 0.82rem; cursor: pointer; }
+.charm-gym input { accent-color: var(--accent); }
+.charm-gym small { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.charm-foot { display: flex; justify-content: flex-end; margin-top: 0.75rem; }
+.charm-foot .btn { min-height: 34px; gap: 0.35rem; }
+@media (prefers-reduced-motion: reduce) { .charm-panel:popover-open { animation: none; } }

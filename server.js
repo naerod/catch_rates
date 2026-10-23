@@ -346,6 +346,35 @@ app.delete('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
   res.json({ success: true });
 });
 
+// ─── Prix du marche des charms (GTL PokeMMO) ───────────────────────────────────
+// Meme source que CharmCalc : l'API publique apis.fiereu.de. Mise en cache cote serveur (10 min),
+// le navigateur n'appelle jamais l'API externe ; si elle tombe, on sert le dernier prix connu.
+const CHARM_IDS = { amulet_coin: 5223, riches_75: 1412, riches_100: 1413 };
+let priceCache = null;           // { at, prices }
+app.get('/api/prices', async (req, res) => {
+  const fresh = priceCache && Date.now() - priceCache.at < 10 * 60 * 1000;
+  if (!fresh) {
+    try {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 8000);
+      const r = await fetch('https://apis.fiereu.de/pokemmoprices/v1/items', { signal: ctl.signal });
+      clearTimeout(timer);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const list = await r.json();
+      const prices = {};
+      for (const [key, id] of Object.entries(CHARM_IDS)) {
+        const it = list.find(i => i.item_id === id);
+        if (it) prices[key] = { price: it.price, listings: it.listings, updated: it.last_updated };
+      }
+      if (Object.keys(prices).length === 3) priceCache = { at: Date.now(), prices };
+    } catch (err) {
+      console.error('prices:', err.message);
+    }
+  }
+  if (!priceCache) return res.status(502).json({ error: 'Market prices unavailable' });
+  res.json({ fetchedAt: priceCache.at, stale: !fresh && Date.now() - priceCache.at >= 10 * 60 * 1000, prices: priceCache.prices });
+});
+
 // ─── Serve SPA ─────────────────────────────────────────────────────────────────
 // Journal des versions (pas de .html dans les URL publiques)
 app.get('/changelog', (req, res) => {

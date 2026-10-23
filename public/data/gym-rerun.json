@@ -1,5 +1,5 @@
 {
-  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier.",
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier. gym.profit = gains de base d'une arene (source CharmCalc, c4vv.github.io/CharmCalc) ; Striaton = 3 champions ; Undella = Marian + Yan (optionnel, decoche par defaut).",
   "total": 442000,
   "team": [
     "typhlosion",
@@ -321,7 +321,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 9360
         },
         {
           "id": "lavaridge",
@@ -347,7 +348,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 8944
         },
         {
           "id": "mauville",
@@ -375,7 +377,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 8840
         },
         {
           "id": "dewford",
@@ -397,7 +400,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "profit": 8736
         },
         {
           "id": "fortree",
@@ -424,7 +428,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 9152
         },
         {
           "id": "rustboro",
@@ -438,7 +443,8 @@
             {
               "s": "blastoise.water_spout + weezing.assurance"
             }
-          ]
+          ],
+          "profit": 8632
         },
         {
           "id": "petalburg",
@@ -465,7 +471,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 9048
         }
       ]
     },
@@ -497,7 +504,8 @@
               "i": 1,
               "s": "@vs #407 , typhlosion.eruption + togekiss.hyper_voice"
             }
-          ]
+          ],
+          "profit": 8736
         },
         {
           "id": "veilstone",
@@ -519,7 +527,8 @@
               "i": 1,
               "s": "@vs #620 , typhlosion.incinerate + togekiss.hyper_voice"
             }
-          ]
+          ],
+          "profit": 8944
         },
         {
           "id": "oreburgh",
@@ -542,7 +551,8 @@
               "i": 1,
               "s": "@vs #248 @and #530 @lead , @if #346 @and #80 @sent_together , @use weezing.assurance @on #346 @turns4"
             }
-          ]
+          ],
+          "profit": 8632
         },
         {
           "id": "canalave",
@@ -575,7 +585,8 @@
           "skip": true,
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 9152
         },
         {
           "id": "pastoria",
@@ -591,7 +602,8 @@
             {
               "s": "blastoise.fake_out ( @prioritize #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
             }
-          ]
+          ],
+          "profit": 9048
         }
       ]
     },
@@ -633,7 +645,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "profit": 8840
         },
         {
           "id": "pewter",
@@ -670,7 +683,8 @@
                 "item": "black_glasses"
               }
             ]
-          }
+          },
+          "profit": 8632
         },
         {
           "id": "cinnabar",
@@ -697,7 +711,8 @@
                 "item": "choice_band"
               }
             ]
-          }
+          },
+          "profit": 9256
         },
         {
           "id": "celadon",
@@ -726,7 +741,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 8944
         },
         {
           "id": "saffron",
@@ -754,7 +770,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "profit": 9152
         },
         {
           "id": "cerulean",
@@ -773,7 +790,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 8736
         }
       ]
     },
@@ -810,7 +828,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 9152
         },
         {
           "id": "azalea",
@@ -837,7 +856,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 8736
         },
         {
           "id": "violet",
@@ -859,7 +879,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "profit": 8632
         },
         {
           "id": "blackthorn",
@@ -879,7 +900,8 @@
               "i": 1,
               "s": "@vs #9 , blastoise.fake_out @on #9"
             }
-          ]
+          ],
+          "profit": 9360
         },
         {
           "id": "cianwood",
@@ -893,7 +915,8 @@
             {
               "s": "togekiss.hyper_voice + garchomp.earthquake"
             }
-          ]
+          ],
+          "profit": 9048
         },
         {
           "id": "goldenrod",
@@ -918,7 +941,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 8840
         },
         {
           "id": "mahogany",
@@ -959,7 +983,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 9256
         }
       ]
     },
@@ -986,7 +1011,8 @@
           ],
           "after": {
             "heal": "maybe"
-          }
+          },
+          "profit": 8840
         },
         {
           "id": "nimbasa",
@@ -1003,7 +1029,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "profit": 8944
         },
         {
           "id": "mistralton",
@@ -1031,7 +1058,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "profit": 9152
         },
         {
           "id": "driftveil",
@@ -1056,7 +1084,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "profit": 9048
         },
         {
           "id": "opelucid",
@@ -1081,7 +1110,8 @@
           ],
           "after": {
             "heal": "maybe"
-          }
+          },
+          "profit": 9360
         },
         {
           "id": "striaton",
@@ -1112,7 +1142,8 @@
           ],
           "after": {
             "heal": "maybe"
-          }
+          },
+          "profit": 25896
         },
         {
           "id": "nacrene",
@@ -1139,14 +1170,17 @@
           ],
           "after": {
             "heal": "maybe"
-          }
+          },
+          "profit": 8736
         },
         {
           "id": "undella",
           "name": "Undella",
           "bonus": true,
           "tip": "tip_route13",
-          "lines": []
+          "lines": [],
+          "profit": 10800,
+          "optional": true
         }
       ]
     }

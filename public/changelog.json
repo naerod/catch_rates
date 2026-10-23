@@ -2,6 +2,24 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "2.3.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Calculateur de charm",
+        "en": "Charm calculator"
+      },
+      "fr": [
+        "Nouveau calculateur de charm dans naerod's 6 Pillars : il compare Pièce Rune (×1,5), Charme Richesse 75 % (×1,75) et 100 % (×2) et affiche le meilleur choix.",
+        "Les arènes sont celles du guide, cochées automatiquement (modifiables) ; les prix du marché sont récupérés automatiquement et restent modifiables à la main.",
+        "Option Donateur (+5 % de gains)."
+      ],
+      "en": [
+        "New charm calculator in naerod's 6 Pillars: it compares Amulet Coin (×1.5), Riches Charm 75% (×1.75) and 100% (×2) and shows the best choice.",
+        "Gyms are the guide's, ticked automatically (editable); market prices are fetched automatically and can be edited by hand.",
+        "Donator option (+5% gains)."
+      ]
+    },
+    {
       "v": "2.2.0",
       "date": "2026-10-24",
       "title": {
