@@ -8,29 +8,30 @@
 /* ── Dark theme (default) ── */
 :root,
 [data-theme="dark"] {
-  --bg: #0a0e17;
-  --bg2: #0f1520;
-  --bg3: #151c2e;
-  --bg4: #1a2236;
-  --card: #111827;
-  --card-border: #1e2d4a;
-  --accent: #00c8ff;
-  --accent2: #0077ff;
-  --accent-glow: rgba(0,200,255,0.13);
-  --text: #e2e8f0;
-  --text-muted: #64748b;
-  --text-dim: #94a3b8;
+  --bg: #111111;
+  --bg2: #151515;
+  --bg3: #1b1b1b;
+  --bg4: #222222;
+  --card: #151515;
+  --card-border: #2c2c2c;
+  --accent: #f5b942;
+  --on-accent: #1a1200;
+  --accent2: #e0a020;
+  --accent-glow: rgba(245,185,66,0.13);
+  --text: #ececec;
+  --text-muted: #8a8a8a;
+  --text-dim: #b0b0b0;
   --green: #22c55e;
   --yellow: #eab308;
   --red: #ef4444;
   --purple: #a855f7;
   --orange: #f97316;
   --shadow: 0 4px 24px rgba(0,0,0,0.5);
-  --glow: 0 0 20px rgba(0,200,255,0.18);
-  --slider-track: #1e2d4a;
-  --slider-thumb: #00c8ff;
-  --input-bg: #151c2e;
-  --toggle-bg: #151c2e;
+  --glow: 0 0 20px rgba(245,185,66,0.18);
+  --slider-track: #2c2c2c;
+  --slider-thumb: #f5b942;
+  --input-bg: #1b1b1b;
+  --toggle-bg: #1b1b1b;
   --font-head: 'Rajdhani', sans-serif;
   --font-body: 'Exo 2', sans-serif;
   --radius: 10px;
@@ -45,9 +46,10 @@
   --bg4: #cbd5e1;
   --card: #ffffff;
   --card-border: #cbd5e1;
-  --accent: #0077cc;
-  --accent2: #005fa3;
-  --accent-glow: rgba(0,119,204,0.1);
+  --accent: #8a5a00;
+  --on-accent: #ffffff;
+  --accent2: #b36b00;
+  --accent-glow: rgba(179,107,0,0.1);
   --text: #0f172a;
   --text-muted: #64748b;
   --text-dim: #475569;
@@ -57,9 +59,9 @@
   --purple: #7c3aed;
   --orange: #ea580c;
   --shadow: 0 4px 16px rgba(0,0,0,0.12);
-  --glow: 0 0 16px rgba(0,119,204,0.15);
+  --glow: 0 0 16px rgba(179,107,0,0.15);
   --slider-track: #cbd5e1;
-  --slider-thumb: #0077cc;
+  --slider-thumb: #8a5a00;
   --input-bg: #f8fafc;
   --toggle-bg: #e2e8f0;
 }
@@ -76,7 +78,7 @@
   --nrd-card: var(--card);
   --nrd-border: var(--card-border);
   --nrd-accent: var(--accent);
-  --nrd-on-accent: #001018;
+  --nrd-on-accent: var(--on-accent);
   --nrd-danger: var(--red);
   --nrd-header-bg: var(--bg2);
 }
@@ -236,7 +238,7 @@ main {
   font-weight: 700;
   color: var(--accent);
 }
-[data-theme="dark"] .page-title h1 { text-shadow: 0 0 30px rgba(0,200,255,0.25); }
+[data-theme="dark"] .page-title h1 { text-shadow: 0 0 30px rgba(245,185,66,0.25); }
 .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
 
 /* ══════════════ SEARCH ══════════════ */
@@ -349,7 +351,7 @@ main {
   image-rendering: pixelated;
 }
 [data-theme="dark"] .pokemon-sprite {
-  filter: drop-shadow(0 0 10px rgba(0,200,255,0.25));
+  filter: drop-shadow(0 0 10px rgba(245,185,66,0.25));
 }
 
 .pokemon-id { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.15rem; }
@@ -546,7 +548,7 @@ main {
 .chip-para   { background: rgba(234,179,8,0.12);  color: var(--yellow); border-color: rgba(234,179,8,0.3); }
 .chip-poison { background: rgba(192,132,252,0.1); color: #c084fc;       border-color: rgba(192,132,252,0.3); }
 .chip-burn   { background: rgba(249,115,22,0.12); color: var(--orange); border-color: rgba(249,115,22,0.3); }
-.chip-night  { background: rgba(0,200,255,0.1);   color: var(--accent); border-color: rgba(0,200,255,0.3); }
+.chip-night  { background: rgba(245,185,66,0.1);   color: var(--accent); border-color: rgba(245,185,66,0.3); }
 .chip-timer  { background: rgba(34,197,94,0.1);   color: var(--green);  border-color: rgba(34,197,94,0.3); }
 
 /* ══════════════ MORE PARAMS ══════════════ */
@@ -630,7 +632,7 @@ main {
   border: 3px solid var(--card);
   cursor: pointer;
 }
-#hp-slider::-webkit-slider-thumb:hover { box-shadow: 0 0 0 4px rgba(0,200,255,0.2); }
+#hp-slider::-webkit-slider-thumb:hover { box-shadow: 0 0 0 4px rgba(245,185,66,0.2); }
 
 .hp-slider-labels {
   display: flex;
@@ -735,7 +737,7 @@ main {
 .ball-grid-item:hover { border-color: var(--accent); box-shadow: var(--glow); }
 .ball-grid-item.ball-unavailable { opacity: 0.38; }
 .ball-grid-item.ball-guaranteed { border-color: var(--green); }
-.ball-grid-item.ball-best { border-color: var(--accent); box-shadow: 0 0 12px rgba(0,200,255,0.15); }
+.ball-grid-item.ball-best { border-color: var(--accent); box-shadow: 0 0 12px rgba(245,185,66,0.15); }
 .ball-grid-item.ball-cheapest { border-color: var(--green); box-shadow: 0 0 12px rgba(34,197,94,0.15); }
 
 .ball-grid-img { width: 36px; height: 36px; image-rendering: pixelated; }
@@ -988,8 +990,8 @@ input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--accent);
   border: 2px solid transparent;
   white-space: nowrap;
 }
-.btn-primary { background: var(--accent2); color: #fff; }
-.btn-primary:hover { background: var(--accent); box-shadow: 0 0 14px rgba(0,200,255,0.25); }
+.btn-primary { background: var(--accent2); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent); box-shadow: 0 0 14px rgba(245,185,66,0.25); }
 .btn-outline { background: transparent; border-color: var(--card-border); color: var(--text-dim); }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 .btn-danger-outline { background: transparent; border-color: rgba(239,68,68,0.3); color: var(--red); }
@@ -1236,7 +1238,7 @@ footer {
 .user-action:hover { background: var(--card-border); color: var(--accent); }
 
 .btn-sso { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.6rem 1rem; background: var(--card-bg); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background 0.15s, box-shadow 0.15s; margin-bottom: 0.5rem; }
-.btn-sso:hover { background: rgba(0,200,255,0.08); box-shadow: 0 0 12px rgba(0,200,255,0.2); }
+.btn-sso:hover { background: rgba(245,185,66,0.08); box-shadow: 0 0 12px rgba(245,185,66,0.2); }
 
 .admin-login-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--text-dim); font-size: 0.8rem; margin: 0.75rem 0; }
 .admin-login-divider::before, .admin-login-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }

@@ -56,7 +56,7 @@
   transition: border-color 0.18s, color 0.18s, background 0.18s;
 }
 .region-tab:hover { border-color: var(--accent); color: var(--text); }
-.region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+.region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: var(--on-accent); }
 .money-nav { display: flex; align-items: center; gap: 0.75rem; }
 .money-nav .btn { min-height: 44px; }
 .money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -91,7 +91,7 @@
 .gym-title .material-symbols-outlined { margin-left: auto; color: var(--green); font-size: 1.2em; }
 .gym-num {
   display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; border-radius: 50%;
-  background: var(--accent2); color: #fff; font-size: 0.8em;
+  background: var(--accent2); color: var(--on-accent); font-size: 0.8em;
 }
 .gym-tip { display: flex; align-items: center; gap: 0.5em; font-size: 0.85em; color: var(--text-dim); }
 .gym-tip .material-symbols-outlined { font-size: 1.2em; }

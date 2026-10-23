@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.6.1",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Nouvelle palette",
+        "en": "New palette"
+      },
+      "fr": [
+        "Fond neutre #111111 / #151515 en thème sombre, à la place du bleu nuit.",
+        "Nouvelle couleur d'accentuation ambre, assortie à l'Amulet Coin."
+      ],
+      "en": [
+        "Neutral #111111 / #151515 background in dark theme, replacing the navy blue.",
+        "New amber accent colour, matching the Amulet Coin."
+      ]
+    },
+    {
       "v": "1.6.0",
       "date": "2026-10-23",
       "title": {
