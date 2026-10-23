@@ -13,24 +13,20 @@ const Money = (() => {
 
   let data = null;
   let loading = false;
-  const state = { method: null, region: 0, gym: 0 };
+  const state = { method: null, region: 0 };
 
-  /* ── Persistance : hash (#money/gym-rerun/kanto/3) puis localStorage ── */
+  /* ── Persistance : hash (#money/gym-rerun/kanto) puis localStorage ── */
   function restore() {
     try { Object.assign(state, JSON.parse(localStorage.getItem(STORE)) || {}); } catch { /* stockage indisponible */ }
     const seg = location.hash.slice(1).split('/').slice(1);
     if (seg[0] === state.method) seg.shift();
     const ri = data.regions.findIndex(r => r.id === seg[0]);
-    if (ri >= 0) { state.region = ri; state.gym = Math.max(0, (+seg[1] || 1) - 1); }
-    clamp();
-  }
-  function clamp() {
+    if (ri >= 0) state.region = ri;
     state.region = Math.min(Math.max(+state.region || 0, 0), data.regions.length - 1);
-    state.gym = Math.min(Math.max(+state.gym || 0, 0), data.regions[state.region].gyms.length - 1);
   }
   function persist() {
-    try { localStorage.setItem(STORE, JSON.stringify({ region: state.region, gym: state.gym })); } catch { /* idem */ }
-    history.replaceState(null, '', `#money/${state.method}/${data.regions[state.region].id}/${state.gym + 1}`);
+    try { localStorage.setItem(STORE, JSON.stringify({ region: state.region })); } catch { /* idem */ }
+    history.replaceState(null, '', `#money/${state.method}/${data.regions[state.region].id}`);
   }
 
   /* ── Rendu des jetons ── */
@@ -70,6 +66,7 @@ const Money = (() => {
   /* Bascule menu <-> methode, avec fondu (cf. DA : tout ce qui apparait s'anime). */
   function view(method) {
     state.method = method;
+    $('page-money').classList.toggle('in-method', !!method);
     $('money-menu').hidden = !!method;
     $('money-method').hidden = !method;
     const shown = method ? $('money-method') : $('money-menu');
@@ -80,13 +77,13 @@ const Money = (() => {
 
   function infoBar() {
     const total = new Intl.NumberFormat(i18n.lang).format(data.total);
-    const stock = data.stock.map(s => `<li>${s.qty} × ${esc(t('item_' + s.item))}</li>`).join('');
+    const stock = data.stock.map(x => `${x.qty} × ${esc(t('item_' + x.item))}`).join(' · ');
     const team = data.team.map(id => `<li data-mon="${id}">${monSprite(id)}<b>${esc(name(data.mons, id))}</b></li>`).join('');
     $('money-info').innerHTML =
-      `<div class="info-block info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></div>` +
-      `<div class="info-block"><span class="info-label">${esc(t('gr_stock'))}</span><ul class="info-stock">${stock}</ul>` +
-      `<span class="info-note">${icon('flight')}${esc(t('gr_ocarina'))}</span></div>` +
-      `<div class="info-block info-team"><span class="info-label">${esc(t('gr_team'))}</span><ul>${team}</ul></div>`;
+      `<span class="info-item info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></span>` +
+      `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span>${stock}</span>` +
+      `<span class="info-item">${icon('flight')}${esc(t('gr_ocarina'))}</span>` +
+      `<ul class="info-item info-team" aria-label="${esc(t('gr_team'))}">${team}</ul>`;
   }
 
   function regionTabs() {
@@ -95,11 +92,10 @@ const Money = (() => {
   }
 
   function controls() {
-    const r = data.regions[state.region];
-    const last = state.region === data.regions.length - 1 && state.gym === r.gyms.length - 1;
-    $('money-progress').textContent = `${state.gym + 1} / ${r.gyms.length}`;
+    const last = state.region === data.regions.length - 1;
+    $('money-progress').textContent = `${state.region + 1} / ${data.regions.length}`;
     const prev = $('money-prev'), next = $('money-next');
-    prev.disabled = state.region === 0 && state.gym === 0;
+    prev.disabled = state.region === 0;
     prev.title = prev.disabled ? t('gr_first') : '';
     next.querySelector('span:first-child').textContent = t(last ? 'gr_restart' : 'gr_next');
     next.querySelector('.material-symbols-outlined').textContent = last ? 'restart_alt' : 'arrow_forward';
@@ -108,40 +104,46 @@ const Money = (() => {
   function stage(animate) {
     const r = data.regions[state.region];
     const cards = r.gyms.map((g, i) => {
-      const st = i < state.gym ? 'past' : i === state.gym ? 'current' : 'next';
       const tip = g.tip ? `<p class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
-      return `<article class="gym" data-state="${st}" data-gym="${i}"${i === state.gym ? ' aria-current="step"' : ''}>` +
-        `<header class="gym-head"><img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="768" height="480" loading="lazy">` +
-        `<div class="gym-heading"><h3 class="gym-title"><span class="gym-num">${i + 1}</span>${esc(g.name)}` +
-        `${i < state.gym ? icon('check_circle') : ''}</h3>${tip}</div></header>` +
-        `<div class="gym-lines">${g.lines.map(line).join('')}</div></article>`;
+      return `<article class="gym">` +
+        `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="768" height="480" loading="lazy">` +
+        `<div class="gym-body"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}` +
+        `${g.lines.map(line).join('')}</div></article>`;
     }).join('');
     const el = $('money-stage');
     el.innerHTML = `<div class="stage-body">${cards}</div>`;
-    el.setAttribute('aria-label', `${r.name}`);
+    el.setAttribute('aria-label', r.name);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
-  function renderAll(animate) {
-    infoBar(); regionTabs(); controls(); stage(animate);
+  /* Plus grand texte qui tienne dans la fenetre : recherche par dichotomie sur la taille de police. */
+  function fit() {
+    const box = $('money-stage'), body = box.querySelector('.stage-body');
+    if (!body) return;
+    body.style.fontSize = '';
+    if (matchMedia('(max-width: 899px)').matches) return;     // mobile : la page defile
+    let lo = 11, hi = 28;
+    for (let i = 0; i < 7; i++) {
+      const mid = (lo + hi) / 2;
+      body.style.fontSize = mid + 'px';
+      if (body.scrollHeight <= box.clientHeight) lo = mid; else hi = mid;
+    }
+    body.style.fontSize = lo + 'px';
   }
 
-  /* ── Navigation ── */
-  function go(region, gym) {
-    const regionChanged = region !== state.region;
-    state.region = region; state.gym = gym;
-    clamp(); persist(); renderAll(regionChanged);
+  function renderAll(animate) {
+    infoBar(); regionTabs(); controls(); stage(animate); fit();
+  }
+
+  /* ── Navigation : de region en region ── */
+  function go(region) {
+    const changed = region !== state.region;
+    state.region = region; persist(); renderAll(changed);
   }
   function step(dir) {
-    const last = data.regions.length - 1;
-    const count = i => data.regions[i].gyms.length;
-    const { region, gym } = state;
-    if (dir > 0) {
-      if (gym < count(region) - 1) return go(region, gym + 1);
-      return go(region < last ? region + 1 : 0, 0);          // fin du parcours : on recommence
-    }
-    if (gym > 0) return go(region, gym - 1);
-    if (region > 0) go(region - 1, count(region - 1) - 1);
+    const n = data.regions.length;
+    if (dir > 0) return go((state.region + 1) % n);          // apres la derniere : on recommence
+    if (state.region > 0) go(state.region - 1);
   }
 
   /* ── Chargement ── */
@@ -185,16 +187,18 @@ const Money = (() => {
     $('money-prev').addEventListener('click', () => step(-1));
     $('money-next').addEventListener('click', () => step(1));
     $('money-regions').addEventListener('click', e => {
-      const b = e.target.closest('[data-region]'); if (b) go(+b.dataset.region, 0);
-    });
-    $('money-stage').addEventListener('click', e => {
-      const g = e.target.closest('[data-gym]'); if (g) go(state.region, +g.dataset.gym);
+      const b = e.target.closest('[data-region]'); if (b) go(+b.dataset.region);
     });
     document.addEventListener('keydown', e => {
       if (!$('page-money').classList.contains('active') || !data || !state.method) return;
       if (e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    });
+    let resizeTimer;
+    addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { if (state.method && data && !$('money-method').hidden) fit(); }, 100);
     });
     document.addEventListener('langchange', () => {
       if (!$('page-money').classList.contains('active')) return;

@@ -2,6 +2,26 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.7.0",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "naerod's 6 Pillars : une région par écran",
+        "en": "naerod's 6 Pillars: one region per screen"
+      },
+      "fr": [
+        "La méthode s'appelle désormais « naerod's 6 Pillars ».",
+        "Mise en page compacte : chaque région tient entièrement dans la fenêtre, le texte s'adapte à la taille de l'écran.",
+        "« Suivant » et la flèche droite passent à la région suivante, « Précédent » et la flèche gauche reviennent en arrière.",
+        "Icône de l'onglet (favicon) : la Timer Ball."
+      ],
+      "en": [
+        "The method is now called \"naerod's 6 Pillars\".",
+        "Compact layout: each region fits entirely in the window, and the text adapts to the screen size.",
+        "\"Next\" and the right arrow go to the next region, \"Previous\" and the left arrow go back.",
+        "Tab icon (favicon): the Timer Ball."
+      ]
+    },
+    {
       "v": "1.6.4",
       "date": "2026-10-23",
       "title": {
