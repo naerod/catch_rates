@@ -92,9 +92,9 @@
 .money-stage { flex: 1; min-height: 0; }
 /* La taille du texte est ajustee par money.js (fit) pour que la region tienne dans la fenetre. */
 .stage-body { font-size: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5em; align-items: start; }
-.stage-col { display: flex; flex-direction: column; gap: 0.5em; min-width: 0; }
+.stage-col { display: flex; flex-direction: column; gap: 0.25em; min-width: 0; }
 @media (max-width: 899px) {                       /* mobile : une colonne, ordre des arenes conserve */
-  .stage-body { grid-template-columns: 1fr; }
+  .stage-body { grid-template-columns: minmax(0, 1fr); }
   .stage-col { display: contents; }
   .gym { order: var(--n); }
 }
@@ -197,10 +197,53 @@
 .gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
 
 /* Pied de carte : soin conseille, objets a changer avant le combat suivant */
-.gym-after { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; margin-top: 0.1em; }
+.gym-between { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.4em; font-size: 0.9em; }
 .after-chip.is-heal { color: var(--green); }
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
 .after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
 .after-chip.is-swap .sprite { width: calc(var(--w) * 0.017em); }
 .swap-item { width: 1.5em; height: 1.5em; }
 .info-item.is-require { color: var(--orange); }
+
+/* Mode d'affichage et timecodes */
+.money-mode { display: inline-flex; border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.money-mode button {
+  display: inline-grid; place-items: center; width: 40px; height: 34px; background: transparent; color: var(--text-muted);
+  border: 0; cursor: pointer; transition: background 0.18s, color 0.18s;
+}
+.money-mode button + button { border-left: 1px solid var(--card-border); }
+.money-mode button:hover { color: var(--text); }
+.money-mode button[aria-pressed="true"] { background: var(--accent-glow); color: var(--accent); }
+.money-mode button:focus-visible, .tc-toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tc-toggle { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--text-dim); cursor: pointer; white-space: nowrap; }
+.tc-toggle input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.tc-toggle .material-symbols-outlined { font-size: 18px; }
+.no-tc .gym-chip.is-time { display: none; }
+
+/* ── Mode lineaire : aimant sur l'arene en cours ── */
+.money-stage { position: relative; }
+.lin-stage { position: absolute; inset: 0; max-width: 1240px; margin: 0 auto; overflow: hidden; font-size: 20px; }
+.lin-item {
+  position: absolute; left: 0; right: 0; top: 0; transform-origin: top center; display: flex; flex-direction: column; gap: 0.35em;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, filter 0.4s ease; will-change: transform;
+}
+.lin-item.is-past { opacity: 0.5; filter: grayscale(0.9) brightness(0.85); cursor: pointer; }
+.lin-item.is-next { opacity: 0.9; cursor: pointer; }
+.lin-item.is-hidden { opacity: 0; pointer-events: none; }
+.lin-item.is-current .gym { border-color: var(--accent); box-shadow: var(--glow); }
+.lin-item .gym-line-body { flex-wrap: wrap; }
+.lin-stage.is-flat { position: static; overflow: visible; font-size: 16px; display: flex; flex-direction: column; gap: 0.75rem; }
+.lin-stage.is-flat .lin-item { position: static; opacity: 1; filter: none; }
+@media (prefers-reduced-motion: reduce) { .lin-item, .money-mode button { transition: none; } }
+
+/* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
+@media (max-width: 899px) {
+  .money-regions { flex-wrap: wrap; }
+  .gym { flex-direction: column; }
+  .gym-map { width: 100%; max-width: 360px; }
+  .gym-seg, .gym-line-body { flex-wrap: wrap; }
+  .gym-top { flex-wrap: wrap; }
+  .gym-tip { white-space: normal; }
+  .money-info { gap: 0.25rem 1rem; }
+  .info-team { margin-left: 0; flex-wrap: wrap; }
+}

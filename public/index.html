@@ -218,6 +218,11 @@
           </button>
           <h2 id="money-method-name" class="money-method-name"></h2>
           <span id="money-fav"></span>
+          <div id="money-mode" class="money-mode" role="group" aria-label="View mode">
+            <button type="button" data-mode="grid" aria-pressed="true"><span class="material-symbols-outlined" aria-hidden="true">grid_view</span></button>
+            <button type="button" data-mode="linear" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">view_agenda</span></button>
+          </div>
+          <label class="tc-toggle"><input type="checkbox" id="money-tc" checked><span class="material-symbols-outlined" aria-hidden="true">timer</span><span data-i18n="gr_timecodes">Timecodes</span></label>
           <div id="money-regions" class="money-regions" role="group" aria-label="Regions"></div>
           <ul id="money-team" class="info-team" aria-label="Team"></ul>
           <div class="money-nav">
