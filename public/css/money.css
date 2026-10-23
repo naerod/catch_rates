@@ -1,0 +1,133 @@
+/* ════════════════════════════════════════════
+   Money making — page des methodes de farm
+   ════════════════════════════════════════════ */
+
+/* Couleurs des Pokemon de l'equipe : lisibles sur fond sombre ET clair (AA) */
+:root, [data-theme="dark"] {
+  --mon-typhlosion: #ff6b6b; --mon-togekiss: var(--text); --mon-blastoise: #5b9bff;
+  --mon-vanilluxe: #8fc8ff; --mon-weezing: #e07bc8; --mon-garchomp: #b983ff;
+}
+[data-theme="light"] {
+  --mon-typhlosion: #c21f1f; --mon-togekiss: var(--text); --mon-blastoise: #1d4ed8;
+  --mon-vanilluxe: #0b6fa8; --mon-weezing: #a3238e; --mon-garchomp: #7c2dd1;
+}
+[data-mon="typhlosion"] { --mon: var(--mon-typhlosion); }
+[data-mon="togekiss"]   { --mon: var(--mon-togekiss); }
+[data-mon="blastoise"]  { --mon: var(--mon-blastoise); }
+[data-mon="vanilluxe"]  { --mon: var(--mon-vanilluxe); }
+[data-mon="weezing"]    { --mon: var(--mon-weezing); }
+[data-mon="garchomp"]   { --mon: var(--mon-garchomp); }
+
+/* Cette page a besoin de largeur : l'ecran d'une region fait 16:9 */
+.layout-grid.is-wide { grid-template-columns: 1fr minmax(0, 1800px) 1fr; }
+.layout-grid.is-wide .history-panel { display: none; }
+
+/* ── Methodes ── */
+.money-methods { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.money-method {
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0.4rem 1rem;
+  background: var(--card); color: var(--text-dim); border: 2px solid var(--card-border);
+  border-radius: var(--radius); font: 600 1rem var(--font-head); cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.money-method:hover { border-color: var(--accent); color: var(--text); }
+.money-method[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+/* ── Bandeau d'infos ── */
+.money-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+.info-block {
+  display: flex; flex-direction: column; gap: 0.25rem; padding: 0.75rem 1rem;
+  background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
+}
+.info-label { font: 600 0.8rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.info-total strong { font: 700 1.75rem var(--font-head); color: var(--accent); }
+.info-note { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.85rem; color: var(--text-dim); }
+.info-note .material-symbols-outlined { font-size: 18px; }
+.info-stock, .info-team ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; list-style: none; }
+.info-team ul li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
+.info-team .sprite { height: 32px; width: auto; }
+
+/* ── Barre d'actions : precedent a gauche, suivant a droite ── */
+.money-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; }
+.money-regions { display: flex; gap: 0.5rem; }
+.region-tab {
+  min-height: 44px; padding: 0.4rem 1rem; background: transparent; color: var(--text-dim);
+  border: 2px solid var(--card-border); border-radius: var(--radius); font: 600 1rem var(--font-head); cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.region-tab:hover { border-color: var(--accent); color: var(--text); }
+.region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+.money-nav { display: flex; align-items: center; gap: 0.75rem; }
+.money-nav .btn { min-height: 44px; }
+.money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.money-progress { min-width: 4ch; text-align: center; font: 600 1rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+/* ── Scene 16:9 : tous les combats d'une region sur un ecran ── */
+.money-stage { container-type: inline-size; }
+.stage-body {
+  --spr: max(0.8px, calc(100cqw / 1760));                   /* 1 pixel de sprite a 1760 px de large */
+  font-size: max(0.875rem, calc(100cqw / 1760 * 19));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22em), 1fr)); gap: 1em;
+}
+@container (min-width: 1100px) {
+  .stage-body { aspect-ratio: 16 / 9; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); }
+}
+.money-stage.is-entering .stage-body { animation: stage-in 0.24s ease-out; }
+@keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.gym {
+  display: flex; flex-direction: column; gap: 0.75em; padding: 1em;
+  background: var(--card); border: 2px solid var(--card-border); border-radius: var(--radius-lg); cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+}
+.gym[data-state="past"] { opacity: 0.5; }
+.gym[data-state="current"] { border-color: var(--accent); box-shadow: var(--glow); transform: scale(1.01); }
+.gym:hover { border-color: var(--accent); }
+.gym-head { display: flex; align-items: center; gap: 1em; }
+.gym-map { flex: none; width: 30%; height: auto; aspect-ratio: 768 / 480; border-radius: var(--radius); background: var(--bg3); }
+.gym-heading { display: flex; flex-direction: column; gap: 0.5em; flex: 1; min-width: 0; }
+.gym-lines { display: flex; flex-direction: column; gap: 0.5em; min-width: 0; }
+.gym-title { display: flex; align-items: center; gap: 0.5em; font: 700 1.5em var(--font-head); color: var(--text); }
+.gym-title .material-symbols-outlined { margin-left: auto; color: var(--green); font-size: 1.2em; }
+.gym-num {
+  display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; border-radius: 50%;
+  background: var(--accent2); color: #fff; font-size: 0.8em;
+}
+.gym-tip { display: flex; align-items: center; gap: 0.5em; font-size: 0.85em; color: var(--text-dim); }
+.gym-tip .material-symbols-outlined { font-size: 1.2em; }
+
+/* ── Lignes de strategie ── */
+.gym-line { display: flex; align-items: flex-start; gap: 0.5em; line-height: 1.3; }
+.gym-line.is-variant { font-size: 0.92em; color: var(--text-dim); }
+.gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
+.gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25em 0.5em; }
+.tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.25em; color: var(--mon, var(--text)); }
+.tk-move { font-weight: 700; }
+.tk-plus, .tk-raw { color: var(--text-muted); font-weight: 700; }
+.tk-word { font-style: italic; }
+.tk-opp { display: inline-flex; align-items: center; gap: 0.25em; }
+.tk-lvl { padding: 0 0.5em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
+
+.sprite {
+  width: calc(var(--w) * var(--spr, 1px) * 0.6); height: auto; image-rendering: pixelated; flex: none;
+  max-width: none;
+}
+.sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
+
+/* ── Etats : chargement (squelette) et erreur ── */
+.is-skeleton .gym { cursor: default; border-style: dashed; animation: skel 1.2s ease-in-out infinite alternate; }
+@keyframes skel { from { opacity: 0.45; } to { opacity: 0.85; } }
+.money-state { display: grid; justify-items: center; gap: 0.75rem; padding: 3rem 1rem; text-align: center; color: var(--text-dim); }
+.money-state .material-symbols-outlined { font-size: 48px; color: var(--text-muted); }
+
+.money-method:focus-visible, .region-tab:focus-visible, .gym:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 680px) {
+  .money-toolbar { flex-direction: column; align-items: stretch; }
+  .money-nav { justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gym, .money-method, .region-tab { transition: none; }
+  .money-stage.is-entering .stage-body, .is-skeleton .gym { animation: none; }
+  .gym[data-state="current"] { transform: none; }
+}

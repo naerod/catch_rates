@@ -33,7 +33,7 @@ document.addEventListener('naerod:navigate', e => {
 
 // Arrivee depuis une autre page (ex. /changelog#events) : ouvrir la bonne vue.
 addEventListener('DOMContentLoaded', () => {
-  const p = location.hash.slice(1);
+  const p = location.hash.slice(1).split('/')[0];
   if (p && document.getElementById('page-' + p)) showPage(p);
 });
 
@@ -43,7 +43,9 @@ function showPage(page) {
   // L etat actif de la nav appartient au header partage : on le lui declare.
   document.querySelector('naerod-header')?.setAttribute('active', page);
   $('page-' + page).classList.add('active');
+  document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
 
+  if (page === 'money') Money.open();
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();
 }

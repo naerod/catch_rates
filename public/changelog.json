@@ -2,6 +2,24 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.6.0",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Money making : Gym Rerun 6 Pillars",
+        "en": "Money making: Gym Rerun 6 Pillars"
+      },
+      "fr": [
+        "Nouvel onglet « Money making » dans la barre du haut, avec une première méthode : la Gym Rerun 6 Pillars.",
+        "Hoenn et Kanto : chaque région tient sur un seul écran 16:9, avec la carte, les attaques et les cas particuliers de chaque arène.",
+        "Bouton « Suivant » (ou flèche droite du clavier) pour passer à l'arène suivante ; la progression est mémorisée."
+      ],
+      "en": [
+        "New \"Money making\" tab in the top bar, starting with the Gym Rerun 6 Pillars method.",
+        "Hoenn and Kanto: each region fits on a single 16:9 screen, with the map, the moves and the special cases of every gym.",
+        "\"Next\" button (or the right arrow key) to move to the next gym; your progress is remembered."
+      ]
+    },
+    {
       "v": "1.5.1",
       "date": "2026-09-21",
       "title": {

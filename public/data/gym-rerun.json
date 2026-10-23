@@ -1,0 +1,351 @@
+{
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante).",
+  "total": 442000,
+  "team": [
+    "typhlosion",
+    "togekiss",
+    "blastoise",
+    "vanilluxe",
+    "weezing",
+    "garchomp"
+  ],
+  "stock": [
+    {
+      "item": "black_glasses",
+      "qty": 1
+    },
+    {
+      "item": "choice_specs",
+      "qty": 2
+    },
+    {
+      "item": "choice_scarf",
+      "qty": 2
+    }
+  ],
+  "mons": {
+    "typhlosion": {
+      "dex": 157,
+      "en": "Typhlosion",
+      "fr": "Typhlosion"
+    },
+    "togekiss": {
+      "dex": 468,
+      "en": "Togekiss",
+      "fr": "Togekiss"
+    },
+    "blastoise": {
+      "dex": 9,
+      "en": "Blastoise",
+      "fr": "Tortank"
+    },
+    "vanilluxe": {
+      "dex": 585,
+      "en": "Vanilluxe",
+      "fr": "Blizzaroi"
+    },
+    "weezing": {
+      "dex": 110,
+      "en": "Weezing",
+      "fr": "Smogogo"
+    },
+    "garchomp": {
+      "dex": 445,
+      "en": "Garchomp",
+      "fr": "Carchacrok"
+    }
+  },
+  "opponents": {
+    "229": {
+      "en": "Houndoom",
+      "fr": "Démolosse"
+    },
+    "59": {
+      "en": "Arcanine",
+      "fr": "Arcanin"
+    },
+    "279": {
+      "en": "Pelipper",
+      "fr": "Pelipper"
+    },
+    "227": {
+      "en": "Skarmory",
+      "fr": "Airmure"
+    },
+    "277": {
+      "en": "Swellow",
+      "fr": "Hélédelle"
+    },
+    "523": {
+      "en": "Zebstrika",
+      "fr": "Zébribon"
+    },
+    "76": {
+      "en": "Golem",
+      "fr": "Grolem"
+    },
+    "454": {
+      "en": "Toxicroak",
+      "fr": "Toxicroak"
+    },
+    "272": {
+      "en": "Ludicolo",
+      "fr": "Ludicolo"
+    },
+    "142": {
+      "en": "Aerodactyl",
+      "fr": "Ptéra"
+    },
+    "260": {
+      "en": "Swampert",
+      "fr": "Laggron"
+    },
+    "196": {
+      "en": "Espeon",
+      "fr": "Mentali"
+    },
+    "202": {
+      "en": "Wobbuffet",
+      "fr": "Qulbutoké"
+    },
+    "71": {
+      "en": "Victreebel",
+      "fr": "Empiflor"
+    }
+  },
+  "regions": [
+    {
+      "id": "hoenn",
+      "name": "Hoenn",
+      "gyms": [
+        {
+          "id": "lavaridge",
+          "name": "Lavaridge",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.helping_hand"
+            },
+            {
+              "i": 1,
+              "s": "@vs #229 / #59:85 , togekiss.hyper_voice"
+            }
+          ]
+        },
+        {
+          "id": "dewford",
+          "name": "Dewford",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.hyper_voice"
+            }
+          ]
+        },
+        {
+          "id": "fortree",
+          "name": "Fortree",
+          "lines": [
+            {
+              "s": "blastoise.fake_out ( @on #277 ) + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #279 / #227 , @use blastoise.water_spout @instead_of .fake_out"
+            },
+            {
+              "i": 1,
+              "s": "@vs #277 , @follow_into vanilluxe.blizzard + togekiss.hyper_voice @instead"
+            }
+          ]
+        },
+        {
+          "id": "mauville",
+          "name": "Mauville",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "@vs #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
+            }
+          ]
+        },
+        {
+          "id": "rustboro",
+          "name": "Rustboro",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kanto",
+      "name": "Kanto",
+      "gyms": [
+        {
+          "id": "vermilion",
+          "name": "Vermilion",
+          "tip": "tip_vermilion",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            }
+          ]
+        },
+        {
+          "id": "cinnabar",
+          "name": "Cinnabar",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.rain_dance , @then weezing.assurance"
+            }
+          ]
+        },
+        {
+          "id": "celadon",
+          "name": "Celadon",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #71 , @follow_up_with typhlosion.eruption + garchomp.dragon_claw"
+            }
+          ]
+        },
+        {
+          "id": "saffron",
+          "name": "Saffron",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "@vs #196 / #202 , @use typhlosion.eruption + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@into togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ]
+        },
+        {
+          "id": "pewter",
+          "name": "Pewter",
+          "lines": [
+            {
+              "s": "@lead_with ~blastoise @and ~weezing"
+            },
+            {
+              "i": 1,
+              "s": "@vs #76 / #454 , @use blastoise.water_spout + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #272 / #142 , @use blastoise.water_spout + weezing.explosion"
+            },
+            {
+              "i": 1,
+              "s": "@into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #260 , @use blastoise.water_spout + weezing.explosion"
+            },
+            {
+              "i": 1,
+              "s": "@into typhlosion.eruption + togekiss.hyper_voice"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "size": {
+    "157": [
+      59,
+      72
+    ],
+    "468": [
+      86,
+      52
+    ],
+    "9": [
+      70,
+      66
+    ],
+    "585": [
+      36,
+      50
+    ],
+    "110": [
+      85,
+      67
+    ],
+    "445": [
+      83,
+      80
+    ],
+    "229": [
+      77,
+      72
+    ],
+    "59": [
+      75,
+      69
+    ],
+    "279": [
+      95,
+      76
+    ],
+    "227": [
+      69,
+      70
+    ],
+    "277": [
+      72,
+      59
+    ],
+    "523": [
+      74,
+      75
+    ],
+    "76": [
+      72,
+      57
+    ],
+    "454": [
+      68,
+      60
+    ],
+    "272": [
+      84,
+      80
+    ],
+    "142": [
+      94,
+      82
+    ],
+    "260": [
+      76,
+      60
+    ],
+    "196": [
+      63,
+      58
+    ],
+    "202": [
+      53,
+      58
+    ],
+    "71": [
+      65,
+      71
+    ]
+  }
+}
