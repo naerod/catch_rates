@@ -201,7 +201,7 @@ const Money = (() => {
       const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
       // Une exception qui enchaine sur une action ("... into Eruption + ...") se coupe en deux : la suite passe sur sa propre ligne.
       const expanded = g.lines.flatMap(l => {
-        const m = l.i && !l.s.startsWith('@into') && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);
+        const m = l.i && !l.s.startsWith('@into') && !/@switch_out ~\w+ @into /.test(l.s) && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);   // "switch out X into Y" reste d'un bloc
         return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
       });
       const lines = expanded.map((l, n) => { gymItems = n === 0 || l.lead ? g.items || {} : {}; return line(l, n); }).join('');
