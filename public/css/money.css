@@ -22,16 +22,25 @@
 .layout-grid.is-wide { grid-template-columns: 1fr minmax(0, 1800px) 1fr; }
 .layout-grid.is-wide .history-panel { display: none; }
 
-/* ── Methodes ── */
-.money-methods { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-.money-method {
-  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0.4rem 1rem;
-  background: var(--card); color: var(--text-dim); border: 2px solid var(--card-border);
-  border-radius: var(--radius); font: 600 1rem var(--font-head); cursor: pointer;
-  transition: border-color 0.18s, color 0.18s, background 0.18s;
+/* ── Menu des methodes ── */
+.money-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 360px)); gap: 1rem; }
+.money-card {
+  display: flex; align-items: center; gap: 1rem; min-height: 96px; padding: 1rem 1.5rem; text-align: left;
+  background: var(--card); color: var(--text); border: 2px solid var(--card-border); border-radius: var(--radius-lg);
+  font: 700 1.25rem var(--font-head); cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
 }
-.money-method:hover { border-color: var(--accent); color: var(--text); }
-.money-method[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.money-card > span:nth-child(2) { flex: 1; }
+.money-card .material-symbols-outlined:first-child { font-size: 40px; color: var(--accent); }
+.money-card .material-symbols-outlined:last-child { color: var(--text-muted); transition: transform 0.18s, color 0.18s; }
+.money-card:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); box-shadow: var(--glow); }
+.money-card:hover .material-symbols-outlined:last-child { color: var(--accent); transform: translateX(4px); }
+#money-menu.is-entering, #money-method.is-entering { animation: stage-in 0.24s ease-out; }
+
+/* ── Entete de la methode : retour a gauche ── */
+.money-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.money-head .btn { min-height: 44px; }
+.money-method-name { font: 700 1.5rem var(--font-head); color: var(--accent); }
 
 /* ── Bandeau d'infos ── */
 .money-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
@@ -120,14 +129,15 @@
 .money-state { display: grid; justify-items: center; gap: 0.75rem; padding: 3rem 1rem; text-align: center; color: var(--text-dim); }
 .money-state .material-symbols-outlined { font-size: 48px; color: var(--text-muted); }
 
-.money-method:focus-visible, .region-tab:focus-visible, .gym:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.money-card:focus-visible, .region-tab:focus-visible, .gym:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 @media (max-width: 680px) {
   .money-toolbar { flex-direction: column; align-items: stretch; }
   .money-nav { justify-content: space-between; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gym, .money-method, .region-tab { transition: none; }
-  .money-stage.is-entering .stage-body, .is-skeleton .gym { animation: none; }
+  .gym, .money-card, .region-tab { transition: none; }
+  .money-stage.is-entering .stage-body, .is-skeleton .gym, #money-menu.is-entering, #money-method.is-entering { animation: none; }
   .gym[data-state="current"] { transform: none; }
 }
+.money-menu[hidden], #money-method[hidden] { display: none; }

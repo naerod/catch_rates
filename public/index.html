@@ -211,21 +211,29 @@
       <div class="page-title">
         <h1 data-i18n="money_title">Money making</h1>
       </div>
-      <div id="money-methods" class="money-methods" role="group" aria-label="Methods"></div>
-      <div id="money-info" class="money-info"></div>
-      <div class="money-toolbar">
-        <div id="money-regions" class="money-regions" role="group" aria-label="Regions"></div>
-        <div class="money-nav">
-          <button type="button" id="money-prev" class="btn btn-outline">
-            <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span data-i18n="gr_prev">Previous</span>
+      <nav id="money-menu" class="money-menu" aria-label="Methods"></nav>
+      <div id="money-method" hidden>
+        <div class="money-head">
+          <button type="button" id="money-back" class="btn btn-outline">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span data-i18n="money_back">All methods</span>
           </button>
-          <span id="money-progress" class="money-progress" aria-live="polite"></span>
-          <button type="button" id="money-next" class="btn btn-primary">
-            <span data-i18n="gr_next">Next</span><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-          </button>
+          <h2 id="money-method-name" class="money-method-name"></h2>
         </div>
+        <div id="money-info" class="money-info"></div>
+        <div class="money-toolbar">
+          <div id="money-regions" class="money-regions" role="group" aria-label="Regions"></div>
+          <div class="money-nav">
+            <button type="button" id="money-prev" class="btn btn-outline">
+              <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span data-i18n="gr_prev">Previous</span>
+            </button>
+            <span id="money-progress" class="money-progress" aria-live="polite"></span>
+            <button type="button" id="money-next" class="btn btn-primary">
+              <span data-i18n="gr_next">Next</span><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+        <div id="money-stage" class="money-stage"></div>
       </div>
-      <div id="money-stage" class="money-stage"></div>
     </section>
 
     <section id="page-admin" class="page">

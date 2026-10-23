@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.6.3",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Menu des méthodes",
+        "en": "Methods menu"
+      },
+      "fr": [
+        "« Money making » ouvre maintenant un menu des méthodes, pour l'instant une seule : Gym Rerun 6 Pillars.",
+        "Bouton « Toutes les méthodes » pour revenir au menu ; chaque méthode a son lien direct."
+      ],
+      "en": [
+        "\"Money making\" now opens a menu of methods, for now just one: Gym Rerun 6 Pillars.",
+        "\"All methods\" button to go back to the menu; each method has its own direct link."
+      ]
+    },
+    {
       "v": "1.6.2",
       "date": "2026-10-23",
       "title": {

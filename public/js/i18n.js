@@ -5,7 +5,7 @@
 const translations = {
   en: {
     nav_calc: 'Calculator', nav_events: 'Events', nav_admin: 'Admin',
-    nav_money: 'Money making', money_title: 'Money making',
+    nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods',
     gr_name: 'Gym Rerun – 6 Pillars', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first gym',
     gr_total: 'Total', gr_total_note: 'with Amulet Coin (price not included)', gr_stock: 'Stockpile', gr_team: 'Team',
     gr_ocarina: 'Fly / Teleport Ocarina recommended', gr_map_of: 'Map to', gr_lvl: 'Lvl.',
@@ -109,7 +109,7 @@ const translations = {
   },
   fr: {
     nav_calc: 'Calculateur', nav_events: 'Événements', nav_admin: 'Admin',
-    nav_money: 'Money making', money_title: "Gagner de l'argent",
+    nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes',
     gr_name: 'Gym Rerun – 6 Pillars', gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première arène',
     gr_total: 'Total', gr_total_note: "avec Pièce Rune (prix non inclus)", gr_stock: 'Réserve', gr_team: 'Équipe',
     gr_ocarina: 'Ocarina Vol / Téléportation recommandée', gr_map_of: 'Carte vers', gr_lvl: 'Niv.',

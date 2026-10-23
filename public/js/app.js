@@ -28,7 +28,7 @@ const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/s
    plutot que de naviguer lui-meme, le routage reste au site. */
 document.addEventListener('naerod:navigate', e => {
   e.preventDefault();          // on revendique le routage, sinon le header
-  showPage(e.detail.page);     // renverrait vers l accueil (cas /changelog)
+  showPage(e.detail.page, true);  // renverrait vers l accueil (cas /changelog)
 });
 
 // Arrivee depuis une autre page (ex. /changelog#events) : ouvrir la bonne vue.
@@ -37,7 +37,7 @@ addEventListener('DOMContentLoaded', () => {
   if (p && document.getElementById('page-' + p)) showPage(p);
 });
 
-function showPage(page) {
+function showPage(page, fresh = false) {
   state.page = page;
   document.documentElement.dataset.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -46,7 +46,7 @@ function showPage(page) {
   $('page-' + page).classList.add('active');
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
 
-  if (page === 'money') Money.open();
+  if (page === 'money') Money.open(fresh);
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();
 }

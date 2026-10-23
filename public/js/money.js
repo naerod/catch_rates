@@ -13,14 +13,15 @@ const Money = (() => {
 
   let data = null;
   let loading = false;
-  const state = { method: METHODS[0].id, region: 0, gym: 0 };
+  const state = { method: null, region: 0, gym: 0 };
 
-  /* ── Persistance : hash (#money/kanto/3) puis localStorage ── */
+  /* ── Persistance : hash (#money/gym-rerun/kanto/3) puis localStorage ── */
   function restore() {
     try { Object.assign(state, JSON.parse(localStorage.getItem(STORE)) || {}); } catch { /* stockage indisponible */ }
-    const [, region, gym] = location.hash.slice(1).split('/');
-    const ri = data.regions.findIndex(r => r.id === region);
-    if (ri >= 0) { state.region = ri; state.gym = Math.max(0, (+gym || 1) - 1); }
+    const seg = location.hash.slice(1).split('/').slice(1);
+    if (seg[0] === state.method) seg.shift();
+    const ri = data.regions.findIndex(r => r.id === seg[0]);
+    if (ri >= 0) { state.region = ri; state.gym = Math.max(0, (+seg[1] || 1) - 1); }
     clamp();
   }
   function clamp() {
@@ -29,7 +30,7 @@ const Money = (() => {
   }
   function persist() {
     try { localStorage.setItem(STORE, JSON.stringify({ region: state.region, gym: state.gym })); } catch { /* idem */ }
-    history.replaceState(null, '', `#money/${data.regions[state.region].id}/${state.gym + 1}`);
+    history.replaceState(null, '', `#money/${state.method}/${data.regions[state.region].id}/${state.gym + 1}`);
   }
 
   /* ── Rendu des jetons ── */
@@ -61,9 +62,20 @@ const Money = (() => {
     `<span class="gym-line-body">${l.s.split(' ').map(token).join('')}</span></p>`;
 
   /* ── Rendu des blocs ── */
-  function methodBar() {
-    $('money-methods').innerHTML = METHODS.map(m =>
-      `<button type="button" class="money-method" data-method="${m.id}" aria-pressed="${m.id === state.method}">${icon(m.icon)}<span>${esc(t(m.nameKey))}</span></button>`).join('');
+  function menu() {
+    $('money-menu').innerHTML = METHODS.map(m =>
+      `<button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span>${esc(t(m.nameKey))}</span>${icon('arrow_forward')}</button>`).join('');
+  }
+
+  /* Bascule menu <-> methode, avec fondu (cf. DA : tout ce qui apparait s'anime). */
+  function view(method) {
+    state.method = method;
+    $('money-menu').hidden = !!method;
+    $('money-method').hidden = !method;
+    const shown = method ? $('money-method') : $('money-menu');
+    shown.classList.remove('is-entering'); void shown.offsetWidth; shown.classList.add('is-entering');
+    if (!method) { history.replaceState(null, '', '#money'); menu(); return; }
+    $('money-method-name').textContent = t(METHODS.find(m => m.id === method).nameKey);
   }
 
   function infoBar() {
@@ -111,7 +123,7 @@ const Money = (() => {
   }
 
   function renderAll(animate) {
-    methodBar(); infoBar(); regionTabs(); controls(); stage(animate);
+    infoBar(); regionTabs(); controls(); stage(animate);
   }
 
   /* ── Navigation ── */
@@ -146,15 +158,30 @@ const Money = (() => {
       const res = await fetch(METHODS[0].src);
       if (!res.ok) throw new Error(res.status);
       data = await res.json();
-      restore(); renderAll(false);
+      restore(); renderAll(false); persist();
     } catch { showError(); }
     loading = false;
   }
 
-  function open() { if (data) { restore(); renderAll(false); } else load(); }
+  function enter(method) {
+    view(method);
+    if (data) { restore(); renderAll(false); persist(); } else load();
+  }
+
+  /* fresh = clic dans la barre (menu) ; sinon lien profond (#money/gym-rerun/...) */
+  function open(fresh) {
+    const [, method] = location.hash.slice(1).split('/');
+    const legacy = method && !METHODS.some(m => m.id === method);   // ancien #money/hoenn/3
+    const id = fresh ? null : METHODS.some(m => m.id === method) ? method : legacy ? METHODS[0].id : null;
+    if (id) enter(id); else view(null);
+  }
 
   /* ── Evenements ── */
   document.addEventListener('DOMContentLoaded', () => {
+    $('money-menu').addEventListener('click', e => {
+      const b = e.target.closest('[data-method]'); if (b) enter(b.dataset.method);
+    });
+    $('money-back').addEventListener('click', () => view(null));
     $('money-prev').addEventListener('click', () => step(-1));
     $('money-next').addEventListener('click', () => step(1));
     $('money-regions').addEventListener('click', e => {
@@ -164,12 +191,16 @@ const Money = (() => {
       const g = e.target.closest('[data-gym]'); if (g) go(state.region, +g.dataset.gym);
     });
     document.addEventListener('keydown', e => {
-      if (!$('page-money').classList.contains('active') || !data) return;
+      if (!$('page-money').classList.contains('active') || !data || !state.method) return;
       if (e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
     });
-    document.addEventListener('langchange', () => { if (data && $('page-money').classList.contains('active')) renderAll(false); });
+    document.addEventListener('langchange', () => {
+      if (!$('page-money').classList.contains('active')) return;
+      if (!state.method) return menu();
+      if (data) { $('money-method-name').textContent = t(METHODS.find(m => m.id === state.method).nameKey); renderAll(false); }
+    });
   });
 
   return { open };
