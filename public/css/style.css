@@ -83,6 +83,10 @@
   --nrd-on-accent: var(--on-accent);
   --nrd-danger: var(--red);
   --nrd-header-bg: var(--bg2);
+  /* Contour accentue des boutons de la barre (header partage >= 1.6.2) : suit l'accent de la page */
+  --nrd-nav-border: color-mix(in srgb, var(--accent) 35%, transparent);
+  --nrd-nav-border-hover: color-mix(in srgb, var(--accent) 70%, transparent);
+  --nrd-nav-border-current: var(--accent);
 }
 
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -1251,17 +1255,11 @@ footer {
 .btn-icon .material-symbols-outlined { font-size: 20px; }
 
 /* ══════════════ ACCENT PAR PAGE ══════════════
-   Calculator = rouge, Events = bleu, Money making = dore (valeurs par defaut ci-dessus).
+   Calculator, Events (et Admin) = bleu ; Money making = dore (valeurs par defaut ci-dessus).
    <html data-page> est pose avant le premier rendu (index.html) puis par showPage(). */
-[data-theme="dark"][data-page="calc"], [data-theme="dark"][data-page="admin"] {
-  --accent: #e55039; --accent2: #d6402a; --on-accent: #1a0500; --accent-rgb: 229,80,57; --slider-thumb: #e55039;
-}
-[data-theme="light"][data-page="calc"], [data-theme="light"][data-page="admin"] {
-  --accent: #b8321d; --accent2: #c93a24; --on-accent: #ffffff; --accent-rgb: 184,50,29; --slider-thumb: #b8321d;
-}
-[data-theme="dark"][data-page="events"] {
+[data-theme="dark"][data-page="calc"], [data-theme="dark"][data-page="events"], [data-theme="dark"][data-page="admin"] {
   --accent: #5aaef0; --accent2: #3d94dc; --on-accent: #00121f; --accent-rgb: 90,174,240; --slider-thumb: #5aaef0;
 }
-[data-theme="light"][data-page="events"] {
+[data-theme="light"][data-page="calc"], [data-theme="light"][data-page="events"], [data-theme="light"][data-page="admin"] {
   --accent: #0b62a8; --accent2: #0b62a8; --on-accent: #ffffff; --accent-rgb: 11,98,168; --slider-thumb: #0b62a8;
 }
