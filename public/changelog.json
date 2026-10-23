@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.7.1",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Interface plus compacte",
+        "en": "More compact interface"
+      },
+      "fr": [
+        "Boutons et textes de l'en-tête de la méthode plus petits sur ordinateur (taille tactile conservée sur mobile).",
+        "Plafond sur la taille du texte des cartes."
+      ],
+      "en": [
+        "Smaller buttons and text in the method header on desktop (touch-sized on mobile).",
+        "Upper limit on the card text size."
+      ]
+    },
+    {
       "v": "1.7.0",
       "date": "2026-10-23",
       "title": {

@@ -122,7 +122,7 @@ const Money = (() => {
     if (!body) return;
     body.style.fontSize = '';
     if (matchMedia('(max-width: 899px)').matches) return;     // mobile : la page defile
-    let lo = 11, hi = 28;
+    let lo = 11, hi = 19;       // plafond : au-dela, trop gros pour lire d'un coup d'oeil
     for (let i = 0; i < 7; i++) {
       const mid = (lo + hi) / 2;
       body.style.fontSize = mid + 'px';

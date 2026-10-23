@@ -43,32 +43,32 @@
 .layout-grid.is-wide main { padding: 0.5rem 1rem; }
 #money-method:not([hidden]) { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-height: 0; }
 
-.money-head { display: flex; align-items: center; gap: 0.75rem; }
-.money-head .btn, .region-tab { min-height: 44px; }
-.money-method-name { font: 700 1.5rem var(--font-head); color: var(--accent); margin-right: 0.5rem; }
+.money-head { display: flex; align-items: center; gap: 0.5rem; }
+.money-head .btn, .region-tab, .money-nav .btn { min-height: 44px; font-size: 0.9rem; }
+@media (pointer: fine) { .money-head .btn, .region-tab, .money-nav .btn { min-height: 34px; padding: 0.15rem 0.75rem; font-size: 0.85rem; } }
+.money-method-name { font: 700 1.25rem var(--font-head); color: var(--accent); margin-right: 0.5rem; }
 .money-regions { display: flex; gap: 0.5rem; }
 .region-tab {
   padding: 0.25rem 1rem; background: transparent; color: var(--text-dim);
-  border: 2px solid var(--card-border); border-radius: var(--radius); font: 600 1rem var(--font-head); cursor: pointer;
+  border: 2px solid var(--card-border); border-radius: var(--radius); font: 600 0.9rem var(--font-head); cursor: pointer;
   transition: border-color 0.18s, color 0.18s, background 0.18s;
 }
 .region-tab:hover { border-color: var(--accent); color: var(--text); }
 .region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: var(--on-accent); }
 .money-nav { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
-.money-nav .btn { min-height: 44px; }
 .money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.money-progress { min-width: 4ch; text-align: center; font: 600 1rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.money-progress { min-width: 4ch; text-align: center; font: 600 0.9rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
 
 /* ── Bandeau d'infos : une seule ligne, sans cadres ── */
-.money-info { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.5rem; font-size: 0.9rem; color: var(--text-dim); }
+.money-info { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.5rem; font-size: 0.8rem; color: var(--text-dim); }
 .info-item { display: inline-flex; align-items: center; gap: 0.5rem; list-style: none; }
 .info-label { font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
-.info-total strong { font: 700 1.25rem var(--font-head); color: var(--accent); }
+.info-total strong { font: 700 1.1rem var(--font-head); color: var(--accent); }
 .info-note { font-size: 0.8rem; color: var(--text-muted); }
 .info-item .material-symbols-outlined { font-size: 18px; }
 .info-team { gap: 0.75rem; margin-left: auto; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
-.info-team .sprite { height: 28px; width: auto; }
+.info-team .sprite { height: 22px; width: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
 .money-stage { flex: 1; min-height: 0; }
