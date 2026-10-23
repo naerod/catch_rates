@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.6.2",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Une couleur par page",
+        "en": "One colour per page"
+      },
+      "fr": [
+        "Couleur d'accentuation propre à chaque page : rouge pour le calculateur, bleu pour les événements, doré pour Money making.",
+        "Ordre de la barre : Calculator, Events, Money making."
+      ],
+      "en": [
+        "Each page now has its own accent colour: red for the calculator, blue for events, gold for Money making.",
+        "Top bar order: Calculator, Events, Money making."
+      ]
+    },
+    {
       "v": "1.6.1",
       "date": "2026-10-23",
       "title": {

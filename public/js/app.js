@@ -39,6 +39,7 @@ addEventListener('DOMContentLoaded', () => {
 
 function showPage(page) {
   state.page = page;
+  document.documentElement.dataset.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   // L etat actif de la nav appartient au header partage : on le lui declare.
   document.querySelector('naerod-header')?.setAttribute('active', page);
