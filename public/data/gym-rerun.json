@@ -1,5 +1,5 @@
 {
-  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon.",
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier.",
   "total": 442000,
   "team": [
     "typhlosion",
@@ -131,6 +131,116 @@
       "en": "Victreebel",
       "fr": "Empiflor",
       "type": "grass"
+    },
+    "38": {
+      "en": "Ninetales",
+      "fr": "Feunard",
+      "type": "fire"
+    },
+    "407": {
+      "en": "Roserade",
+      "fr": "Roserade",
+      "type": "grass"
+    },
+    "392": {
+      "en": "Infernape",
+      "fr": "Simiabraz",
+      "type": "fire"
+    },
+    "620": {
+      "en": "Mienshao",
+      "fr": "Mushana",
+      "type": "fighting"
+    },
+    "476": {
+      "en": "Probopass",
+      "fr": "Tarinorme",
+      "type": "rock"
+    },
+    "248": {
+      "en": "Tyranitar",
+      "fr": "Tyranocif",
+      "type": "rock"
+    },
+    "530": {
+      "en": "Excadrill",
+      "fr": "Minotaupe",
+      "type": "steel"
+    },
+    "346": {
+      "en": "Cradily",
+      "fr": "Vacilys",
+      "type": "rock"
+    },
+    "376": {
+      "en": "Metagross",
+      "fr": "Métalosse",
+      "type": "steel"
+    },
+    "319": {
+      "en": "Sharpedo",
+      "fr": "Sharpedo",
+      "type": "water"
+    },
+    "123": {
+      "en": "Scyther",
+      "fr": "Insécateur",
+      "type": "bug"
+    },
+    "144": {
+      "en": "Articuno",
+      "fr": "Artikodin",
+      "type": "ice"
+    },
+    "365": {
+      "en": "Walrein",
+      "fr": "Kaimorse",
+      "type": "ice"
+    },
+    "473": {
+      "en": "Mamoswine",
+      "fr": "Mammochon",
+      "type": "ground"
+    },
+    "362": {
+      "en": "Glalie",
+      "fr": "Oniglali",
+      "type": "ice"
+    },
+    "478": {
+      "en": "Froslass",
+      "fr": "Momartik",
+      "type": "ice"
+    },
+    "521": {
+      "en": "Unfezant",
+      "fr": "Déflaisan",
+      "type": "normal"
+    },
+    "500": {
+      "en": "Emboar",
+      "fr": "Roitiflam",
+      "type": "fire"
+    },
+    "503": {
+      "en": "Samurott",
+      "fr": "Clamiral",
+      "type": "water"
+    },
+    "419": {
+      "en": "Floatzel",
+      "fr": "Mustéflott",
+      "type": "water"
+    },
+    "234": {
+      "en": "Stantler",
+      "fr": "Cerfrousse",
+      "type": "normal"
+    },
+    "9": {
+      "en": "Blastoise",
+      "fr": "Tortank",
+      "type": "water"
     }
   },
   "regions": [
@@ -149,7 +259,15 @@
               "i": 1,
               "s": "@vs #229 / #59:85 , togekiss.hyper_voice"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_specs",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "dewford",
@@ -158,7 +276,15 @@
             {
               "s": "blastoise.water_spout + togekiss.hyper_voice"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "fortree",
@@ -175,7 +301,15 @@
               "i": 1,
               "s": "@vs #277 , @follow_into vanilluxe.blizzard + togekiss.hyper_voice @instead"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "mauville",
@@ -188,7 +322,15 @@
               "i": 1,
               "s": "@vs #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "rustboro",
@@ -197,12 +339,144 @@
             {
               "s": "blastoise.water_spout + weezing.assurance"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         }
       ],
       "mapSize": [
         576,
         360
+      ]
+    },
+    {
+      "id": "sinnoh",
+      "name": "Sinnoh",
+      "mapSize": [
+        576,
+        448
+      ],
+      "gyms": [
+        {
+          "id": "eterna",
+          "name": "Eterna",
+          "lines": [
+            {
+              "s": "typhlosion.swift + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #38 , typhlosion.eruption + @switch_out ~togekiss @into ~weezing @then weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #407 , typhlosion.eruption + togekiss.hyper_voice"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "veilstone",
+          "name": "Veilstone",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + togekiss.helping_hand"
+            },
+            {
+              "i": 1,
+              "s": "@vs #392 , typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #620 , typhlosion.incinerate + togekiss.hyper_voice"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "oreburgh",
+          "name": "Oreburgh",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #476 , @switch_out ~weezing @into vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #248 @and #530 , @then weezing.assurance @on #346"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "canalave",
+          "name": "Canalave",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #376 , @follow_up_with typhlosion.eruption + togekiss.hyper_voice"
+            }
+          ],
+          "tip": "tip_channel",
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "pastoria",
+          "name": "Pastoria",
+          "lines": [
+            {
+              "s": "blastoise.fake_out ( @on #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        }
       ]
     },
     {
@@ -217,7 +491,15 @@
             {
               "s": "typhlosion.eruption + garchomp.dragon_claw"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "cinnabar",
@@ -226,7 +508,15 @@
             {
               "s": "blastoise.water_spout + weezing.rain_dance , @then weezing.assurance"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_specs",
+            "weezing": "black_glasses",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "celadon",
@@ -239,7 +529,15 @@
               "i": 1,
               "s": "@vs #71 , @follow_up_with typhlosion.eruption + garchomp.dragon_claw"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_specs",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "saffron",
@@ -256,7 +554,15 @@
               "i": 1,
               "s": "@into togekiss.hyper_voice + garchomp.earthquake"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         },
         {
           "id": "pewter",
@@ -285,12 +591,337 @@
               "i": 1,
               "s": "@into typhlosion.eruption + togekiss.hyper_voice"
             }
-          ]
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_specs",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
         }
       ],
       "mapSize": [
         576,
         432
+      ]
+    },
+    {
+      "id": "johto",
+      "name": "Johto",
+      "mapSize": [
+        576,
+        360
+      ],
+      "gyms": [
+        {
+          "id": "olivine",
+          "name": "Olivine",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #376 , typhlosion.eruption + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_specs",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "azalea",
+          "name": "Azalea",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #123 , typhlosion.incinerate"
+            }
+          ],
+          "tip": "tip_channel",
+          "items": {
+            "typhlosion": "choice_scarf",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_specs",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "violet",
+          "name": "Violet",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_scarf",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "blackthorn",
+          "name": "Blackthorn",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into vanilluxe.blizzard + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #9 , blastoise.fake_out @on #9"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "cianwood",
+          "name": "Cianwood",
+          "lines": [
+            {
+              "s": "togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "goldenrod",
+          "name": "Goldenrod",
+          "lines": [
+            {
+              "s": "togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "mahogany",
+          "name": "Mahogany",
+          "lines": [
+            {
+              "s": "weezing.explosion + garchomp.dragon_claw ( @on #144 / #365 ) @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #473 , @follow_up_with blastoise.water_spout + typhlosion.eruption"
+            },
+            {
+              "i": 1,
+              "s": "@vs #362 , weezing.explosion + @switch_out ~garchomp @into ~blastoise"
+            },
+            {
+              "i": 1,
+              "s": "@into typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #478 , weezing.explosion + blastoise.sunny_day @into typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        }
+      ]
+    },
+    {
+      "id": "unova",
+      "name": "Unova",
+      "mapSize": [
+        576,
+        378
+      ],
+      "gyms": [
+        {
+          "id": "castelia",
+          "name": "Castelia",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "nimbasa",
+          "name": "Nimbasa",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.hyper_voice"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "mistralton",
+          "name": "Mistralton",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #521 , vanilluxe.blizzard + @switch_out ~blastoise @into ~weezing @then weezing.assurance"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "driftveil",
+          "name": "Driftveil",
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_specs",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "opelucid",
+          "name": "Opelucid",
+          "lines": [
+            {
+              "s": "typhlosion.eruption + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #500 , blastoise.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #503 , togekiss.hyper_voice"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "striaton",
+          "name": "Striaton",
+          "lines": [
+            {
+              "s": "@vs =Chili , blastoise.water_spout + togekiss.hyper_voice"
+            },
+            {
+              "s": "@vs =Cress , typhlosion.eruption / .incinerate + togekiss.hyper_voice"
+            },
+            {
+              "s": "@vs =Cilan , typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #419 , blastoise.helping_hand + togekiss.hyper_voice @into vanilluxe.blizzard + togekiss.hyper_voice"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        },
+        {
+          "id": "nacrene",
+          "name": "Nacrene",
+          "lines": [
+            {
+              "s": "weezing.explosion + blastoise.sunny_day @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #234 , @switch_out ~garchomp @into ~typhlosion @then weezing.explosion"
+            },
+            {
+              "i": 1,
+              "s": "@follow_up_with togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf",
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band",
+            "garchomp": "choice_band"
+          }
+        }
       ]
     }
   ],
@@ -374,6 +1005,90 @@
     "584": [
       63,
       73
+    ],
+    "38": [
+      74,
+      73
+    ],
+    "407": [
+      71,
+      58
+    ],
+    "392": [
+      80,
+      74
+    ],
+    "620": [
+      87,
+      70
+    ],
+    "476": [
+      65,
+      84
+    ],
+    "248": [
+      88,
+      76
+    ],
+    "530": [
+      91,
+      77
+    ],
+    "346": [
+      58,
+      78
+    ],
+    "376": [
+      83,
+      58
+    ],
+    "319": [
+      72,
+      72
+    ],
+    "123": [
+      54,
+      61
+    ],
+    "144": [
+      73,
+      81
+    ],
+    "365": [
+      77,
+      70
+    ],
+    "473": [
+      84,
+      73
+    ],
+    "362": [
+      59,
+      62
+    ],
+    "478": [
+      35,
+      75
+    ],
+    "521": [
+      69,
+      76
+    ],
+    "500": [
+      92,
+      76
+    ],
+    "503": [
+      95,
+      80
+    ],
+    "419": [
+      67,
+      71
+    ],
+    "234": [
+      57,
+      78
     ]
   }
 }

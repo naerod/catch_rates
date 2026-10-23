@@ -5,7 +5,7 @@
 const translations = {
   en: {
     nav_calc: 'Calculator', nav_events: 'Events', nav_admin: 'Admin',
-    nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods',
+    nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
     gr_name: "naerod's 6 Pillars", gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
     gr_total: 'Total', gr_total_note: 'with Amulet Coin (price not included)', gr_stock: 'Stockpile', gr_team: 'Team',
     gr_ocarina: 'Fly / Teleport Ocarina recommended', gr_map_of: 'Map to', gr_lvl: 'Lvl.',
@@ -17,6 +17,9 @@ const translations = {
     mv_water_spout: 'Water Spout', mv_helping_hand: 'Helping Hand', mv_hyper_voice: 'Hyper Voice', mv_fake_out: 'Fake Out',
     mv_explosion: 'Explosion', mv_eruption: 'Eruption', mv_blizzard: 'Blizzard', mv_dragon_claw: 'Dragon Claw',
     mv_assurance: 'Assurance', mv_rain_dance: 'Rain Dance', mv_earthquake: 'Earthquake',
+    mv_swift: 'Swift', mv_incinerate: 'Incinerate', mv_sunny_day: 'Sunny Day',
+    it_black_glasses: 'Black Glasses', it_choice_band: 'Choice Band', it_choice_scarf: 'Choice Scarf', it_choice_specs: 'Choice Specs',
+    gr_tip_channel: 'Change channel right after the battle to teleport straight to the exit',
     btn_sso_login: 'Sign in', btn_sso_logout: 'Sign out', btn_sso_admin: 'Sign in with Authentik', or: 'or',
     calc_title: "Catch Rate Calculator", calc_subtitle: "PokeMMO — Gen 3-5 formula",
     search_placeholder: "Search Pokémon...", catch_rate_label: "Catch Rate", gen_label: "Gen",
@@ -109,7 +112,7 @@ const translations = {
   },
   fr: {
     nav_calc: 'Calculateur', nav_events: 'Événements', nav_admin: 'Admin',
-    nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes',
+    nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes', money_fav_add: 'Ajouter aux favoris', money_fav_remove: 'Retirer des favoris',
     gr_name: "naerod's 6 Pillars", gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',
     gr_total: 'Total', gr_total_note: "avec Pièce Rune (prix non inclus)", gr_stock: 'Réserve', gr_team: 'Équipe',
     gr_ocarina: 'Ocarina Vol / Téléportation recommandée', gr_map_of: 'Carte vers', gr_lvl: 'Niv.',
@@ -121,6 +124,9 @@ const translations = {
     mv_water_spout: 'Giclédo', mv_helping_hand: "Coup d'Main", mv_hyper_voice: 'Mégaphone', mv_fake_out: 'Bluff',
     mv_explosion: 'Explosion', mv_eruption: 'Éruption', mv_blizzard: 'Blizzard', mv_dragon_claw: 'Draco-Griffe',
     mv_assurance: 'Assurance', mv_rain_dance: 'Danse Pluie', mv_earthquake: 'Séisme',
+    mv_swift: 'Météores', mv_incinerate: 'Calcination', mv_sunny_day: 'Zénith',
+    it_black_glasses: 'Lunettes Noires', it_choice_band: 'Bandeau Choix', it_choice_scarf: 'Mouchoir Choix', it_choice_specs: 'Lunettes Choix',
+    gr_tip_channel: "Changer de channel juste après le combat pour se téléporter directement à la sortie",
     btn_sso_login: 'Connexion', btn_sso_logout: 'Déconnexion', btn_sso_admin: 'Se connecter avec Authentik', or: 'ou',
     calc_title: "Calculateur de Taux de Capture", calc_subtitle: "PokeMMO — Formule Gen 3-5",
     search_placeholder: "Rechercher un Pokémon...", catch_rate_label: "Taux de capture", gen_label: "Gén",
