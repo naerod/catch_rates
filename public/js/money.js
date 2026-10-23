@@ -106,7 +106,7 @@ const Money = (() => {
     const cards = r.gyms.map((g, i) => {
       const tip = g.tip ? `<p class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
       return `<article class="gym">` +
-        `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="768" height="480" loading="lazy">` +
+        `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" loading="lazy">` +
         `<div class="gym-body"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}` +
         `${g.lines.map(line).join('')}</div></article>`;
     }).join('');

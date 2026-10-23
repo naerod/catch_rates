@@ -2,6 +2,20 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.7.2",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Nouvelles cartes",
+        "en": "New maps"
+      },
+      "fr": [
+        "Cartes des arènes refaites à la main avec des flèches plus visibles, plus nettes."
+      ],
+      "en": [
+        "Gym maps redone by hand with clearer, more visible arrows."
+      ]
+    },
+    {
       "v": "1.7.1",
       "date": "2026-10-23",
       "title": {
