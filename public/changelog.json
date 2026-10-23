@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "2.3.2",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Connexion corrigée",
+        "en": "Sign-in fixed"
+      },
+      "fr": [
+        "Le bouton « Sign in » fonctionne de nouveau : le serveur utilisait de mauvaises adresses Authentik (404). Il lit maintenant les adresses officielles du fournisseur de connexion.",
+        "La déconnexion renvoie vers le bon site (prod ou preprod)."
+      ],
+      "en": [
+        "The \"Sign in\" button works again: the server was using wrong Authentik addresses (404). It now reads the provider's official endpoints.",
+        "Sign-out now returns to the right site (prod or preprod)."
+      ]
+    },
+    {
       "v": "2.3.1",
       "date": "2026-10-24",
       "title": {

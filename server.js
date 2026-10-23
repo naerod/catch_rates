@@ -69,7 +69,26 @@ function requireAdmin(req, res, next) {
 }
 
 // ─── OIDC Routes ──────────────────────────────────────────────────────────────
-app.get('/auth/login', (req, res) => {
+// Authentik expose authorize/token/userinfo au niveau /application/o/ (pas sous le slug de l'application) ;
+// seul end-session est propre au slug. On lit donc les adresses dans le document de decouverte
+// (mis en cache), avec un repli sur les chemins standards d'Authentik.
+let oidcMeta = null;
+async function oidcEndpoints() {
+  if (oidcMeta) return oidcMeta;
+  const base = OIDC_ISSUER.replace(/\/[^/]+$/, '');                    // https://auth.naerod.com/application/o
+  const fallback = {
+    authorization_endpoint: `${base}/authorize/`, token_endpoint: `${base}/token/`,
+    userinfo_endpoint: `${base}/userinfo/`, end_session_endpoint: `${OIDC_ISSUER}/end-session/`,
+  };
+  try {
+    const r = await fetch(`${OIDC_ISSUER}/.well-known/openid-configuration`, { signal: AbortSignal.timeout(8000) });
+    if (r.ok) { oidcMeta = { ...fallback, ...(await r.json()) }; return oidcMeta; }
+  } catch (e) { console.error('[OIDC] discovery:', e.message); }
+  return fallback;                                                     // pas mis en cache : on reessaiera
+}
+const APP_ORIGIN = new URL(OIDC_REDIRECT_URI).origin;                  // prod ou preprod, selon l'environnement
+
+app.get('/auth/login', async (req, res) => {
   const state        = crypto.randomBytes(16).toString('hex');
   const codeVerifier = crypto.randomBytes(32).toString('base64url');
   const codeChallenge = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
@@ -81,7 +100,7 @@ app.get('/auth/login', (req, res) => {
     redirect_uri: OIDC_REDIRECT_URI, scope: 'openid email profile',
     state, code_challenge: codeChallenge, code_challenge_method: 'S256',
   });
-  res.redirect(`${OIDC_ISSUER}/authorize/?${params}`);
+  res.redirect(`${(await oidcEndpoints()).authorization_endpoint}?${params}`);
 });
 
 app.get('/auth/callback', async (req, res) => {
@@ -92,7 +111,8 @@ app.get('/auth/callback', async (req, res) => {
   delete req.session.oidcCodeVerifier;
   delete req.session.oidcRedirect;
   try {
-    const tokenRes = await fetch(`${OIDC_ISSUER}/token/`, {
+    const meta = await oidcEndpoints();
+    const tokenRes = await fetch(meta.token_endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -103,7 +123,7 @@ app.get('/auth/callback', async (req, res) => {
     });
     if (!tokenRes.ok) throw new Error(`Token exchange: ${tokenRes.status}`);
     const { access_token } = await tokenRes.json();
-    const userRes = await fetch(`${OIDC_ISSUER}/userinfo/`, {
+    const userRes = await fetch(meta.userinfo_endpoint, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
     if (!userRes.ok) throw new Error(`Userinfo: ${userRes.status}`);
@@ -119,8 +139,8 @@ app.get('/auth/callback', async (req, res) => {
   }
 });
 
-app.get('/auth/logout', (req, res) => {
-  const endSession = `${OIDC_ISSUER}/end-session/?redirect_uri=${encodeURIComponent('https://catchr.naerod.com')}`;
+app.get('/auth/logout', async (req, res) => {
+  const endSession = `${(await oidcEndpoints()).end_session_endpoint}?redirect_uri=${encodeURIComponent(APP_ORIGIN)}`;
   req.session.destroy(() => res.redirect(endSession));
 });
 
