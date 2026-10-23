@@ -68,6 +68,7 @@
 .region-tab:hover { border-color: var(--accent); color: var(--text); }
 .region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: var(--on-accent); }
 .money-nav { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+.info-team + .money-nav { margin-left: 1rem; }
 .money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .money-progress { min-width: 4ch; text-align: center; font: 600 0.9rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
 
@@ -83,6 +84,8 @@
 .info-team { gap: 0.75rem; margin-left: auto; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
 .info-team .sprite-box { width: 38px; height: 38px; padding: 2px; }
+.info-team { margin-left: auto; display: inline-flex; gap: 0.5rem; list-style: none; }
+.money-head .info-team + .money-nav { margin-left: 1rem; }
 .info-team .sprite { width: calc(var(--w) * 0.4px); height: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
@@ -181,3 +184,23 @@
 .money-item .fav-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
 .money-head .fav-btn { width: 36px; height: 36px; }
 @media (prefers-reduced-motion: reduce) { .fav-btn { transition: none; } }
+
+/* Titre : tip a cote du nom, puces (temps, a passer ?) a droite */
+.gym-chips { display: inline-flex; align-items: center; gap: 0.5em; margin-left: auto; flex: none; }
+.gym-chip, .after-chip {
+  display: inline-flex; align-items: center; gap: 0.25em; padding: 0.1em 0.5em; border-radius: 1em; white-space: nowrap;
+  background: var(--bg4); color: var(--text-dim); font-size: 0.8em; font-weight: 600;
+}
+.gym-chip .material-symbols-outlined, .after-chip .material-symbols-outlined { font-size: 1.2em; }
+.gym-chip.is-warn { color: var(--orange); }
+.gym-note { display: flex; align-items: flex-start; gap: 0.5em; font-size: 0.85em; color: var(--text-dim); line-height: 1.3; }
+.gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
+
+/* Pied de carte : soin conseille, objets a changer avant le combat suivant */
+.gym-after { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; margin-top: 0.1em; }
+.after-chip.is-heal { color: var(--green); }
+.after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
+.after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
+.after-chip.is-swap .sprite { width: calc(var(--w) * 0.017em); }
+.swap-item { width: 1.5em; height: 1.5em; }
+.info-item.is-require { color: var(--orange); }

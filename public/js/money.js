@@ -74,9 +74,21 @@ const Money = (() => {
   }
   const line = (l, n) => {
     const cont = l.s.startsWith('@into');                       // suite d'une exception : fleche droite, legerement decalee
-    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
+    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
   };
+
+  /* Pied de carte : soin conseille apres le combat, puis les objets a changer avant le suivant. */
+  function after(a) {
+    if (!a) return '';
+    const heal = a.heal ? `<span class="after-chip is-heal">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}</span>` : '';
+    const swaps = (a.switch || []).map(s => {
+      const label = esc(`${name(data.mons, s.mon)} → ${t('it_' + s.item)}`);
+      return `<span class="after-chip is-swap" title="${label}" aria-label="${label}">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
+        `<img class="swap-item" src="/gym-rerun/items/${ITEM_ICON[s.item]}.png" alt="" width="30" height="30"><span>${esc(t('it_' + s.item))}</span></span>`;
+    }).join('');
+    return `<div class="gym-after">${heal}${swaps}</div>`;
+  }
 
   /* ── Rendu des blocs ── */
   /* ── Favoris : memorises dans le navigateur ; les favoris passent en tete du menu ── */
@@ -126,14 +138,15 @@ const Money = (() => {
   }
 
   function infoBar() {
+    $('money-team').innerHTML = data.team.map(id => `<li data-mon="${id}" title="${esc(name(data.mons, id))}">${monSprite(id, false)}</li>`).join('');
+    $('money-team').setAttribute('aria-label', t('gr_team'));
     const total = new Intl.NumberFormat(i18n.lang).format(data.total);
     const stock = data.stock.map(x => `<span class="info-stock"><b>${x.qty}</b>${esc(t('item_' + x.item))}</span>`).join('');
-    const team = data.team.map(id => `<li data-mon="${id}">${monSprite(id, false)}<b>${esc(name(data.mons, id))}</b></li>`).join('');
     $('money-info').innerHTML =
       `<span class="info-item info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></span>` +
       `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span><span class="info-stocks">${stock}</span></span>` +
       `<span class="info-item">${icon('flight')}${esc(t('gr_ocarina'))}</span>` +
-      `<ul class="info-item info-team" aria-label="${esc(t('gr_team'))}">${team}</ul>`;
+      (data.requires ? `<span class="info-item is-require">${icon('warning')}${esc(t('gr_requires'))}</span>` : '');
   }
 
   function regionTabs() {
@@ -176,28 +189,48 @@ const Money = (() => {
     let size = search(19, () => tall() && !overflowsX(body));
     if (size < 14) { body.classList.remove('nowrap'); size = search(19, tall); }
     body.style.fontSize = size + 'px';
+    while (size > 11 && !tall()) body.style.fontSize = (size -= 0.5) + 'px';   // garde-fou : la dichotomie n'est pas monotone
   }
 
   function stage(animate) {
     const r = data.regions[state.region];
     const cards = r.gyms.map((g, i) => {
-      const tip = g.tip ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
-      return `<article class="gym" style="--n:${i}">` +
+      const tip = g.tip && !g.bonus ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
+      const chips = (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
+        (g.time != null ? `<span class="gym-chip">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
+      const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
+      // Une exception qui enchaine sur une action ("... into Eruption + ...") se coupe en deux : la suite passe sur sa propre ligne.
+      const expanded = g.lines.flatMap(l => {
+        const m = l.i && !l.s.startsWith('@into') && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);
+        return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
+      });
+      const lines = expanded.map((l, n) => { gymItems = n === 0 || l.lead ? g.items || {} : {}; return line(l, n); }).join('');
+      gymItems = {};
+      return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
         `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" loading="lazy">` +
-        `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}</div>` +
-        `${g.lines.map((l, n) => { gymItems = n === 0 ? g.items || {} : {}; return line(l, n); }).join('')}</div></article>`;   // objets : ligne de lead seulement
+        `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
+        `${note}${lines}${after(g.after)}</div></article>`;
     });
     gymItems = {};
-    // Deux colonnes independantes (1,3,5 | 2,4,6) : pas de hauteur de rangee imposee par la plus haute carte.
-    const col = k => `<div class="stage-col">${cards.filter((_, i) => i % 2 === k).join('')}</div>`;
+    // Deux colonnes de hauteur voisine : les arenes se lisent de haut en bas, colonne apres colonne.
+    const weight = g => 1 + g.lines.length + (g.after ? 1 : 0) + (g.bonus ? 3 : 0);
+    const total = r.gyms.reduce((s, g) => s + weight(g), 0);
+    let split = 1, best = Infinity;
+    for (let k = 1, acc = 0; k < r.gyms.length; k++) {
+      acc += weight(r.gyms[k - 1]);
+      const worst = Math.max(acc, total - acc);
+      if (worst < best) { best = worst; split = k; }
+    }
+    const col = (from, to) => `<div class="stage-col">${cards.slice(from, to).join('')}</div>`;
     const el = $('money-stage');
-    el.innerHTML = `<div class="stage-body">${col(0)}${col(1)}</div>`;
+    el.innerHTML = `<div class="stage-body">${col(0, split)}${col(split)}</div>`;
     el.setAttribute('aria-label', r.name);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
   function renderAll(animate) {
     infoBar(); regionTabs(); controls(); stage(animate); fit();
+    document.fonts?.ready.then(fit);                  // les polices web changent les largeurs : on recalcule une fois chargees
   }
 
   /* ── Navigation : de region en region ── */

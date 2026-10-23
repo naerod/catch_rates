@@ -241,16 +241,96 @@
       "en": "Blastoise",
       "fr": "Tortank",
       "type": "water"
+    },
+    "130": {
+      "en": "Gyarados",
+      "fr": "Léviator",
+      "type": "water"
+    },
+    "131": {
+      "en": "Lapras",
+      "fr": "Lokhlass",
+      "type": "water"
+    },
+    "226": {
+      "en": "Mantine",
+      "fr": "Démanta",
+      "type": "water"
+    },
+    "327": {
+      "en": "Spinda",
+      "fr": "Spinda",
+      "type": "normal"
+    },
+    "352": {
+      "en": "Kecleon",
+      "fr": "Kecleon",
+      "type": "grass"
+    },
+    "186": {
+      "en": "Politoed",
+      "fr": "Tarpaud",
+      "type": "water"
+    },
+    "212": {
+      "en": "Scizor",
+      "fr": "Cizayox",
+      "type": "fighting"
+    },
+    "80": {
+      "en": "Slowbro",
+      "fr": "Flagadoss",
+      "type": "psychic"
     }
   },
   "regions": [
     {
       "id": "hoenn",
       "name": "Hoenn",
+      "mapSize": [
+        576,
+        360
+      ],
       "gyms": [
+        {
+          "id": "sootopolis",
+          "name": "Sootopolis",
+          "time": 59,
+          "items": {
+            "weezing": "choice_band",
+            "blastoise": "choice_specs",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #130 , @follow_with typhlosion.swift + garchomp.earthquake @instead"
+            },
+            {
+              "i": 1,
+              "s": "@vs #131 , @follow_into togekiss.hyper_voice / .shock_wave + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@if_available @prioritize #226"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          }
+        },
         {
           "id": "lavaridge",
           "name": "Lavaridge",
+          "time": 57,
+          "items": {
+            "blastoise": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + togekiss.helping_hand"
@@ -260,38 +340,78 @@
               "s": "@vs #229 / #59:85 , togekiss.hyper_voice"
             }
           ],
+          "after": {
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
+          }
+        },
+        {
+          "id": "mauville",
+          "name": "Mauville",
+          "time": 56,
           "items": {
             "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_specs",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+            "garchomp": "choice_band",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "@vs #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_scarf"
+              }
+            ]
           }
         },
         {
           "id": "dewford",
           "name": "Dewford",
+          "time": 54,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + togekiss.hyper_voice"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_specs"
+              }
+            ]
           }
         },
         {
           "id": "fortree",
           "name": "Fortree",
+          "time": 53,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
-              "s": "blastoise.fake_out ( @on #277 ) + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+              "s": "blastoise.fake_out ( @prioritize #277 ) + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
             },
             {
               "i": 1,
@@ -302,57 +422,51 @@
               "s": "@vs #277 , @follow_into vanilluxe.blizzard + togekiss.hyper_voice @instead"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
-        },
-        {
-          "id": "mauville",
-          "name": "Mauville",
-          "lines": [
-            {
-              "s": "typhlosion.eruption + garchomp.dragon_claw"
-            },
-            {
-              "i": 1,
-              "s": "@vs #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
-            }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes"
           }
         },
         {
           "id": "rustboro",
           "name": "Rustboro",
+          "time": 51,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.assurance"
             }
-          ],
+          ]
+        },
+        {
+          "id": "petalburg",
+          "name": "Petalburg",
+          "time": 49,
           "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
             "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
             "weezing": "choice_band",
-            "garchomp": "choice_band"
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into typhlosion.eruption + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #327 , @follow_into typhlosion.eruption + garchomp.earthquake @then vanilluxe.blizzard + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #352 , @follow_up_with togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "after": {
+            "heal": "yes"
           }
         }
-      ],
-      "mapSize": [
-        576,
-        360
       ]
     },
     {
@@ -366,6 +480,11 @@
         {
           "id": "eterna",
           "name": "Eterna",
+          "time": 46,
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "typhlosion.swift + togekiss.hyper_voice"
@@ -378,19 +497,16 @@
               "i": 1,
               "s": "@vs #407 , typhlosion.eruption + togekiss.hyper_voice"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         },
         {
           "id": "veilstone",
           "name": "Veilstone",
+          "time": 44,
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + togekiss.helping_hand"
@@ -403,44 +519,41 @@
               "i": 1,
               "s": "@vs #620 , typhlosion.incinerate + togekiss.hyper_voice"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         },
         {
           "id": "oreburgh",
           "name": "Oreburgh",
+          "time": 43,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "vanilluxe": "choice_scarf"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.assurance"
             },
             {
               "i": 1,
-              "s": "@vs #476 , @switch_out ~weezing @into vanilluxe.blizzard"
+              "s": "@vs #476 @lead , @switch_out ~weezing @into vanilluxe.blizzard"
             },
             {
               "i": 1,
-              "s": "@vs #248 @and #530 , @then weezing.assurance @on #346"
+              "s": "@vs #248 @and #530 @lead , @if #346 @and #80 @sent_together , @use weezing.assurance @on #346 @turns4"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         },
         {
           "id": "canalave",
           "name": "Canalave",
+          "time": 41,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
@@ -448,79 +561,154 @@
             {
               "i": 1,
               "s": "@vs #376 , @follow_up_with typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #76 , @use weezing.incinerate"
+            },
+            {
+              "i": 1,
+              "s": "@warn_cradily"
             }
           ],
           "tip": "tip_channel",
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "skip": true,
+          "after": {
+            "heal": "yes"
           }
         },
         {
           "id": "pastoria",
           "name": "Pastoria",
+          "time": 39,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
           "lines": [
             {
-              "s": "blastoise.fake_out ( @on #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+              "s": "blastoise.fake_out ( @prioritize #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         }
       ]
     },
     {
       "id": "kanto",
       "name": "Kanto",
+      "mapSize": [
+        576,
+        432
+      ],
       "gyms": [
         {
           "id": "vermilion",
           "name": "Vermilion",
-          "tip": "tip_vermilion",
+          "time": 38,
+          "items": {
+            "typhlosion": "choice_specs",
+            "garchomp": "choice_band"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "@vs #186 , typhlosion.swift + garchomp.earthquake @into vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@if ~vanilluxe @dies_crit_eq , @send_out togekiss.hyper_voice"
             }
           ],
+          "tip": "tip_vermilion",
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "vanilluxe",
+                "item": "choice_specs"
+              }
+            ]
+          }
+        },
+        {
+          "id": "pewter",
+          "name": "Pewter",
+          "time": 36,
           "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
             "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
             "weezing": "choice_band",
-            "garchomp": "choice_band"
+            "togekiss": "choice_specs",
+            "typhlosion": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "@lead_with ~blastoise @and ~weezing"
+            },
+            {
+              "i": 1,
+              "s": "@vs #260 , @use blastoise.water_spout + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #272 / #142 , @use blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #76 / #454 , @use blastoise.water_spout + weezing.assurance"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "weezing",
+                "item": "black_glasses"
+              }
+            ]
           }
         },
         {
           "id": "cinnabar",
           "name": "Cinnabar",
+          "time": 34,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "black_glasses"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.rain_dance , @then weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #59 , @switch_out ~weezing @into vanilluxe.blizzard"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_specs",
-            "weezing": "black_glasses",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "weezing",
+                "item": "choice_band"
+              }
+            ]
           }
         },
         {
           "id": "celadon",
           "name": "Celadon",
+          "time": 32,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
@@ -530,81 +718,63 @@
               "s": "@vs #71 , @follow_up_with typhlosion.eruption + garchomp.dragon_claw"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_specs",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "vanilluxe",
+                "item": "choice_scarf"
+              }
+            ]
           }
         },
         {
           "id": "saffron",
           "name": "Saffron",
-          "lines": [
-            {
-              "s": "typhlosion.eruption + garchomp.dragon_claw"
-            },
-            {
-              "i": 1,
-              "s": "@vs #196 / #202 , @use typhlosion.eruption + garchomp.earthquake"
-            },
-            {
-              "i": 1,
-              "s": "@into togekiss.hyper_voice + garchomp.earthquake"
-            }
-          ],
+          "time": 29,
           "items": {
             "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+            "garchomp": "choice_band",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #212 / #131 @lead , typhlosion.eruption + garchomp.dragon_claw @protect_furret"
+            }
+          ],
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_specs"
+              }
+            ]
           }
         },
         {
-          "id": "pewter",
-          "name": "Pewter",
+          "id": "cerulean",
+          "name": "Cerulean",
+          "time": 27,
+          "items": {
+            "garchomp": "choice_band",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
-              "s": "@lead_with ~blastoise @and ~weezing"
-            },
-            {
-              "i": 1,
-              "s": "@vs #76 / #454 , @use blastoise.water_spout + weezing.assurance"
-            },
-            {
-              "i": 1,
-              "s": "@vs #272 / #142 , @use blastoise.water_spout + weezing.explosion"
-            },
-            {
-              "i": 1,
-              "s": "@into togekiss.hyper_voice + garchomp.earthquake"
-            },
-            {
-              "i": 1,
-              "s": "@vs #260 , @use blastoise.water_spout + weezing.explosion"
-            },
-            {
-              "i": 1,
-              "s": "@into typhlosion.eruption + togekiss.hyper_voice"
+              "s": "garchomp.sunny_day + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_specs",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes"
           }
         }
-      ],
-      "mapSize": [
-        576,
-        432
       ]
     },
     {
@@ -618,66 +788,89 @@
         {
           "id": "olivine",
           "name": "Olivine",
+          "time": 25,
+          "items": {
+            "typhlosion": "choice_specs",
+            "weezing": "choice_band"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + weezing.assurance"
             },
             {
               "i": 1,
-              "s": "@vs #376 , typhlosion.eruption + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+              "s": "@vs #376 @lead , typhlosion.eruption + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_specs",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "required",
+            "switch": [
+              {
+                "mon": "typhlosion",
+                "item": "choice_scarf"
+              }
+            ]
           }
         },
         {
           "id": "azalea",
           "name": "Azalea",
+          "time": 24,
+          "items": {
+            "blastoise": "choice_specs",
+            "weezing": "choice_band"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.assurance"
             },
             {
               "i": 1,
-              "s": "@vs #123 , typhlosion.incinerate"
+              "s": "@vs #123 @lead , weezing.incinerate"
             }
           ],
           "tip": "tip_channel",
-          "items": {
-            "typhlosion": "choice_scarf",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_specs",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
           }
         },
         {
           "id": "violet",
           "name": "Violet",
+          "time": 22,
+          "items": {
+            "typhlosion": "choice_scarf",
+            "blastoise": "choice_scarf"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + blastoise.water_spout"
             }
           ],
-          "items": {
-            "typhlosion": "choice_scarf",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "switch": [
+              {
+                "mon": "typhlosion",
+                "item": "choice_specs"
+              }
+            ]
           }
         },
         {
           "id": "blackthorn",
           "name": "Blackthorn",
+          "time": 20,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "vanilluxe": "choice_scarf",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.explosion @into vanilluxe.blizzard + togekiss.hyper_voice"
@@ -686,53 +879,57 @@
               "i": 1,
               "s": "@vs #9 , blastoise.fake_out @on #9"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         },
         {
           "id": "cianwood",
           "name": "Cianwood",
+          "time": 19,
+          "items": {
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
           "lines": [
             {
               "s": "togekiss.hyper_voice + garchomp.earthquake"
             }
-          ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
-          }
+          ]
         },
         {
           "id": "goldenrod",
           "name": "Goldenrod",
+          "time": 18,
+          "items": {
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
           "lines": [
             {
               "s": "togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@sub_into ~typhlosion @if ~garchomp @faints"
+            },
+            {
+              "i": 1,
+              "s": "~togekiss @first_slot @and ~garchomp @second_slot"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes"
           }
         },
         {
           "id": "mahogany",
           "name": "Mahogany",
+          "time": 16,
+          "items": {
+            "weezing": "choice_band",
+            "garchomp": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
           "lines": [
             {
               "s": "weezing.explosion + garchomp.dragon_claw ( @on #144 / #365 ) @into typhlosion.eruption + togekiss.hyper_voice"
@@ -743,24 +940,25 @@
             },
             {
               "i": 1,
-              "s": "@vs #362 , weezing.explosion + @switch_out ~garchomp @into ~blastoise"
+              "s": "@vs #362 , weezing.explosion + ~garchomp @hard_switches_into ~blastoise"
             },
             {
               "i": 1,
-              "s": "@into typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+              "s": "@follow_up_with typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
             },
             {
               "i": 1,
-              "s": "@vs #478 , weezing.explosion + blastoise.sunny_day @into typhlosion.eruption + blastoise.water_spout"
+              "s": "@vs #478 , weezing.explosion + garchomp.sunny_day @into typhlosion.eruption + blastoise.water_spout"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_specs",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_scarf"
+              }
+            ]
           }
         }
       ]
@@ -776,40 +974,46 @@
         {
           "id": "castelia",
           "name": "Castelia",
+          "time": 14,
+          "items": {
+            "typhlosion": "choice_specs",
+            "blastoise": "choice_scarf"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + blastoise.water_spout"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe"
           }
         },
         {
           "id": "nimbasa",
           "name": "Nimbasa",
+          "time": 12,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + togekiss.hyper_voice"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes"
           }
         },
         {
           "id": "mistralton",
           "name": "Mistralton",
+          "time": 10,
+          "items": {
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + vanilluxe.blizzard"
@@ -819,108 +1023,130 @@
               "s": "@vs #521 , vanilluxe.blizzard + @switch_out ~blastoise @into ~weezing @then weezing.assurance"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_specs"
+              }
+            ]
           }
         },
         {
           "id": "driftveil",
           "name": "Driftveil",
+          "time": 8,
+          "items": {
+            "blastoise": "choice_specs",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
           "lines": [
             {
               "s": "blastoise.water_spout + weezing.assurance"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_specs",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
           }
         },
         {
           "id": "opelucid",
           "name": "Opelucid",
+          "time": 6,
+          "items": {
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
           "lines": [
             {
               "s": "typhlosion.eruption + vanilluxe.blizzard"
             },
             {
               "i": 1,
-              "s": "@vs #500 , blastoise.blizzard"
+              "s": "@if #500 @survives_kos ~vanilluxe , @send_out blastoise.blizzard"
             },
             {
               "i": 1,
-              "s": "@vs #503 , togekiss.hyper_voice"
+              "s": "@if #503 @survives_kos ~typhlosion , @send_out togekiss.hyper_voice"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe"
           }
         },
         {
           "id": "striaton",
           "name": "Striaton",
+          "time": 4,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf",
+            "typhlosion": "choice_specs"
+          },
           "lines": [
             {
-              "s": "@vs =Chili , blastoise.water_spout + togekiss.hyper_voice"
+              "s": "@vs =Chili , blastoise.water_spout + togekiss.hyper_voice",
+              "lead": true
             },
             {
-              "s": "@vs =Cress , typhlosion.eruption / .incinerate + togekiss.hyper_voice"
+              "s": "@vs =Cress , typhlosion.eruption / .incinerate + togekiss.hyper_voice",
+              "lead": true
             },
             {
-              "s": "@vs =Cilan , typhlosion.eruption + togekiss.hyper_voice"
+              "s": "@vs =Cilan , typhlosion.eruption + togekiss.hyper_voice",
+              "lead": true
             },
             {
               "i": 1,
-              "s": "@vs #419 , blastoise.helping_hand + togekiss.hyper_voice @into vanilluxe.blizzard + togekiss.hyper_voice"
+              "s": "@vs #419 , @use typhlosion.helping_hand + togekiss.hyper_voice @into vanilluxe.blizzard + togekiss.hyper_voice"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe"
           }
         },
         {
           "id": "nacrene",
           "name": "Nacrene",
+          "time": 0,
+          "items": {
+            "weezing": "choice_band",
+            "garchomp": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf"
+          },
           "lines": [
             {
-              "s": "weezing.explosion + blastoise.sunny_day @into typhlosion.eruption + togekiss.hyper_voice"
+              "s": "weezing.explosion + garchomp.sunny_day @into typhlosion.eruption + togekiss.hyper_voice"
             },
             {
               "i": 1,
-              "s": "@vs #234 , @switch_out ~garchomp @into ~typhlosion @then weezing.explosion"
+              "s": "@vs #234 , @switch_out ~garchomp @for ~typhlosion @then weezing.explosion"
             },
             {
               "i": 1,
-              "s": "@follow_up_with togekiss.hyper_voice + garchomp.earthquake"
+              "s": "@then @follow_with togekiss.hyper_voice + garchomp.earthquake"
             }
           ],
-          "items": {
-            "typhlosion": "choice_specs",
-            "togekiss": "choice_scarf",
-            "blastoise": "choice_scarf",
-            "vanilluxe": "choice_scarf",
-            "weezing": "choice_band",
-            "garchomp": "choice_band"
+          "after": {
+            "heal": "maybe"
           }
+        },
+        {
+          "id": "undella",
+          "name": "Undella",
+          "bonus": true,
+          "tip": "tip_route13",
+          "lines": []
         }
       ]
     }
@@ -1089,6 +1315,39 @@
     "234": [
       57,
       78
+    ],
+    "130": [
+      102,
+      84
+    ],
+    "131": [
+      68,
+      72
+    ],
+    "226": [
+      82,
+      77
+    ],
+    "327": [
+      39,
+      52
+    ],
+    "352": [
+      65,
+      55
+    ],
+    "186": [
+      51,
+      79
+    ],
+    "212": [
+      75,
+      73
+    ],
+    "80": [
+      62,
+      60
     ]
-  }
+  },
+  "requires": "vanilluxe"
 }
