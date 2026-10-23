@@ -2,6 +2,20 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.10.1",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Objets sur la ligne de lead uniquement",
+        "en": "Items on the lead line only"
+      },
+      "fr": [
+        "Les bulles d'objets ne s'affichent plus que sur la ligne de lead de chaque arène."
+      ],
+      "en": [
+        "Item bubbles now only appear on each gym's lead line."
+      ]
+    },
+    {
       "v": "1.10.0",
       "date": "2026-10-24",
       "title": {

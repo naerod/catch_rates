@@ -181,12 +181,11 @@ const Money = (() => {
   function stage(animate) {
     const r = data.regions[state.region];
     const cards = r.gyms.map((g, i) => {
-      gymItems = g.items || {};
       const tip = g.tip ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
       return `<article class="gym" style="--n:${i}">` +
         `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" loading="lazy">` +
         `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}</div>` +
-        `${g.lines.map((l, n) => line(l, n)).join('')}</div></article>`;
+        `${g.lines.map((l, n) => { gymItems = n === 0 ? g.items || {} : {}; return line(l, n); }).join('')}</div></article>`;   // objets : ligne de lead seulement
     });
     gymItems = {};
     // Deux colonnes independantes (1,3,5 | 2,4,6) : pas de hauteur de rangee imposee par la plus haute carte.
