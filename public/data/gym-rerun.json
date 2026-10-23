@@ -1,5 +1,5 @@
 {
-  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). Types : generation 5 (Togekiss = normal/vol), 1 ou 2 par Pokemon, ils colorent l'encadre du sprite.",
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon.",
   "total": 442000,
   "team": [
     "typhlosion",
@@ -28,161 +28,109 @@
       "dex": 157,
       "en": "Typhlosion",
       "fr": "Typhlosion",
-      "types": [
-        "fire"
-      ]
+      "type": "fire"
     },
     "togekiss": {
       "dex": 468,
       "en": "Togekiss",
       "fr": "Togekiss",
-      "types": [
-        "normal",
-        "flying"
-      ]
+      "type": "normal"
     },
     "blastoise": {
       "dex": 9,
       "en": "Blastoise",
       "fr": "Tortank",
-      "types": [
-        "water"
-      ]
+      "type": "water"
     },
     "vanilluxe": {
       "dex": 584,
       "en": "Vanilluxe",
       "fr": "Blizzaroi",
-      "types": [
-        "ice"
-      ]
+      "type": "ice"
     },
     "weezing": {
       "dex": 110,
       "en": "Weezing",
       "fr": "Smogogo",
-      "types": [
-        "poison"
-      ]
+      "type": "poison"
     },
     "garchomp": {
       "dex": 445,
       "en": "Garchomp",
       "fr": "Carchacrok",
-      "types": [
-        "dragon",
-        "ground"
-      ]
+      "type": "dragon"
     }
   },
   "opponents": {
     "229": {
       "en": "Houndoom",
       "fr": "Démolosse",
-      "types": [
-        "dark",
-        "fire"
-      ]
+      "type": "dark"
     },
     "59": {
       "en": "Arcanine",
       "fr": "Arcanin",
-      "types": [
-        "fire"
-      ]
+      "type": "fire"
     },
     "279": {
       "en": "Pelipper",
       "fr": "Pelipper",
-      "types": [
-        "water",
-        "flying"
-      ]
+      "type": "water"
     },
     "227": {
       "en": "Skarmory",
       "fr": "Airmure",
-      "types": [
-        "steel",
-        "flying"
-      ]
+      "type": "steel"
     },
     "277": {
       "en": "Swellow",
       "fr": "Hélédelle",
-      "types": [
-        "normal",
-        "flying"
-      ]
+      "type": "flying"
     },
     "523": {
       "en": "Zebstrika",
       "fr": "Zébribon",
-      "types": [
-        "electric"
-      ]
+      "type": "electric"
     },
     "76": {
       "en": "Golem",
       "fr": "Grolem",
-      "types": [
-        "rock",
-        "ground"
-      ]
+      "type": "rock"
     },
     "454": {
       "en": "Toxicroak",
       "fr": "Toxicroak",
-      "types": [
-        "poison",
-        "fighting"
-      ]
+      "type": "poison"
     },
     "272": {
       "en": "Ludicolo",
       "fr": "Ludicolo",
-      "types": [
-        "water",
-        "grass"
-      ]
+      "type": "grass"
     },
     "142": {
       "en": "Aerodactyl",
       "fr": "Ptéra",
-      "types": [
-        "rock",
-        "flying"
-      ]
+      "type": "flying"
     },
     "260": {
       "en": "Swampert",
       "fr": "Laggron",
-      "types": [
-        "water",
-        "ground"
-      ]
+      "type": "water"
     },
     "196": {
       "en": "Espeon",
       "fr": "Mentali",
-      "types": [
-        "psychic"
-      ]
+      "type": "psychic"
     },
     "202": {
       "en": "Wobbuffet",
       "fr": "Qulbutoké",
-      "types": [
-        "psychic"
-      ]
+      "type": "psychic"
     },
     "71": {
       "en": "Victreebel",
       "fr": "Empiflor",
-      "types": [
-        "grass",
-        "poison"
-      ]
+      "type": "grass"
     }
   },
   "regions": [

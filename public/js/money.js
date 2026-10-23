@@ -32,15 +32,14 @@ const Money = (() => {
   /* ── Rendu des jetons ── */
   const name = (table, key) => (table[key] && (table[key][i18n.lang] || table[key].en)) || key;
 
-  /* Encadre derriere le sprite, teinte selon le(s) type(s) du Pokemon. */
-  function sprite(dex, label, cls = '', types = []) {
+  /* Encadre carre derriere le sprite, teinte d'une seule couleur (type dominant du Pokemon). */
+  function sprite(dex, label, cls = '', type = '') {
     const [w, h] = data.size[dex];
-    const [t1, t2 = t1] = types;
     const img = `<picture><source media="(prefers-reduced-motion: reduce)" srcset="/gym-rerun/sprites/${dex}.png">` +
       `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" loading="lazy"></picture>`;
-    return t1 ? `<span class="sprite-box" style="--t1:var(--type-${t1});--t2:var(--type-${t2})">${img}</span>` : img;
+    return type ? `<span class="sprite-box" style="--t:var(--type-${type})">${img}</span>` : img;
   }
-  const monSprite = id => sprite(data.mons[id].dex, name(data.mons, id), '', data.mons[id].types);
+  const monSprite = id => sprite(data.mons[id].dex, name(data.mons, id), '', data.mons[id].type);
 
   function token(tk) {
     if (tk === '+') return '<span class="tk-plus" aria-hidden="true">+</span>';
@@ -52,7 +51,7 @@ const Money = (() => {
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
       const lv = lvl ? `<span class="tk-lvl">${esc(t('gr_lvl'))} ${+lvl}</span>` : '';
-      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].types)}${lv}</span>`;
+      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].type)}${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
     return `<span class="tk-act" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;

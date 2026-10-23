@@ -20,7 +20,7 @@
 
 /* Couleurs des types (generation 5) : l'encadre est semi-transparent, il tient sur les deux themes */
 :root {
-  --type-normal: #a8a77a; --type-fire: #ee8130; --type-water: #6390f0; --type-electric: #f7d02c; --type-grass: #7ac74c;
+  --type-normal: #a3a7ad; --type-fire: #ee8130; --type-water: #6390f0; --type-electric: #f7d02c; --type-grass: #7ac74c;
   --type-ice: #96d9d6; --type-fighting: #c22e28; --type-poison: #a33ea1; --type-ground: #e2bf65; --type-flying: #a98ff3;
   --type-psychic: #f95587; --type-bug: #a6b91a; --type-rock: #b6a136; --type-ghost: #735797; --type-dragon: #6f35fc;
   --type-dark: #705746; --type-steel: #b7b7ce;
@@ -76,7 +76,8 @@
 .info-item .material-symbols-outlined { font-size: 18px; }
 .info-team { gap: 0.75rem; margin-left: auto; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
-.info-team .sprite { height: 28px; width: auto; }
+.info-team .sprite-box { width: 38px; height: 38px; padding: 2px; }
+.info-team .sprite { width: calc(var(--w) * 0.4px); height: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
 .money-stage { flex: 1; min-height: 0; }
@@ -99,7 +100,7 @@
 
 /* ── Lignes de strategie ── */
 .gym-line { display: flex; align-items: flex-start; gap: 0.25em; line-height: 1.25; }
-.gym-line.is-variant { font-size: 0.92em; color: var(--text-dim); }
+.gym-line.is-variant { color: var(--text-dim); }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
 .gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.1em 0.4em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.2em; color: var(--mon, var(--text)); }
@@ -109,12 +110,14 @@
 .tk-opp { display: inline-flex; align-items: center; gap: 0.2em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
 
-.sprite { width: calc(var(--w) * 0.035em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
+.sprite-box .sprite { max-width: 100%; max-height: 100%; object-fit: contain; }
+.sprite { width: calc(var(--w) * 0.032em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
 .sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
 .sprite-box {
-  display: inline-flex; align-items: center; justify-content: center; flex: none; padding: 0.1em; border-radius: 0.35em;
-  border: 1px solid color-mix(in srgb, var(--t1) 70%, transparent);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--t1) 32%, transparent) 50%, color-mix(in srgb, var(--t2) 32%, transparent) 50%);
+  display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
+  width: 3.3em; height: 3.3em; padding: 0.1em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
+  border: 1px solid color-mix(in srgb, var(--t) 75%, transparent);
+  background: color-mix(in srgb, var(--t) 34%, transparent);
 }
 
 /* ── Etats : chargement (squelette) et erreur ── */
