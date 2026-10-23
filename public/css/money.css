@@ -18,6 +18,14 @@
 [data-mon="weezing"]    { --mon: var(--mon-weezing); }
 [data-mon="garchomp"]   { --mon: var(--mon-garchomp); }
 
+/* Couleurs des types (generation 5) : l'encadre est semi-transparent, il tient sur les deux themes */
+:root {
+  --type-normal: #a8a77a; --type-fire: #ee8130; --type-water: #6390f0; --type-electric: #f7d02c; --type-grass: #7ac74c;
+  --type-ice: #96d9d6; --type-fighting: #c22e28; --type-poison: #a33ea1; --type-ground: #e2bf65; --type-flying: #a98ff3;
+  --type-psychic: #f95587; --type-bug: #a6b91a; --type-rock: #b6a136; --type-ghost: #735797; --type-dragon: #6f35fc;
+  --type-dark: #705746; --type-steel: #b7b7ce;
+}
+
 /* Cette page a besoin de largeur : l'ecran d'une region fait 16:9 */
 .layout-grid.is-wide { grid-template-columns: 1fr minmax(0, 1800px) 1fr; }
 .layout-grid.is-wide .history-panel { display: none; }
@@ -68,7 +76,7 @@
 .info-item .material-symbols-outlined { font-size: 18px; }
 .info-team { gap: 0.75rem; margin-left: auto; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
-.info-team .sprite { height: 22px; width: auto; }
+.info-team .sprite { height: 28px; width: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
 .money-stage { flex: 1; min-height: 0; }
@@ -79,11 +87,11 @@
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
-  display: flex; gap: 0.75em; padding: 0.5em; align-items: flex-start;
+  display: flex; gap: 0.6em; padding: 0.4em; align-items: flex-start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
 .gym-map { flex: none; width: 27%; height: auto; border-radius: 4px; background: var(--bg3); }
-.gym-body { display: flex; flex-direction: column; gap: 0.25em; min-width: 0; flex: 1; }
+.gym-body { display: flex; flex-direction: column; gap: 0.15em; min-width: 0; flex: 1; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
 .gym-tip { display: flex; align-items: center; gap: 0.5em; font-size: 0.8em; color: var(--text-dim); }
@@ -101,8 +109,13 @@
 .tk-opp { display: inline-flex; align-items: center; gap: 0.2em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
 
-.sprite { width: calc(var(--w) * 0.03em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
+.sprite { width: calc(var(--w) * 0.035em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
 .sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
+.sprite-box {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; padding: 0.1em; border-radius: 0.35em;
+  border: 1px solid color-mix(in srgb, var(--t1) 70%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--t1) 32%, transparent) 50%, color-mix(in srgb, var(--t2) 32%, transparent) 50%);
+}
 
 /* ── Etats : chargement (squelette) et erreur ── */
 .is-skeleton .gym { min-height: 8em; border-style: dashed; animation: skel 1.2s ease-in-out infinite alternate; }

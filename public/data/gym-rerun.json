@@ -1,5 +1,5 @@
 {
-  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante).",
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). Types : generation 5 (Togekiss = normal/vol), 1 ou 2 par Pokemon, ils colorent l'encadre du sprite.",
   "total": 442000,
   "team": [
     "typhlosion",
@@ -27,90 +27,162 @@
     "typhlosion": {
       "dex": 157,
       "en": "Typhlosion",
-      "fr": "Typhlosion"
+      "fr": "Typhlosion",
+      "types": [
+        "fire"
+      ]
     },
     "togekiss": {
       "dex": 468,
       "en": "Togekiss",
-      "fr": "Togekiss"
+      "fr": "Togekiss",
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     "blastoise": {
       "dex": 9,
       "en": "Blastoise",
-      "fr": "Tortank"
+      "fr": "Tortank",
+      "types": [
+        "water"
+      ]
     },
     "vanilluxe": {
       "dex": 584,
       "en": "Vanilluxe",
-      "fr": "Blizzaroi"
+      "fr": "Blizzaroi",
+      "types": [
+        "ice"
+      ]
     },
     "weezing": {
       "dex": 110,
       "en": "Weezing",
-      "fr": "Smogogo"
+      "fr": "Smogogo",
+      "types": [
+        "poison"
+      ]
     },
     "garchomp": {
       "dex": 445,
       "en": "Garchomp",
-      "fr": "Carchacrok"
+      "fr": "Carchacrok",
+      "types": [
+        "dragon",
+        "ground"
+      ]
     }
   },
   "opponents": {
     "229": {
       "en": "Houndoom",
-      "fr": "Démolosse"
+      "fr": "Démolosse",
+      "types": [
+        "dark",
+        "fire"
+      ]
     },
     "59": {
       "en": "Arcanine",
-      "fr": "Arcanin"
+      "fr": "Arcanin",
+      "types": [
+        "fire"
+      ]
     },
     "279": {
       "en": "Pelipper",
-      "fr": "Pelipper"
+      "fr": "Pelipper",
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     "227": {
       "en": "Skarmory",
-      "fr": "Airmure"
+      "fr": "Airmure",
+      "types": [
+        "steel",
+        "flying"
+      ]
     },
     "277": {
       "en": "Swellow",
-      "fr": "Hélédelle"
+      "fr": "Hélédelle",
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     "523": {
       "en": "Zebstrika",
-      "fr": "Zébribon"
+      "fr": "Zébribon",
+      "types": [
+        "electric"
+      ]
     },
     "76": {
       "en": "Golem",
-      "fr": "Grolem"
+      "fr": "Grolem",
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     "454": {
       "en": "Toxicroak",
-      "fr": "Toxicroak"
+      "fr": "Toxicroak",
+      "types": [
+        "poison",
+        "fighting"
+      ]
     },
     "272": {
       "en": "Ludicolo",
-      "fr": "Ludicolo"
+      "fr": "Ludicolo",
+      "types": [
+        "water",
+        "grass"
+      ]
     },
     "142": {
       "en": "Aerodactyl",
-      "fr": "Ptéra"
+      "fr": "Ptéra",
+      "types": [
+        "rock",
+        "flying"
+      ]
     },
     "260": {
       "en": "Swampert",
-      "fr": "Laggron"
+      "fr": "Laggron",
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     "196": {
       "en": "Espeon",
-      "fr": "Mentali"
+      "fr": "Mentali",
+      "types": [
+        "psychic"
+      ]
     },
     "202": {
       "en": "Wobbuffet",
-      "fr": "Qulbutoké"
+      "fr": "Qulbutoké",
+      "types": [
+        "psychic"
+      ]
     },
     "71": {
       "en": "Victreebel",
-      "fr": "Empiflor"
+      "fr": "Empiflor",
+      "types": [
+        "grass",
+        "poison"
+      ]
     }
   },
   "regions": [
