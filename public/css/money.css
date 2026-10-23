@@ -55,10 +55,10 @@
 .layout-grid.is-wide main { padding: 0.5rem 1rem; }
 #money-method:not([hidden]) { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-height: 0; }
 
-.money-head { display: flex; align-items: center; gap: 0.5rem; }
+.money-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .money-head .btn, .region-tab, .money-nav .btn { min-height: 44px; font-size: 0.9rem; }
 @media (pointer: fine) { .money-head .btn, .region-tab, .money-nav .btn { min-height: 34px; padding: 0.15rem 0.75rem; font-size: 0.85rem; } }
-.money-method-name { font: 700 1.25rem var(--font-head); color: var(--accent); margin-right: 0.5rem; }
+.money-method-name { font: 700 1.1rem var(--font-head); color: var(--accent); margin-right: 0.5rem; }
 .money-regions { display: flex; gap: 0.5rem; }
 .region-tab {
   padding: 0.25rem 1rem; background: transparent; color: var(--text-dim);
@@ -67,8 +67,8 @@
 }
 .region-tab:hover { border-color: var(--accent); color: var(--text); }
 .region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: var(--on-accent); }
-.money-nav { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
-.info-team + .money-nav { margin-left: 1rem; }
+.money-nav { display: flex; align-items: center; gap: 0.75rem; }
+.money-head-right { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.5rem 1rem; margin-left: auto; }
 .money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .money-progress { min-width: 4ch; text-align: center; font: 600 0.9rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
 
@@ -81,12 +81,11 @@
 .info-stock b { margin-right: 0.25rem; color: var(--text); }
 .info-note { font-size: 0.8rem; color: var(--text-muted); }
 .info-item .material-symbols-outlined { font-size: 18px; }
-.info-team { gap: 0.75rem; margin-left: auto; }
+.info-team { gap: 0.75rem; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
 .info-team .sprite-box { width: 38px; height: 38px; padding: 2px; }
-.info-team { margin-left: auto; display: inline-flex; gap: 0.5rem; list-style: none; }
-.money-head .info-team + .money-nav { margin-left: 1rem; }
-.info-team .sprite { width: calc(var(--w) * 0.4px); height: auto; }
+.info-team { display: inline-flex; gap: 0.5rem; list-style: none; }
+.money-head .info-team .sprite { width: calc(var(--w) * 0.4px); height: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
 .money-stage { flex: 1; min-height: 0; }

@@ -6,7 +6,7 @@ const translations = {
   en: {
     nav_calc: 'Calculator', nav_events: 'Events', nav_admin: 'Admin',
     nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
-    gr_name: "naerod's 6 Pillars", gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
+    gr_name: '6 Pillars : Diabolus - ITEM SWAP - X.ITEMLESS - VARIATION', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
     gr_total: 'Total', gr_total_note: 'with Amulet Coin (price not included)', gr_stock: 'Stockpile', gr_team: 'Team',
     gr_ocarina: 'Fly / Teleport Ocarina recommended', gr_map_of: 'Map to', gr_lvl: 'Lvl.',
     gr_error: "Couldn't load the route. Check your connection, then retry.", gr_retry: 'Retry',
@@ -126,7 +126,7 @@ const translations = {
   fr: {
     nav_calc: 'Calculateur', nav_events: 'Événements', nav_admin: 'Admin',
     nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes', money_fav_add: 'Ajouter aux favoris', money_fav_remove: 'Retirer des favoris',
-    gr_name: "naerod's 6 Pillars", gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',
+    gr_name: '6 Pillars : Diabolus - ITEM SWAP - X.ITEMLESS - VARIATION', gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',
     gr_total: 'Total', gr_total_note: "avec Pièce Rune (prix non inclus)", gr_stock: 'Réserve', gr_team: 'Équipe',
     gr_ocarina: 'Ocarina Vol / Téléportation recommandée', gr_map_of: 'Carte vers', gr_lvl: 'Niv.',
     gr_error: "Impossible de charger le parcours. Vérifie ta connexion, puis réessaie.", gr_retry: 'Réessayer',
