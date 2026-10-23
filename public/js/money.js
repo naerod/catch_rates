@@ -42,8 +42,10 @@ const Money = (() => {
   const monSprite = id => sprite(data.mons[id].dex, name(data.mons, id), '', data.mons[id].type);
 
   function token(tk) {
-    if (tk === '+') return '<span class="tk-plus" aria-hidden="true">+</span>';
-    if ('/(),'.includes(tk)) return `<span class="tk-raw">${tk}</span>`;
+    // Pas de caracteres de ponctuation : des icones, ou rien (l'espacement suffit).
+    if (tk === '+') return icon('add').replace('class="', 'class="tk-plus ');
+    if (tk === '/') return icon('swap_horiz').replace('class="', 'class="tk-raw ');
+    if ('(),'.includes(tk)) return '';
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
     if (c === '~') return `<span class="tk-act" data-mon="${rest}">${monSprite(rest)}</span>`;
@@ -56,8 +58,11 @@ const Money = (() => {
     const [mon, move] = tk.split('.');
     return `<span class="tk-act" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
   }
-  const line = l => `<p class="gym-line${l.i ? ' is-variant' : ''}">${l.i ? icon('subdirectory_arrow_right') : ''}` +
+  const line = (l, n) => {
+    const cont = l.s.startsWith('@into');                       // suite d'une exception : fleche droite, legerement decalee
+    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(' ').map(token).join('')}</span></p>`;
+  };
 
   /* ── Rendu des blocs ── */
   function menu() {
@@ -79,11 +84,11 @@ const Money = (() => {
 
   function infoBar() {
     const total = new Intl.NumberFormat(i18n.lang).format(data.total);
-    const stock = data.stock.map(x => `${x.qty} × ${esc(t('item_' + x.item))}`).join(' · ');
+    const stock = data.stock.map(x => `<span class="info-stock"><b>${x.qty}</b>${esc(t('item_' + x.item))}</span>`).join('');
     const team = data.team.map(id => `<li data-mon="${id}">${monSprite(id)}<b>${esc(name(data.mons, id))}</b></li>`).join('');
     $('money-info').innerHTML =
       `<span class="info-item info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></span>` +
-      `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span>${stock}</span>` +
+      `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span><span class="info-stocks">${stock}</span></span>` +
       `<span class="info-item">${icon('flight')}${esc(t('gr_ocarina'))}</span>` +
       `<ul class="info-item info-team" aria-label="${esc(t('gr_team'))}">${team}</ul>`;
   }
@@ -109,14 +114,17 @@ const Money = (() => {
       const tip = g.tip ? `<p class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
       return `<article class="gym">` +
         `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" loading="lazy">` +
-        `<div class="gym-body"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}` +
-        `${g.lines.map(line).join('')}</div></article>`;
+        `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${i + 1}.</span>${esc(g.name)}</h3>${tip}</div>` +
+        `${g.lines.map((l, n) => line(l, n)).join('')}</div></article>`;
     }).join('');
     const el = $('money-stage');
     el.innerHTML = `<div class="stage-body">${cards}</div>`;
     el.setAttribute('aria-label', r.name);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
+
+  /* Une ligne de strategie ne passe jamais a la ligne : elle ne doit pas deborder de sa carte. */
+  const overflowsX = body => [...body.querySelectorAll('.gym-body')].some(el => el.scrollWidth > el.clientWidth + 1);
 
   /* Plus grand texte qui tienne dans la fenetre : recherche par dichotomie sur la taille de police. */
   function fit() {
@@ -128,7 +136,7 @@ const Money = (() => {
     for (let i = 0; i < 7; i++) {
       const mid = (lo + hi) / 2;
       body.style.fontSize = mid + 'px';
-      if (body.scrollHeight <= box.clientHeight) lo = mid; else hi = mid;
+      if (body.scrollHeight <= box.clientHeight && !overflowsX(body)) lo = mid; else hi = mid;
     }
     body.style.fontSize = lo + 'px';
   }

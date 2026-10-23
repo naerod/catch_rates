@@ -18,6 +18,10 @@
 [data-mon="weezing"]    { --mon: var(--mon-weezing); }
 [data-mon="garchomp"]   { --mon: var(--mon-garchomp); }
 
+/* Ligne de lead : fond legerement plus fonce que la carte */
+:root, [data-theme="dark"] { --lead-bg: rgba(0, 0, 0, 0.35); }
+[data-theme="light"] { --lead-bg: rgba(0, 0, 0, 0.07); }
+
 /* Couleurs des types (generation 5) : l'encadre est semi-transparent, il tient sur les deux themes */
 :root {
   --type-normal: #a3a7ad; --type-fire: #ee8130; --type-water: #6390f0; --type-electric: #f7d02c; --type-grass: #7ac74c;
@@ -72,6 +76,8 @@
 .info-item { display: inline-flex; align-items: center; gap: 0.5rem; list-style: none; }
 .info-label { font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
 .info-total strong { font: 700 1.1rem var(--font-head); color: var(--accent); }
+.info-stocks { display: inline-flex; gap: 0.75rem; }
+.info-stock b { margin-right: 0.25rem; color: var(--text); }
 .info-note { font-size: 0.8rem; color: var(--text-muted); }
 .info-item .material-symbols-outlined { font-size: 18px; }
 .info-team { gap: 0.75rem; margin-left: auto; }
@@ -83,39 +89,42 @@
 .money-stage { flex: 1; min-height: 0; }
 /* La taille du texte est ajustee par money.js (fit) pour que la region tienne dans la fenetre. */
 .stage-body { font-size: 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 24em), 1fr)); gap: 0.5em; align-content: start; }
-@media (min-width: 900px) { .stage-body { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .stage-body { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .money-stage.is-entering .stage-body { animation: stage-in 0.24s ease-out; }
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
-  display: flex; gap: 0.6em; padding: 0.4em; align-items: flex-start;
+  display: flex; gap: 0.5em; padding: 0.4em; align-items: flex-start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
-.gym-map { flex: none; width: 27%; height: auto; border-radius: 4px; background: var(--bg3); }
+.gym-map { flex: none; width: 20%; height: auto; border-radius: 4px; background: var(--bg3); }
 .gym-body { display: flex; flex-direction: column; gap: 0.15em; min-width: 0; flex: 1; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
-.gym-tip { display: flex; align-items: center; gap: 0.5em; font-size: 0.8em; color: var(--text-dim); }
+.gym-top { display: flex; align-items: center; gap: 0.75em; min-width: 0; }
+.gym-tip { display: flex; align-items: center; gap: 0.35em; min-width: 0; font-size: 0.8em; color: var(--text-dim); white-space: nowrap; }
 .gym-tip .material-symbols-outlined { font-size: 1.2em; }
 
 /* ── Lignes de strategie ── */
-.gym-line { display: flex; align-items: flex-start; gap: 0.25em; line-height: 1.25; }
-.gym-line.is-variant { color: var(--text-dim); }
+.gym-line { display: flex; align-items: center; gap: 0.25em; line-height: 1.25; }
+.gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
+.gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
+.gym-line.is-lead { align-self: flex-start; padding: 0.15em 0.4em; border-radius: 0.4em; background: var(--lead-bg); }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
-.gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.1em 0.4em; }
+.gym-line-body { display: flex; flex-wrap: nowrap; align-items: center; gap: 0.1em 0.3em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.2em; color: var(--mon, var(--text)); }
 .tk-move { font-weight: 700; }
-.tk-plus, .tk-raw { color: var(--text-muted); font-weight: 700; }
+.tk-plus, .tk-raw { color: var(--text-muted); font-size: 1.2em; }
 .tk-word { font-style: italic; }
 .tk-opp { display: inline-flex; align-items: center; gap: 0.2em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
 
 .sprite-box .sprite { max-width: 100%; max-height: 100%; object-fit: contain; }
-.sprite { width: calc(var(--w) * 0.032em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
+.sprite { width: calc(var(--w) * 0.029em); height: auto; image-rendering: pixelated; flex: none; max-width: none; }
 .sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
 .sprite-box {
   display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
-  width: 3.3em; height: 3.3em; padding: 0.1em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
+  width: 3em; height: 3em; padding: 0.1em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
   border: 1px solid color-mix(in srgb, var(--t) 75%, transparent);
   background: color-mix(in srgb, var(--t) 34%, transparent);
 }
