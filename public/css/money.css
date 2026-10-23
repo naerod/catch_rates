@@ -23,16 +23,16 @@
 .layout-grid.is-wide .history-panel { display: none; }
 
 /* ── Menu des methodes ── */
-.money-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 360px)); gap: 1rem; }
+.money-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 560px)); gap: 1rem; }
 .money-card {
-  display: flex; align-items: center; gap: 1rem; min-height: 96px; padding: 1rem 1.5rem; text-align: left;
+  display: flex; align-items: center; gap: 1.5rem; min-height: 176px; padding: 1.5rem 2rem; text-align: left;
   background: var(--card); color: var(--text); border: 2px solid var(--card-border); border-radius: var(--radius-lg);
-  font: 700 1.25rem var(--font-head); cursor: pointer;
+  font: 700 1.75rem var(--font-head); cursor: pointer;
   transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
 }
 .money-card > span:nth-child(2) { flex: 1; }
-.money-card .material-symbols-outlined:first-child { font-size: 40px; color: var(--accent); }
-.money-card .material-symbols-outlined:last-child { color: var(--text-muted); transition: transform 0.18s, color 0.18s; }
+.money-card .material-symbols-outlined:first-child { font-size: 72px; color: var(--accent); }
+.money-card .material-symbols-outlined:last-child { font-size: 32px; color: var(--text-muted); transition: transform 0.18s, color 0.18s; }
 .money-card:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); box-shadow: var(--glow); }
 .money-card:hover .material-symbols-outlined:last-child { color: var(--accent); transform: translateX(4px); }
 #money-menu.is-entering, #money-method.is-entering { animation: stage-in 0.24s ease-out; }

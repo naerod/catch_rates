@@ -2,6 +2,20 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "1.6.4",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Boutons du menu plus grands",
+        "en": "Bigger menu buttons"
+      },
+      "fr": [
+        "Les boutons du menu Money making sont plus grands : icône, texte et zone cliquable."
+      ],
+      "en": [
+        "The Money making menu buttons are bigger: icon, text and click area."
+      ]
+    },
+    {
       "v": "1.6.3",
       "date": "2026-10-23",
       "title": {
