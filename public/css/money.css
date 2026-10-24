@@ -293,3 +293,80 @@
 .charm-foot { display: flex; justify-content: flex-end; margin-top: 0.75rem; }
 .charm-foot .btn { min-height: 34px; gap: 0.35rem; }
 @media (prefers-reduced-motion: reduce) { .charm-panel:popover-open { animation: none; } }
+
+/* ── En-tete sur une seule ligne ── */
+.btn-icon-only { width: 44px; padding: 0 !important; justify-content: center; }
+@media (pointer: fine) { .btn-icon-only { width: 36px; } }
+.money-head { flex-wrap: nowrap; }
+.money-head-right { flex-wrap: nowrap; flex: 1; min-width: 0; gap: 0.5rem; }
+.money-head > * { flex-shrink: 0; }
+.money-head-right > span { display: inline-flex; align-items: center; }
+.guide-link { gap: 0.35rem; text-decoration: none; white-space: nowrap; }
+.guide-link .material-symbols-outlined { font-size: 18px; }
+.guide-link.is-soon { opacity: 0.6; cursor: not-allowed; }
+.info-btn { border: 1px solid var(--card-border); border-radius: var(--radius); width: 36px; height: 36px; }
+.charm-btn .cb-name { font-weight: 600; }
+.charm-btn .cb-net { font-weight: 700; font-variant-numeric: tabular-nums; }
+.info-panel { width: min(460px, calc(100vw - 2rem)); }
+.info-list { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; }
+.info-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; color: var(--text-dim); }
+.info-list strong { font: 700 1.25rem var(--font-head); color: var(--accent); }
+.info-list .info-stocks { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; }
+.info-list .info-stock b { margin-right: 0.25rem; color: var(--text); }
+/* Largeurs moyennes : on garde une seule ligne en retirant d'abord les libelles */
+@media (max-width: 1850px) and (min-width: 900px) { .charm-btn .cb-name, .guide-link .lbl { display: none; } }
+@media (max-width: 1500px) and (min-width: 900px) { .tc-toggle .lbl, .money-nav .lbl { display: none; } .region-tab { padding: 0.25rem 0.6rem; } }
+@media (max-width: 899px) { .money-head { flex-wrap: wrap; } .money-head-right { flex-wrap: wrap; } }
+
+/* ── Tags de methode (menu et en-tete) ── */
+.money-tags { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { padding: 0.05rem 0.5rem; border-radius: 1em; border: 1px solid var(--card-border); background: var(--bg4); color: var(--text-dim); font: 600 0.7rem var(--font-head); letter-spacing: 0.04em; }
+.mc-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex: 1; }
+.mc-name { font: 700 1.5rem var(--font-head); }
+.money-card > .mc-text + .material-symbols-outlined { margin-left: auto; }
+.gym-chip.is-optional { color: var(--accent); }
+.after-chip.is-heal .sprite-box { width: 1.7em; height: 1.7em; padding: 0.05em; }
+.after-chip.is-heal .sprite { width: calc(var(--w) * 0.016em); }
+@media (max-width: 1700px) { .money-head .money-tags { display: none; } }
+
+/* ── Page « Team building guide » ── */
+#money-method.is-team #money-mode, #money-method.is-team .tc-toggle, #money-method.is-team #money-regions,
+#money-method.is-team #money-charm-slot, #money-method.is-team .money-nav, #money-method.is-team #money-guide { display: none; }
+#money-method.is-team .money-stage { overflow: auto; }
+.tp { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 1rem; padding-bottom: 1rem; font-size: 0.95rem; }
+.tp-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.75rem; align-content: start; }
+.tp-mon, .tp-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 0.75rem 1rem; }
+.tp-mon { display: flex; flex-direction: column; gap: 0.6rem; border-top: 3px solid var(--mon, var(--card-border)); }
+.tp-mon[data-mon="typhlosion"] { --mon: var(--mon-typhlosion); } .tp-mon[data-mon="togekiss"] { --mon: var(--mon-togekiss); }
+.tp-mon[data-mon="blastoise"] { --mon: var(--mon-blastoise); } .tp-mon[data-mon="vanilluxe"] { --mon: var(--mon-vanilluxe); }
+.tp-mon[data-mon="weezing"] { --mon: var(--mon-weezing); } .tp-mon[data-mon="garchomp"] { --mon: var(--mon-garchomp); }
+.tp-mon-head { display: flex; align-items: center; gap: 0.75rem; }
+.tp-mon-head h3 { font: 700 1.35rem var(--font-head); color: var(--mon); }
+.tp-mon .sprite-box { width: 88px; height: 88px; }
+.tp-mon .sprite { width: calc(var(--w) * 0.9px); }
+.tp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.25rem; }
+.tp-lv { font: 600 0.8rem var(--font-head); color: var(--text-dim); }
+.type-chip { padding: 0 0.55rem; border-radius: 1em; border: 1px solid color-mix(in srgb, var(--t) 75%, transparent); background: color-mix(in srgb, var(--t) 30%, transparent); font-size: 0.75rem; font-weight: 600; }
+.tp-row { display: flex; flex-direction: column; gap: 0.25rem; }
+.tp-label { font: 600 0.7rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.tp-item { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; }
+.tp-item img, .tp-stock img { width: 24px; height: 24px; }
+.tp-moves { display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; list-style: none; }
+.tp-moves li { display: inline-flex; align-items: baseline; gap: 0.25rem; }
+.tp-moves b { color: var(--mon); }
+.tp-moves small { color: var(--text-muted); }
+.tp-swaps { display: flex; flex-direction: column; gap: 0.2rem; list-style: none; font-size: 0.85rem; color: var(--text-dim); }
+.tp-swaps li { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.tp-side { display: flex; flex-direction: column; gap: 0.75rem; align-content: start; }
+.tp-card h3 { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; font: 700 1.05rem var(--font-head); color: var(--accent); }
+.tp-stock { display: flex; flex-direction: column; gap: 0.4rem; list-style: none; }
+.tp-stock li { display: flex; align-items: center; gap: 0.5rem; }
+.tp-stock b { min-width: 1.5ch; color: var(--accent); }
+.tp-attention { display: flex; flex-direction: column; gap: 0.6rem; list-style: none; }
+.tp-attention li { display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.35; }
+.tp-attention .material-symbols-outlined { flex: none; font-size: 20px; color: var(--orange); }
+.tp-gym { padding: 0 0.4rem; border-radius: 1em; background: var(--bg4); font-size: 0.75rem; white-space: nowrap; }
+.tp-gains { display: flex; flex-direction: column; gap: 0.2rem; }
+.tp-gains strong { font: 700 1.6rem var(--font-head); color: var(--accent); }
+.tp-gains span { font-size: 0.8rem; color: var(--text-muted); }
+@media (max-width: 899px) { .tp { grid-template-columns: minmax(0, 1fr); } .tp-team { grid-template-columns: minmax(0, 1fr); } }

@@ -213,31 +213,32 @@
       <nav id="money-menu" class="money-menu" aria-label="Methods"></nav>
       <div id="money-method" hidden>
         <div class="money-head">
-          <button type="button" id="money-back" class="btn btn-outline">
-            <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span data-i18n="money_back">All methods</span>
+          <button type="button" id="money-back" class="btn btn-outline btn-icon-only">
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
           </button>
           <h2 id="money-method-name" class="money-method-name"></h2>
+          <span id="money-tags" class="money-tags"></span>
           <span id="money-fav"></span>
           <div id="money-mode" class="money-mode" role="group" aria-label="View mode">
             <button type="button" data-mode="grid" aria-pressed="true"><span class="material-symbols-outlined" aria-hidden="true">grid_view</span></button>
             <button type="button" data-mode="linear" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">view_agenda</span></button>
           </div>
-          <label class="tc-toggle"><input type="checkbox" id="money-tc" checked><span class="material-symbols-outlined" aria-hidden="true">timer</span><span data-i18n="gr_timecodes">Timecodes</span></label>
+          <label class="tc-toggle"><input type="checkbox" id="money-tc" checked><span class="material-symbols-outlined" aria-hidden="true">timer</span><span class="lbl" data-i18n="gr_timecodes">Timecodes</span></label>
           <div id="money-regions" class="money-regions" role="group" aria-label="Regions"></div>
           <div class="money-head-right">
-          <ul id="money-team" class="info-team" aria-label="Team"></ul>
-          <div class="money-nav">
-            <button type="button" id="money-prev" class="btn btn-outline">
-              <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span data-i18n="gr_prev">Previous</span>
-            </button>
-            <span id="money-progress" class="money-progress" aria-live="polite"></span>
-            <button type="button" id="money-next" class="btn btn-primary">
-              <span data-i18n="gr_next">Next</span><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-            </button>
-          </div>
+            <span id="money-guide"></span>
+            <span id="money-charm-slot"></span>
+            <div class="money-nav">
+              <button type="button" id="money-prev" class="btn btn-outline">
+                <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span><span class="lbl" data-i18n="gr_prev">Previous</span>
+              </button>
+              <span id="money-progress" class="money-progress" aria-live="polite"></span>
+              <button type="button" id="money-next" class="btn btn-primary">
+                <span class="lbl" data-i18n="gr_next">Next</span><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div id="money-info" class="money-info"></div>
         <div id="money-charm" class="charm-panel" popover></div>
         <div id="money-stage" class="money-stage"></div>
       </div>

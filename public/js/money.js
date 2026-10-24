@@ -4,23 +4,31 @@
    ════════════════════════════════════════════ */
 
 const Money = (() => {
-  const METHODS = [{ id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', src: '/data/gym-rerun.json' }];
-  const STORE = 'money.gym-rerun';
+  const METHODS = [
+    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], src: '/data/technical-route.json' },
+    { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], src: '/data/gym-rerun.json' },
+  ];
+  const storeKey = () => 'money.' + state.method;                    // position dans la methode
+  const PREFS = 'money.prefs';                                        // mode d'affichage et timecodes : communs a toutes les methodes
   const FAVS = 'money.favs';
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const t = k => i18n.t(k);
   const icon = n => `<span class="material-symbols-outlined" aria-hidden="true">${n}</span>`;
 
-  let data = null;
+  const datas = {};                                                   // donnees deja chargees, par methode
+  let data = null;                                                    // donnees de la methode ouverte
   let loading = false;
-  const state = { method: null, region: 0, gym: 0, mode: 'grid', tc: true };
+  const state = { method: null, region: 0, gym: 0, mode: 'grid', tc: true, view: 'route' };
 
   /* ── Persistance : hash (#money/gym-rerun/kanto[/3]) puis localStorage ── */
   function restore() {
-    try { Object.assign(state, JSON.parse(localStorage.getItem(STORE)) || {}); } catch { /* stockage indisponible */ }
+    try { Object.assign(state, JSON.parse(localStorage.getItem(storeKey())) || {}); } catch { /* stockage indisponible */ }
+    try { Object.assign(state, JSON.parse(localStorage.getItem(PREFS)) || {}); } catch { /* idem */ }
     const seg = location.hash.slice(1).split('/').slice(1);
     if (seg[0] === state.method) seg.shift();
+    state.view = seg[0] === 'team' ? 'team' : 'route';
+    if (state.view === 'team') seg.shift();
     const ri = data.regions.findIndex(r => r.id === seg[0]);
     if (ri >= 0) { state.region = ri; state.gym = Math.max(0, (+seg[1] || 1) - 1); }
     else state.gym = 0;
@@ -30,8 +38,11 @@ const Money = (() => {
     state.tc = state.tc !== false;
   }
   function persist() {
-    try { localStorage.setItem(STORE, JSON.stringify({ region: state.region, mode: state.mode, tc: state.tc })); } catch { /* idem */ }
-    history.replaceState(null, '', `#money/${state.method}/${data.regions[state.region].id}${state.mode === 'linear' ? '/' + (state.gym + 1) : ''}`);
+    try {
+      localStorage.setItem(storeKey(), JSON.stringify({ region: state.region }));
+      localStorage.setItem(PREFS, JSON.stringify({ mode: state.mode, tc: state.tc }));
+    } catch { /* idem */ }
+    history.replaceState(null, '', state.view === 'team' ? `#money/${state.method}/team` : `#money/${state.method}/${data.regions[state.region].id}${state.mode === 'linear' ? '/' + (state.gym + 1) : ''}`);
   }
 
   /* ── Rendu des jetons ── */
@@ -77,7 +88,7 @@ const Money = (() => {
     return `<span class="tk-act" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
   }
   const line = (l, n) => {
-    const cont = l.s.startsWith('@into');                       // suite d'une exception : fleche droite, legerement decalee
+    const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
     return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
   };
@@ -85,7 +96,7 @@ const Money = (() => {
   /* Entre deux cartes : soin conseille apres le combat, puis les objets a changer avant le suivant. */
   function between(a) {
     if (!a) return '';
-    const heal = a.heal ? `<span class="after-chip is-heal">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}</span>` : '';
+    const heal = a.heal ? `<span class="after-chip is-heal">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}${a.healMon ? monSprite(a.healMon, false) : ''}</span>` : '';
     const swaps = (a.switch || []).map(s => {
       const label = esc(`${name(data.mons, s.mon)} → ${t('it_' + s.item)}`);
       return `<span class="after-chip is-swap" title="${label}" aria-label="${label}">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
@@ -104,12 +115,13 @@ const Money = (() => {
   const CHARM_STORE = 'money.charm';
   const charm = { donator: false, sel: {}, prices: {} };           // sel : arenes cochees/decochees par rapport au guide ; prices : prix saisis a la main
   try { Object.assign(charm, JSON.parse(localStorage.getItem(CHARM_STORE)) || {}); } catch { /* stockage indisponible */ }
+  if (Object.keys(charm.sel).some(k => k.includes('/'))) charm.sel = { 'gym-rerun': charm.sel };   // ancien format : une seule methode
   let market = null;                                               // { fetchedAt, prices } renvoye par /api/prices
   let marketState = 'idle';                                        // idle | loading | ok | error
   const saveCharm = () => { try { localStorage.setItem(CHARM_STORE, JSON.stringify(charm)); } catch { /* idem */ } };
   const money = n => new Intl.NumberFormat(i18n.lang).format(Math.round(n));
   const gymKey = (r, g) => `${r.id}/${g.id}`;
-  const gymOn = (r, g) => (gymKey(r, g) in charm.sel ? charm.sel[gymKey(r, g)] : !g.optional);   // par defaut : toutes les arenes du guide
+  const gymOn = (r, g) => { const s = charm.sel[state.method] || {}; return gymKey(r, g) in s ? s[gymKey(r, g)] : !g.optional; };   // par defaut : les arenes du guide, sauf les optionnelles
 
   function charmCalc() {
     const base = data.regions.reduce((s, r) => s + r.gyms.reduce((a, g) => a + (gymOn(r, g) ? g.profit : 0), 0), 0) * (charm.donator ? 1.05 : 1);
@@ -136,8 +148,10 @@ const Money = (() => {
 
   function charmButton() {
     const c = charmCalc();
-    const label = c.best && c.best.id !== 'none' ? `${t(c.best.nameKey)} · ${money(c.best.net)} ¥` : marketState === 'error' ? t('charm_unavailable') : t('charm_title');
-    return `<button type="button" class="charm-btn" popovertarget="money-charm" aria-label="${esc(t('charm_title'))}">${icon('savings')}<span>${esc(label)}</span></button>`;
+    const best = c.best && c.best.id !== 'none' ? c.best : null;
+    const label = best ? `<span class="cb-name">${esc(t(best.nameKey))}</span><span class="cb-net">${money(best.net)} ¥</span>`
+      : `<span class="cb-net">${esc(marketState === 'error' ? t('charm_unavailable') : t('charm_title'))}</span>`;
+    return `<button type="button" class="charm-btn" popovertarget="money-charm" title="${esc(t('charm_title'))}" aria-label="${esc(t('charm_title'))}${best ? ' — ' + esc(t(best.nameKey)) : ''}">${icon('savings')}${label}</button>`;
   }
 
   function charmPanel() {
@@ -185,12 +199,14 @@ const Money = (() => {
     });
   }
 
+  const tagsHTML = m => m.tags.length ? `<span class="money-tags">${m.tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</span>` : '';
+
   function menu(animate) {
     const el = $('money-menu');
     const first = new Map([...el.children].map(c => [c.dataset.id, c.getBoundingClientRect()]));
     const sorted = [...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id));        // tri stable : favoris d'abord
     el.innerHTML = sorted.map(m =>
-      `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span>${esc(t(m.nameKey))}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
+      `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
     if (!animate) return;
     [...el.children].forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
       const a = first.get(c.dataset.id), b = c.getBoundingClientRect();
@@ -208,22 +224,22 @@ const Money = (() => {
     const shown = method ? $('money-method') : $('money-menu');
     shown.classList.remove('is-entering'); void shown.offsetWidth; shown.classList.add('is-entering');
     if (!method) { history.replaceState(null, '', '#money'); menu(false); return; }
-    $('money-method-name').textContent = t(METHODS.find(m => m.id === method).nameKey);
+    setTitle();
     $('money-fav').innerHTML = favBtn(method);
   }
 
+  /* Titre court dans la barre (le nom complet reste dans l'infobulle et le menu) ; change sur la page equipe. */
+  function setTitle() {
+    const m = METHODS.find(x => x.id === state.method); if (!m) return;
+    const team = state.view === 'team', el = $('money-method-name'), back = $('money-back');
+    el.textContent = t(team ? 'gr_team_guide' : m.shortKey); el.title = t(m.nameKey);
+    $('money-tags').innerHTML = team ? '' : tagsHTML(m);
+    const l = t(team ? 'tp_back' : 'money_back'); back.title = l; back.setAttribute('aria-label', l);
+  }
+
   function infoBar() {
-    $('money-team').innerHTML = data.team.map(id => `<li data-mon="${id}" title="${esc(name(data.mons, id))}">${monSprite(id, false)}</li>`).join('');
-    $('money-team').setAttribute('aria-label', t('gr_team'));
-    const calc = charmCalc();
-    const total = money(calc.rows.find(r => r.id === 'amulet_coin').gain);
-    const stock = data.stock.map(x => `<span class="info-stock"><b>${x.qty}</b>${esc(t('item_' + x.item))}</span>`).join('');
-    $('money-info').innerHTML =
-      `<span class="info-item info-total"><span class="info-label">${esc(t('gr_total'))}</span><strong>${total}+ ¥</strong><span class="info-note">${esc(t('gr_total_note'))}</span></span>` +
-      `<span class="info-item"><span class="info-label">${esc(t('gr_stock'))}</span><span class="info-stocks">${stock}</span></span>` +
-      `<span class="info-item">${icon('flight')}${esc(t('gr_ocarina'))}</span>` +
-      (data.requires ? `<span class="info-item is-require">${icon('warning')}${esc(t('gr_requires'))}</span>` : '') +
-      `<span class="info-item info-charm">${charmButton()}</span>`;
+    $('money-guide').innerHTML = `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${esc(t('gr_team_guide'))}">${icon('groups')}<span class="lbl">${esc(t('gr_team_guide'))}</span></button>`;
+    $('money-charm-slot').innerHTML = charmButton();
   }
 
   function regionTabs() {
@@ -274,7 +290,7 @@ const Money = (() => {
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
   function card(g, i, r) {
     const tip = g.tip && !g.bonus ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
-    const chips = (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
+    const chips = (g.badge ? `<span class="gym-chip is-optional">${icon('flag')}${esc(t('gr_' + g.badge))}</span>` : '') + (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
       (g.time != null ? `<span class="gym-chip is-time">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     // Une exception qui enchaine sur une action ("... into Eruption + ...") se coupe en deux : la suite passe sur sa propre ligne.
@@ -350,14 +366,52 @@ const Money = (() => {
       const l = t('money_mode_' + b.dataset.mode); b.title = l; b.setAttribute('aria-label', l);
     });
     $('money-tc').checked = state.tc;
+    $('money-tc').closest('label').hidden = !data.regions.some(r => r.gyms.some(g => g.time != null));
     $('money-method').classList.toggle('no-tc', !state.tc);
   }
 
-  function renderAll(animate) {
-    infoBar(); regionTabs(); controls(); modeUI(); stage(animate);
-    if (state.mode === 'grid') { fit(); document.fonts?.ready.then(() => state.mode === 'grid' && fit()); }   // les polices web changent les largeurs
-    else document.fonts?.ready.then(() => state.mode === 'linear' && layoutLinear());
+  /* ── Page "Team building guide" : l'equipe a construire et les points d'attention, tires des donnees de la methode ── */
+  function teamPage() {
+    const tg = data.teamGuide || {};
+    const gyms = data.regions.flatMap(r => r.gyms.map(g => ({ r, g })));
+    const used = {};                                                // mon -> move -> arenes ou elle sert
+    for (const { g } of gyms) for (const l of g.lines) for (const tk of l.s.split(' ')) {
+      const m = tk.match(/^([a-z]+)\.([a-z_0-9]+)$/);
+      if (m && data.mons[m[1]]) (((used[m[1]] ??= {})[m[2]]) ??= new Set()).add(g.name);
+    }
+    const swaps = {};                                               // mon -> changements d'objet, dans l'ordre du parcours
+    for (const { g } of gyms) for (const s of g.after?.switch || []) (swaps[s.mon] ??= []).push({ gym: g.name, item: s.item });
+    const itemChip = it => `<span class="tp-item"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">${esc(t('it_' + it))}</span>`;
+    const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
+    const mons = data.team.map(id => {
+      const x = (tg.mons || {})[id] || {}, moves = Object.entries(used[id] || {}).sort((a, b) => b[1].size - a[1].size);
+      const extra = ['nature', 'ability', 'evs', 'ivs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
+      return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
+        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
+        (tg.start?.[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_start'))}</span>${itemChip(tg.start[id])}</div>` : '') +
+        `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ul class="tp-moves">${moves.map(([mv, set]) => `<li title="${esc([...set].join(', '))}"><b class="tk-move">${esc(t('mv_' + mv))}</b><small>×${set.size}</small></li>`).join('')}</ul></div>` +
+        (swaps[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_swaps'))}</span><ol class="tp-swaps">${swaps[id].map(s => `<li><span>${esc(t('tp_after'))} ${esc(s.gym)}</span>${itemChip(s.item)}</li>`).join('')}</ol></div>` : '') +
+        extra + '</article>';
+    }).join('');
+    const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
+    const attention = (tg.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
+    const gains = money(charmCalc().rows.find(r => r.id === 'amulet_coin').gain);
+    $('money-stage').innerHTML =
+      `<div class="tp"><section class="tp-team" aria-label="${esc(t('tp_team'))}">${mons}</section>` +
+      `<aside class="tp-side"><section class="tp-card"><h3>${icon('inventory_2')}${esc(t('tp_stock'))}</h3><ul class="tp-stock">${stock}</ul></section>` +
+      (attention ? `<section class="tp-card"><h3>${icon('priority_high')}${esc(t('tp_attention'))}</h3><ul class="tp-attention">${attention}</ul></section>` : '') +
+      `<section class="tp-card"><h3>${icon('payments')}${esc(t('tp_gains'))}</h3><p class="tp-gains"><strong>${gains}+ ¥</strong><span>${esc(t('gr_total_note'))}</span></p></section></aside></div>`;
   }
+
+  function renderAll(animate) {
+    $('money-method').classList.toggle('is-team', state.view === 'team');
+    setTitle(); infoBar(); regionTabs(); controls(); modeUI();
+    if (state.view === 'team') { teamPage(); return; }
+    stage(animate);
+    if (state.mode === 'grid') { fit(); document.fonts?.ready.then(() => state.view === 'route' && state.mode === 'grid' && fit()); }   // les polices web changent les largeurs
+    else document.fonts?.ready.then(() => state.view === 'route' && state.mode === 'linear' && layoutLinear());
+  }
+  function setView(v) { state.view = v; persist(); renderAll(true); }
 
   /* ── Navigation : region par region (grille) ou arene par arene (lineaire) ── */
   function goTo(region, gym) {
@@ -390,9 +444,10 @@ const Money = (() => {
     loading = true;
     $('money-stage').innerHTML = '<div class="stage-body is-skeleton" aria-hidden="true">' + '<div class="gym"></div>'.repeat(6) + '</div>';
     try {
-      const res = await fetch(METHODS[0].src);
+      const m = METHODS.find(x => x.id === state.method);
+      const res = await fetch(m.src);
       if (!res.ok) throw new Error(res.status);
-      data = await res.json();
+      data = datas[m.id] = await res.json();
       restore(); renderAll(false); persist(); loadMarket();
     } catch { showError(); }
     loading = false;
@@ -400,6 +455,7 @@ const Money = (() => {
 
   function enter(method) {
     view(method);
+    data = datas[method] || null;
     if (data) { restore(); renderAll(false); persist(); loadMarket(); } else load();
   }
 
@@ -415,11 +471,12 @@ const Money = (() => {
   document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', e => {
       const f = e.target.closest('[data-fav]'); if (f && $('page-money').contains(f)) toggleFav(f.dataset.fav);
+      const v = e.target.closest('[data-view]'); if (v && $('page-money').contains(v)) setView(v.dataset.view);
     });
     $('money-menu').addEventListener('click', e => {
       const b = e.target.closest('[data-method]'); if (b) enter(b.dataset.method);
     });
-    $('money-back').addEventListener('click', () => view(null));
+    $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
     $('money-prev').addEventListener('click', () => step(-1));
     $('money-next').addEventListener('click', () => step(1));
     $('money-regions').addEventListener('click', e => {
@@ -431,7 +488,7 @@ const Money = (() => {
     $('money-tc').addEventListener('change', e => { state.tc = e.target.checked; persist(); modeUI(); if (state.mode === 'linear') layoutLinear(); else fit(); });
     const active = () => $('page-money').classList.contains('active') && data && state.method && !$('money-method').hidden;
     document.addEventListener('keydown', e => {
-      if (!active() || e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (!active() || state.view !== 'route' || e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
       const next = ['ArrowRight', ...(state.mode === 'linear' ? ['ArrowDown', 'PageDown'] : [])], prev = ['ArrowLeft', ...(state.mode === 'linear' ? ['ArrowUp', 'PageUp'] : [])];
       if (next.includes(e.key)) { e.preventDefault(); step(1); }
       if (prev.includes(e.key)) { e.preventDefault(); step(-1); }
@@ -441,7 +498,7 @@ const Money = (() => {
     let wheelAcc = 0, locked = false;
     const lock = () => { locked = true; wheelAcc = 0; setTimeout(() => { locked = false; }, 450); };
     stageBox.addEventListener('wheel', e => {
-      if (!active() || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
+      if (!active() || state.view !== 'route' || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
       e.preventDefault();
       if (locked) return;
       wheelAcc += e.deltaY;
@@ -450,7 +507,7 @@ const Money = (() => {
     let touchY = null;
     stageBox.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
     stageBox.addEventListener('touchend', e => {
-      if (touchY == null || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
+      if (touchY == null || state.view !== 'route' || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
       const dy = touchY - e.changedTouches[0].clientY; touchY = null;
       if (Math.abs(dy) > 50 && !locked) { lock(); step(dy > 0 ? 1 : -1); }
     }, { passive: true });
@@ -467,7 +524,7 @@ const Money = (() => {
     panel.addEventListener('change', e => {
       const el = e.target;
       if (el.id === 'charm-donator') charm.donator = el.checked;
-      else if (el.dataset.gym) charm.sel[el.dataset.gym] = el.checked;
+      else if (el.dataset.gym) (charm.sel[state.method] ??= {})[el.dataset.gym] = el.checked;
       else if (el.dataset.price) { const v = parseInt(el.value, 10); if (Number.isFinite(v) && v >= 0) charm.prices[el.dataset.price] = v; else delete charm.prices[el.dataset.price]; }
       else return;
       charmRefresh();
@@ -475,17 +532,17 @@ const Money = (() => {
     panel.addEventListener('click', e => {
       const r = e.target.closest('[data-price-reset]');
       if (r) { delete charm.prices[r.dataset.priceReset]; charmRefresh(); }
-      if (e.target.closest('#charm-reset')) { charm.sel = {}; charm.prices = {}; charm.donator = false; charmRefresh(); }
+      if (e.target.closest('#charm-reset')) { charm.sel[state.method] = {}; charm.prices = {}; charm.donator = false; charmRefresh(); }
     });
     let resizeTimer;
     addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => { if (active()) { state.mode === 'linear' ? layoutLinear() : fit(); } }, 100);
+      resizeTimer = setTimeout(() => { if (active() && state.view === 'route') { state.mode === 'linear' ? layoutLinear() : fit(); } }, 100);
     });
     document.addEventListener('langchange', () => {
       if (!$('page-money').classList.contains('active')) return;
       if (!state.method) return menu(false);
-      if (data) { $('money-method-name').textContent = t(METHODS.find(m => m.id === state.method).nameKey); renderAll(false); }
+      if (data) renderAll(false);
     });
   });
 

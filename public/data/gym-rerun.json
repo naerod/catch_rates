@@ -1,5 +1,5 @@
 {
-  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier. gym.profit = gains de base d'une arene (source CharmCalc, c4vv.github.io/CharmCalc) ; Striaton = 3 champions ; Undella = Marian + Yan (optionnel, decoche par defaut).",
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier. gym.profit = gains de base d'une arene (source CharmCalc, c4vv.github.io/CharmCalc) ; Striaton = 3 champions ; Undella = Marian + Yan (optionnel, decoche par defaut). pokepaste = URL du pokepaste de l'equipe (lien « Team building guide », contient aussi la contrainte Vanilluxe/Garchomp).",
   "total": 442000,
   "team": [
     "typhlosion",
@@ -281,6 +281,76 @@
       "en": "Slowbro",
       "fr": "Flagadoss",
       "type": "psychic"
+    },
+    "101": {
+      "en": "Electrode",
+      "fr": "Électrode",
+      "type": "electric"
+    },
+    "6": {
+      "en": "Charizard",
+      "fr": "Dracaufeu",
+      "type": "fire"
+    },
+    "547": {
+      "en": "Whimsicott",
+      "fr": "Farfaduvet",
+      "type": "grass"
+    },
+    "508": {
+      "en": "Stoutland",
+      "fr": "Lainergie",
+      "type": "normal"
+    },
+    "542": {
+      "en": "Leavanny",
+      "fr": "Charmillon",
+      "type": "bug"
+    },
+    "628": {
+      "en": "Braviary",
+      "fr": "Gueriaigle",
+      "type": "flying"
+    },
+    "630": {
+      "en": "Mandibuzz",
+      "fr": "Vostourno",
+      "type": "dark"
+    },
+    "581": {
+      "en": "Swanna",
+      "fr": "Lakmécygne",
+      "type": "water"
+    },
+    "587": {
+      "en": "Emolga",
+      "fr": "Emolga",
+      "type": "electric"
+    },
+    "596": {
+      "en": "Galvantula",
+      "fr": "Mygavolt",
+      "type": "electric"
+    },
+    "302": {
+      "en": "Sableye",
+      "fr": "Ténéfix",
+      "type": "ghost"
+    },
+    "389": {
+      "en": "Torterra",
+      "fr": "Torterra",
+      "type": "grass"
+    },
+    "18": {
+      "en": "Pidgeot",
+      "fr": "Roucarnage",
+      "type": "flying"
+    },
+    "145": {
+      "en": "Zapdos",
+      "fr": "Électhor",
+      "type": "electric"
     }
   },
   "regions": [
@@ -1171,7 +1241,8 @@
           "after": {
             "heal": "maybe"
           },
-          "profit": 8736
+          "profit": 8736,
+          "optional": true
         },
         {
           "id": "undella",
@@ -1381,7 +1452,139 @@
     "80": [
       62,
       60
+    ],
+    "101": [
+      48,
+      52
+    ],
+    "6": [
+      87,
+      89
+    ],
+    "547": [
+      63,
+      71
+    ],
+    "508": [
+      74,
+      71
+    ],
+    "542": [
+      49,
+      76
+    ],
+    "628": [
+      102,
+      110
+    ],
+    "630": [
+      56,
+      71
+    ],
+    "581": [
+      137,
+      69
+    ],
+    "587": [
+      80,
+      77
+    ],
+    "596": [
+      68,
+      56
+    ],
+    "302": [
+      43,
+      49
+    ],
+    "389": [
+      78,
+      80
+    ],
+    "18": [
+      58,
+      68
+    ],
+    "145": [
+      96,
+      71
     ]
   },
-  "requires": "vanilluxe"
+  "teamGuide": {
+    "types": {
+      "typhlosion": [
+        "fire"
+      ],
+      "togekiss": [
+        "normal",
+        "flying"
+      ],
+      "blastoise": [
+        "water"
+      ],
+      "vanilluxe": [
+        "ice"
+      ],
+      "weezing": [
+        "poison"
+      ],
+      "garchomp": [
+        "dragon",
+        "ground"
+      ]
+    },
+    "start": {
+      "typhlosion": "choice_specs",
+      "togekiss": "choice_specs",
+      "blastoise": "choice_specs",
+      "vanilluxe": "choice_scarf",
+      "weezing": "choice_band",
+      "garchomp": "choice_band"
+    },
+    "attention": [
+      {
+        "icon": "warning",
+        "key": "gr_requires"
+      },
+      {
+        "icon": "flight",
+        "key": "gr_ocarina"
+      },
+      {
+        "icon": "info",
+        "key": "gr_tip_vermilion",
+        "gym": "Vermilion"
+      },
+      {
+        "icon": "info",
+        "key": "gr_tip_channel",
+        "gym": "Canalave · Azalea"
+      },
+      {
+        "icon": "warning",
+        "key": "gr_warn_cradily",
+        "gym": "Canalave"
+      },
+      {
+        "icon": "help",
+        "key": "tp_n_canalave_skip",
+        "gym": "Canalave"
+      },
+      {
+        "icon": "timer",
+        "key": "tp_n_sinnoh",
+        "gym": "Sinnoh"
+      },
+      {
+        "icon": "local_hospital",
+        "key": "tp_n_nacrene",
+        "gym": "Nacrene"
+      },
+      {
+        "icon": "add_circle",
+        "key": "gr_tip_route13",
+        "gym": "Undella"
+      }
+    ]
+  }
 }
