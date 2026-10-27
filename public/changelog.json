@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Adaptation aux écrans moyens, objets et soins alignés", "en": "Medium-screen fit, aligned items and heals" },
+      "fr": ["Écrans moyens (1080p avec zoom, portables) : la ligne principale passe sous la carte sur toute la largeur de la fiche, le texte suit la largeur de l'écran, plus de débordement.", "Les changements d'objet ont la même taille que le soin et sont bien en bas à droite de la carte."],
+      "en": ["Medium screens (1080p with zoom, laptops): the main line moves under the map across the card's full width, text follows the screen width, no more overflow.", "Item changes are the same size as the heal and sit at the bottom right of the card."]
+    },
+    {
       "v": "3.10.0",
       "date": "2026-10-27",
       "title": { "fr": "Icônes 8 bits comme dans le jeu", "en": "8-bit icons like in the game" },

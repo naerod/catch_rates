@@ -87,7 +87,7 @@
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
-  display: grid; grid-template-columns: clamp(150px, 30%, 280px) minmax(0, 1fr); gap: 0 0.8em; padding: 0.7em; align-items: start;
+  display: grid; grid-template-columns: clamp(150px, 30%, 280px) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 0 0.8em; padding: 0.7em; align-items: start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
 .gym-map { width: 100%; height: auto; border-radius: 4px; background: var(--bg3); }
@@ -104,7 +104,7 @@
 .gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
 .gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
 .gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.3em; }
-.gym-line.is-lead { font-size: 0.95em; }
+.gym-line.is-lead { font-size: max(12px, min(0.95em, 0.95vw)); }   /* suit la largeur de l'ecran */
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
 .gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.4em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
@@ -170,9 +170,10 @@
 .gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
 
 /* Pied de carte : soin conseille, objets a changer avant le combat suivant */
-.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; justify-content: flex-end; font-size: 0.9em; }   /* soin et changements d'objet : en bas a droite */
+.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: auto; padding-top: 0.5em; justify-content: flex-end; }   /* soin et changements d'objet : en bas a droite de la carte */
 .after-chip.is-heal { order: 2; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
-.after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
+.after-chip.is-swap { gap: 0.4em; color: var(--text); padding: 0.2em 0.9em 0.2em 0.7em; }
+.after-chip.is-heal, .after-chip.is-swap { min-height: 40px; font-size: 0.85em; font-weight: 700; }   /* meme taille pour le soin et les changements d'objet */
 .swap-item { width: 1.5em; height: 1.5em; }
 .info-item.is-require { color: var(--orange); }
 
@@ -330,3 +331,11 @@
 .is-lead .sprite-box { --k: 2; }
 .is-lead .tk-raw { align-self: flex-start; margin-top: 0.9em; }
 .is-lead .gym-seg { align-items: flex-start; }
+
+/* Ecrans moyens (1080p avec zoom Windows, portables) : la ligne principale passe sous la carte, sur toute la largeur de la fiche */
+@media (min-width: 900px) and (max-width: 1799px) {
+  .gym { grid-template-columns: clamp(120px, 24%, 200px) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
+  .gym-head { display: contents; }
+  .gym-top, .gym-note { grid-column: 2; }
+  .gym-line.is-lead { grid-column: 1 / -1; }
+}
