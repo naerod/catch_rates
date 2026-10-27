@@ -1026,7 +1026,11 @@
           },
           "lines": [
             {
-              "s": "weezing.explosion + garchomp.dragon_claw ( @on #144 / #365 ) @into typhlosion.eruption + togekiss.hyper_voice"
+              "s": "weezing.explosion + garchomp.dragon_claw @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@prefer garchomp.dragon_claw @on #144 @and #365"
             },
             {
               "i": 1,
