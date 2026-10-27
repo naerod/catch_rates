@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.6.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Retour arrière du navigateur", "en": "Browser back button" },
+      "fr": ["Le bouton retour du navigateur (et avance) fonctionne entre le menu, la méthode et le Team building guide, sans quitter le site ni repasser par la connexion."],
+      "en": ["The browser back (and forward) button works between the menu, the method and the Team building guide, without leaving the site or going back through sign-in."]
+    },
+    {
       "v": "3.6.0",
       "date": "2026-10-27",
       "title": { "fr": "Détails du guide d'origine ajoutés", "en": "Original guide details added" },

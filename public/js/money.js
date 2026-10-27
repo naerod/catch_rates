@@ -30,9 +30,12 @@ const Money = (() => {
     state.region = data.regions.find(r => r.id === seg[0])?.id || null;
     state.tc = state.tc !== false;
   }
-  function persist() {
+  /* Historique : chaque changement d'ecran est une entree, le retour arriere du navigateur reste dans le site. */
+  const push = h => { if (location.hash !== h) history.pushState({ m: 1 }, '', h); };
+  function persist(navigate = false) {
     try { localStorage.setItem(PREFS, JSON.stringify({ tc: state.tc })); } catch { /* idem */ }
-    history.replaceState(null, '', `#money/${state.method}${state.view === 'team' ? '/team' : ''}`);
+    const h = `#money/${state.method}${state.view === 'team' ? '/team' : ''}`;
+    if (navigate) push(h); else history.replaceState({ m: 1 }, '', h);
   }
 
   /* ── Rendu des jetons ── */
@@ -220,7 +223,7 @@ const Money = (() => {
     $('money-method').hidden = !method;
     const shown = method ? $('money-method') : $('money-menu');
     shown.classList.remove('is-entering'); void shown.offsetWidth; shown.classList.add('is-entering');
-    if (!method) { history.replaceState(null, '', '#money'); menu(false); return; }
+    if (!method) { push('#money'); menu(false); return; }
     setTitle();
     $('money-fav').innerHTML = favBtn(method);
   }
@@ -317,7 +320,7 @@ const Money = (() => {
     stage(animate);
     if (state.region) { $('region-' + state.region)?.scrollIntoView(); state.region = null; }
   }
-  function setView(v) { state.view = v; persist(); renderAll(true); }
+  function setView(v) { state.view = v; persist(true); renderAll(true); }
 
   /* ── Chargement ── */
   function showError() {
@@ -350,17 +353,28 @@ const Money = (() => {
     const [, method] = location.hash.slice(1).split('/');
     const legacy = method && !METHODS.some(m => m.id === method);   // ancien #money/hoenn/3
     const id = fresh ? null : METHODS.some(m => m.id === method) ? method : legacy ? METHODS[0].id : null;
+    if (id && !history.state?.m) {               // lien profond : une entree "menu" derriere, pour que le retour ne quitte pas le site
+      const target = location.hash;
+      history.replaceState({ m: 1 }, '', '#money'); history.pushState({ m: 1 }, '', target);
+    }
     if (id) enter(id); else view(null);
   }
 
   /* ── Evenements ── */
+  addEventListener('popstate', () => {            // retour / avance du navigateur : on affiche l'ecran du lien
+    const [page, method] = location.hash.slice(1).split('/');
+    if (page !== 'money' || !$('page-money').classList.contains('active')) return;
+    if (!METHODS.some(m => m.id === method)) return view(null);
+    if (state.method !== method || !data) return enter(method);
+    state.method = method; restore(); view(method); renderAll(true);
+  });
   document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', e => {
       const f = e.target.closest('[data-fav]'); if (f && $('page-money').contains(f)) toggleFav(f.dataset.fav);
       const v = e.target.closest('[data-view]'); if (v && $('page-money').contains(v)) setView(v.dataset.view);
     });
     $('money-menu').addEventListener('click', e => {
-      const b = e.target.closest('[data-method]'); if (b) enter(b.dataset.method);
+      const b = e.target.closest('[data-method]'); if (b) { push('#money/' + b.dataset.method); enter(b.dataset.method); }
     });
     $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
     $('money-tc').addEventListener('change', e => { state.tc = e.target.checked; persist(); modeUI(); });
