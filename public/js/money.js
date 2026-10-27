@@ -257,11 +257,13 @@ const Money = (() => {
     const lead = [], exc = [];                                    // ligne principale a cote de la carte, exceptions pleine largeur dessous
     expanded.forEach((l, n) => (n === 0 || l.lead ? lead : exc).push(line(l, n)));
     gymItems = {}; leadMode = false;
+    // 1 seule option a 2 Pokemon, aucune exception : le soin remonte a cote de la carte au lieu d'une ligne vide en dessous
+    const compact = !exc.length && !endNote && (expanded[0]?.s.match(/[a-z]+\.[a-z_0-9]+|~[a-z]+/g) || []).length <= 2;
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${lead.join('')}</div>` +
-      `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div></article>`;
+      `${note}${lead.join('')}${compact ? between(g.after) : ''}</div>` +
+      (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div>`) + `</article>`;
   }
 
   function stage(animate) {

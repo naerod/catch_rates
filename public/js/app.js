@@ -16,7 +16,8 @@ const state = {
 const HP_VALUES = [1, 25, 50, 75, 100];
 
 const $ = id => document.getElementById(id);
-const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;   // grande image : fiche du resultat uniquement
+const miniIcon = id => `/gym-rerun/icons/${id}.png`;                                                          // petite icone 8 bits locale : listes, recherche, evenements
 
 /* ══════════════ THEME ══════════════ */
 /* Le bouton, la persistance et l attribut data-theme sont geres par
@@ -119,7 +120,7 @@ function renderDropdown(pokemon) {
   activeSearchIndex = -1;
   searchDropdown.innerHTML = pokemon.map(p => `
     <div class="search-item" data-id="${p.id}">
-      <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+      <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
       <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
       <span class="search-item-name">${p.name}</span>
       <span class="search-item-rate">${p.catch_rate}</span>
@@ -501,7 +502,7 @@ async function loadEvents() {
       <div class="event-pokemon-grid">
         ${(ev.pokemon || []).map(p => `
           <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}">
-            <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
             <span class="ep-name">${p.name}</span>
             <span class="ep-rate">${p.catch_rate}</span>
           </div>
@@ -827,7 +828,7 @@ function renderAdminEvents(events) {
       <div class="admin-event-pokemon">
         ${(ev.pokemon || []).map(p => `
           <div class="admin-pokemon-chip">
-            <img src="${sprite(p.id)}" alt="${p.name}" />
+            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" />
             <span>${p.name}</span>
             <button class="remove-pokemon-btn" data-pid="${p.id}" data-eid="${ev.id}">✕</button>
           </div>
@@ -898,7 +899,7 @@ function renderAdminEvents(events) {
         if (!data.length) { dropdown.style.display = 'none'; return; }
         dropdown.innerHTML = data.slice(0, 8).map(p => `
           <div class="search-item" data-id="${p.id}">
-            <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
             <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
             <span class="search-item-name">${p.name}</span>
           </div>
@@ -1005,7 +1006,7 @@ function renderHistory() {
     }
     return `
       <div class="history-item" data-id="${h.id}">
-        <img class="history-item-sprite" src="${h.spriteUrl}" alt="${h.name}" />
+        <img class="history-item-sprite" src="${miniIcon(h.id)}" width="40" height="30" alt="${h.name}" />
         <div class="history-item-info">
           <div class="history-item-name">${h.name}</div>
           ${badgeHtml}

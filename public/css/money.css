@@ -357,3 +357,5 @@ naerod-header { transition: transform 0.25s ease; }
 .start-panel .item-badge { font-size: 13px; }
 .start-panel { gap: 1rem; }   /* air entre le 6e sprite et la fleche */
 .after-chip.is-swap[data-item] { color: #1f2430; }   /* texte sombre sur fond pastel, dans les deux themes */
+.gym-head .gym-between { margin-top: auto; }
+.gym-head:has(.gym-between) { align-self: stretch; }

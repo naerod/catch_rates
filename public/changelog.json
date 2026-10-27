@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.11.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Icônes 8 bits partout, soin remonté", "en": "8-bit icons everywhere, heal moved up" },
+      "fr": ["Recherche, événements, historique et administration utilisent les mêmes petites icônes 8 bits que Money making (locales, plus rapides à charger). La grande image de la fiche du résultat ne change pas.", "Money making : sur les cartes à une seule option de 2 Pokémon, le bouton de soin remonte à côté de la carte au lieu de laisser une ligne vide."],
+      "en": ["Search, events, history and admin use the same small 8-bit icons as Money making (local, faster to load). The large image on the result card is unchanged.", "Money making: on cards with a single 2-Pokémon option, the heal button moves up beside the map instead of leaving an empty row."]
+    },
+    {
       "v": "3.10.13",
       "date": "2026-10-28",
       "title": { "fr": "Changement d'objet coloré", "en": "Color-coded item swap" },
