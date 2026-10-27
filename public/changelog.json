@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Tailles adaptées à la largeur de chaque fiche", "en": "Sizes follow each card's width" },
+      "fr": ["La ligne principale reste à côté de la carte sur tous les écrans ; la taille du texte et des icônes suit la largeur de la fiche, sans débordement ni vide à droite de la carte."],
+      "en": ["The main line stays beside the map on every screen; text and icon sizes follow the card's width, with no overflow and no empty space next to the map."]
+    },
+    {
       "v": "3.10.1",
       "date": "2026-10-27",
       "title": { "fr": "Adaptation aux écrans moyens, objets et soins alignés", "en": "Medium-screen fit, aligned items and heals" },
