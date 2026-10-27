@@ -56,6 +56,12 @@ addEventListener('load', () => {
   }, 100);
 });
 
+// Retour / avance du navigateur : afficher la page de l'adresse (money gere ses sous-ecrans lui-meme).
+addEventListener('popstate', () => {
+  const p = location.hash.slice(1).split('/')[0] || 'calc';
+  if (p !== state.page && document.getElementById('page-' + p)) showPage(p, p === 'money' && !location.hash.split('/')[1]);
+});
+
 function showPage(page, fresh = false) {
   state.page = page;
   document.documentElement.dataset.page = page;
@@ -67,6 +73,7 @@ function showPage(page, fresh = false) {
   if (page !== 'money' && location.hash.slice(1).split('/')[0] !== page) history.replaceState(history.state, '', page === 'calc' ? location.pathname + location.search : '#' + page);
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
 
+  if (page === 'calc') Money.homeLinks();                         // favoris a jour
   if (page === 'money') Money.open(fresh);
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();

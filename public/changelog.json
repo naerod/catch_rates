@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.12.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Accueil avec raccourcis", "en": "Home page shortcuts" },
+      "fr": ["La page d'accueil affiche des raccourcis : tes méthodes Money making en favori, puis « Essaims d'événements » et « Money making ».", "Le bouton « Calculateur » disparaît de la barre (le logo ramène à l'accueil) ; « Events » devient « Event swarms »."],
+      "en": ["The home page shows shortcuts: your favourite Money making methods, then \"Event swarms\" and \"Money making\".", "The \"Calculator\" button is removed from the top bar (the logo goes home); \"Events\" becomes \"Event swarms\"."]
+    },
+    {
       "v": "3.11.5",
       "date": "2026-10-28",
       "title": { "fr": "Barre du haut identique sur tout le site", "en": "Same top bar across the whole site" },
