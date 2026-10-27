@@ -212,6 +212,7 @@ const Money = (() => {
   /* Bascule menu <-> methode, avec fondu (cf. DA : tout ce qui apparait s'anime). */
   function view(method) {
     state.method = method;
+    if (!method && location.hash !== '#money' && $('page-money').classList.contains('active')) history.replaceState(history.state, '', '#money');
     document.documentElement.classList.remove('bars-hidden');
     $('page-money').classList.toggle('in-method', !!method);
     $('money-menu').hidden = !!method;

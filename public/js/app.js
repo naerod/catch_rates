@@ -38,6 +38,24 @@ addEventListener('DOMContentLoaded', () => {
   if (p && document.getElementById('page-' + p)) showPage(p);
 });
 
+/* Defilement conserve apres un rafraichissement (par onglet, par adresse). */
+history.scrollRestoration = 'manual';
+const SCROLL_KEY = 'catchr-scroll';
+let scrollReady = false, scrollTimer = 0;
+const saveScroll = () => { try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify({ h: location.hash, y: scrollY })); } catch { /* stockage indisponible */ } };
+addEventListener('scroll', () => { if (!scrollReady) return; clearTimeout(scrollTimer); scrollTimer = setTimeout(saveScroll, 150); }, { passive: true });
+addEventListener('pagehide', () => { if (scrollReady) saveScroll(); });
+addEventListener('load', () => {
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(SCROLL_KEY)); } catch { /* idem */ }
+  if (!saved || saved.h !== location.hash || !saved.y) { scrollReady = true; return; }
+  let tries = 0;                                                  // le contenu (donnees, images) arrive apres le chargement : on reessaie
+  const timer = setInterval(() => {
+    scrollTo(0, saved.y);
+    if (++tries >= 30 || Math.abs(scrollY - saved.y) < 2) { clearInterval(timer); scrollReady = true; }
+  }, 100);
+});
+
 function showPage(page, fresh = false) {
   state.page = page;
   document.documentElement.dataset.page = page;
@@ -45,6 +63,8 @@ function showPage(page, fresh = false) {
   // L etat actif de la nav appartient au header partage : on le lui declare.
   document.querySelector('naerod-header')?.setAttribute('active', page);
   $('page-' + page).classList.add('active');
+  // L'adresse suit la page affichee : un rafraichissement revient ici (money gere sa propre adresse).
+  if (page !== 'money' && location.hash.slice(1).split('/')[0] !== page) history.replaceState(history.state, '', page === 'calc' ? location.pathname + location.search : '#' + page);
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
 
   if (page === 'money') Money.open(fresh);
