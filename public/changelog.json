@@ -2,6 +2,24 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.3.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Guide d'équipe épuré, notes dans le guide",
+        "en": "Cleaner team guide, notes in the guide"
+      },
+      "fr": [
+        "Page « Team building guide » : retrait des points d'attention et des gains attendus (déjà dans le guide).",
+        "Les notes générales (Vanilluxe requis, ocarina) passent en tête de la page du guide ; le conseil de soin avec 2:30 restantes est désormais sur la carte Striaton.",
+        "Retrait de la note « 47 min restantes » de Sinnoh."
+      ],
+      "en": [
+        "\"Team building guide\" page: removed the points of attention and expected gains (already in the guide).",
+        "General notes (Vanilluxe required, ocarina) now sit at the top of the guide page; the heal advice with 2:30 left is now on the Striaton card.",
+        "Removed the Sinnoh \"47 min left\" note."
+      ]
+    },
+    {
       "v": "3.2.1",
       "date": "2026-10-27",
       "title": {

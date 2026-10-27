@@ -1213,7 +1213,8 @@
           "after": {
             "heal": "maybe"
           },
-          "profit": 25896
+          "profit": 25896,
+          "tip": "tip_heal_230"
         },
         {
           "id": "nacrene",
@@ -1549,41 +1550,6 @@
       {
         "icon": "flight",
         "key": "gr_ocarina"
-      },
-      {
-        "icon": "info",
-        "key": "gr_tip_vermilion",
-        "gym": "Vermilion"
-      },
-      {
-        "icon": "info",
-        "key": "gr_tip_channel",
-        "gym": "Canalave · Azalea"
-      },
-      {
-        "icon": "warning",
-        "key": "gr_warn_cradily",
-        "gym": "Canalave"
-      },
-      {
-        "icon": "help",
-        "key": "tp_n_canalave_skip",
-        "gym": "Canalave"
-      },
-      {
-        "icon": "timer",
-        "key": "tp_n_sinnoh",
-        "gym": "Sinnoh"
-      },
-      {
-        "icon": "local_hospital",
-        "key": "tp_n_nacrene",
-        "gym": "Nacrene"
-      },
-      {
-        "icon": "add_circle",
-        "key": "gr_tip_route13",
-        "gym": "Undella"
       }
     ]
   }

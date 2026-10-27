@@ -306,14 +306,13 @@
 .tp-stock { display: flex; flex-direction: column; gap: 0.4rem; list-style: none; }
 .tp-stock li { display: flex; align-items: center; gap: 0.5rem; }
 .tp-stock b { min-width: 1.5ch; color: var(--accent); }
-.tp-attention { display: flex; flex-direction: column; gap: 0.6rem; list-style: none; }
-.tp-attention li { display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.35; }
-.tp-attention .material-symbols-outlined { flex: none; font-size: 20px; color: var(--orange); }
 .tp-gym { padding: 0 0.4rem; border-radius: 1em; background: var(--bg4); font-size: 0.75rem; white-space: nowrap; }
-.tp-gains { display: flex; flex-direction: column; gap: 0.2rem; }
-.tp-gains strong { font: 700 1.6rem var(--font-head); color: var(--accent); }
-.tp-gains span { font-size: 0.8rem; color: var(--text-muted); }
 @media (max-width: 899px) { .tp { grid-template-columns: minmax(0, 1fr); } .tp-team { grid-template-columns: minmax(0, 1fr); } }
 
 /* ── Police lisible (DA : Google Sans Flex) sur cette page ── */
 #page-money { --font-head: 'Google Sans Flex', 'Google Sans', system-ui, sans-serif; --font-body: var(--font-head); }
+
+/* ── Notes generales du guide, en tete de page ── */
+.guide-notes { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; list-style: none; margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); }
+.guide-notes li { display: flex; align-items: center; gap: 0.6rem; line-height: 1.35; }
+.guide-notes .material-symbols-outlined { flex: none; font-size: 22px; color: var(--orange); }
