@@ -52,7 +52,7 @@ const Money = (() => {
     const it = gymItems[id];
     if (!it) return '';
     const label = esc(t('it_' + it));
-    return `<span class="item-badge" title="${label}"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="${label}" width="30" height="30"></span>`;
+    return `<span class="item-badge" data-item="${it}" title="${label}"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="${label}" width="30" height="30"></span>`;
   }
   const monSprite = (id, withItem = true) => {
     const s = sprite(data.mons[id].dex, name(data.mons, id));

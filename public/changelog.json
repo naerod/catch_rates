@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Objets plus visibles et colorés", "en": "Larger, color-coded items" },
+      "fr": ["Les icônes d'objet sont agrandies de 25 % et ont un fond pastel : jaune (Choice Specs), bleu (Choice Scarf), blanc (Choice Band), gris (Black Glasses)."],
+      "en": ["Item icons are 25% larger with a pastel background: yellow (Choice Specs), blue (Choice Scarf), white (Choice Band), grey (Black Glasses)."]
+    },
+    {
       "v": "3.10.2",
       "date": "2026-10-27",
       "title": { "fr": "Tailles adaptées à la largeur de chaque fiche", "en": "Sizes follow each card's width" },
