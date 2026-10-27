@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.4.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Notes du guide dans le Team building guide", "en": "Guide notes in the Team building guide" },
+      "fr": ["Les notes générales (Vanilluxe requis, ocarina…) quittent le haut de la page des régions et passent dans le Team building guide."],
+      "en": ["General notes (Vanilluxe required, ocarina…) leave the top of the regions page and move into the Team building guide."]
+    },
+    {
       "v": "3.4.2",
       "date": "2026-10-27",
       "title": { "fr": "Cartes 4 fois plus légères", "en": "Maps 4x lighter" },
