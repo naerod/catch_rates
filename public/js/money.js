@@ -72,7 +72,8 @@ const Money = (() => {
     if (tk === '+') return icon('add').replace('class="', 'class="tk-plus ');
     if (tk === '?') return '<span class="tk-raw">?</span>';                      // incertitude, comme dans le guide
     if (tk === '/') return '<span class="tk-raw">/</span>';                      // tel que dans le guide
-    if ('(),'.includes(tk)) return '';
+    if (tk === ',') return '';
+    if (tk === '(' || tk === ')') return `<span class="tk-raw">${tk}</span>`;                 // parentheses du guide
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
     if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)

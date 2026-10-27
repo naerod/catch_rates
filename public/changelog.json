@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.8.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Sootopolis : Shock Wave (if available) et Mantine prioritaire", "en": "Sootopolis: Shock Wave (if available) and Mantine priority" },
+      "fr": ["Sootopolis (Lapras) : « Shock Wave (if available) », et la consigne « prioritize » Mantine devient une ligne à part, valable dans tous les cas.", "Les parenthèses du guide sont désormais affichées telles qu'écrites."],
+      "en": ["Sootopolis (Lapras): \"Shock Wave (if available)\", and the \"prioritize\" Mantine instruction becomes its own line, valid in all cases.", "The guide's parentheses are now shown as written."]
+    },
+    {
       "v": "3.8.0",
       "date": "2026-10-27",
       "title": { "fr": "Chaque Pokémon au-dessus de son attaque", "en": "Each Pokémon above its move" },
