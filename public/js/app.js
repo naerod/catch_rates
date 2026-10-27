@@ -502,7 +502,7 @@ async function loadEvents() {
       <div class="event-pokemon-grid">
         ${(ev.pokemon || []).map(p => `
           <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}">
-            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
+            <img width="80" height="60" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
             <span class="ep-name">${p.name}</span>
             <span class="ep-rate">${p.catch_rate}</span>
           </div>

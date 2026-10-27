@@ -857,15 +857,15 @@ main {
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s;
-  width: 76px;
+  width: 96px;
 }
 .event-pokemon-item:hover {
   border-color: var(--accent);
   background: var(--accent-glow);
   transform: translateY(-2px);
 }
-.event-pokemon-item img { width: 60px; height: 45px; image-rendering: pixelated; }
-.event-pokemon-item .ep-name { font-size: 0.62rem; color: var(--text-dim); text-align: center; line-height: 1.2; }
+.event-pokemon-item img { width: 80px; height: 60px;   /* x2 exact : pixels nets */ image-rendering: pixelated; }
+.event-pokemon-item .ep-name { font-size: 0.7rem; color: var(--text-dim); text-align: center; line-height: 1.2; }
 .event-pokemon-item .ep-rate { font-size: 0.68rem; color: var(--accent); font-weight: 600; }
 
 /* ══════════════ ADMIN ══════════════ */

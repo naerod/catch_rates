@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.11.3",
+      "date": "2026-10-28",
+      "title": { "fr": "Icônes des événements plus grandes et nettes", "en": "Larger, crisper event icons" },
+      "fr": ["Les icônes de la page Événements passent à 80×60 px (échelle ×2 exacte) : pixels nets, plus gros d'environ un tiers."],
+      "en": ["Event page icons are now 80×60 px (exact ×2 scale): crisp pixels, about a third larger."]
+    },
+    {
       "v": "3.11.2",
       "date": "2026-10-28",
       "title": { "fr": "États : une seule ligne, boutons principaux centrés", "en": "Statuses on one line, main buttons centered" },
