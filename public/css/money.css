@@ -75,7 +75,6 @@
 .info-item .material-symbols-outlined { font-size: 18px; }
 .info-team { gap: 0.75rem; }
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
-.info-team .sprite-box { width: 38px; height: 38px; padding: 2px; }
 .info-team { display: inline-flex; gap: 0.5rem; list-style: none; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
@@ -116,15 +115,9 @@
 .tk-opp { display: inline-flex; align-items: center; gap: 0.4em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
 
-.sprite-box .sprite { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }   /* tous les sprites remplissent le meme carre */
-.sprite { width: calc(var(--w) * 0.029em); height: auto; flex: none; max-width: none; }
+.sprite-box { position: relative; display: inline-flex; flex: none; --k: 1; }   /* --k : echelle entiere de l'icone 40x30 */
+.sprite.icon { width: calc(40px * var(--k)); height: calc(30px * var(--k)); flex: none; image-rendering: pixelated; }
 .sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
-.sprite-box {
-  display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
-  width: 3em; height: 3em; padding: 0.15em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
-  border: 1px solid color-mix(in srgb, var(--t) 75%, transparent);
-  background: color-mix(in srgb, var(--t) 34%, transparent);
-}
 
 /* ── Etats : chargement (squelette) et erreur ── */
 .is-skeleton .gym { min-height: 8em; border-style: dashed; animation: skel 1.2s ease-in-out infinite alternate; }
@@ -143,7 +136,6 @@
 .tk-trainer { font-weight: 700; color: var(--text); }
 
 /* Bulle d'objet : petite, en bas a droite du sprite */
-.sprite-box { position: relative; }
 .item-badge {
   position: absolute; right: -0.35em; bottom: -0.35em; display: grid; place-items: center; width: 1.45em; height: 1.45em;
   border-radius: 50%; background: var(--card); border: 1px solid var(--card-border);
@@ -181,7 +173,6 @@
 .gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; justify-content: flex-end; font-size: 0.9em; }   /* soin et changements d'objet : en bas a droite */
 .after-chip.is-heal { order: 2; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
-.after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
 .swap-item { width: 1.5em; height: 1.5em; }
 .info-item.is-require { color: var(--orange); }
 
@@ -275,7 +266,6 @@
 .mc-name { font: 700 1.5rem var(--font-head); }
 .money-card > .mc-text + .material-symbols-outlined { margin-left: auto; }
 .gym-chip.is-optional { color: var(--accent); }
-.after-chip.is-heal .sprite-box { width: 1.7em; height: 1.7em; padding: 0.05em; }
 
 /* ── Page « Team building guide » ── */
 #money-method.is-team .money-head-right { display: none; }
@@ -288,7 +278,7 @@
 .tp-mon[data-mon="weezing"] { --mon: var(--mon-weezing); } .tp-mon[data-mon="garchomp"] { --mon: var(--mon-garchomp); }
 .tp-mon-head { display: flex; align-items: center; gap: 0.75rem; }
 .tp-mon-head h3 { font: 700 1.35rem var(--font-head); color: var(--mon); }
-.tp-mon .sprite-box { width: 88px; height: 88px; }
+.tp-mon .sprite-box { --k: 3; }
 .tp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.25rem; }
 .tp-lv { font: 600 0.8rem var(--font-head); color: var(--text-dim); }
 .type-chip { padding: 0 0.55rem; border-radius: 1em; border: 1px solid color-mix(in srgb, var(--t) 75%, transparent); background: color-mix(in srgb, var(--t) 30%, transparent); font-size: 0.75rem; font-weight: 600; }
@@ -325,7 +315,7 @@
 .tp-start ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; list-style: none; }
 .tp-start li { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
 .tp-start li b { color: var(--mon); font: 700 1rem var(--font-head); }
-.tp-start .sprite-box { width: 88px; height: 88px; }
+.tp-start .sprite-box { --k: 3; }
 
 /* Ligne principale : le sprite de chaque Pokemon au-dessus de son attaque */
 .tk-stack { display: inline-flex; flex-direction: column; align-items: center; gap: 0.35em; text-align: center; }
@@ -337,6 +327,6 @@
 /* Ligne principale : sprites un peu plus grands et plus espaces pour occuper la largeur */
 .is-lead { --g: 1.1em; width: 100%; }
 .is-lead .gym-line-body, .is-lead .gym-seg { gap: 0.3em var(--g); }
-.is-lead .sprite-box { width: 3.6em; height: 3.6em; }
+.is-lead .sprite-box { --k: 2; }
 .is-lead .tk-raw { align-self: flex-start; margin-top: 0.9em; }
 .is-lead .gym-seg { align-items: flex-start; }

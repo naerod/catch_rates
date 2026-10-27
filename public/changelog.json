@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Icônes 8 bits comme dans le jeu", "en": "8-bit icons like in the game" },
+      "fr": ["Les Pokémon s'affichent avec leurs icônes de menu 8 bits (celles de l'équipe et du PC), en pixels nets et sans cadre ; l'équipe de départ et les fiches les montrent en plus grand.", "Chargement quasi instantané : chaque icône pèse environ 300 octets (les anciens GIF animés faisaient 50 à 70 Ko)."],
+      "en": ["Pokémon are shown with their 8-bit menu icons (as in the team and PC screens), with crisp pixels and no frame; the starting set and cards show them larger.", "Near-instant loading: each icon is about 300 bytes (the old animated GIFs were 50 to 70 KB)."]
+    },
+    {
       "v": "3.9.3",
       "date": "2026-10-27",
       "title": { "fr": "Espace mieux rempli, parenthèses collées, objets à droite", "en": "Better filled space, tight parentheses, items on the right" },

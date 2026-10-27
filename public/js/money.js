@@ -41,18 +41,10 @@ const Money = (() => {
   /* ── Rendu des jetons ── */
   const name = (table, key) => (table[key] && (table[key][i18n.lang] || table[key].en)) || key;
 
-  /* Encadre carre derriere le sprite, teinte d'une seule couleur (type dominant du Pokemon). */
-  function sprite(dex, label, cls = '', type = '') {
-    const [w, h] = data.size[dex];
-    // Image fixe (1 Ko) tout de suite ; le GIF anime (50-70 Ko) ne remplace l'image que quand elle approche de l'ecran (animate).
-    const img = `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.png" data-gif="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" decoding="async">`;
-    return type ? `<span class="sprite-box" style="--t:var(--type-${type})">${img}</span>` : img;
+  /* Icones de menu 8 bits (40x30, comme l'equipe et le PC du jeu), affichees en pixels nets. */
+  function sprite(dex, label, cls = '') {
+    return `<span class="sprite-box"><img class="sprite icon ${cls}" src="/gym-rerun/icons/${dex}.png" alt="${esc(label)}" width="40" height="30" decoding="async"></span>`;
   }
-  const io = 'IntersectionObserver' in window && new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    io.unobserve(e.target); e.target.src = e.target.dataset.gif;
-  }), { rootMargin: '400px' });
-  const animateSprites = root => { if (io && !matchMedia('(prefers-reduced-motion: reduce)').matches) root.querySelectorAll('img[data-gif]').forEach(i => io.observe(i)); };
   let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs' };
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
@@ -63,7 +55,7 @@ const Money = (() => {
     return `<span class="item-badge" title="${label}"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="${label}" width="30" height="30"></span>`;
   }
   const monSprite = (id, withItem = true) => {
-    const s = sprite(data.mons[id].dex, name(data.mons, id), '', data.mons[id].type);
+    const s = sprite(data.mons[id].dex, name(data.mons, id));
     return withItem && gymItems[id] ? s.replace('</span>', `${itemBadge(id)}</span>`) : s;
   };
 
@@ -82,7 +74,7 @@ const Money = (() => {
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
       const lv = lvl ? `<span class="tk-lvl">${esc(t('gr_lvl'))} ${+lvl}</span>` : '';
-      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].type)}${lv}</span>`;
+      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp')}${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
     return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
@@ -271,7 +263,6 @@ const Money = (() => {
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
     el.innerHTML = data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
       `<div class="stage-body">${r.gyms.map((g, i) => card(g, i, r)).join('')}</div></section>`).join('');
-    animateSprites(el);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
@@ -313,7 +304,6 @@ const Money = (() => {
       `<div class="tp"><section class="tp-team" aria-label="${esc(t('tp_team'))}">${mons}</section>` +
       `<aside class="tp-side"><section class="tp-card"><h3>${icon('inventory_2')}${esc(t('tp_stock'))}</h3><ul class="tp-stock">${stock}</ul></section>` +
       (notes ? `<section class="tp-card"><ul class="tp-notes">${notes}</ul></section>` : '') + `</aside></div>`;
-    animateSprites($('money-stage'));
   }
 
   function renderAll(animate) {
