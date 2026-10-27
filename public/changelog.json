@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.12",
+      "date": "2026-10-28",
+      "title": { "fr": "Soin et changement d'objet : même hauteur, objet lisible", "en": "Heal and item swap: same height, readable item" },
+      "fr": ["Le bouton de soin a exactement la même hauteur que celui de changement d'objet ; l'icône de l'objet y est agrandie."],
+      "en": ["The heal button is now exactly as tall as the item-swap button; the item icon inside it is larger."]
+    },
+    {
       "v": "3.10.11",
       "date": "2026-10-28",
       "title": { "fr": "Mahogany : Dragon Claw à privilégier", "en": "Mahogany: prefer Dragon Claw" },

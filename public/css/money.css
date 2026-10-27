@@ -177,8 +177,8 @@
 .gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: auto; padding-top: 0.5em; justify-content: flex-end; }   /* soin et changements d'objet : en bas a droite de la carte */
 .after-chip.is-heal { order: 2; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
 .after-chip.is-swap { gap: 0.4em; color: var(--text); padding: 0.2em 0.9em 0.2em 0.7em; }
-.after-chip.is-heal, .after-chip.is-swap { min-height: 30px; font-size: 0.64em; font-weight: 700; }   /* meme taille pour le soin et les changements d'objet */
-.swap-item { width: 1.5em; height: 1.5em; }
+.after-chip.is-heal, .after-chip.is-swap { box-sizing: border-box; height: 36px; padding-block: 0; font-size: 0.64em; font-weight: 700; }   /* meme taille pour le soin et les changements d'objet */
+.swap-item { width: 28px; height: 28px; image-rendering: pixelated; }   /* objet lisible, pas proportionnel au texte de la puce */
 .gym-note.is-end { font-size: 0.8em; }
 .info-item.is-require { color: var(--orange); }
 
