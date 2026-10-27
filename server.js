@@ -38,6 +38,12 @@ function dbRun(sql, params = []) {
 
 // ─── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
+// Cloudflare garde les statiques 4 h cote navigateur : on versionne leurs URL (?v=<version du changelog>) pour qu'un deploiement les renouvelle tout de suite.
+const APP_V = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'changelog.json'), 'utf8')).versions[0].v;
+const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8')
+  .replace(/((?:src|href)="\/(?:js|css)\/[^"]+\.(?:js|css))"/g, `$1?v=${APP_V}"`)
+  .replace('</head>', `  <meta name="app-version" content="${APP_V}" />\n</head>`);
+app.get(['/', '/index.html'], (req, res) => res.type('html').send(INDEX_HTML));
 app.use('/gym-rerun', express.static(path.join(__dirname, 'public', 'gym-rerun'), { maxAge: '1d' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ball-images', express.static(path.join(__dirname, 'db', 'images')));

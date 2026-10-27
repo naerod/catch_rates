@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.7.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Correction du « mv_undefined » et mises à jour immédiates", "en": "Fix for \"mv_undefined\" and instant updates" },
+      "fr": ["Correction : le « ? » de certaines lignes (Mauville…) s'affichait « mv_undefined » quand le navigateur gardait une ancienne version du script.", "Les scripts et styles sont maintenant versionnés : une nouvelle version du site s'affiche tout de suite, sans attendre l'expiration du cache (4 h)."],
+      "en": ["Fix: the \"?\" on some lines (Mauville…) showed \"mv_undefined\" when the browser kept an old script version.", "Scripts and styles are now versioned: a new site version shows up immediately, without waiting for the cache (4 h) to expire."]
+    },
+    {
       "v": "3.7.1",
       "date": "2026-10-27",
       "title": { "fr": "« Timecodes » devient « Temps de référence »", "en": "\"Timecodes\" becomes \"Reference time\"" },

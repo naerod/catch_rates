@@ -336,7 +336,7 @@ const Money = (() => {
     $('money-stage').innerHTML = '<div class="stage-body is-skeleton" aria-hidden="true">' + '<div class="gym"></div>'.repeat(6) + '</div>';
     try {
       const m = METHODS.find(x => x.id === state.method);
-      const res = await fetch(m.src);
+      const res = await fetch(m.src + '?v=' + (document.querySelector('meta[name=app-version]')?.content || ''));
       if (!res.ok) throw new Error(res.status);
       data = datas[m.id] = await res.json();
       restore(); renderAll(false); persist(); loadMarket();
