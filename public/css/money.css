@@ -141,10 +141,10 @@
   border-radius: 50%; background: var(--card); border: 1px solid var(--card-border);
 }
 .item-badge img { width: 1.45em; height: 1.45em; }
-.item-badge[data-item=choice_specs] { background: #fff3b0; }
-.item-badge[data-item=choice_scarf] { background: #bfdcff; }
-.item-badge[data-item=choice_band] { background: #ffd6c4; }
-.item-badge[data-item=black_glasses] { background: #c9ccd3; }
+.item-badge[data-item=choice_specs], .after-chip.is-swap[data-item=choice_specs] { background: #fff3b0; }
+.item-badge[data-item=choice_scarf], .after-chip.is-swap[data-item=choice_scarf] { background: #bfdcff; }
+.item-badge[data-item=choice_band], .after-chip.is-swap[data-item=choice_band] { background: #ffd6c4; }
+.item-badge[data-item=black_glasses], .after-chip.is-swap[data-item=black_glasses] { background: #c9ccd3; }
 
 /* Favoris */
 .money-item { position: relative; }
@@ -356,3 +356,4 @@ naerod-header { transition: transform 0.25s ease; }
 .start-panel .sprite.icon { width: 48px; height: 36px; }   /* +20 % (echelle non entiere, accepte ici) */
 .start-panel .item-badge { font-size: 13px; }
 .start-panel { gap: 1rem; }   /* air entre le 6e sprite et la fleche */
+.after-chip.is-swap[data-item] { color: #1f2430; }   /* texte sombre sur fond pastel, dans les deux themes */

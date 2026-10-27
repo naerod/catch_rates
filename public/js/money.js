@@ -92,7 +92,7 @@ const Money = (() => {
     const heal = a.heal ? `<span class="after-chip is-heal">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}${a.healMon ? monSprite(a.healMon, false) : ''}</span>` : '';
     const swaps = (a.switch || []).map(s => {
       const label = esc(`${name(data.mons, s.mon)} → ${t('it_' + s.item)}`);
-      return `<span class="after-chip is-swap" title="${label}" aria-label="${label}">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
+      return `<span class="after-chip is-swap" data-item="${s.item}" title="${label}" aria-label="${label}">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
         `<img class="swap-item" src="/gym-rerun/items/${ITEM_ICON[s.item]}.png" alt="" width="30" height="30"><span>${esc(t('it_' + s.item))}</span>${s.exit ? `<span class="tk-word">${esc(t('gr_on_exit'))}</span>` : ''}</span>`;
     }).join('');
     return `<div class="gym-between">${heal}${swaps}</div>`;
