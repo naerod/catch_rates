@@ -49,28 +49,20 @@
 .money-card:hover .material-symbols-outlined:last-child { color: var(--accent); transform: translateX(4px); }
 #money-menu.is-entering, #money-method.is-entering { animation: stage-in 0.24s ease-out; }
 
-/* ── Methode ouverte : toute la region tient dans la fenetre (1080p) ── */
-#page-money.in-method { display: flex; flex-direction: column; height: calc(100dvh - 60px - 1rem); min-height: 520px; }
+/* ── Methode ouverte : une seule page, les regions s'empilent ── */
 #page-money.in-method .page-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
-.layout-grid.is-wide main { padding: 0.5rem 1rem; }
-#money-method:not([hidden]) { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-height: 0; }
+.layout-grid.is-wide main { padding: 0.5rem 1.5rem 3rem; }
+#money-method:not([hidden]) { display: flex; flex-direction: column; gap: 1.5rem; }
 
-.money-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-.money-head .btn, .region-tab, .money-nav .btn { min-height: 44px; font-size: 0.9rem; }
-@media (pointer: fine) { .money-head .btn, .region-tab, .money-nav .btn { min-height: 34px; padding: 0.15rem 0.75rem; font-size: 0.85rem; } }
-.money-method-name { font: 700 1.1rem var(--font-head); color: var(--accent); margin-right: 0.5rem; }
-.money-regions { display: flex; gap: 0.5rem; }
-.region-tab {
-  padding: 0.25rem 1rem; background: transparent; color: var(--text-dim);
-  border: 2px solid var(--card-border); border-radius: var(--radius); font: 600 0.9rem var(--font-head); cursor: pointer;
-  transition: border-color 0.18s, color 0.18s, background 0.18s;
+.money-head {
+  position: sticky; top: 60px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; padding: 0.75rem 0;
+  background: var(--bg);
 }
-.region-tab:hover { border-color: var(--accent); color: var(--text); }
-.region-tab[aria-pressed="true"] { background: var(--accent2); border-color: var(--accent2); color: var(--on-accent); }
-.money-nav { display: flex; align-items: center; gap: 0.75rem; }
-.money-head-right { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.5rem 1rem; margin-left: auto; }
-.money-nav .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.money-progress { min-width: 4ch; text-align: center; font: 600 0.9rem var(--font-head); color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.money-head-left, .money-head-right { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.money-head-right { margin-left: auto; }
+.money-head .btn { min-height: 44px; font-size: 0.9rem; }
+@media (pointer: fine) { .money-head .btn { min-height: 36px; padding: 0.15rem 0.75rem; } }
+.money-method-name { font: 700 1.25rem var(--font-head); color: var(--accent); }
 
 /* ── Bandeau d'infos : une seule ligne, sans cadres ── */
 .money-info { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.5rem; font-size: 0.8rem; color: var(--text-dim); }
@@ -87,12 +79,13 @@
 .info-team { display: inline-flex; gap: 0.5rem; list-style: none; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
-.money-stage { flex: 1; min-height: 0; overflow-y: auto; }   /* defile si le texte, au plus petit (14 px), ne tient pas */
-/* La taille du texte est ajustee par money.js (fit) pour que la region tienne dans la fenetre. */
-.stage-body { font-size: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1em; align-items: start; }
-.gym-wrap { display: flex; flex-direction: column; gap: 0.5em; min-width: 0; }
-@media (max-width: 899px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* mobile : une colonne, meme ordre */
-.money-stage.is-entering .stage-body { animation: stage-in 0.24s ease-out; }
+/* Une region = un titre et ses arenes, lues comme un livre (1 2 / 3 4 / ...). */
+.region + .region { margin-top: 3rem; }
+.region-title { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--card-border); font: 700 2rem var(--font-head); color: var(--text); scroll-margin-top: 150px; }
+.stage-body { font-size: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5em; align-items: start; }
+.gym-wrap { display: flex; flex-direction: column; gap: 0.75em; min-width: 0; }
+@media (max-width: 1099px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* une colonne, meme ordre */
+.money-stage.is-entering .region { animation: stage-in 0.24s ease-out; }
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
@@ -103,19 +96,18 @@
 .gym-body { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; flex: 1; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
-.gym-top { display: flex; align-items: center; gap: 0.75em; min-width: 0; }
-.gym-tip { display: flex; align-items: center; gap: 0.35em; min-width: 0; font-size: 0.8em; color: var(--text-dim); white-space: nowrap; }
+.gym-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25em 0.75em; min-width: 0; }
+.gym-tip { display: flex; align-items: center; gap: 0.35em; min-width: 0; font-size: 0.8em; color: var(--text-dim); }
 .gym-tip .material-symbols-outlined { font-size: 1.2em; }
 
 /* ── Lignes de strategie ── */
-.gym-line { display: flex; align-items: center; gap: 0.4em; line-height: 1.35; }
+.gym-line { display: flex; align-items: center; min-width: 0; gap: 0.4em; line-height: 1.35; }
 .gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
 .gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
-.stage-body.nowrap .gym-line-body { flex-wrap: nowrap; }
-.gym-seg { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3em 0.6em; }
+.gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.6em; }
 .gym-line.is-lead { align-self: flex-start; padding: 0.15em 0.4em; border-radius: 0.4em; background: var(--lead-bg); }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
-.gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3em 0.6em; }
+.gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.6em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
 .tk-move { font-weight: 700; }
 .tk-plus, .tk-raw { color: var(--text-muted); font-size: 1.2em; }
@@ -139,18 +131,12 @@
 .money-state { display: grid; justify-items: center; gap: 0.75rem; padding: 3rem 1rem; text-align: center; color: var(--text-dim); }
 .money-state .material-symbols-outlined { font-size: 48px; color: var(--text-muted); }
 
-.money-card:focus-visible, .region-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.money-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .money-menu[hidden], #money-method[hidden] { display: none; }
 
-@media (max-width: 900px) {
-  #page-money.in-method { height: auto; }
-  .money-head { flex-wrap: wrap; }
-  .money-nav { width: 100%; justify-content: space-between; margin-left: 0; }
-  .info-team { margin-left: 0; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .money-card, .region-tab { transition: none; }
-  .money-stage.is-entering .stage-body, .is-skeleton .gym, #money-menu.is-entering, #money-method.is-entering { animation: none; }
+  .money-card { transition: none; }
+  .money-stage.is-entering .region, .is-skeleton .gym, #money-menu.is-entering, #money-method.is-entering { animation: none; }
 }
 
 .tk-trainer { font-weight: 700; color: var(--text); }
@@ -198,40 +184,16 @@
 .swap-item { width: 1.5em; height: 1.5em; }
 .info-item.is-require { color: var(--orange); }
 
-/* Mode d'affichage et timecodes */
-.money-mode { display: inline-flex; border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
-.money-mode button {
-  display: inline-grid; place-items: center; width: 40px; height: 34px; background: transparent; color: var(--text-muted);
-  border: 0; cursor: pointer; transition: background 0.18s, color 0.18s;
-}
-.money-mode button + button { border-left: 1px solid var(--card-border); }
-.money-mode button:hover { color: var(--text); }
-.money-mode button[aria-pressed="true"] { background: var(--accent-glow); color: var(--accent); }
-.money-mode button:focus-visible, .tc-toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Timecodes */
+.tc-toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tc-toggle { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--text-dim); cursor: pointer; white-space: nowrap; }
 .tc-toggle input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
 .tc-toggle .material-symbols-outlined { font-size: 18px; }
 .no-tc .gym-chip.is-time { display: none; }
 
-/* ── Mode lineaire : aimant sur l'arene en cours ── */
-.money-stage { position: relative; }
-.lin-stage { position: absolute; inset: 0; max-width: 1240px; margin: 0 auto; overflow: hidden; font-size: 20px; }
-.lin-item {
-  position: absolute; left: 0; right: 0; top: 0; transform-origin: top center; display: flex; flex-direction: column; gap: 0.35em;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, filter 0.4s ease; will-change: transform;
-}
-.lin-item.is-past { opacity: 0.5; filter: grayscale(0.9) brightness(0.85); cursor: pointer; }
-.lin-item.is-next { opacity: 0.9; cursor: pointer; }
-.lin-item.is-hidden { opacity: 0; pointer-events: none; }
-.lin-item.is-current .gym { border-color: var(--accent); box-shadow: var(--glow); }
-.lin-item .gym-line-body { flex-wrap: wrap; }
-.lin-stage.is-flat { position: static; overflow: visible; font-size: 16px; display: flex; flex-direction: column; gap: 0.75rem; }
-.lin-stage.is-flat .lin-item { position: static; opacity: 1; filter: none; }
-@media (prefers-reduced-motion: reduce) { .lin-item, .money-mode button { transition: none; } }
 
 /* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
 @media (max-width: 899px) {
-  .money-regions { flex-wrap: wrap; }
   .gym { flex-direction: column; }
   .gym-map { width: 100%; max-width: 360px; }
   .gym-seg, .gym-line-body { flex-wrap: wrap; }
@@ -288,12 +250,9 @@
 .charm-foot .btn { min-height: 34px; gap: 0.35rem; }
 @media (prefers-reduced-motion: reduce) { .charm-panel:popover-open { animation: none; } }
 
-/* ── En-tete sur une seule ligne ── */
+/* ── En-tete ── */
 .btn-icon-only { width: 44px; padding: 0 !important; justify-content: center; }
 @media (pointer: fine) { .btn-icon-only { width: 36px; } }
-.money-head { flex-wrap: nowrap; }
-.money-head-right { flex-wrap: nowrap; flex: 1; min-width: 0; gap: 0.5rem; }
-.money-head > * { flex-shrink: 0; }
 .money-head-right > span { display: inline-flex; align-items: center; }
 .guide-link { gap: 0.35rem; text-decoration: none; white-space: nowrap; }
 .guide-link .material-symbols-outlined { font-size: 18px; }
@@ -307,10 +266,6 @@
 .info-list strong { font: 700 1.25rem var(--font-head); color: var(--accent); }
 .info-list .info-stocks { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; }
 .info-list .info-stock b { margin-right: 0.25rem; color: var(--text); }
-/* Largeurs moyennes : on garde une seule ligne en retirant d'abord les libelles */
-@media (max-width: 2000px) and (min-width: 900px) { .charm-btn .cb-name, .guide-link .lbl { display: none; } }
-@media (max-width: 1500px) and (min-width: 900px) { .tc-toggle .lbl, .money-nav .lbl { display: none; } .region-tab { padding: 0.25rem 0.6rem; } }
-@media (max-width: 899px) { .money-head { flex-wrap: wrap; } .money-head-right { flex-wrap: wrap; } }
 
 /* ── Tags de methode (menu et en-tete) ── */
 .money-tags { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; }
@@ -320,12 +275,9 @@
 .money-card > .mc-text + .material-symbols-outlined { margin-left: auto; }
 .gym-chip.is-optional { color: var(--accent); }
 .after-chip.is-heal .sprite-box { width: 1.7em; height: 1.7em; padding: 0.05em; }
-@media (max-width: 1700px) { .money-head .money-tags { display: none; } }
 
 /* ── Page « Team building guide » ── */
-#money-method.is-team #money-mode, #money-method.is-team .tc-toggle, #money-method.is-team #money-regions,
-#money-method.is-team #money-charm-slot, #money-method.is-team .money-nav, #money-method.is-team #money-guide { display: none; }
-#money-method.is-team .money-stage { overflow: auto; }
+#money-method.is-team .money-head-right { display: none; }
 .tp { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 1rem; padding-bottom: 1rem; font-size: 0.95rem; }
 .tp-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.75rem; align-content: start; }
 .tp-mon, .tp-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 0.75rem 1rem; }
@@ -365,4 +317,3 @@
 
 /* ── Police lisible (DA : Google Sans Flex) sur cette page ── */
 #page-money { --font-head: 'Google Sans Flex', 'Google Sans', system-ui, sans-serif; --font-body: var(--font-head); }
-@media (max-width: 1250px) and (min-width: 900px) { .money-head, .money-head-right { flex-wrap: wrap; } }

@@ -2,6 +2,26 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.2.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Une seule page, toutes les régions",
+        "en": "One page, all regions"
+      },
+      "fr": [
+        "Plus de slider ni de boutons de région : les régions s'enchaînent sur la même page, chacune avec son titre, et la page défile.",
+        "En-tête simplifié : retour, titre et favori à gauche ; timecodes, guide d'équipe et charm à droite ; il reste visible pendant le défilement.",
+        "La vue linéaire disparaît (elle n'avait plus de sens sans slider).",
+        "Titres et lignes longs qui passent à la ligne au lieu de déborder de leur carte."
+      ],
+      "en": [
+        "No more slider or region buttons: regions follow each other on a single page, each with its own title, and the page scrolls.",
+        "Simpler header: back, title and favourite on the left; timecodes, team guide and charm on the right; it stays visible while scrolling.",
+        "The linear view is gone (it made no sense without the slider).",
+        "Long titles and lines now wrap instead of overflowing their card."
+      ]
+    },
+    {
       "v": "3.1.0",
       "date": "2026-10-27",
       "title": {

@@ -8,8 +8,7 @@ const Money = (() => {
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], src: '/data/technical-route.json' },
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], src: '/data/gym-rerun.json' },
   ];
-  const storeKey = () => 'money.' + state.method;                    // position dans la methode
-  const PREFS = 'money.prefs';                                        // mode d'affichage et timecodes : communs a toutes les methodes
+  const PREFS = 'money.prefs';                                        // timecodes : communs a toutes les methodes
   const FAVS = 'money.favs';
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -19,30 +18,21 @@ const Money = (() => {
   const datas = {};                                                   // donnees deja chargees, par methode
   let data = null;                                                    // donnees de la methode ouverte
   let loading = false;
-  const state = { method: null, region: 0, gym: 0, mode: 'grid', tc: true, view: 'route' };
+  const state = { method: null, region: null, tc: true, view: 'route' };   // region : region a faire defiler en vue (lien profond)
 
-  /* ── Persistance : hash (#money/gym-rerun/kanto[/3]) puis localStorage ── */
+  /* ── Persistance : hash (#money/gym-rerun[/kanto]) puis localStorage ── */
   function restore() {
-    try { Object.assign(state, JSON.parse(localStorage.getItem(storeKey())) || {}); } catch { /* stockage indisponible */ }
-    try { Object.assign(state, JSON.parse(localStorage.getItem(PREFS)) || {}); } catch { /* idem */ }
+    try { Object.assign(state, JSON.parse(localStorage.getItem(PREFS)) || {}); } catch { /* stockage indisponible */ }
     const seg = location.hash.slice(1).split('/').slice(1);
     if (seg[0] === state.method) seg.shift();
     state.view = seg[0] === 'team' ? 'team' : 'route';
     if (state.view === 'team') seg.shift();
-    const ri = data.regions.findIndex(r => r.id === seg[0]);
-    if (ri >= 0) { state.region = ri; state.gym = Math.max(0, (+seg[1] || 1) - 1); }
-    else state.gym = 0;
-    state.region = Math.min(Math.max(+state.region || 0, 0), data.regions.length - 1);
-    state.gym = Math.min(Math.max(+state.gym || 0, 0), data.regions[state.region].gyms.length - 1);
-    if (state.mode !== 'linear') state.mode = 'grid';
+    state.region = data.regions.find(r => r.id === seg[0])?.id || null;
     state.tc = state.tc !== false;
   }
   function persist() {
-    try {
-      localStorage.setItem(storeKey(), JSON.stringify({ region: state.region }));
-      localStorage.setItem(PREFS, JSON.stringify({ mode: state.mode, tc: state.tc }));
-    } catch { /* idem */ }
-    history.replaceState(null, '', state.view === 'team' ? `#money/${state.method}/team` : `#money/${state.method}/${data.regions[state.region].id}${state.mode === 'linear' ? '/' + (state.gym + 1) : ''}`);
+    try { localStorage.setItem(PREFS, JSON.stringify({ tc: state.tc })); } catch { /* idem */ }
+    history.replaceState(null, '', `#money/${state.method}${state.view === 'team' ? '/team' : ''}`);
   }
 
   /* ── Rendu des jetons ── */
@@ -242,51 +232,6 @@ const Money = (() => {
     $('money-charm-slot').innerHTML = charmButton();
   }
 
-  function regionTabs() {
-    $('money-regions').innerHTML = data.regions.map((r, i) =>
-      `<button type="button" class="region-tab" data-region="${i}" aria-pressed="${i === state.region}">${esc(r.name)}</button>`).join('');
-  }
-
-  function controls() {
-    const lin = state.mode === 'linear', regions = data.regions;
-    const first = state.region === 0 && (!lin || state.gym === 0);
-    const last = state.region === regions.length - 1 && (!lin || state.gym === regions[state.region].gyms.length - 1);
-    $('money-progress').textContent = lin ? `${state.gym + 1} / ${regions[state.region].gyms.length}` : `${state.region + 1} / ${regions.length}`;
-    const prev = $('money-prev'), next = $('money-next');
-    prev.disabled = first;
-    prev.title = first ? t('gr_first') : '';
-    next.querySelector('span:first-child').textContent = t(last ? 'gr_restart' : 'gr_next');
-    next.querySelector('.material-symbols-outlined').textContent = last ? 'restart_alt' : 'arrow_forward';
-  }
-
-  /* Une ligne de strategie ne passe jamais a la ligne : elle ne doit pas deborder de sa carte. */
-  const overflowsX = body => [...body.querySelectorAll('.gym-body')].some(el => el.scrollWidth > el.clientWidth + 1);
-
-  /* Plus grand texte qui tienne dans la fenetre (dichotomie sur la taille de police).
-     Phase 1 : chaque ligne sur une seule ligne. Si le texte tombe sous 14 px, phase 2 : une ligne
-     longue peut passer a la ligne, mais seulement avant un "into". */
-  function fit() {
-    const box = $('money-stage'), body = box.querySelector('.stage-body');
-    if (!body || state.mode !== 'grid') return;
-    body.style.fontSize = '';
-    if (matchMedia('(max-width: 899px)').matches) return;     // mobile : la page defile
-    const search = (hi, ok) => {
-      let lo = 14;
-      for (let i = 0; i < 7; i++) {
-        const mid = (lo + hi) / 2;
-        body.style.fontSize = mid + 'px';
-        if (ok()) lo = mid; else hi = mid;
-      }
-      return lo;
-    };
-    const tall = () => body.scrollHeight <= box.clientHeight;
-    body.classList.add('nowrap');
-    let size = search(19, () => tall() && !overflowsX(body));
-    if (size <= 14) { body.classList.remove('nowrap'); size = search(19, tall); }
-    body.style.fontSize = size + 'px';
-    while (size > 14 && !tall()) body.style.fontSize = (size -= 0.5) + 'px';   // garde-fou : la dichotomie n'est pas monotone
-  }
-
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
   function card(g, i, r) {
     const tip = g.tip && !g.bonus ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
@@ -307,54 +252,14 @@ const Money = (() => {
   }
 
   function stage(animate) {
-    const r = data.regions[state.region];
     const el = $('money-stage');
-    el.setAttribute('aria-label', r.name);
-    if (state.mode === 'linear') {
-      el.innerHTML = `<div class="lin-stage">${r.gyms.map((g, i) => `<div class="lin-item" data-i="${i}">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div>`;
-      layoutLinear();
-    } else {
-      // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
-      el.innerHTML = `<div class="stage-body">${r.gyms.map((g, i) => `<div class="gym-wrap">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div>`;
-    }
+    // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
+    el.innerHTML = data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
+      `<div class="stage-body">${r.gyms.map((g, i) => `<div class="gym-wrap">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div></section>`).join('');
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
-  /* ── Mode lineaire : l'arene en cours en grand, la precedente grisee et les suivantes en petit ── */
-  function layoutLinear() {
-    const stageEl = $('money-stage').querySelector('.lin-stage');
-    if (!stageEl) return;
-    const items = [...stageEl.children], n = items.length, cur = state.gym;
-    const flat = matchMedia('(max-width: 899px)').matches;          // mobile : liste normale, la page defile
-    stageEl.classList.toggle('is-flat', flat);
-    if (flat) { items.forEach((el, i) => { el.style.transform = ''; el.className = 'lin-item' + (i === cur ? ' is-current' : ''); }); stageEl.style.fontSize = ''; return; }
-    const H = stageEl.clientHeight, SMALL = 0.66, GAP = 12;
-    const first = Math.max(0, Math.min(cur - 1, n - 4)), last = Math.min(n - 1, first + 3);   // toujours 3 arenes au minimum
-    const scale = i => (i === cur ? 1 : SMALL);
-    const measure = size => {
-      stageEl.style.fontSize = size + 'px';
-      const pos = {}; let y = 0;
-      for (let i = first; i <= last; i++) { pos[i] = y; y += items[i].offsetHeight * scale(i) + GAP; }
-      return { pos, total: y - GAP };
-    };
-    let lo = 11, hi = 24;
-    for (let k = 0; k < 7; k++) { const mid = (lo + hi) / 2; if (measure(mid).total <= H) lo = mid; else hi = mid; }
-    const { pos } = measure(lo);
-    items.forEach((el, i) => {
-      const inView = i >= first && i <= last;
-      el.className = 'lin-item ' + (!inView ? 'is-hidden' : i === cur ? 'is-current' : i < cur ? 'is-past' : 'is-next');
-      el.inert = !inView;
-      el.setAttribute('aria-current', i === cur ? 'step' : 'false');
-      const y = inView ? pos[i] : i < first ? -(el.offsetHeight * SMALL) - 80 : H + 80;
-      el.style.transform = `translateY(${y}px) scale(${scale(i)})`;
-    });
-  }
-
   function modeUI() {
-    document.querySelectorAll('#money-mode [data-mode]').forEach(b => {
-      b.setAttribute('aria-pressed', b.dataset.mode === state.mode);
-      const l = t('money_mode_' + b.dataset.mode); b.title = l; b.setAttribute('aria-label', l);
-    });
     $('money-tc').checked = state.tc;
     $('money-tc').closest('label').hidden = !data.regions.some(r => r.gyms.some(g => g.time != null));
     $('money-method').classList.toggle('no-tc', !state.tc);
@@ -395,33 +300,12 @@ const Money = (() => {
 
   function renderAll(animate) {
     $('money-method').classList.toggle('is-team', state.view === 'team');
-    setTitle(); infoBar(); regionTabs(); controls(); modeUI();
+    setTitle(); infoBar(); modeUI();
     if (state.view === 'team') { teamPage(); return; }
     stage(animate);
-    if (state.mode === 'grid') { fit(); document.fonts?.ready.then(() => state.view === 'route' && state.mode === 'grid' && fit()); }   // les polices web changent les largeurs
-    else document.fonts?.ready.then(() => state.view === 'route' && state.mode === 'linear' && layoutLinear());
+    if (state.region) { $('region-' + state.region)?.scrollIntoView(); state.region = null; }
   }
   function setView(v) { state.view = v; persist(); renderAll(true); }
-
-  /* ── Navigation : region par region (grille) ou arene par arene (lineaire) ── */
-  function goTo(region, gym) {
-    const changed = region !== state.region;
-    state.region = region; state.gym = gym; persist();
-    if (changed || state.mode === 'grid') renderAll(changed);
-    else { controls(); layoutLinear(); }
-  }
-  function step(dir) {
-    const regions = data.regions, n = regions.length;
-    if (state.mode === 'grid') {
-      if (dir > 0) return goTo((state.region + 1) % n, 0);        // apres la derniere : on recommence
-      return state.region > 0 && goTo(state.region - 1, 0);
-    }
-    const count = regions[state.region].gyms.length;
-    if (dir > 0) return state.gym < count - 1 ? goTo(state.region, state.gym + 1) : goTo((state.region + 1) % n, 0);
-    if (state.gym > 0) return goTo(state.region, state.gym - 1);
-    if (state.region > 0) goTo(state.region - 1, regions[state.region - 1].gyms.length - 1);
-  }
-  function setMode(mode) { state.mode = mode; persist(); renderAll(false); }
 
   /* ── Chargement ── */
   function showError() {
@@ -467,43 +351,7 @@ const Money = (() => {
       const b = e.target.closest('[data-method]'); if (b) enter(b.dataset.method);
     });
     $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
-    $('money-prev').addEventListener('click', () => step(-1));
-    $('money-next').addEventListener('click', () => step(1));
-    $('money-regions').addEventListener('click', e => {
-      const b = e.target.closest('[data-region]'); if (b) goTo(+b.dataset.region, 0);
-    });
-    $('money-mode').addEventListener('click', e => {
-      const b = e.target.closest('[data-mode]'); if (b && b.dataset.mode !== state.mode) setMode(b.dataset.mode);
-    });
-    $('money-tc').addEventListener('change', e => { state.tc = e.target.checked; persist(); modeUI(); if (state.mode === 'linear') layoutLinear(); else fit(); });
-    const active = () => $('page-money').classList.contains('active') && data && state.method && !$('money-method').hidden;
-    document.addEventListener('keydown', e => {
-      if (!active() || state.view !== 'route' || e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
-      const next = ['ArrowRight', ...(state.mode === 'linear' ? ['ArrowDown', 'PageDown'] : [])], prev = ['ArrowLeft', ...(state.mode === 'linear' ? ['ArrowUp', 'PageUp'] : [])];
-      if (next.includes(e.key)) { e.preventDefault(); step(1); }
-      if (prev.includes(e.key)) { e.preventDefault(); step(-1); }
-    });
-    /* Aimant du mode lineaire : un cran de molette (ou un balayage) = une arene, jamais entre deux. */
-    const stageBox = $('money-stage');
-    let wheelAcc = 0, locked = false;
-    const lock = () => { locked = true; wheelAcc = 0; setTimeout(() => { locked = false; }, 450); };
-    stageBox.addEventListener('wheel', e => {
-      if (!active() || state.view !== 'route' || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
-      e.preventDefault();
-      if (locked) return;
-      wheelAcc += e.deltaY;
-      if (Math.abs(wheelAcc) >= 40) { const d = wheelAcc > 0 ? 1 : -1; lock(); step(d); }
-    }, { passive: false });
-    let touchY = null;
-    stageBox.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-    stageBox.addEventListener('touchend', e => {
-      if (touchY == null || state.view !== 'route' || state.mode !== 'linear' || matchMedia('(max-width: 899px)').matches) return;
-      const dy = touchY - e.changedTouches[0].clientY; touchY = null;
-      if (Math.abs(dy) > 50 && !locked) { lock(); step(dy > 0 ? 1 : -1); }
-    }, { passive: true });
-    stageBox.addEventListener('click', e => {
-      const it = e.target.closest('.lin-item'); if (it && !it.classList.contains('is-current') && !it.classList.contains('is-hidden')) goTo(state.region, +it.dataset.i);
-    });
+    $('money-tc').addEventListener('change', e => { state.tc = e.target.checked; persist(); modeUI(); });
     const panel = $('money-charm');
     panel.addEventListener('beforetoggle', e => {                    // se place sous le bouton, a droite de l'ecran
       if (e.newState !== 'open') return;
@@ -523,11 +371,6 @@ const Money = (() => {
       const r = e.target.closest('[data-price-reset]');
       if (r) { delete charm.prices[r.dataset.priceReset]; charmRefresh(); }
       if (e.target.closest('#charm-reset')) { charm.sel[state.method] = {}; charm.prices = {}; charm.donator = false; charmRefresh(); }
-    });
-    let resizeTimer;
-    addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => { if (active() && state.view === 'route') { state.mode === 'linear' ? layoutLinear() : fit(); } }, 100);
     });
     document.addEventListener('langchange', () => {
       if (!$('page-money').classList.contains('active')) return;
