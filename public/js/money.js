@@ -82,7 +82,7 @@ const Money = (() => {
   const line = (l, n) => {
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
-    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
+    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
   };
 
@@ -238,15 +238,19 @@ const Money = (() => {
 
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
   function card(g, i, r) {
-    const tip = g.tip && !g.bonus ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
+    const endTip = g.tip === 'tip_channel';                       // info de fin de combat : tout en bas de la carte
+    const tip = g.tip && !g.bonus && !endTip ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
     const chips = (g.badge ? `<span class="gym-chip is-optional">${icon('flag')}${esc(t('gr_' + g.badge))}</span>` : '') + (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
       (g.time != null ? `<span class="gym-chip is-time">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
+    const endNote = endTip ? `<p class="gym-note is-end">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     // Une exception qui enchaine sur une action ("... into Eruption + ...") se coupe en deux : la suite passe sur sa propre ligne.
     const expanded = g.lines.flatMap(l => {
       const m = l.i && !l.s.startsWith('@into') && !/@switch_out ~\w+ @into /.test(l.s) && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);   // "switch out X into Y" reste d'un bloc
       return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
     });
+    const pri = expanded[0]?.s.match(/ \( (@prioritize #\d+) \)/);   // "(prioritize X)" sort de la ligne principale : 1re exception, avec une icone info
+    if (pri) { expanded[0] = { ...expanded[0], s: expanded[0].s.replace(pri[0], '') }; expanded.splice(1, 0, { i: 1, info: true, s: pri[1] }); }
     curItems = g.items || {};
     const lead = [], exc = [];                                    // ligne principale a cote de la carte, exceptions pleine largeur dessous
     expanded.forEach((l, n) => (n === 0 || l.lead ? lead : exc).push(line(l, n)));
@@ -255,7 +259,7 @@ const Money = (() => {
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
       `${note}${lead.join('')}</div>` +
-      `<div class="gym-exc">${exc.join('')}${between(g.after)}</div></article>`;
+      `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div></article>`;
   }
 
   function stage(animate) {

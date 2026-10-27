@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.4",
+      "date": "2026-10-27",
+      "title": { "fr": "Exceptions \"prioritize\", info de fin de combat, soin et objets", "en": "Prioritize exceptions, end-of-battle info, heal and items" },
+      "fr": ["« Prioritize [Pokémon] » sort de la ligne principale : première exception, avec une icône info.", "L'info « Change channel… » (Canalave) passe tout en bas de la carte, car elle concerne la fin du combat.", "Le soin est toujours en bas à droite, même quand la carte n'a aucune exception (Cerulean).", "Soin et changements d'objet réduits de 25 %."],
+      "en": ["\"Prioritize [Pokémon]\" leaves the main line: first exception, with an info icon.", "The \"Change channel…\" info (Canalave) moves to the bottom of the card, as it applies at the end of the battle.", "The heal chip is always at the bottom right, even when the card has no exceptions (Cerulean).", "Heal and item-swap chips are 25% smaller."]
+    },
+    {
       "v": "3.10.3",
       "date": "2026-10-27",
       "title": { "fr": "Objets plus visibles et colorés", "en": "Larger, color-coded items" },
