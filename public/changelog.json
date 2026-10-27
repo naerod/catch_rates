@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.13.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Connexion / Inscription, Edit réservé aux gestionnaires", "en": "Log in / Sign up, Edit for managers only" },
+      "fr": ["Le bouton « Sign in » devient « Connexion / Inscription » (la page Authentik gère les deux).", "Le bouton Edit des événements n'apparaît que pour les comptes admin ou gestionnaire d'événements ; l'étoile prend sa place à droite."],
+      "en": ["The \"Sign in\" button becomes \"Log in / Sign up\" (the Authentik page handles both).", "The events Edit button only appears for admin or event-manager accounts; the star takes its place on the right."]
+    },
+    {
       "v": "3.13.0",
       "date": "2026-10-28",
       "title": { "fr": "Événements : tri par date, favoris et événement en cours", "en": "Events: date sorting, favourites and live event" },

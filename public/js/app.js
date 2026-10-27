@@ -525,6 +525,8 @@ async function getEvents(fresh = false) {
   await ensureBalls();
   return eventsData;
 }
+// Edition reservee aux comptes admin / gestionnaire d'evenements (session du site, pas la porte Authentik de la preprod)
+const canEditEvents = () => !!(currentOidcUser?.isAdmin || currentOidcUser?.isEventManager);
 const isLive = ev => {                                              // en cours : date du jour entre debut et fin (inclus)
   const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   return !!ev.starts_at && !!ev.ends_at && ev.starts_at <= today && today <= ev.ends_at;
@@ -536,8 +538,8 @@ function eventCard(ev, { edit = false } = {}) {
     <div class="event-card">
       <div class="event-card-header">
         <span class="event-name">${ev.name_en}</span>
-        <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
         ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
+        <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
       </div>
       <div class="event-pokemon-grid">
         ${(ev.pokemon || []).map(p => {
@@ -564,7 +566,7 @@ async function loadEvents() {
     container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
     return;
   }
-  container.innerHTML = events.map(ev => eventCard(ev, { edit: true })).join('');
+  container.innerHTML = events.map(ev => eventCard(ev, { edit: canEditEvents() })).join('');
 }
 
 document.addEventListener('click', e => {
@@ -606,6 +608,7 @@ let currentOidcUser = null;
 
 document.addEventListener('naerod:user', e => {
   currentOidcUser = e.detail.user;
+  if (state.page === 'events') loadEvents();                       // le bouton Edit depend du compte, connu apres coup
   // L utilisateur arrive de façon asynchrone : si la page Admin est deja
   // ouverte, on la reevalue avec la session maintenant connue.
   if (state.page === 'admin') initAdmin();

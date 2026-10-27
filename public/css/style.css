@@ -1286,8 +1286,9 @@ footer {
 /* ces regles gardent l'icone de la balle petite : la regle generale des tuiles s'applique sinon a toutes les images */
 .event-pokemon-item .ep-icon .ep-ball { width: 28px; height: 28px; }
 
-.event-card-header .event-edit-btn { margin-left: auto; }
-.event-card-header .fav-btn { width: 36px; height: 36px; margin: -0.3rem 0; }
+.event-card-header .event-edit-btn, .event-card-header .fav-btn { margin-left: auto; }
+.event-card-header .event-edit-btn + .fav-btn { margin-left: 0; }   /* etoile a droite ; Edit (si autorise) juste avant */
+.event-card-header .fav-btn { width: 36px; height: 36px; margin-top: -0.3rem; margin-bottom: -0.3rem; }
 .admin-event-dates { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-left: auto; font-size: 0.75rem; color: var(--text-dim); }
 .admin-event-dates label { display: flex; flex-direction: column; gap: 0.15rem; }
 .admin-event-dates input { font: inherit; color: var(--text); background: var(--bg3); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 0.25rem 0.4rem; }
