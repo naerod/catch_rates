@@ -53,7 +53,7 @@ const Money = (() => {
     io.unobserve(e.target); e.target.src = e.target.dataset.gif;
   }), { rootMargin: '400px' });
   const animateSprites = root => { if (io && !matchMedia('(prefers-reduced-motion: reduce)').matches) root.querySelectorAll('img[data-gif]').forEach(i => io.observe(i)); };
-  let gymItems = {};                                              // objets de la carte en cours de rendu
+  let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs' };
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
   function itemBadge(id) {
@@ -76,7 +76,7 @@ const Money = (() => {
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
     if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)
-    if (c === '~') return `<b class="tk-act" data-mon="${rest}">${esc(name(data.mons, rest))}</b>`;
+    if (c === '~') return leadMode ? `<span class="tk-act tk-stack" data-mon="${rest}">${monSprite(rest)}<b>${esc(name(data.mons, rest))}</b></span>` : `<b class="tk-act" data-mon="${rest}">${esc(name(data.mons, rest))}</b>`;
     if (c === '.') return `<b class="tk-move">${esc(t('mv_' + rest))}</b>`;
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
@@ -84,9 +84,10 @@ const Money = (() => {
       return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].type)}${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
-    return `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
+    return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
   }
   const line = (l, n) => {
+    leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
     return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
@@ -253,16 +254,13 @@ const Money = (() => {
       const m = l.i && !l.s.startsWith('@into') && !/@switch_out ~\w+ @into /.test(l.s) && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);   // "switch out X into Y" reste d'un bloc
       return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
     });
+    curItems = g.items || {};
     const lines = expanded.map((l, n) => line(l, n)).join('');
-    // Les Pokemon du combat, une seule fois, avec leur objet (comme dans le guide d'origine).
-    const team = [...new Set((g.lines[0]?.s || '').split(' ').map(tk => tk.match(/^~?([a-z]+)(?:\.[a-z_0-9]+)?$/)?.[1]).filter(id => data.mons[id]))];
-    gymItems = g.items || {};
-    const squad = team.length ? `<div class="gym-team">${team.map(id => monSprite(id)).join('')}</div>` : '';
-    gymItems = {};
+    gymItems = {}; leadMode = false;
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${squad}${lines}${between(g.after)}</div></article>`;
+      `${note}${lines}${between(g.after)}</div></article>`;
   }
 
   function stage(animate) {

@@ -104,8 +104,7 @@
 .gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
 .gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
 .gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.3em; }
-.gym-line.is-lead { font-size: 1.1em; }
-.gym-team { display: flex; flex-wrap: wrap; gap: 0.6em; margin: 0.25em 0 0.5em; }
+.gym-line.is-lead { font-size: 0.95em; }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
 .gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.4em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
@@ -326,3 +325,10 @@
 .tp-start li { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
 .tp-start li b { color: var(--mon); font: 700 1rem var(--font-head); }
 .tp-start .sprite-box { width: 88px; height: 88px; }
+
+/* Ligne principale : le sprite de chaque Pokemon au-dessus de son attaque */
+.tk-stack { display: inline-flex; flex-direction: column; align-items: center; gap: 0.35em; text-align: center; }
+.is-lead .tk-plus, .is-lead .tk-word { align-self: flex-start; margin-top: 0.9em; }
+.is-lead .gym-seg { align-items: flex-start; gap: 0.3em 0.35em; }
+.is-lead .gym-line-body { gap: 0.3em 0.35em; }
+.gym-line.is-lead { margin: 0.4em 0 0.2em; }
