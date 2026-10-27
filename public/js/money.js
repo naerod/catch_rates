@@ -72,15 +72,15 @@ const Money = (() => {
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
     if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)
-    if (c === '~') return `<span class="tk-act" data-mon="${rest}">${monSprite(rest)}</span>`;
+    if (c === '~') return `<b class="tk-act" data-mon="${rest}">${esc(name(data.mons, rest))}</b>`;
     if (c === '.') return `<b class="tk-move">${esc(t('mv_' + rest))}</b>`;
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
       const lv = lvl ? `<span class="tk-lvl">${esc(t('gr_lvl'))} ${+lvl}</span>` : '';
-      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].type)}${lv}</span>`;
+      return `<span class="tk-opp">${sprite(dex, '', 'is-opp', data.opponents[dex].type)}<b class="tk-trainer">${esc(name(data.opponents, dex))}</b>${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
-    return `<span class="tk-act" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
+    return `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
   }
   const line = (l, n) => {
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
@@ -248,12 +248,16 @@ const Money = (() => {
       const m = l.i && !l.s.startsWith('@into') && !/@switch_out ~\w+ @into /.test(l.s) && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);   // "switch out X into Y" reste d'un bloc
       return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
     });
-    const lines = expanded.map((l, n) => { gymItems = n === 0 || l.lead ? g.items || {} : {}; return line(l, n); }).join('');
+    const lines = expanded.map((l, n) => line(l, n)).join('');
+    // Les Pokemon du combat, une seule fois, avec leur objet (comme dans le guide d'origine).
+    const team = [...new Set((g.lines[0]?.s || '').split(' ').map(tk => tk.match(/^~?([a-z]+)(?:\.[a-z_0-9]+)?$/)?.[1]).filter(id => data.mons[id]))];
+    gymItems = g.items || {};
+    const squad = team.length ? `<div class="gym-team">${team.map(id => monSprite(id)).join('')}</div>` : '';
     gymItems = {};
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${lines}</div></article>`;
+      `${note}${squad}${lines}</div></article>`;
   }
 
   function stage(animate) {

@@ -2,6 +2,24 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.4.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Cartes d'arène plus lisibles, comme le guide d'origine",
+        "en": "Clearer gym cards, like the original guide"
+      },
+      "fr": [
+        "Les Pokémon du combat s'affichent une seule fois (avec leur objet) sous le titre de l'arène ; les attaques sont du texte coloré, sans sprite devant chacune.",
+        "Les adversaires gardent leur sprite, avec leur nom.",
+        "Le soin (HEAL) est un repère bien visible entre deux arènes."
+      ],
+      "en": [
+        "The battle's Pokémon are shown once (with their item) under the gym title; moves are coloured text, with no sprite in front of each.",
+        "Opponents keep their sprite, with their name.",
+        "Healing (HEAL) is a clear marker between gyms."
+      ]
+    },
+    {
       "v": "3.3.0",
       "date": "2026-10-27",
       "title": {
