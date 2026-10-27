@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.11.2",
+      "date": "2026-10-28",
+      "title": { "fr": "États : une seule ligne, boutons principaux centrés", "en": "Statuses on one line, main buttons centered" },
+      "fr": ["Gel, Paralysie, Poison et Brûlure tiennent sur une seule ligne ; Sommeil et Nuit gardent leur taille et sont centrés."],
+      "en": ["Freeze, Paralysis, Poison and Burn fit on a single line; Sleep and Night keep their size and are centered."]
+    },
+    {
       "v": "3.11.1",
       "date": "2026-10-28",
       "title": { "fr": "Curseur de PV : étiquettes alignées", "en": "HP slider: aligned labels" },
