@@ -355,3 +355,4 @@ naerod-header { transition: transform 0.25s ease; }
 .start-panel .item-badge { font-size: 11px; right: -0.5em; bottom: -0.3em; }   /* pastille proportionnee aux petits sprites */
 .start-panel .sprite.icon { width: 48px; height: 36px; }   /* +20 % (echelle non entiere, accepte ici) */
 .start-panel .item-badge { font-size: 13px; }
+.start-panel { gap: 1rem; }   /* air entre le 6e sprite et la fleche */
