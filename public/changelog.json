@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.4.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Adversaires sans nom", "en": "Opponents without names" },
+      "fr": ["Les adversaires s'affichent avec leur sprite seul, sans leur nom."],
+      "en": ["Opponents are shown with their sprite only, without their name."]
+    },
+    {
       "v": "3.4.0",
       "date": "2026-10-27",
       "title": {

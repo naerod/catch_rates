@@ -77,7 +77,7 @@ const Money = (() => {
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
       const lv = lvl ? `<span class="tk-lvl">${esc(t('gr_lvl'))} ${+lvl}</span>` : '';
-      return `<span class="tk-opp">${sprite(dex, '', 'is-opp', data.opponents[dex].type)}<b class="tk-trainer">${esc(name(data.opponents, dex))}</b>${lv}</span>`;
+      return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp', data.opponents[dex].type)}${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
     return `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
