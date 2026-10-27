@@ -55,7 +55,7 @@
 #money-method:not([hidden]) { display: flex; flex-direction: column; gap: 1.5rem; }
 
 .money-head {
-  position: sticky; top: 60px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; padding: 0.75rem 0;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; padding: 0.75rem 0;
   background: var(--bg);
 }
 .money-head-left, .money-head-right { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
@@ -349,7 +349,6 @@
 .start-panel .sprite-box { --k: 2; }
 
 /* Defilement : les deux barres se retirent vers le bas et reviennent vers le haut */
-naerod-header, .money-head { transition: transform 0.25s ease, top 0.25s ease; }
+naerod-header { transition: transform 0.25s ease; }
 .bars-hidden naerod-header { transform: translateY(-100%); }
-.bars-hidden .money-head { top: 0; }
-@media (prefers-reduced-motion: reduce) { naerod-header, .money-head { transition: none; } }
+@media (prefers-reduced-motion: reduce) { naerod-header { transition: none; } }
