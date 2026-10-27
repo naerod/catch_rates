@@ -196,7 +196,7 @@
 /* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
 @media (max-width: 899px) {
   .gym { flex-direction: column; }
-  .gym-map { width: 100%; max-width: 360px; }
+  .gym-map { width: 100%; max-width: 320px; }
   .gym-seg, .gym-line-body { flex-wrap: wrap; }
   .gym-top { flex-wrap: wrap; }
   .gym-tip { white-space: normal; }

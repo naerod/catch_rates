@@ -358,8 +358,8 @@
       "id": "hoenn",
       "name": "Hoenn",
       "mapSize": [
-        576,
-        360
+        320,
+        200
       ],
       "gyms": [
         {
@@ -550,8 +550,8 @@
       "id": "sinnoh",
       "name": "Sinnoh",
       "mapSize": [
-        576,
-        448
+        320,
+        249
       ],
       "gyms": [
         {
@@ -681,8 +681,8 @@
       "id": "kanto",
       "name": "Kanto",
       "mapSize": [
-        576,
-        432
+        320,
+        240
       ],
       "gyms": [
         {
@@ -869,8 +869,8 @@
       "id": "johto",
       "name": "Johto",
       "mapSize": [
-        576,
-        360
+        320,
+        200
       ],
       "gyms": [
         {
@@ -1062,8 +1062,8 @@
       "id": "unova",
       "name": "Unova",
       "mapSize": [
-        576,
-        378
+        320,
+        210
       ],
       "gyms": [
         {
