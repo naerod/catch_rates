@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.7.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Équipement de départ en tête du guide d'équipe", "en": "Items starting set at the top of the team guide" },
+      "fr": ["Nouveau bandeau « Items starting set » en haut du Team building guide : les 6 Pokémon avec l'objet à leur faire tenir au départ. Il remplace la ligne « Objet de départ » de chaque fiche."],
+      "en": ["New \"Items starting set\" banner at the top of the Team building guide: the 6 Pokémon with the item each must hold at the start. It replaces the \"Starting item\" line of each card."]
+    },
+    {
       "v": "3.6.1",
       "date": "2026-10-27",
       "title": { "fr": "Retour arrière du navigateur", "en": "Browser back button" },

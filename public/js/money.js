@@ -299,14 +299,16 @@ const Money = (() => {
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
         extra +
-        (tg.start?.[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_start'))}</span>${itemChip(tg.start[id])}</div>` : '') +
         `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ul class="tp-moves">${moves.map(([mv, set]) => `<li title="${esc([...set].join(', '))}"><b class="tk-move">${esc(t('mv_' + mv))}</b><small>×${set.size}</small></li>`).join('')}</ul></div>` +
         (swaps[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_swaps'))}</span><ol class="tp-swaps">${swaps[id].map(s => `<li><span>${esc(t('tp_after'))} ${esc(s.gym)}</span>${itemChip(s.item)}</li>`).join('')}</ol></div>` : '') +
         '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
-    $('money-stage').innerHTML =
+    // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
+    const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${data.team.map(id =>
+      `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';
+    $('money-stage').innerHTML = startSet +
       `<div class="tp"><section class="tp-team" aria-label="${esc(t('tp_team'))}">${mons}</section>` +
       `<aside class="tp-side"><section class="tp-card"><h3>${icon('inventory_2')}${esc(t('tp_stock'))}</h3><ul class="tp-stock">${stock}</ul></section>` +
       (notes ? `<section class="tp-card"><ul class="tp-notes">${notes}</ul></section>` : '') + `</aside></div>`;

@@ -318,3 +318,11 @@
 .tp-notes .material-symbols-outlined { flex: none; font-size: 22px; color: var(--orange); }
 .charm-img { flex: none; width: 24px; height: 24px; margin-right: 0.4rem; vertical-align: middle; image-rendering: pixelated; }
 .charm-btn .charm-img { margin-right: 0; }
+
+/* ── Equipement de depart, en tete du guide d'equipe ── */
+.tp-start { margin-bottom: 1rem; padding: 1rem 1.25rem; background: var(--card); border: 1px solid var(--accent); border-radius: var(--radius-lg); }
+.tp-start h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; font: 700 1.25rem var(--font-head); color: var(--accent); }
+.tp-start ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; list-style: none; }
+.tp-start li { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+.tp-start li b { color: var(--mon); font: 700 1rem var(--font-head); }
+.tp-start .sprite-box { width: 88px; height: 88px; }
