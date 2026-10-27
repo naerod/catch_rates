@@ -353,3 +353,5 @@ naerod-header { transition: transform 0.25s ease; }
 .bars-hidden naerod-header { transform: translateY(-100%); }
 @media (prefers-reduced-motion: reduce) { naerod-header { transition: none; } }
 .start-panel .item-badge { font-size: 11px; right: -0.5em; bottom: -0.3em; }   /* pastille proportionnee aux petits sprites */
+.start-panel .sprite.icon { width: 48px; height: 36px; }   /* +20 % (echelle non entiere, accepte ici) */
+.start-panel .item-badge { font-size: 13px; }
