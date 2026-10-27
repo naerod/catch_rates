@@ -179,7 +179,7 @@
 
 /* Pied de carte : soin conseille, objets a changer avant le combat suivant */
 .gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; font-size: 0.9em; }
-.after-chip.is-heal { padding: 0.25em 1.2em; border: 1px solid var(--green); color: var(--green); font-size: 1.1em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.after-chip.is-heal { order: 2; margin-left: auto; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
 .after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
 .swap-item { width: 1.5em; height: 1.5em; }

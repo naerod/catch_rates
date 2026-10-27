@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.9.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Soin en rouge en bas à droite ; Mantine sur la ligne de Lapras", "en": "Heal in red at the bottom right; Mantine on the Lapras line" },
+      "fr": ["Le soin (HEAL, HEAL IF NEEDED, HEAL IF REQUIRED) passe en bas à droite de la carte, en rouge plein, lisible en thème sombre comme en thème clair.", "Sootopolis : « prioritize Mantine » est sur la même ligne que Lapras."],
+      "en": ["Heal (HEAL, HEAL IF NEEDED, HEAL IF REQUIRED) moves to the bottom right of the card, solid red, readable in dark and light themes.", "Sootopolis: \"prioritize Mantine\" is on the same line as Lapras."]
+    },
+    {
       "v": "3.9.0",
       "date": "2026-10-27",
       "title": { "fr": "Nouvelle mise en page des cartes d'arène", "en": "New gym card layout" },
