@@ -2,6 +2,26 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.1.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Lecture en livre, sprites homogènes, police lisible",
+        "en": "Book reading order, uniform sprites, readable font"
+      },
+      "fr": [
+        "Les arènes se lisent comme un livre : 1 et 2 sur la première ligne, 3 et 4 sur la suivante, etc.",
+        "Tous les sprites ont la même taille, quel que soit le Pokémon.",
+        "Police Google Sans Flex sur la page Money making, interface plus aérée et plus d'espace entre un sprite et son attaque.",
+        "Chargement des images plus rapide (plus de chargement différé, mise en cache) ; la page défile au lieu de réduire le texte sous 14 px ; en-tête adapté aux écrans moyens."
+      ],
+      "en": [
+        "Gyms read like a book: 1 and 2 on the first row, 3 and 4 on the next, and so on.",
+        "All sprites share the same size, whatever the Pokémon.",
+        "Google Sans Flex font on the Money making page, airier layout and more space between a sprite and its move.",
+        "Faster image loading (no lazy loading, caching); the page scrolls instead of shrinking text below 14 px; header adapted to medium screens."
+      ]
+    },
+    {
       "v": "3.0.0",
       "date": "2026-10-24",
       "title": {

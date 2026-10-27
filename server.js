@@ -38,6 +38,7 @@ function dbRun(sql, params = []) {
 
 // ─── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
+app.use('/gym-rerun', express.static(path.join(__dirname, 'public', 'gym-rerun'), { maxAge: '1d' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ball-images', express.static(path.join(__dirname, 'db', 'images')));
 app.use(session({

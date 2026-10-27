@@ -85,27 +85,22 @@
 .info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
 .info-team .sprite-box { width: 38px; height: 38px; padding: 2px; }
 .info-team { display: inline-flex; gap: 0.5rem; list-style: none; }
-.money-head .info-team .sprite { width: calc(var(--w) * 0.4px); height: auto; }
 
 /* ── Scene : la region occupe tout le reste de la fenetre ── */
-.money-stage { flex: 1; min-height: 0; }
+.money-stage { flex: 1; min-height: 0; overflow-y: auto; }   /* defile si le texte, au plus petit (14 px), ne tient pas */
 /* La taille du texte est ajustee par money.js (fit) pour que la region tienne dans la fenetre. */
-.stage-body { font-size: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5em; align-items: start; }
-.stage-col { display: flex; flex-direction: column; gap: 0.25em; min-width: 0; }
-@media (max-width: 899px) {                       /* mobile : une colonne, ordre des arenes conserve */
-  .stage-body { grid-template-columns: minmax(0, 1fr); }
-  .stage-col { display: contents; }
-  .gym { order: var(--n); }
-}
+.stage-body { font-size: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1em; align-items: start; }
+.gym-wrap { display: flex; flex-direction: column; gap: 0.5em; min-width: 0; }
+@media (max-width: 899px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* mobile : une colonne, meme ordre */
 .money-stage.is-entering .stage-body { animation: stage-in 0.24s ease-out; }
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
-  display: flex; gap: 0.5em; padding: 0.4em; align-items: flex-start;
+  display: flex; gap: 0.8em; padding: 0.7em; align-items: flex-start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
 .gym-map { flex: none; width: 20%; height: auto; border-radius: 4px; background: var(--bg3); }
-.gym-body { display: flex; flex-direction: column; gap: 0.15em; min-width: 0; flex: 1; }
+.gym-body { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; flex: 1; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
 .gym-top { display: flex; align-items: center; gap: 0.75em; min-width: 0; }
@@ -113,27 +108,27 @@
 .gym-tip .material-symbols-outlined { font-size: 1.2em; }
 
 /* ── Lignes de strategie ── */
-.gym-line { display: flex; align-items: center; gap: 0.25em; line-height: 1.25; }
+.gym-line { display: flex; align-items: center; gap: 0.4em; line-height: 1.35; }
 .gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
 .gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
 .stage-body.nowrap .gym-line-body { flex-wrap: nowrap; }
-.gym-seg { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.1em 0.3em; }
+.gym-seg { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 0.3em 0.6em; }
 .gym-line.is-lead { align-self: flex-start; padding: 0.15em 0.4em; border-radius: 0.4em; background: var(--lead-bg); }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
-.gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.1em 0.3em; }
-.tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.2em; color: var(--mon, var(--text)); }
+.gym-line-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3em 0.6em; }
+.tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
 .tk-move { font-weight: 700; }
 .tk-plus, .tk-raw { color: var(--text-muted); font-size: 1.2em; }
 .tk-word { font-style: italic; }
-.tk-opp { display: inline-flex; align-items: center; gap: 0.2em; }
+.tk-opp { display: inline-flex; align-items: center; gap: 0.4em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
 
-.sprite-box .sprite { max-width: 100%; max-height: 100%; object-fit: contain; }
+.sprite-box .sprite { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }   /* tous les sprites remplissent le meme carre */
 .sprite { width: calc(var(--w) * 0.029em); height: auto; flex: none; max-width: none; }
 .sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
 .sprite-box {
   display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
-  width: 3em; height: 3em; padding: 0.1em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
+  width: 3em; height: 3em; padding: 0.15em; border-radius: 0.35em;   /* toujours carre, quelle que soit la taille du sprite */
   border: 1px solid color-mix(in srgb, var(--t) 75%, transparent);
   background: color-mix(in srgb, var(--t) 34%, transparent);
 }
@@ -200,7 +195,6 @@
 .after-chip.is-heal { color: var(--green); }
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
 .after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
-.after-chip.is-swap .sprite { width: calc(var(--w) * 0.017em); }
 .swap-item { width: 1.5em; height: 1.5em; }
 .info-item.is-require { color: var(--orange); }
 
@@ -314,7 +308,7 @@
 .info-list .info-stocks { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; }
 .info-list .info-stock b { margin-right: 0.25rem; color: var(--text); }
 /* Largeurs moyennes : on garde une seule ligne en retirant d'abord les libelles */
-@media (max-width: 1850px) and (min-width: 900px) { .charm-btn .cb-name, .guide-link .lbl { display: none; } }
+@media (max-width: 2000px) and (min-width: 900px) { .charm-btn .cb-name, .guide-link .lbl { display: none; } }
 @media (max-width: 1500px) and (min-width: 900px) { .tc-toggle .lbl, .money-nav .lbl { display: none; } .region-tab { padding: 0.25rem 0.6rem; } }
 @media (max-width: 899px) { .money-head { flex-wrap: wrap; } .money-head-right { flex-wrap: wrap; } }
 
@@ -326,7 +320,6 @@
 .money-card > .mc-text + .material-symbols-outlined { margin-left: auto; }
 .gym-chip.is-optional { color: var(--accent); }
 .after-chip.is-heal .sprite-box { width: 1.7em; height: 1.7em; padding: 0.05em; }
-.after-chip.is-heal .sprite { width: calc(var(--w) * 0.016em); }
 @media (max-width: 1700px) { .money-head .money-tags { display: none; } }
 
 /* ── Page « Team building guide » ── */
@@ -343,7 +336,6 @@
 .tp-mon-head { display: flex; align-items: center; gap: 0.75rem; }
 .tp-mon-head h3 { font: 700 1.35rem var(--font-head); color: var(--mon); }
 .tp-mon .sprite-box { width: 88px; height: 88px; }
-.tp-mon .sprite { width: calc(var(--w) * 0.9px); }
 .tp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.25rem; }
 .tp-lv { font: 600 0.8rem var(--font-head); color: var(--text-dim); }
 .type-chip { padding: 0 0.55rem; border-radius: 1em; border: 1px solid color-mix(in srgb, var(--t) 75%, transparent); background: color-mix(in srgb, var(--t) 30%, transparent); font-size: 0.75rem; font-weight: 600; }
@@ -370,3 +362,7 @@
 .tp-gains strong { font: 700 1.6rem var(--font-head); color: var(--accent); }
 .tp-gains span { font-size: 0.8rem; color: var(--text-muted); }
 @media (max-width: 899px) { .tp { grid-template-columns: minmax(0, 1fr); } .tp-team { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── Police lisible (DA : Google Sans Flex) sur cette page ── */
+#page-money { --font-head: 'Google Sans Flex', 'Google Sans', system-ui, sans-serif; --font-body: var(--font-head); }
+@media (max-width: 1250px) and (min-width: 900px) { .money-head, .money-head-right { flex-wrap: wrap; } }

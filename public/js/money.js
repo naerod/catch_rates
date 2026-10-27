@@ -52,7 +52,7 @@ const Money = (() => {
   function sprite(dex, label, cls = '', type = '') {
     const [w, h] = data.size[dex];
     const img = `<picture><source media="(prefers-reduced-motion: reduce)" srcset="/gym-rerun/sprites/${dex}.png">` +
-      `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" loading="lazy"></picture>`;
+      `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" decoding="async"></picture>`;
     return type ? `<span class="sprite-box" style="--t:var(--type-${type})">${img}</span>` : img;
   }
   let gymItems = {};                                              // objets de la carte en cours de rendu
@@ -271,7 +271,7 @@ const Money = (() => {
     body.style.fontSize = '';
     if (matchMedia('(max-width: 899px)').matches) return;     // mobile : la page defile
     const search = (hi, ok) => {
-      let lo = 11;
+      let lo = 14;
       for (let i = 0; i < 7; i++) {
         const mid = (lo + hi) / 2;
         body.style.fontSize = mid + 'px';
@@ -282,9 +282,9 @@ const Money = (() => {
     const tall = () => body.scrollHeight <= box.clientHeight;
     body.classList.add('nowrap');
     let size = search(19, () => tall() && !overflowsX(body));
-    if (size < 14) { body.classList.remove('nowrap'); size = search(19, tall); }
+    if (size <= 14) { body.classList.remove('nowrap'); size = search(19, tall); }
     body.style.fontSize = size + 'px';
-    while (size > 11 && !tall()) body.style.fontSize = (size -= 0.5) + 'px';   // garde-fou : la dichotomie n'est pas monotone
+    while (size > 14 && !tall()) body.style.fontSize = (size -= 0.5) + 'px';   // garde-fou : la dichotomie n'est pas monotone
   }
 
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
@@ -301,7 +301,7 @@ const Money = (() => {
     const lines = expanded.map((l, n) => { gymItems = n === 0 || l.lead ? g.items || {} : {}; return line(l, n); }).join('');
     gymItems = {};
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
-      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" loading="lazy">` +
+      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async">` +
       `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
       `${note}${lines}</div></article>`;
   }
@@ -314,18 +314,8 @@ const Money = (() => {
       el.innerHTML = `<div class="lin-stage">${r.gyms.map((g, i) => `<div class="lin-item" data-i="${i}">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div>`;
       layoutLinear();
     } else {
-      // Deux colonnes de hauteur voisine : les arenes se lisent de haut en bas, colonne apres colonne.
-      const cards = r.gyms.map((g, i) => card(g, i, r) + between(g.after));
-      const weight = g => 1 + g.lines.length + (g.after ? 1 : 0) + (g.bonus ? 3 : 0);
-      const total = r.gyms.reduce((s, g) => s + weight(g), 0);
-      let split = 1, best = Infinity;
-      for (let k = 1, acc = 0; k < r.gyms.length; k++) {
-        acc += weight(r.gyms[k - 1]);
-        const worst = Math.max(acc, total - acc);
-        if (worst < best) { best = worst; split = k; }
-      }
-      const col = (from, to) => `<div class="stage-col">${cards.slice(from, to).join('')}</div>`;
-      el.innerHTML = `<div class="stage-body">${col(0, split)}${col(split)}</div>`;
+      // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
+      el.innerHTML = `<div class="stage-body">${r.gyms.map((g, i) => `<div class="gym-wrap">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div>`;
     }
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
