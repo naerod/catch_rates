@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.13.2",
+      "date": "2026-10-28",
+      "title": { "fr": "Couleurs cohérentes sur l'accueil", "en": "Consistent colors on the home page" },
+      "fr": ["Sur l'accueil, « Money making » (et tes méthodes favorites) sont dorés et « Event swarms » bleu, comme dans la barre du haut."],
+      "en": ["On the home page, \"Money making\" (and your favourite methods) are gold and \"Event swarms\" blue, like in the top bar."]
+    },
+    {
       "v": "3.13.1",
       "date": "2026-10-28",
       "title": { "fr": "Connexion / Inscription, Edit réservé aux gestionnaires", "en": "Log in / Sign up, Edit for managers only" },

@@ -422,8 +422,8 @@ const Money = (() => {
   });
 
   /* Accueil : cartes de raccourci (la page d'accueil, dans app.js, les assemble en sections). */
-  const homeCard = (go, ic, label, tags = '', cls = '') => `<button type="button" class="home-card${cls}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
-  const homeFavCards = () => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav')).join('');
+  const homeCard = (go, ic, label, tags = '', cls = '', tone = '') => `<button type="button" class="home-card${cls}${tone ? ' tone-' + tone : ''}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
+  const homeFavCards = () => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav', 'money')).join('');
 
   return { open, homeCard, homeFavCards };
 })();

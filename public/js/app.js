@@ -592,7 +592,7 @@ async function renderHome() {
     const slugs = evFavs(), methods = Money.homeFavCards(), favEvents = evs.filter(ev => slugs.includes(ev.slug));
     const live = methods || favEvents.length ? [] : evs.filter(isLive);
     el.innerHTML =
-      sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'))}${Money.homeCard('#money', 'paid', i18n.t('nav_money'))}</div>`) +
+      sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
       sec('home_favs', (methods ? `<div class="home-grid">${methods}</div>` : '') + (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
       sec('home_live', live.length ? `<div class="home-events">${live.map(ev => eventCard(ev)).join('')}</div>` : '');
   };
