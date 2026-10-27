@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.2.1",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Images instantanées",
+        "en": "Instant images"
+      },
+      "fr": [
+        "Les sprites s'affichent tout de suite en image fixe (1 Ko) ; l'animation (GIF) ne se charge que pour les arènes proches de l'écran.",
+        "Les cartes des régions suivantes se chargent au défilement."
+      ],
+      "en": [
+        "Sprites show immediately as a still image (1 KB); the animation (GIF) only loads for gyms near the screen.",
+        "Maps of the following regions load as you scroll."
+      ]
+    },
+    {
       "v": "3.2.0",
       "date": "2026-10-27",
       "title": {

@@ -41,10 +41,15 @@ const Money = (() => {
   /* Encadre carre derriere le sprite, teinte d'une seule couleur (type dominant du Pokemon). */
   function sprite(dex, label, cls = '', type = '') {
     const [w, h] = data.size[dex];
-    const img = `<picture><source media="(prefers-reduced-motion: reduce)" srcset="/gym-rerun/sprites/${dex}.png">` +
-      `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" decoding="async"></picture>`;
+    // Image fixe (1 Ko) tout de suite ; le GIF anime (50-70 Ko) ne remplace l'image que quand elle approche de l'ecran (animate).
+    const img = `<img class="sprite ${cls}" src="/gym-rerun/sprites/${dex}.png" data-gif="/gym-rerun/sprites/${dex}.gif" alt="${esc(label)}" style="--w:${w};--h:${h}" width="${w}" height="${h}" decoding="async">`;
     return type ? `<span class="sprite-box" style="--t:var(--type-${type})">${img}</span>` : img;
   }
+  const io = 'IntersectionObserver' in window && new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target); e.target.src = e.target.dataset.gif;
+  }), { rootMargin: '400px' });
+  const animateSprites = root => { if (io && !matchMedia('(prefers-reduced-motion: reduce)').matches) root.querySelectorAll('img[data-gif]').forEach(i => io.observe(i)); };
   let gymItems = {};                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs' };
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
@@ -246,7 +251,7 @@ const Money = (() => {
     const lines = expanded.map((l, n) => { gymItems = n === 0 || l.lead ? g.items || {} : {}; return line(l, n); }).join('');
     gymItems = {};
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
-      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async">` +
+      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
       `${note}${lines}</div></article>`;
   }
@@ -256,6 +261,7 @@ const Money = (() => {
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
     el.innerHTML = data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
       `<div class="stage-body">${r.gyms.map((g, i) => `<div class="gym-wrap">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div></section>`).join('');
+    animateSprites(el);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
@@ -296,6 +302,7 @@ const Money = (() => {
       `<aside class="tp-side"><section class="tp-card"><h3>${icon('inventory_2')}${esc(t('tp_stock'))}</h3><ul class="tp-stock">${stock}</ul></section>` +
       (attention ? `<section class="tp-card"><h3>${icon('priority_high')}${esc(t('tp_attention'))}</h3><ul class="tp-attention">${attention}</ul></section>` : '') +
       `<section class="tp-card"><h3>${icon('payments')}${esc(t('tp_gains'))}</h3><p class="tp-gains"><strong>${gains}+ ¥</strong><span>${esc(t('gr_total_note'))}</span></p></section></aside></div>`;
+    animateSprites($('money-stage'));
   }
 
   function renderAll(animate) {
