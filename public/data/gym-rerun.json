@@ -730,7 +730,7 @@
           },
           "lines": [
             {
-              "s": "@lead_with ~blastoise @and ~weezing"
+              "s": "~blastoise + ~weezing"
             },
             {
               "i": 1,
@@ -1536,12 +1536,12 @@
       ]
     },
     "start": {
-      "typhlosion": "choice_specs",
-      "togekiss": "choice_specs",
       "blastoise": "choice_specs",
-      "vanilluxe": "choice_scarf",
       "weezing": "choice_band",
-      "garchomp": "choice_band"
+      "togekiss": "choice_specs",
+      "garchomp": "choice_band",
+      "typhlosion": "choice_specs",
+      "vanilluxe": "choice_scarf"
     },
     "attention": [
       {

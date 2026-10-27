@@ -82,7 +82,7 @@ const Money = (() => {
   const line = (l, n) => {
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
-    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
+    return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info || !/@vs\b/.test(l.s) && !cont ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
     `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
   };
 
@@ -232,7 +232,12 @@ const Money = (() => {
   }
 
   function infoBar() {
-    $('money-guide').innerHTML = `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${esc(t('gr_team_guide'))}">${icon('groups')}<span class="lbl">${esc(t('gr_team_guide'))}</span></button>`;
+    const st = data.teamGuide?.start, label = esc(t('gr_team_guide'));
+    gymItems = st || {};
+    $('money-guide').innerHTML = st
+      ? `<button type="button" class="start-panel" data-view="team" title="${label}" aria-label="${label}"><ul>${Object.keys(st).map(id => `<li>${monSprite(id)}</li>`).join('')}</ul>${icon('chevron_right')}</button>`
+      : `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${label}">${icon('groups')}<span class="lbl">${label}</span></button>`;
+    gymItems = {};
     $('money-charm-slot').innerHTML = charmButton();
   }
 
@@ -244,11 +249,7 @@ const Money = (() => {
       (g.time != null ? `<span class="gym-chip is-time">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
     const endNote = endTip ? `<p class="gym-note is-end">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
-    // Une exception qui enchaine sur une action ("... into Eruption + ...") se coupe en deux : la suite passe sur sa propre ligne.
-    const expanded = g.lines.flatMap(l => {
-      const m = l.i && !l.s.startsWith('@into') && !/@switch_out ~\w+ @into /.test(l.s) && l.s.match(/ (@into [a-z]+\.[a-z_]+.*)$/);   // "switch out X into Y" reste d'un bloc
-      return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
-    });
+    const expanded = [...g.lines];
     const pri = expanded[0]?.s.match(/ \( (@prioritize #\d+) \)/);   // "(prioritize X)" sort de la ligne principale : 1re exception, avec une icone info
     if (pri) { expanded[0] = { ...expanded[0], s: expanded[0].s.replace(pri[0], '') }; expanded.splice(1, 0, { i: 1, info: true, s: pri[1] }); }
     curItems = g.items || {};

@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.5",
+      "date": "2026-10-28",
+      "title": { "fr": "Équipe de départ en haut de page, exceptions plus lisibles", "en": "Starting team at the top, clearer exceptions" },
+      "fr": ["Le bouton « Team building guide » devient un grand panneau centré avec les 6 Pokémon et leur objet de départ ; un clic ouvre le guide.", "Items starting set dans l'ordre : Blastoise, Weezing, Togekiss, Garchomp, Typhlosion, Vanilluxe.", "Les informations sans adversaire (ex. Goldenrod) ont une icône ⓘ ; la flèche reste pour les lignes « vs. ».", "Les suites « into … » restent sur la même ligne (Olivine…).", "Pewter : « Lead with … and … » retiré, il reste Blastoise + Weezing.", "Choice Band : fond pastel pêche au lieu du blanc."],
+      "en": ["The \"Team building guide\" button becomes a large centered panel with the 6 Pokémon and their starting item; a click opens the guide.", "Items starting set in order: Blastoise, Weezing, Togekiss, Garchomp, Typhlosion, Vanilluxe.", "Information with no opponent (e.g. Goldenrod) gets an ⓘ icon; the arrow stays for \"vs.\" lines.", "\"into …\" follow-ups stay on the same line (Olivine…).", "Pewter: \"Lead with … and …\" removed, Blastoise + Weezing remain.", "Choice Band: pastel peach background instead of white."]
+    },
+    {
       "v": "3.10.4",
       "date": "2026-10-27",
       "title": { "fr": "Exceptions \"prioritize\", info de fin de combat, soin et objets", "en": "Prioritize exceptions, end-of-battle info, heal and items" },
