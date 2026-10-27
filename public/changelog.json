@@ -2,6 +2,25 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.6.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Détails du guide d'origine ajoutés", "en": "Original guide details added" },
+      "fr": [
+        "Eterna, Oreburgh, Mistralton : le switch se fait au tour 1.",
+        "Mistralton : le changement d'objet de Blastoise se fait à la sortie.",
+        "Canalave (Golem) : l'alternative Water Spout + Assurance, avec les « ? » du guide.",
+        "Vermilion (Politoed) : Lanturn survit et Garchomp meurt à Laser Glace.",
+        "Mauville (Zebstrika) : l'Air Balloon et les « ? » du guide."
+      ],
+      "en": [
+        "Eterna, Oreburgh, Mistralton: the switch happens at Turn 1.",
+        "Mistralton: Blastoise's item change happens on exit.",
+        "Canalave (Golem): the Water Spout + Assurance alternative, with the guide's \"?\".",
+        "Vermilion (Politoed): Lanturn survives and Garchomp dies to Ice Beam.",
+        "Mauville (Zebstrika): the Air Balloon and the guide's \"?\"."
+      ]
+    },
+    {
       "v": "3.5.3",
       "date": "2026-10-27",
       "title": { "fr": "Le « / » du guide est restitué tel quel", "en": "The guide's \"/\" is shown as written" },

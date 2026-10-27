@@ -436,7 +436,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
+              "s": "? @vs #523 @air_balloon , @switch_out ~garchomp @into togekiss.hyper_voice ?"
             }
           ],
           "after": {
@@ -568,7 +568,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #38 , typhlosion.eruption + @switch_out ~togekiss @into weezing.assurance"
+              "s": "@vs #38 , typhlosion.eruption + @switch_out ~togekiss @into weezing.assurance @at_turn1"
             },
             {
               "i": 1,
@@ -615,7 +615,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #476 @lead , @switch_out ~weezing @into vanilluxe.blizzard"
+              "s": "@vs #476 @lead , @switch_out ~weezing @into vanilluxe.blizzard @at_turn1"
             },
             {
               "i": 1,
@@ -644,7 +644,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #76 , @use weezing.incinerate"
+              "s": "@vs #76 , @use weezing.incinerate ? blastoise.water_spout + weezing.assurance ? @turns4"
             },
             {
               "i": 1,
@@ -699,7 +699,11 @@
             },
             {
               "i": 1,
-              "s": "@vs #186 , typhlosion.swift + garchomp.earthquake @into vanilluxe.blizzard"
+              "s": "@vs #186 , typhlosion.swift + garchomp.earthquake @into vanilluxe.blizzard ?"
+            },
+            {
+              "i": 1,
+              "s": "@warn_lanturn"
             },
             {
               "i": 1,
@@ -1117,7 +1121,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #521 , vanilluxe.blizzard + @switch_out ~blastoise @into weezing.assurance"
+              "s": "@vs #521 , vanilluxe.blizzard + @switch_out ~blastoise @into weezing.assurance @at_turn1"
             }
           ],
           "after": {
@@ -1125,7 +1129,8 @@
             "switch": [
               {
                 "mon": "blastoise",
-                "item": "choice_specs"
+                "item": "choice_specs",
+                "exit": true
               }
             ]
           },
