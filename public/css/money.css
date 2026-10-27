@@ -82,7 +82,7 @@
 /* Une region = un titre et ses arenes, lues comme un livre (1 2 / 3 4 / ...). */
 .region + .region { margin-top: 3rem; }
 .region-title { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--card-border); font: 700 2rem var(--font-head); color: var(--text); scroll-margin-top: 150px; }
-.stage-body { font-size: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5em; align-items: start; }
+.stage-body { font-size: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5em; align-items: stretch; }   /* cartes d'une meme ligne a hauteur egale : pas de trou */
 @media (max-width: 1099px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* une colonne, meme ordre */
 .money-stage.is-entering .region { animation: stage-in 0.24s ease-out; }
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
@@ -91,8 +91,8 @@
   display: flex; gap: 0.8em; padding: 0.7em; align-items: flex-start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
-.gym-map { flex: none; width: 20%; height: auto; border-radius: 4px; background: var(--bg3); }
-.gym-body { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; flex: 1; }
+.gym-map { flex: none; width: 30%; max-width: 280px; height: auto; border-radius: 4px; background: var(--bg3); }
+.gym-body { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; flex: 1; align-self: stretch; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
 .gym-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25em 0.75em; min-width: 0; }
@@ -103,14 +103,14 @@
 .gym-line { display: flex; align-items: center; min-width: 0; gap: 0.4em; line-height: 1.35; }
 .gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
 .gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
-.gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.6em; }
+.gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.3em; }
 .gym-line.is-lead { font-size: 1.1em; }
 .gym-team { display: flex; flex-wrap: wrap; gap: 0.6em; margin: 0.25em 0 0.5em; }
 .gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
-.gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.6em; }
+.gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.4em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
 .tk-move { font-weight: 700; }
-.tk-plus, .tk-raw { color: var(--text-muted); font-size: 1.2em; }
+.tk-plus, .tk-raw { color: var(--text-muted); font-size: 0.85em; }
 .tk-word { font-style: italic; }
 .tk-opp { display: inline-flex; align-items: center; gap: 0.4em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }

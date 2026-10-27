@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.5.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Cartes plus compactes et sans trous", "en": "Tighter cards, no gaps" },
+      "fr": ["Les « + » entre les attaques sont plus petits et plus proches du texte.", "Les cartes d'une même ligne ont la même hauteur (plus de vide entre deux lignes) et la carte de l'arène est plus grande."],
+      "en": ["The \"+\" between moves are smaller and closer to the text.", "Cards on the same row share the same height (no gap between rows) and the gym map is larger."]
+    },
+    {
       "v": "3.5.0",
       "date": "2026-10-27",
       "title": { "fr": "Talents, natures, IV et EV ; icônes des charms", "en": "Abilities, natures, IVs and EVs; charm icons" },
