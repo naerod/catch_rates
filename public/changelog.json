@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.8",
+      "date": "2026-10-28",
+      "title": { "fr": "Deux barres de même hauteur", "en": "Both bars the same height" },
+      "fr": ["La barre du titre fait désormais la même hauteur (60 px) que la barre du site ; le panneau de l'équipe de départ est réduit en conséquence."],
+      "en": ["The title bar is now the same height (60 px) as the site bar; the starting-team panel is scaled down to fit."]
+    },
+    {
       "v": "3.10.7",
       "date": "2026-10-28",
       "title": { "fr": "Seconde barre non fixe", "en": "Second bar no longer fixed" },
