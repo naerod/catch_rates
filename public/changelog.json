@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.11.5",
+      "date": "2026-10-28",
+      "title": { "fr": "Barre du haut identique sur tout le site", "en": "Same top bar across the whole site" },
+      "fr": ["La barre du haut (dont « Money making ») est maintenant définie en un seul endroit et reste identique sur toutes les pages, y compris le journal des modifications."],
+      "en": ["The top bar (including \"Money making\") is now defined in one place and is identical on every page, including the changelog."]
+    },
+    {
       "v": "3.11.4",
       "date": "2026-10-28",
       "title": { "fr": "Rafraîchir garde la page et le défilement", "en": "Refresh keeps the page and scroll position" },
