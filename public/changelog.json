@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.5.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Le « / » du guide est restitué tel quel", "en": "The guide's \"/\" is shown as written" },
+      "fr": ["Le « / » du guide (Hyper Voice / Shock Wave, Houndoom / Arcanine…) s'affiche tel qu'écrit, sans interprétation."],
+      "en": ["The guide's \"/\" (Hyper Voice / Shock Wave, Houndoom / Arcanine…) is shown as written, without interpretation."]
+    },
+    {
       "v": "3.5.2",
       "date": "2026-10-27",
       "title": { "fr": "« ou » au lieu de la double flèche", "en": "\"or\" instead of the double arrow" },

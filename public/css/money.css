@@ -110,7 +110,8 @@
 .gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.4em; }
 .tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
 .tk-move { font-weight: 700; }
-.tk-plus, .tk-raw { color: var(--text-muted); font-size: 0.85em; }
+.tk-plus { color: var(--text-muted); font-size: 0.85em; }
+.tk-raw { color: var(--text-muted); }
 .tk-word { font-style: italic; }
 .tk-opp { display: inline-flex; align-items: center; gap: 0.4em; }
 .tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
