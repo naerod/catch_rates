@@ -640,10 +640,11 @@ main {
 }
 #hp-slider::-webkit-slider-thumb:hover { box-shadow: 0 0 0 4px rgba(var(--accent-rgb),0.2); }
 
-.hp-slider-labels {
-  display: flex;
-  justify-content: space-between;
-}
+/* Chaque etiquette est centree sous le centre du curseur (le curseur parcourt largeur - 20 px) */
+.hp-slider-labels { position: relative; height: 1.2em; }
+.hp-label-item { position: absolute; top: 0; left: calc(10px + (100% - 20px) * var(--i) / 4); transform: translateX(-50%); white-space: nowrap; }
+.hp-label-item[data-idx="0"] { --i: 0; } .hp-label-item[data-idx="1"] { --i: 1; } .hp-label-item[data-idx="2"] { --i: 2; }
+.hp-label-item[data-idx="3"] { --i: 3; } .hp-label-item[data-idx="4"] { --i: 4; }
 .hp-label-item {
   font-size: 0.78rem;
   color: var(--text-muted);

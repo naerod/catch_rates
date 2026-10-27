@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.11.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Curseur de PV : étiquettes alignées", "en": "HP slider: aligned labels" },
+      "fr": ["Les étiquettes 1 % / 25 % / 50 % / 75 % / 100 % sont centrées exactement sous chaque cran du curseur."],
+      "en": ["The 1% / 25% / 50% / 75% / 100% labels are centered exactly under each slider notch."]
+    },
+    {
       "v": "3.11.0",
       "date": "2026-10-28",
       "title": { "fr": "Icônes 8 bits partout, soin remonté", "en": "8-bit icons everywhere, heal moved up" },
