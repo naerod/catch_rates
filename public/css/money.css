@@ -83,7 +83,6 @@
 .region + .region { margin-top: 3rem; }
 .region-title { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--card-border); font: 700 2rem var(--font-head); color: var(--text); scroll-margin-top: 150px; }
 .stage-body { font-size: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5em; align-items: start; }
-.gym-wrap { display: flex; flex-direction: column; gap: 0.75em; min-width: 0; }
 @media (max-width: 1099px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* une colonne, meme ordre */
 .money-stage.is-entering .region { animation: stage-in 0.24s ease-out; }
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
@@ -178,7 +177,7 @@
 .gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
 
 /* Pied de carte : soin conseille, objets a changer avant le combat suivant */
-.gym-between { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.4em; font-size: 0.9em; }
+.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; font-size: 0.9em; }
 .after-chip.is-heal { padding: 0.25em 1.2em; border: 1px solid var(--green); color: var(--green); font-size: 1.1em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
 .after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }

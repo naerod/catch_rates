@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.4.4",
+      "date": "2026-10-27",
+      "title": { "fr": "Soin et changement d'objet dans la carte", "en": "Heal and item swap inside the card" },
+      "fr": ["Le soin (HEAL) et les changements d'objet sont de retour à l'intérieur de la carte de leur arène, en bas à gauche."],
+      "en": ["Heal and item swaps are back inside their gym's card, at the bottom left."]
+    },
+    {
       "v": "3.4.3",
       "date": "2026-10-27",
       "title": { "fr": "Notes du guide dans le Team building guide", "en": "Guide notes in the Team building guide" },

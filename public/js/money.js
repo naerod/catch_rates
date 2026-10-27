@@ -257,14 +257,14 @@ const Money = (() => {
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${squad}${lines}</div></article>`;
+      `${note}${squad}${lines}${between(g.after)}</div></article>`;
   }
 
   function stage(animate) {
     const el = $('money-stage');
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
     el.innerHTML = data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
-      `<div class="stage-body">${r.gyms.map((g, i) => `<div class="gym-wrap">${card(g, i, r)}${between(g.after)}</div>`).join('')}</div></section>`).join('');
+      `<div class="stage-body">${r.gyms.map((g, i) => card(g, i, r)).join('')}</div></section>`).join('');
     animateSprites(el);
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
