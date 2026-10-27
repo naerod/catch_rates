@@ -72,6 +72,7 @@ function showPage(page, fresh = false) {
   // L'adresse suit la page affichee : un rafraichissement revient ici (money gere sa propre adresse).
   if (page !== 'money' && location.hash.slice(1).split('/')[0] !== page) history.replaceState(history.state, '', page === 'calc' ? location.pathname + location.search : '#' + page);
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
+  document.querySelector('.layout-grid').classList.toggle('is-events', page === 'events');
 
   if (page === 'calc') Money.homeLinks();                         // favoris a jour
   if (page === 'money') Money.open(fresh);
@@ -520,6 +521,7 @@ async function loadEvents() {
   const detailed = await Promise.all(
     events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
   );
+  await ensureBalls();
   container.innerHTML = detailed.map(ev => `
     <div class="event-card">
       <div class="event-card-header">
@@ -527,13 +529,19 @@ async function loadEvents() {
         <button class="btn btn-sm btn-outline event-edit-btn">Edit</button>
       </div>
       <div class="event-pokemon-grid">
-        ${(ev.pokemon || []).map(p => `
-          <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}">
-            <img width="80" height="60" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
+        ${(ev.pokemon || []).map(p => {
+          const best = Calc.computeOptimalFastest(p, state.balls);       // meilleure Pokeball automatique (meme choix que le calculateur)
+          const ball = best ? i18n.ballName(best.key) : '';
+          return `
+          <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}${best ? ` — ${ball} ${Calc.formatPercent(best.probability)}` : ''}">
+            <span class="ep-icon">
+              <img width="80" height="60" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
+              ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="${ball}" width="28" height="28" loading="lazy" />` : ''}
+            </span>
             <span class="ep-name">${p.name}</span>
-            <span class="ep-rate">${p.catch_rate}</span>
-          </div>
-        `).join('')}
+            <span class="ep-stats"><span class="ep-rate">${p.catch_rate}</span>${best ? `<span class="ep-best">${Calc.formatPercent(best.probability)}</span>` : ''}</span>
+          </div>`;
+        }).join('')}
       </div>
     </div>
   `).join('');

@@ -361,7 +361,9 @@ naerod-header { transition: transform 0.25s ease; }
 .gym-head:has(.gym-between) { align-self: stretch; }
 
 /* ── Accueil : raccourcis ── */
-.home-shortcuts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.75rem; max-width: 900px; margin: 1.5rem auto 0; }
+.home-shortcuts { display: flex; flex-direction: column; gap: 1.75rem; max-width: 900px; margin: 1.75rem auto 0; }
+.home-title { margin-bottom: 0.6rem; font: 700 0.8rem var(--font-head); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.75rem; }
 #page-calc:has(#pokemon-card:not([style*="none"])) .home-shortcuts { display: none; }
 .home-card {
   display: flex; align-items: center; gap: 1rem; min-height: 88px; padding: 1rem 1.25rem; text-align: left; cursor: pointer;

@@ -812,9 +812,10 @@ main {
 /* ══════════════ EVENTS PAGE ══════════════ */
 .events-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));   /* 4 tuiles par ligne dans chaque carte */
   gap: 1.5rem;
 }
+.layout-grid.is-events { grid-template-columns: 1fr minmax(0, 1100px) 1fr; }
 
 .event-card {
   background: var(--card);
@@ -857,7 +858,7 @@ main {
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s;
-  width: 96px;
+  width: 104px;
 }
 .event-pokemon-item:hover {
   border-color: var(--accent);
@@ -1270,3 +1271,16 @@ footer {
 [data-theme="light"][data-page="calc"], [data-theme="light"][data-page="events"], [data-theme="light"][data-page="admin"] {
   --accent: #0b62a8; --accent2: #0b62a8; --on-accent: #ffffff; --accent-rgb: 11,98,168; --slider-thumb: #0b62a8;
 }
+
+/* Evenements : meilleure Pokeball en pastille sur le sprite, chance de capture a cote du taux */
+.ep-icon { position: relative; display: inline-flex; }
+.ep-ball { position: absolute; right: -6px; bottom: -4px; width: 28px; height: 28px; image-rendering: pixelated; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+.ep-stats { display: inline-flex; align-items: baseline; gap: 0.4rem; }
+.ep-best { font-size: 0.68rem; font-weight: 700; color: var(--green); }
+
+/* Couleurs permanentes des boutons de la barre (jetons lus par <naerod-header> >= 1.6.5) : Event swarms = bleu, Money making = dore, sur toutes les pages */
+[data-theme="dark"]  { --nrd-nav-tone-events: #5aaef0; --nrd-nav-tone-money: #f5b942; }
+[data-theme="light"] { --nrd-nav-tone-events: #0b62a8; --nrd-nav-tone-money: #8a5a00; }
+
+/* ces regles gardent l'icone de la balle petite : la regle generale des tuiles s'applique sinon a toutes les images */
+.event-pokemon-item .ep-icon .ep-ball { width: 28px; height: 28px; }

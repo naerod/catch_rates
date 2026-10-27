@@ -426,9 +426,10 @@ const Money = (() => {
   /* Accueil : raccourcis vers les methodes favorites, puis les deux sections. */
   function homeLinks() {
     const card = (go, ic, label, tags = '', cls = '') => `<button type="button" class="home-card${cls}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
+    const sec = (title, cards) => cards ? `<section class="home-section"><h2 class="home-title">${esc(t(title))}</h2><div class="home-grid">${cards}</div></section>` : '';
     $('home-shortcuts').innerHTML =
-      METHODS.filter(m => isFav(m.id)).map(m => card(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav')).join('') +
-      card('#events', 'event', t('nav_events')) + card('#money', 'paid', t('nav_money'));
+      sec('home_explore', card('#events', 'event', t('nav_events')) + card('#money', 'paid', t('nav_money'))) +
+      sec('home_favs', METHODS.filter(m => isFav(m.id)).map(m => card(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav')).join(''));
   }
 
   return { open, homeLinks };

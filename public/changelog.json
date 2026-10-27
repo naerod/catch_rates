@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.12.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : 4 tuiles par ligne, meilleure Pokéball, boutons colorés", "en": "Events: 4 tiles per row, best Poké Ball, colored buttons" },
+      "fr": ["Accueil : « Event swarms » et « Money making » ont leur propre section « Explorer » ; une seconde section « Favoris » affiche tes méthodes Money making favorites (masquée s'il n'y en a pas).", "Dans la barre du haut, « Event swarms » reste toujours bleu et « Money making » toujours doré, quelle que soit la page.", "Les cartes d'événements sont plus larges (2 par ligne, 4 Pokémon par ligne dans chaque carte).", "Chaque Pokémon affiche la meilleure Pokéball (même choix automatique que le calculateur) en pastille sur son sprite, avec sa chance de capture à côté du taux."],
+      "en": ["Home: \"Event swarms\" and \"Money making\" get their own \"Explore\" section; a second \"Favourites\" section lists your favourite Money making methods (hidden when there are none).", "In the top bar, \"Event swarms\" is always blue and \"Money making\" always gold, whatever the page.", "Event cards are wider (2 per row, 4 Pokémon per row in each card).", "Each Pokémon shows its best Poké Ball (same automatic pick as the calculator) as a badge on its sprite, with its catch chance next to the catch rate."]
+    },
+    {
       "v": "3.12.0",
       "date": "2026-10-28",
       "title": { "fr": "Accueil avec raccourcis", "en": "Home page shortcuts" },
