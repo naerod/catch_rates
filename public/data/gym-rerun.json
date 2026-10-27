@@ -382,7 +382,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #131 , @follow_into togekiss.hyper_voice / .shock_wave ( @if_available ) + garchomp.earthquake , @prioritize #226"
+              "s": "@vs #131 , @follow_into togekiss.hyper_voice / .shock_wave ( @if_available ) + garchomp.earthquake ( @prioritize #226 )"
             }
           ],
           "after": {
