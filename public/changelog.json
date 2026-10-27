@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.10.6",
+      "date": "2026-10-28",
+      "title": { "fr": "Barres masquées au défilement", "en": "Bars hide on scroll" },
+      "fr": ["Les deux barres du haut se retirent quand on descend dans la page et reviennent dès qu'on remonte, sans retourner tout en haut."],
+      "en": ["Both top bars slide away when scrolling down and come back as soon as you scroll up, without going back to the top."]
+    },
+    {
       "v": "3.10.5",
       "date": "2026-10-28",
       "title": { "fr": "Équipe de départ en haut de page, exceptions plus lisibles", "en": "Starting team at the top, clearer exceptions" },

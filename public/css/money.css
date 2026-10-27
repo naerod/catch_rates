@@ -347,3 +347,9 @@
 .start-panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .start-panel ul { display: flex; gap: 1rem; list-style: none; }
 .start-panel .sprite-box { --k: 2; }
+
+/* Defilement : les deux barres se retirent vers le bas et reviennent vers le haut */
+naerod-header, .money-head { transition: transform 0.25s ease, top 0.25s ease; }
+.bars-hidden naerod-header { transform: translateY(-100%); }
+.bars-hidden .money-head { top: 0; }
+@media (prefers-reduced-motion: reduce) { naerod-header, .money-head { transition: none; } }

@@ -212,6 +212,7 @@ const Money = (() => {
   /* Bascule menu <-> methode, avec fondu (cf. DA : tout ce qui apparait s'anime). */
   function view(method) {
     state.method = method;
+    document.documentElement.classList.remove('bars-hidden');
     $('page-money').classList.toggle('in-method', !!method);
     $('money-menu').hidden = !!method;
     $('money-method').hidden = !method;
@@ -357,6 +358,16 @@ const Money = (() => {
     }
     if (id) enter(id); else view(null);
   }
+
+  /* Barres masquees en descendant, reaffichees des qu'on remonte (sans retourner tout en haut). */
+  let lastY = scrollY;
+  addEventListener('scroll', () => {
+    const y = scrollY, dy = y - lastY;
+    if (Math.abs(dy) < 8) return;                                 // ignore les micro-mouvements
+    lastY = y;
+    const on = $('page-money').classList.contains('active') && !!state.method;
+    document.documentElement.classList.toggle('bars-hidden', on && dy > 0 && y > 120);
+  }, { passive: true });
 
   /* ── Evenements ── */
   addEventListener('popstate', () => {            // retour / avance du navigateur : on affiche l'ecran du lien
