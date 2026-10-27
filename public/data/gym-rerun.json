@@ -1551,6 +1551,44 @@
         "icon": "flight",
         "key": "gr_ocarina"
       }
-    ]
+    ],
+    "mons": {
+      "typhlosion": {
+        "ability": "Blaze",
+        "nature": "Modest",
+        "ivs": "10-31 HP / 10-31 Def / 31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "togekiss": {
+        "ability": "Hustle",
+        "nature": "Modest",
+        "ivs": "31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "blastoise": {
+        "ability": "Torrent",
+        "nature": "Mild",
+        "ivs": "0-25 HP / 0-25 Def / 31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "vanilluxe": {
+        "ability": "Snow Warning",
+        "nature": "Modest",
+        "ivs": "28-31 HP* / 28-31 Def* / 31 SpAtk / 31 Spe",
+        "evs": "6 Def / 252 SpAtk / 252 Spe"
+      },
+      "weezing": {
+        "ability": "Reactive Gas",
+        "nature": "Adamant",
+        "ivs": "31 Atk / 31 Spe",
+        "evs": "252 Atk / 6 Def / 252 Spe"
+      },
+      "garchomp": {
+        "ability": "Sand Veil / Rough Skin*",
+        "nature": "Lonely",
+        "ivs": "0-8 HP* / 0-8 Def* / 31 Atk / 25-31 SpDef / 31 Spe",
+        "evs": "252 Atk / 26 SpDef / 232 Spe"
+      }
+    }
   }
 }

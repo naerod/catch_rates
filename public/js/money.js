@@ -103,9 +103,9 @@ const Money = (() => {
   /* ── Calculateur de charm : quel objet de gains choisir selon les prix du marche ── */
   const CHARMS = [
     { id: 'none', mult: 1, nameKey: 'charm_none' },
-    { id: 'amulet_coin', mult: 1.5, nameKey: 'charm_amulet' },
-    { id: 'riches_75', mult: 1.75, nameKey: 'charm_r75' },
-    { id: 'riches_100', mult: 2, nameKey: 'charm_r100' },
+    { id: 'amulet_coin', mult: 1.5, nameKey: 'charm_amulet', img: 'amulet-coin' },
+    { id: 'riches_75', mult: 1.75, nameKey: 'charm_r75', img: 'riches-charm' },
+    { id: 'riches_100', mult: 2, nameKey: 'charm_r100', img: 'riches-charm' },
   ];
   const CHARM_STORE = 'money.charm';
   const charm = { donator: false, sel: {}, prices: {} };           // sel : arenes cochees/decochees par rapport au guide ; prices : prix saisis a la main
@@ -141,12 +141,13 @@ const Money = (() => {
     if (data && state.method) { infoBar(); charmPanel(); }
   }
 
+  const charmImg = c => c?.img ? `<img class="charm-img" src="/gym-rerun/items/${c.img}.png" alt="" width="24" height="24">` : '';
   function charmButton() {
     const c = charmCalc();
     const best = c.best && c.best.id !== 'none' ? c.best : null;
     const label = best ? `<span class="cb-name">${esc(t(best.nameKey))}</span><span class="cb-net">${money(best.net)} ¥</span>`
       : `<span class="cb-net">${esc(marketState === 'error' ? t('charm_unavailable') : t('charm_title'))}</span>`;
-    return `<button type="button" class="charm-btn" popovertarget="money-charm" title="${esc(t('charm_title'))}" aria-label="${esc(t('charm_title'))}${best ? ' — ' + esc(t(best.nameKey)) : ''}">${icon('savings')}${label}</button>`;
+    return `<button type="button" class="charm-btn" popovertarget="money-charm" title="${esc(t('charm_title'))}" aria-label="${esc(t('charm_title'))}${best ? ' — ' + esc(t(best.nameKey)) : ''}">${best ? charmImg(best) : icon('savings')}${label}</button>`;
   }
 
   function charmPanel() {
@@ -154,7 +155,7 @@ const Money = (() => {
     if (!panel || !data) return;
     const c = charmCalc();
     const rows = c.rows.map(r => `<tr class="${c.best && c.best.id === r.id ? 'is-best' : ''}">` +
-      `<th scope="row">${esc(t(r.nameKey))}${c.best && c.best.id === r.id ? `<span class="best-chip">${icon('check_circle')}${esc(t('charm_best'))}</span>` : ''}</th>` +
+      `<th scope="row">${charmImg(r)}${esc(t(r.nameKey))}${c.best && c.best.id === r.id ? `<span class="best-chip">${icon('check_circle')}${esc(t('charm_best'))}</span>` : ''}</th>` +
       `<td>×${r.mult}</td>` +
       `<td>${r.id === 'none' ? '—' : `<span class="price-field"><input type="number" min="0" step="100" inputmode="numeric" data-price="${r.id}" aria-label="${esc(t('charm_price'))} — ${esc(t(r.nameKey))}" value="${r.price ?? ''}">` +
         (r.custom ? `<button type="button" class="btn-icon-sm" data-price-reset="${r.id}" title="${esc(t('charm_use_market'))}" aria-label="${esc(t('charm_use_market'))}">${icon('sync')}</button>` : '') + '</span>'}</td>` +
@@ -290,13 +291,14 @@ const Money = (() => {
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
     const mons = data.team.map(id => {
       const x = (tg.mons || {})[id] || {}, moves = Object.entries(used[id] || {}).sort((a, b) => b[1].size - a[1].size);
-      const extra = ['nature', 'ability', 'evs', 'ivs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
+      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
+        extra +
         (tg.start?.[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_start'))}</span>${itemChip(tg.start[id])}</div>` : '') +
         `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ul class="tp-moves">${moves.map(([mv, set]) => `<li title="${esc([...set].join(', '))}"><b class="tk-move">${esc(t('mv_' + mv))}</b><small>×${set.size}</small></li>`).join('')}</ul></div>` +
         (swaps[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_swaps'))}</span><ol class="tp-swaps">${swaps[id].map(s => `<li><span>${esc(t('tp_after'))} ${esc(s.gym)}</span>${itemChip(s.item)}</li>`).join('')}</ol></div>` : '') +
-        extra + '</article>';
+        '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
