@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.9.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Nouvelle mise en page des cartes d'arène", "en": "New gym card layout" },
+      "fr": ["Carte d'arène : carte à gauche, nom et temps de référence à droite, puis les Pokémon au-dessus de leurs attaques ; les exceptions occupent toute la largeur en dessous.", "Sootopolis : « prioritize Mantine » est rattaché à la ligne de Lapras (et plus une exception à part)."],
+      "en": ["Gym card: map on the left, name and reference time on the right, then the Pokémon above their moves; exceptions use the full width below.", "Sootopolis: \"prioritize Mantine\" is attached to the Lapras line (no longer a separate exception)."]
+    },
+    {
       "v": "3.8.1",
       "date": "2026-10-27",
       "title": { "fr": "Sootopolis : Shock Wave (if available) et Mantine prioritaire", "en": "Sootopolis: Shock Wave (if available) and Mantine priority" },

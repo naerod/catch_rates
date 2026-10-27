@@ -88,11 +88,12 @@
 @keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 .gym {
-  display: flex; gap: 0.8em; padding: 0.7em; align-items: flex-start;
+  display: grid; grid-template-columns: clamp(150px, 30%, 280px) minmax(0, 1fr); gap: 0 0.8em; padding: 0.7em; align-items: start;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
-.gym-map { flex: none; width: 30%; max-width: 280px; height: auto; border-radius: 4px; background: var(--bg3); }
-.gym-body { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; flex: 1; align-self: stretch; }
+.gym-map { width: 100%; height: auto; border-radius: 4px; background: var(--bg3); }
+.gym-head { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; }
+.gym-exc { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.4em; min-width: 0; margin-top: 0.5em; }
 .gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
 .gym-num { color: var(--accent); margin-right: 0.25em; }
 .gym-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25em 0.75em; min-width: 0; }
@@ -194,8 +195,8 @@
 
 /* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
 @media (max-width: 899px) {
-  .gym { flex-direction: column; }
-  .gym-map { width: 100%; max-width: 320px; }
+  .gym { grid-template-columns: minmax(0, 1fr); }
+  .gym-map { max-width: 320px; }
   .gym-seg, .gym-line-body { flex-wrap: wrap; }
   .gym-top { flex-wrap: wrap; }
   .gym-tip { white-space: normal; }

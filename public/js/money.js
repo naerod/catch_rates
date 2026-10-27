@@ -256,12 +256,14 @@ const Money = (() => {
       return m ? [{ ...l, s: l.s.slice(0, m.index) }, { i: 1, s: m[1] }] : [l];
     });
     curItems = g.items || {};
-    const lines = expanded.map((l, n) => line(l, n)).join('');
+    const lead = [], exc = [];                                    // ligne principale a cote de la carte, exceptions pleine largeur dessous
+    expanded.forEach((l, n) => (n === 0 || l.lead ? lead : exc).push(line(l, n)));
     gymItems = {}; leadMode = false;
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
-      `<div class="gym-body"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${lines}${between(g.after)}</div></article>`;
+      `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
+      `${note}${lead.join('')}</div>` +
+      `<div class="gym-exc">${exc.join('')}${between(g.after)}</div></article>`;
   }
 
   function stage(animate) {
