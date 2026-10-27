@@ -178,8 +178,8 @@
 .gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
 
 /* Pied de carte : soin conseille, objets a changer avant le combat suivant */
-.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; font-size: 0.9em; }
-.after-chip.is-heal { order: 2; margin-left: auto; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
+.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: 0.5em; justify-content: flex-end; font-size: 0.9em; }   /* soin et changements d'objet : en bas a droite */
+.after-chip.is-heal { order: 2; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
 .after-chip.is-swap { gap: 0.3em; color: var(--text); padding: 0.1em 0.5em 0.1em 0.3em; }
 .after-chip.is-swap .sprite-box { width: 1.9em; height: 1.9em; padding: 0.05em; }
 .swap-item { width: 1.5em; height: 1.5em; }
@@ -330,6 +330,13 @@
 /* Ligne principale : le sprite de chaque Pokemon au-dessus de son attaque */
 .tk-stack { display: inline-flex; flex-direction: column; align-items: center; gap: 0.35em; text-align: center; }
 .is-lead .tk-plus, .is-lead .tk-word { align-self: flex-start; margin-top: 0.9em; }
-.is-lead .gym-seg { align-items: flex-start; gap: 0.3em 0.35em; }
-.is-lead .gym-line-body { gap: 0.3em 0.35em; }
 .gym-line.is-lead { margin: 0.4em 0 0.2em; }
+
+/* Parentheses du guide collees au texte (l'ecart --g est celui des jetons voisins) */
+.tk-open { margin-right: calc(-1 * var(--g, 0.3em)); } .tk-close { margin-left: calc(-1 * var(--g, 0.3em)); }
+/* Ligne principale : sprites un peu plus grands et plus espaces pour occuper la largeur */
+.is-lead { --g: 1.1em; width: 100%; }
+.is-lead .gym-line-body, .is-lead .gym-seg { gap: 0.3em var(--g); }
+.is-lead .sprite-box { width: 3.6em; height: 3.6em; }
+.is-lead .tk-raw { align-self: flex-start; margin-top: 0.9em; }
+.is-lead .gym-seg { align-items: flex-start; }

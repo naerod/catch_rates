@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.9.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Espace mieux rempli, parenthèses collées, objets à droite", "en": "Better filled space, tight parentheses, items on the right" },
+      "fr": ["Ligne principale : sprites plus grands et plus espacés pour occuper la largeur de la carte.", "Les parenthèses sont collées au texte (plus d'espace après « ( » ni avant « ) »).", "Les changements d'objet passent en bas à droite, à côté du soin."],
+      "en": ["Main line: larger, more widely spaced sprites to use the card's width.", "Parentheses stick to the text (no more space after \"(\" or before \")\").", "Item changes move to the bottom right, next to the heal."]
+    },
+    {
       "v": "3.9.2",
       "date": "2026-10-27",
       "title": { "fr": "Sootopolis : Mantine entre parenthèses", "en": "Sootopolis: Mantine in parentheses" },
