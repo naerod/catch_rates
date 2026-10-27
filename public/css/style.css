@@ -814,6 +814,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));   /* 4 tuiles par ligne dans chaque carte */
   gap: 1.5rem;
+  align-items: start;   /* chaque boite a la hauteur de son contenu : aucun vide en bas */
 }
 .layout-grid.is-events { grid-template-columns: 1fr minmax(0, 1100px) 1fr; }
 
@@ -842,8 +843,8 @@ main {
 }
 
 .event-pokemon-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));   /* les tuiles se partagent toute la largeur : aucun vide a droite */
   gap: 0.5rem;
   padding: 1rem 1.25rem;
 }
@@ -859,7 +860,6 @@ main {
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s;
-  width: 104px;
 }
 .event-pokemon-item:hover {
   border-color: var(--accent);
