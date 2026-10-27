@@ -410,27 +410,20 @@ const Money = (() => {
       if (r) { delete charm.prices[r.dataset.priceReset]; charmRefresh(); }
       if (e.target.closest('#charm-reset')) { charm.sel[state.method] = {}; charm.prices = {}; charm.donator = false; charmRefresh(); }
     });
-    homeLinks();
     $('home-shortcuts').addEventListener('click', e => {
       const b = e.target.closest('[data-go]'); if (!b) return;
       history.pushState(null, '', b.dataset.go); showPage(b.dataset.go.slice(1).split('/')[0], false);
     });
     document.addEventListener('langchange', () => {
-      homeLinks();
       if (!$('page-money').classList.contains('active')) return;
       if (!state.method) return menu(false);
       if (data) renderAll(false);
     });
   });
 
-  /* Accueil : raccourcis vers les methodes favorites, puis les deux sections. */
-  function homeLinks() {
-    const card = (go, ic, label, tags = '', cls = '') => `<button type="button" class="home-card${cls}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
-    const sec = (title, cards) => cards ? `<section class="home-section"><h2 class="home-title">${esc(t(title))}</h2><div class="home-grid">${cards}</div></section>` : '';
-    $('home-shortcuts').innerHTML =
-      sec('home_explore', card('#events', 'event', t('nav_events')) + card('#money', 'paid', t('nav_money'))) +
-      sec('home_favs', METHODS.filter(m => isFav(m.id)).map(m => card(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav')).join(''));
-  }
+  /* Accueil : cartes de raccourci (la page d'accueil, dans app.js, les assemble en sections). */
+  const homeCard = (go, ic, label, tags = '', cls = '') => `<button type="button" class="home-card${cls}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
+  const homeFavCards = () => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav')).join('');
 
-  return { open, homeLinks };
+  return { open, homeCard, homeFavCards };
 })();

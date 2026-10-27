@@ -4,7 +4,7 @@
 
 const translations = {
   en: {
-    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', nav_events: 'Event swarms', nav_admin: 'Admin',
+    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_live: 'Live now', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
     nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: 'Team building guide', gr_team_guide_soon: 'Pokepaste coming soon', gr_info: 'Run info', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
     gr_total: 'Total', gr_total_note: 'with Amulet Coin (price not included)', gr_stock: 'Stockpile', gr_team: 'Team',
@@ -133,7 +133,7 @@ const translations = {
     history_close: "Close",
   },
   fr: {
-    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', nav_events: "Essaims d'événements", nav_admin: 'Admin',
+    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', home_live: 'En cours', ev_start: 'Début', ev_end: 'Fin', nav_events: "Essaims d'événements", nav_admin: 'Admin',
     nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes', money_fav_add: 'Ajouter aux favoris', money_fav_remove: 'Retirer des favoris',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: "Guide de construction d'équipe", gr_team_guide_soon: 'Pokepaste bientôt disponible', gr_info: 'Infos du parcours', gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',
     gr_total: 'Total', gr_total_note: "avec Pièce Rune (prix non inclus)", gr_stock: 'Réserve', gr_team: 'Équipe',

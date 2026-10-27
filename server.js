@@ -215,7 +215,8 @@ app.get('/api/pokeballs', (req, res) => {
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 app.get('/api/events', (req, res) => {
-  res.json(dbAll('SELECT * FROM events ORDER BY sort_order ASC, created_at DESC'));
+  // Du plus recent au plus ancien : date de debut, a defaut date de creation ; egalite -> dernier ajoute d'abord
+  res.json(dbAll("SELECT * FROM events ORDER BY COALESCE(starts_at, substr(created_at, 1, 10)) DESC, id DESC"));
 });
 
 app.get('/api/events/:slug', (req, res) => {
@@ -257,21 +258,15 @@ app.get('/api/admin/check', (req, res) => {
 });
 
 // ─── Admin Events ──────────────────────────────────────────────────────────────
-app.put('/api/admin/events/reorder', requireAuth, (req, res) => {
-  const { ids } = req.body;
-  if (!Array.isArray(ids)) return res.status(400).json({ error: 'ids must be an array' });
-  ids.forEach((id, i) => dbRun('UPDATE events SET sort_order=? WHERE id=?', [i, id]));
-  saveDb();
-  res.json({ success: true });
-});
-
+const isDate = v => v == null || v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v);
 app.post('/api/admin/events', requireAuth, (req, res) => {
-  const { slug, name_en, name_fr, active } = req.body;
+  const { slug, name_en, name_fr, active, starts_at, ends_at } = req.body;
   if (!slug || !name_en) return res.status(400).json({ error: 'Missing fields' });
+  if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
   try {
     const result = dbRun(
-      'INSERT INTO events (slug, name_en, name_fr, active) VALUES (?, ?, ?, ?)',
-      [slug, name_en, name_fr, active ? 1 : 0]
+      'INSERT INTO events (slug, name_en, name_fr, active, starts_at, ends_at) VALUES (?, ?, ?, ?, ?, ?)',
+      [slug, name_en, name_fr || '', active ? 1 : 0, starts_at || null, ends_at || null]
     );
     saveDb();
     res.json({ id: result.lastInsertRowid, slug, name_en, name_fr, active: active ? 1 : 0 });
@@ -290,6 +285,14 @@ app.put('/api/admin/events/:id', requireAuth, (req, res) => {
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
+});
+
+app.put('/api/admin/events/:id/dates', requireAuth, (req, res) => {
+  const { starts_at, ends_at } = req.body;
+  if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
+  dbRun('UPDATE events SET starts_at=?, ends_at=? WHERE id=?', [starts_at || null, ends_at || null, req.params.id]);
+  saveDb();
+  res.json({ success: true });
 });
 
 app.delete('/api/admin/events/:id', requireAuth, (req, res) => {
@@ -422,6 +425,11 @@ app.get('*', (req, res) => {
   const fileBuffer = fs.readFileSync(DB_PATH);
   db = new SQL.Database(fileBuffer);
   db.run('PRAGMA foreign_keys = ON;');
+  // Migrations : dates de debut/fin d'evenement (tri par recence, "en cours") ; sort_order pour les bases anciennes
+  const evCols = dbAll('PRAGMA table_info(events)').map(c => c.name);
+  for (const [col, ddl] of [['sort_order', 'INTEGER DEFAULT 0'], ['starts_at', 'TEXT'], ['ends_at', 'TEXT']])
+    if (!evCols.includes(col)) db.run(`ALTER TABLE events ADD COLUMN ${col} ${ddl}`);
+  saveDb();
 
   app.listen(PORT, () => {
     console.log(`CatchR running at http://localhost:${PORT}`);

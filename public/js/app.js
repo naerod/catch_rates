@@ -74,7 +74,7 @@ function showPage(page, fresh = false) {
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
   document.querySelector('.layout-grid').classList.toggle('is-events', page === 'events');
 
-  if (page === 'calc') Money.homeLinks();                         // favoris a jour
+  if (page === 'calc') renderHome();                              // favoris a jour
   if (page === 'money') Money.open(fresh);
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();
@@ -505,28 +505,39 @@ document.addEventListener('langchange', () => {
     updateResults();
   }
   renderHistory();
+  renderHome();
+  if (state.page === 'events') loadEvents();
 });
 
 /* ══════════════ EVENTS PAGE ══════════════ */
-async function loadEvents() {
-  const res = await fetch('/api/events');
-  const events = await res.json();
-  const container = $('events-list');
-
-  if (!events.length) {
-    container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
-    return;
-  }
-
-  const detailed = await Promise.all(
-    events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
-  );
+/* Donnees partagees entre la page Events, l'accueil et l'admin (une seule source). */
+const EV_FAVS = 'catchr.favEvents';
+const evFavs = () => { try { return JSON.parse(localStorage.getItem(EV_FAVS)) || []; } catch { return []; } };
+const toggleEvFav = slug => {
+  const f = evFavs(), n = f.includes(slug) ? f.filter(x => x !== slug) : [...f, slug];
+  try { localStorage.setItem(EV_FAVS, JSON.stringify(n)); } catch { /* stockage indisponible */ }
+};
+let eventsData = null;
+async function getEvents(fresh = false) {
+  if (eventsData && !fresh) return eventsData;
+  const list = await (await fetch('/api/events')).json();          // deja trie du plus recent au plus ancien
+  eventsData = await Promise.all(list.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json())));
   await ensureBalls();
-  container.innerHTML = detailed.map(ev => `
+  return eventsData;
+}
+const isLive = ev => {                                              // en cours : date du jour entre debut et fin (inclus)
+  const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return !!ev.starts_at && !!ev.ends_at && ev.starts_at <= today && today <= ev.ends_at;
+};
+
+function eventCard(ev, { edit = false } = {}) {
+  const fav = evFavs().includes(ev.slug), favLabel = i18n.t(fav ? 'money_fav_remove' : 'money_fav_add');
+  return `
     <div class="event-card">
       <div class="event-card-header">
         <span class="event-name">${ev.name_en}</span>
-        <button class="btn btn-sm btn-outline event-edit-btn">Edit</button>
+        <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
+        ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
       </div>
       <div class="event-pokemon-grid">
         ${(ev.pokemon || []).map(p => {
@@ -543,19 +554,48 @@ async function loadEvents() {
           </div>`;
         }).join('')}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+}
 
-  container.querySelectorAll('.event-pokemon-item').forEach(item => {
-    item.addEventListener('click', () => {
-      showPage('calc');
-      selectPokemonById(Number(item.dataset.id));
-    });
-  });
+async function loadEvents() {
+  const container = $('events-list');
+  const events = await getEvents(true);
+  if (!events.length) {
+    container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
+    return;
+  }
+  container.innerHTML = events.map(ev => eventCard(ev, { edit: true })).join('');
+}
 
-  container.querySelectorAll('.event-edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => showPage('admin'));
-  });
+document.addEventListener('click', e => {
+  const item = e.target.closest('.event-pokemon-item');
+  if (item) { showPage('calc'); selectPokemonById(Number(item.dataset.id)); return; }
+  const fav = e.target.closest('[data-evfav]');
+  if (fav) {
+    toggleEvFav(fav.dataset.evfav);
+    const on = evFavs().includes(fav.dataset.evfav), label = i18n.t(on ? 'money_fav_remove' : 'money_fav_add');
+    document.querySelectorAll(`[data-evfav="${fav.dataset.evfav}"]`).forEach(b => { b.setAttribute('aria-pressed', on); b.title = label; b.setAttribute('aria-label', label); });
+    if (state.page === 'calc') renderHome();
+    return;
+  }
+  if (e.target.closest('.event-edit-btn')) showPage('admin');
+});
+
+/* ══════════════ ACCUEIL : raccourcis ══════════════ */
+/* Explorer ; Favoris (methodes Money making + boites d'evenements) ; sans aucun favori, l'evenement en cours s'il y en a un. */
+async function renderHome() {
+  const el = $('home-shortcuts'); if (!el) return;
+  const sec = (title, body) => body ? `<section class="home-section"><h2 class="home-title">${i18n.t(title)}</h2>${body}</section>` : '';
+  const paint = evs => {
+    const slugs = evFavs(), methods = Money.homeFavCards(), favEvents = evs.filter(ev => slugs.includes(ev.slug));
+    const live = methods || favEvents.length ? [] : evs.filter(isLive);
+    el.innerHTML =
+      sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'))}${Money.homeCard('#money', 'paid', i18n.t('nav_money'))}</div>`) +
+      sec('home_favs', (methods ? `<div class="home-grid">${methods}</div>` : '') + (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
+      sec('home_live', live.length ? `<div class="home-events">${live.map(ev => eventCard(ev)).join('')}</div>` : '');
+  };
+  paint(eventsData || []);
+  if (!eventsData) { try { paint(await getEvents()); } catch { /* hors ligne : on garde l'affichage sans evenements */ } }
 }
 
 /* ══════════════ USER SESSION (OIDC) ══════════════ */
@@ -808,6 +848,7 @@ $('create-event-btn').addEventListener('click', async () => {
   const slug = $('event-slug').value.trim();
   const name_en = $('event-name-en').value.trim();
   const active = true;
+  const starts_at = $('event-start').value, ends_at = $('event-end').value;
   $('event-form-error').style.display = 'none';
   if (!slug || !name_en) {
     $('event-form-error').textContent = 'All fields required.';
@@ -817,11 +858,12 @@ $('create-event-btn').addEventListener('click', async () => {
   const res = await fetch('/api/admin/events', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slug, name_en, name_fr: '', active })
+    body: JSON.stringify({ slug, name_en, name_fr: '', active, starts_at, ends_at })
   });
   if (res.ok) {
     $('event-slug').value = '';
     $('event-name-en').value = '';
+    $('event-start').value = ''; $('event-end').value = '';
     loadAdminEvents();
   } else {
     const d = await res.json();
@@ -831,12 +873,7 @@ $('create-event-btn').addEventListener('click', async () => {
 });
 
 async function loadAdminEvents() {
-  const res = await fetch('/api/events');
-  const events = await res.json();
-  const detailed = await Promise.all(
-    events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
-  );
-  renderAdminEvents(detailed);
+  renderAdminEvents(await getEvents(true));
 }
 
 function renderAdminEvents(events) {
@@ -846,13 +883,13 @@ function renderAdminEvents(events) {
   container.innerHTML = events.map((ev, idx) => `
     <div class="admin-event-row" data-event-id="${ev.id}">
       <div class="admin-event-top">
-        <div class="aer-order-btns">
-          <button class="btn-order move-up-btn" data-idx="${idx}" ${idx === 0 ? 'disabled' : ''}>▲</button>
-          <button class="btn-order move-down-btn" data-idx="${idx}" ${idx === events.length - 1 ? 'disabled' : ''}>▼</button>
-        </div>
         <div class="admin-event-info">
           <div class="aei-name">${ev.name_en}</div>
           <div class="aei-slug">${ev.slug}</div>
+        </div>
+        <div class="admin-event-dates">
+          <label>${i18n.t('ev_start')}<input type="date" class="ev-date" data-field="starts_at" value="${ev.starts_at || ''}" /></label>
+          <label>${i18n.t('ev_end')}<input type="date" class="ev-date" data-field="ends_at" value="${ev.ends_at || ''}" /></label>
         </div>
         <div class="admin-event-actions">
           <button class="btn btn-sm btn-danger delete-event-btn" data-id="${ev.id}">
@@ -878,23 +915,16 @@ function renderAdminEvents(events) {
   `).join('');
 
 
-  // Reorder arrows
-  const reorder = async (fromIdx, toIdx) => {
-    const reordered = [...events];
-    const [moved] = reordered.splice(fromIdx, 1);
-    reordered.splice(toIdx, 0, moved);
-    await fetch('/api/admin/events/reorder', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: reordered.map(e => e.id) })
-    });
-    loadAdminEvents();
-  };
-  container.querySelectorAll('.move-up-btn').forEach(btn => {
-    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) - 1));
-  });
-  container.querySelectorAll('.move-down-btn').forEach(btn => {
-    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) + 1));
+  // Dates de debut / fin : enregistrees des qu'on les change (le tri et "en cours" en dependent)
+  container.querySelectorAll('.admin-event-row').forEach(row => {
+    row.querySelectorAll('.ev-date').forEach(inp => inp.addEventListener('change', async () => {
+      const get = f => row.querySelector(`[data-field="${f}"]`).value;
+      const res = await fetch(`/api/admin/events/${row.dataset.eventId}/dates`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ starts_at: get('starts_at'), ends_at: get('ends_at') })
+      });
+      if (res.ok) loadAdminEvents();
+    }));
   });
 
   // Delete event

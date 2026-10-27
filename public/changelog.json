@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.13.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : tri par date, favoris et événement en cours", "en": "Events: date sorting, favourites and live event" },
+      "fr": ["Les événements sont triés du plus récent au plus ancien : le plus récent est toujours en haut à gauche.", "Chaque événement a une étoile : en favori, sa boîte complète s'affiche dans la section « Favoris » de l'accueil.", "Sans aucun favori, l'accueil affiche la boîte de l'événement en cours (section « En cours ») ; rien s'il n'y en a pas.", "Admin : dates de début et de fin pour chaque événement (le tri et « en cours » en dépendent) ; les flèches de tri manuel disparaissent."],
+      "en": ["Events are sorted newest to oldest: the newest is always at the top left.", "Each event has a star: when favourited, its full box appears in the home page \"Favourites\" section.", "With no favourites at all, the home page shows the box of the live event (\"Live now\" section); nothing if there is none.", "Admin: start and end dates per event (sorting and \"live\" depend on them); the manual sort arrows are gone."]
+    },
+    {
       "v": "3.12.1",
       "date": "2026-10-28",
       "title": { "fr": "Événements : 4 tuiles par ligne, meilleure Pokéball, boutons colorés", "en": "Events: 4 tiles per row, best Poké Ball, colored buttons" },
