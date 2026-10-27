@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.5.2",
+      "date": "2026-10-27",
+      "title": { "fr": "« ou » au lieu de la double flèche", "en": "\"or\" instead of the double arrow" },
+      "fr": ["Quand le guide propose l'un ou l'autre (Hyper Voice ou Shock Wave, Houndoom ou Arcanine…), la page affiche maintenant le mot « ou »."],
+      "en": ["When the guide offers one or the other (Hyper Voice or Shock Wave, Houndoom or Arcanine…), the page now shows the word \"or\"."]
+    },
+    {
       "v": "3.5.1",
       "date": "2026-10-27",
       "title": { "fr": "Cartes plus compactes et sans trous", "en": "Tighter cards, no gaps" },

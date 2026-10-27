@@ -67,7 +67,7 @@ const Money = (() => {
   function token(tk) {
     // Pas de caracteres de ponctuation : des icones, ou rien (l'espacement suffit).
     if (tk === '+') return icon('add').replace('class="', 'class="tk-plus ');
-    if (tk === '/') return icon('swap_horiz').replace('class="', 'class="tk-raw ');
+    if (tk === '/') return `<span class="tk-word">${esc(t('gr_or'))}</span>`;
     if ('(),'.includes(tk)) return '';
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
