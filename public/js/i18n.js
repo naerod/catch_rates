@@ -4,7 +4,7 @@
 
 const translations = {
   en: {
-    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_suggest: 'Suggestions', home_add_method: 'Add a method to your favourites', home_add_event: 'Add an event to your favourites', ev_forecast: 'Forecast', ev_empty: 'Swarm list not available yet.', ev_add: 'Add an event', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
+    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_suggest: 'Suggested', home_add_method: 'Add a method to your favourites', home_add_event: 'Add an event to your favourites', ev_forecast: 'Forecast', ev_empty: 'Swarm list not available yet.', ev_add: 'Add an event', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
     nrd_login: "Log in / Sign up",
     nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: 'Team building guide', gr_team_guide_soon: 'Pokepaste coming soon', gr_info: 'Run info', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
