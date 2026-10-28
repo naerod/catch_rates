@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.16.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Tuiles d'événements épurées, détail au survol", "en": "Cleaner event tiles, details on hover" },
+      "fr": ["Les tuiles d'événements n'affichent plus que le sprite, la Pokéball conseillée (pastille) et le nom ; taux de capture, chance, PV, statut, nuit et attente apparaissent au survol (et au clavier). Valable aussi sur l'accueil."],
+      "en": ["Event tiles now show only the sprite, the recommended Poké Ball (badge) and the name; catch rate, chance, HP, status, night and wait appear on hover (and keyboard focus). Also applies on the home page."]
+    },
+    {
       "v": "3.16.0",
       "date": "2026-10-28",
       "title": { "fr": "Événements : conditions de capture sur chaque tuile", "en": "Events: capture conditions on each tile" },

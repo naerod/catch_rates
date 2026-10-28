@@ -558,16 +558,15 @@ function eventCard(ev, { edit = false } = {}) {
           const ball = best ? i18n.ballName(best.key) : '';
           // Conditions pour atteindre ce taux : PV (y compris "PV pleins"), statut, nuit, attente du Timer Ball...
           const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique)] : [];
-          const tip = best ? `${p.name}\n${ball} — ${Calc.formatPercent(best.probability)}${conds.length ? `\n${conds.map(c => c.label).join(' · ')}` : ''}` : p.name;
+          // Tout le detail est au survol : taux de capture, Pokeball, chance et conditions (PV, statut, nuit, attente)
+          const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? [conds.map(c => c.label).join(' · ')] : [])] : [])].join('\n');
           return `
-          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}">
+          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}" aria-label="${tip.replace(/\n/g, ', ')}" tabindex="0">
             <span class="ep-icon">
-              <img width="80" height="60" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
-              ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="${ball}" width="28" height="28" loading="lazy" />` : ''}
+              <img width="80" height="60" src="${miniIcon(p.id)}" alt="" loading="lazy" />
+              ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="" width="28" height="28" loading="lazy" />` : ''}
             </span>
             <span class="ep-name">${p.name}</span>
-            <span class="ep-stats"><span class="ep-rate">${p.catch_rate}</span>${best ? `<span class="ep-best">${Calc.formatPercent(best.probability)}</span>` : ''}</span>
-            ${conds.length ? `<span class="ep-conds">${chipsHTML(conds)}</span>` : ''}
           </div>`;
         }).join('')}
       </div>
