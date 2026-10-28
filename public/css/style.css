@@ -1307,7 +1307,8 @@ footer {
 #site-tip.is-on { opacity: 1; transform: none; }
 #site-tip[hidden] { display: none; }
 #site-tip strong { font-weight: 700; }
-#site-tip span { color: var(--text-dim); font-size: 0.75rem; }
+#site-tip .tip-chips { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.2rem; }
+#site-tip span:not(.technique-chip) { color: var(--text-dim); font-size: 0.75rem; }
 #site-tip::after {           /* petite fleche vers l'element */
   content: ''; position: absolute; left: var(--arrow-x, 50%); bottom: -6px; width: 10px; height: 10px; margin-left: -5px;
   background: var(--card); border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent); transform: rotate(45deg);

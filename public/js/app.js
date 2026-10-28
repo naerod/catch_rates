@@ -558,11 +558,11 @@ function eventCard(ev, { edit = false } = {}) {
           const best = Calc.computeOptimalFastest(p, state.balls);       // meilleure Pokeball automatique (meme choix que le calculateur)
           const ball = best ? i18n.ballName(best.key) : '';
           // Conditions pour atteindre ce taux : PV (y compris "PV pleins"), statut, nuit, attente du Timer Ball...
-          const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique)] : [];
+          const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique).map(c => c.label === i18n.t('technique_wait10') ? { ...c, label: i18n.t('ev_turns10') } : c)] : [];
           // Tout le detail est au survol : taux de capture, Pokeball, chance et conditions (PV, statut, nuit, attente)
-          const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? [conds.map(c => c.label).join(' · ')] : [])] : [])].join('\n');
+          const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? ['#' + conds.map(c => `${c.cls}:${c.label}`).join('|')] : [])] : [])].join('\n');
           return `
-          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}" aria-label="${tip.replace(/\n/g, ', ')}" tabindex="0">
+          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}" aria-label="${tip.replace(/#?chip-\w+:/g, '').replace(/[#\n]/g, ', ')}" tabindex="0">
             <span class="ep-icon">
               <img width="80" height="60" src="${miniIcon(p.id)}" alt="" loading="lazy" />
               ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="" width="28" height="28" loading="lazy" />` : ''}

@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.4",
+      "date": "2026-10-28",
+      "title": { "fr": "Conditions encadrées dans l'infobulle", "en": "Boxed conditions in the tooltip" },
+      "fr": ["Au survol d'un Pokémon d'événement, les conditions (1 PV, Sommeil, 10 tours) sont affichées dans des encadrés colorés, sans le mot « attendre »."],
+      "en": ["When hovering an event Pokémon, the conditions (1 HP, Sleep, 10 turns) now appear in coloured boxes, without the word \"wait\"."]
+    },
+    {
       "v": "3.17.3",
       "date": "2026-10-28",
       "title": { "fr": "« Event swarms » en français", "en": "\"Event swarms\" in French" },

@@ -39,7 +39,14 @@
     const [head, ...rest] = el.dataset.tip.split('\n');
     ensure().replaceChildren();
     const h = document.createElement('strong'); h.textContent = head; tip.appendChild(h);
-    for (const line of rest) { const p = document.createElement('span'); p.textContent = line; tip.appendChild(p); }
+    for (const line of rest) {
+      const p = document.createElement(line[0] === '#' ? 'div' : 'span');
+      if (line[0] === '#') {                                           // ligne de pastilles "#classe:libelle|classe:libelle"
+        p.className = 'tip-chips';
+        for (const c of line.slice(1).split('|')) { const [cls, ...l] = c.split(':'); const chip = document.createElement('span'); chip.className = `technique-chip ${cls}`; chip.textContent = l.join(':'); p.appendChild(chip); }
+      } else p.textContent = line;
+      tip.appendChild(p);
+    }
     tip.hidden = false; current = el;
     el.setAttribute('aria-describedby', 'site-tip');
     place(el);
