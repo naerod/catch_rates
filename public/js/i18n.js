@@ -4,7 +4,7 @@
 
 const translations = {
   en: {
-    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_live: 'Live now', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
+    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_suggest: 'Suggestions', home_add_method: 'Add a method to your favourites', home_add_event: 'Add an event to your favourites', ev_forecast: 'Forecast', ev_empty: 'Swarm list not available yet.', ev_add: 'Add an event', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
     nrd_login: "Log in / Sign up",
     nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: 'Team building guide', gr_team_guide_soon: 'Pokepaste coming soon', gr_info: 'Run info', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
@@ -44,7 +44,7 @@ const translations = {
     ty_fire: 'Fire', ty_normal: 'Normal', ty_flying: 'Flying', ty_water: 'Water', ty_ice: 'Ice', ty_poison: 'Poison', ty_dragon: 'Dragon', ty_ground: 'Ground',
     gr_tip_heal_230: 'With 2:30 left, heal if needed', gr_tip_channel: 'Change channel right after the battle to teleport straight to the exit',
     btn_sso_login: 'Sign in', btn_sso_logout: 'Sign out', btn_sso_admin: 'Sign in with Authentik', or: 'or',
-    calc_title: "Catch Rate Calculator", calc_subtitle: "PokeMMO — Gen 3-5 formula",
+    calc_title: "Catch Rate Calculator", calc_subtitle: "Catch Rate Calculator for PokeMMO — Gen 3-5 formula",
     search_placeholder: "Search Pokémon...", catch_rate_label: "Catch Rate", gen_label: "Gen",
     quickable_title: "Quick Ball recommended!", quickable_desc: "≥95% catch rate on turn 1 — throw it immediately!",
     quickable_title_accessible: "Quick Ball accessible", quickable_desc_accessible: "≥75% catch rate on turn 1 — maybe considering it?",
@@ -134,7 +134,7 @@ const translations = {
     history_close: "Close",
   },
   fr: {
-    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', home_live: 'En cours', ev_start: 'Début', ev_end: 'Fin', nav_events: "Essaims d'événements", nav_admin: 'Admin',
+    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', home_suggest: 'Suggestions', home_add_method: 'Ajouter une méthode à vos favoris', home_add_event: 'Ajouter un événement à vos favoris', ev_forecast: 'Prévision', ev_empty: 'Liste des swarms pas encore disponible.', ev_add: 'Ajouter un événement', ev_start: 'Début', ev_end: 'Fin', nav_events: "Essaims d'événements", nav_admin: 'Admin',
     nrd_login: "Connexion / Inscription",
     nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes', money_fav_add: 'Ajouter aux favoris', money_fav_remove: 'Retirer des favoris',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: "Guide de construction d'équipe", gr_team_guide_soon: 'Pokepaste bientôt disponible', gr_info: 'Infos du parcours', gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',
@@ -174,7 +174,7 @@ const translations = {
     ty_fire: 'Feu', ty_normal: 'Normal', ty_flying: 'Vol', ty_water: 'Eau', ty_ice: 'Glace', ty_poison: 'Poison', ty_dragon: 'Dragon', ty_ground: 'Sol',
     gr_tip_heal_230: "Avec 2:30 restantes, soigner si besoin", gr_tip_channel: "Changer de channel juste après le combat pour se téléporter directement à la sortie",
     btn_sso_login: 'Connexion', btn_sso_logout: 'Déconnexion', btn_sso_admin: 'Se connecter avec Authentik', or: 'ou',
-    calc_title: "Calculateur de Taux de Capture", calc_subtitle: "PokeMMO — Formule Gen 3-5",
+    calc_title: "Calculateur de Taux de Capture", calc_subtitle: "Calculateur de Taux de Capture — PokeMMO — Formule Gen 3-5",
     search_placeholder: "Rechercher un Pokémon...", catch_rate_label: "Taux de capture", gen_label: "Gén",
     quickable_title: "Quick Ball recommandée !", quickable_desc: "≥95% de capture au tour 1 — lancez-la immédiatement !",
     quickable_title_accessible: "Quick Ball accessible", quickable_desc_accessible: "≥75% de capture au tour 1 — peut-être à considérer ?",
@@ -245,7 +245,7 @@ const translations = {
   ja: {
     nav_calc: '計算機', nav_events: 'イベント', nav_admin: '管理',
     nrd_login: "ログイン / 新規登録",
-    calc_title: "キャッチレート計算機", calc_subtitle: "PokeMMO — Gen 3-5 計算式",
+    calc_title: "キャッチレート計算機", calc_subtitle: "キャッチレート計算機 — PokeMMO — Gen 3-5 計算式",
     search_placeholder: "ポケモンを検索...", catch_rate_label: "つかまえやすさ", gen_label: "世代",
     quickable_title: "クイックボール推奨！", quickable_desc: "第1ターンに≥95%の捕獲率 — すぐに投げよう！",
     quickable_title_accessible: "クイックボール有効", quickable_desc_accessible: "第1ターンに≥75%の捕獲率 — 検討してみよう？",
@@ -308,7 +308,7 @@ const translations = {
   pt: {
     nav_calc: 'Calculadora', nav_events: 'Eventos', nav_admin: 'Admin',
     nrd_login: "Entrar / Cadastrar",
-    calc_title: "Calculadora de Taxa de Captura", calc_subtitle: "PokeMMO — Fórmula Gen 3-5",
+    calc_title: "Calculadora de Taxa de Captura", calc_subtitle: "Calculadora de Taxa de Captura — PokeMMO — Fórmula Gen 3-5",
     search_placeholder: "Procurar Pokémon...", catch_rate_label: "Taxa de Captura", gen_label: "Ger",
     quickable_title: "Quick Ball recomendada!", quickable_desc: "≥95% de captura no turno 1 — lance imediatamente!",
     quickable_title_accessible: "Quick Ball acessível", quickable_desc_accessible: "≥75% de captura no turno 1 — considere usar?",
@@ -371,7 +371,7 @@ const translations = {
   es: {
     nav_calc: 'Calculadora', nav_events: 'Eventos', nav_admin: 'Admin',
     nrd_login: "Iniciar sesión / Registrarse",
-    calc_title: "Calculadora de Tasa de Captura", calc_subtitle: "PokeMMO — Fórmula Gen 3-5",
+    calc_title: "Calculadora de Tasa de Captura", calc_subtitle: "Calculadora de Tasa de Captura — PokeMMO — Fórmula Gen 3-5",
     search_placeholder: "Buscar Pokémon...", catch_rate_label: "Tasa de Captura", gen_label: "Gen",
     quickable_title: "¡Quick Ball recomendada!", quickable_desc: "≥95% de captura en el turno 1 — ¡lánzala inmediatamente!",
     quickable_title_accessible: "Quick Ball accesible", quickable_desc_accessible: "≥75% de captura en el turno 1 — ¿quizás considerarla?",
@@ -434,7 +434,7 @@ const translations = {
   ko: {
     nav_calc: '계산기', nav_events: '이벤트', nav_admin: '관리',
     nrd_login: "로그인 / 가입",
-    calc_title: "포획률 계산기", calc_subtitle: "PokeMMO — Gen 3-5 공식",
+    calc_title: "포획률 계산기", calc_subtitle: "포획률 계산기 — PokeMMO — Gen 3-5 공식",
     search_placeholder: "포켓몬 검색...", catch_rate_label: "포획률", gen_label: "세대",
     quickable_title: "퀵볼 추천!", quickable_desc: "1턴에 ≥95% 포획률 — 즉시 던지세요!",
     quickable_title_accessible: "퀵볼 유효", quickable_desc_accessible: "1턴에 ≥75% 포획률 — 사용 고려해보세요?",
@@ -497,7 +497,7 @@ const translations = {
   zh: {
     nav_calc: '计算器', nav_events: '活动', nav_admin: '管理',
     nrd_login: "登录 / 注册",
-    calc_title: "捕捉率计算器", calc_subtitle: "PokeMMO — Gen 3-5 公式",
+    calc_title: "捕捉率计算器", calc_subtitle: "捕捉率计算器 — PokeMMO — Gen 3-5 公式",
     search_placeholder: "搜索宝可梦...", catch_rate_label: "捕捉率", gen_label: "世代",
     quickable_title: "推荐快速球！", quickable_desc: "第1回合捕捉率≥95% — 立即投出！",
     quickable_title_accessible: "快速球可用", quickable_desc_accessible: "第1回合捕捉率≥75% — 可以考虑使用？",
@@ -560,7 +560,7 @@ const translations = {
   de: {
     nav_calc: 'Rechner', nav_events: 'Events', nav_admin: 'Admin',
     nrd_login: "Anmelden / Registrieren",
-    calc_title: "Fangwahrscheinlichkeits-Rechner", calc_subtitle: "PokeMMO — Gen 3-5 Formel",
+    calc_title: "Fangwahrscheinlichkeits-Rechner", calc_subtitle: "Fangwahrscheinlichkeits-Rechner — PokeMMO — Gen 3-5 Formel",
     search_placeholder: "Pokémon suchen...", catch_rate_label: "Fangrate", gen_label: "Gen",
     quickable_title: "Flottball empfohlen!", quickable_desc: "≥95% Fangchance in Runde 1 — sofort werfen!",
     quickable_title_accessible: "Flottball nutzbar", quickable_desc_accessible: "≥75% Fangchance in Runde 1 — vielleicht in Betracht ziehen?",
@@ -623,7 +623,7 @@ const translations = {
   it: {
     nav_calc: 'Calcolatrice', nav_events: 'Eventi', nav_admin: 'Admin',
     nrd_login: "Accedi / Registrati",
-    calc_title: "Calcolatore Tasso di Cattura", calc_subtitle: "PokeMMO — Formula Gen 3-5",
+    calc_title: "Calcolatore Tasso di Cattura", calc_subtitle: "Calcolatore Tasso di Cattura — PokeMMO — Formula Gen 3-5",
     search_placeholder: "Cerca Pokémon...", catch_rate_label: "Tasso di Cattura", gen_label: "Gen",
     quickable_title: "Quick Ball consigliata!", quickable_desc: "≥95% tasso al turno 1 — lanciala subito!",
     quickable_title_accessible: "Quick Ball accessibile", quickable_desc_accessible: "≥75% tasso al turno 1 — forse da considerare?",
@@ -686,7 +686,7 @@ const translations = {
   id: {
     nav_calc: 'Kalkulator', nav_events: 'Event', nav_admin: 'Admin',
     nrd_login: "Masuk / Daftar",
-    calc_title: "Kalkulator Tingkat Tangkap", calc_subtitle: "PokeMMO — Rumus Gen 3-5",
+    calc_title: "Kalkulator Tingkat Tangkap", calc_subtitle: "Kalkulator Tingkat Tangkap — PokeMMO — Rumus Gen 3-5",
     search_placeholder: "Cari Pokémon...", catch_rate_label: "Tingkat Tangkap", gen_label: "Gen",
     quickable_title: "Quick Ball direkomendasikan!", quickable_desc: "≥95% tingkat tangkap di giliran 1 — lempar sekarang!",
     quickable_title_accessible: "Quick Ball tersedia", quickable_desc_accessible: "≥75% tingkat tangkap di giliran 1 — mungkin layak dicoba?",

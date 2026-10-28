@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.15.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Accueil CatchR, événements 2024-2026, favoris et suggestions", "en": "CatchR home, 2024-2026 events, favourites and suggestions" },
+      "fr": ["Accueil : titre « CatchR » avec le logo (sans effet de halo) et sous-titre « Catch Rate Calculator for PokeMMO — Gen 3-5 formula » ; barre de recherche corrigée (plus de cadre interne), loupe Material Symbols au lieu de l'emoji, bouton historique de la même hauteur.", "Événements ajoutés : Halloween 2024, Halloween 2025, Noël 2025, LNY 2026 et Halloween 2026 (tag « Prévision », basé sur Halloween 2025), avec une icône par type (citrouille, bonnet de Père Noël, lune). Seules les listes de swarms vérifiées sont renseignées (Noël 2024, Halloween 2025 partiel) ; les autres affichent « Liste des swarms pas encore disponible ».", "Accueil : la section Favoris propose deux cartes « + » pour ajouter une méthode ou un événement ; nouvelle section « Suggestions » qui affiche, en rotation, les événements d'actualité (5 jours avant le début jusqu'à 5 jours après la fin).", "Le bouton Admin quitte la barre : les comptes autorisés ont le bouton Edit sur chaque événement et un bouton « + » sur la page Événements."],
+      "en": ["Home: \"CatchR\" title with the logo (no glow) and subtitle \"Catch Rate Calculator for PokeMMO — Gen 3-5 formula\"; search bar fixed (no inner frame), Material Symbols magnifier instead of the emoji, history button the same height.", "Events added: Halloween 2024, Halloween 2025, Xmas 2025, LNY 2026 and Halloween 2026 (\"Forecast\" tag, based on Halloween 2025), with one icon per type (pumpkin, Santa hat, moon). Only verified swarm lists are filled in (Xmas 2024, partial Halloween 2025); the others show \"Swarm list not available yet\".", "Home: the Favourites section offers two \"+\" cards to add a method or an event; new \"Suggestions\" section rotating through current events (from 5 days before the start to 5 days after the end).", "The Admin button leaves the top bar: authorized accounts get an Edit button on each event and a \"+\" button on the Events page."]
+    },
+    {
       "v": "3.14.0",
       "date": "2026-10-28",
       "title": { "fr": "Infobulles du site, puces en icônes, temps de référence permanent", "en": "Site tooltips, icon-only chips, permanent reference time" },

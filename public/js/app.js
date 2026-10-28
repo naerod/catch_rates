@@ -532,16 +532,25 @@ const isLive = ev => {                                              // en cours 
   return !!ev.starts_at && !!ev.ends_at && ev.starts_at <= today && today <= ev.ends_at;
 };
 
+const EVENT_ICONS = {   // SVG sobres (une couleur), reconnaissables a petite taille
+  halloween: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M11 2.5h2v3.2c5-.6 9 3 9 7.6 0 4.2-3.8 7.7-10 7.7S2 17.500 2 13.300c0-4.600 4-8.200 9-7.600zM7.500 10.500l2 3.200h-4zM16.500 10.500l2 3.200h-4zM7.500 16.500h9l-1.500 2.500-1.500-1.200-1.500 1.200-1.500-1.200L9 19z"/></svg>',
+  xmas: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.500 17.500C5 9 8.500 4.500 14 4.500c1.800 0 3.200.6 4 1.800L20.500 17.500z"/><rect x="2.500" y="16.500" width="19" height="4.500" rx="2.250" opacity=".55"/><circle cx="19" cy="5.500" r="2.500"/></svg>',
+  lny: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.500 14.500A9 9 0 0 1 9.500 3.500a9 9 0 1 0 11 11z"/></svg>',
+};
+
 function eventCard(ev, { edit = false } = {}) {
   const fav = evFavs().includes(ev.slug), favLabel = i18n.t(fav ? 'money_fav_remove' : 'money_fav_add');
   return `
     <div class="event-card">
       <div class="event-card-header">
+        ${EVENT_ICONS[ev.kind] ? `<span class="ev-icon ev-${ev.kind}">${EVENT_ICONS[ev.kind]}</span>` : ''}
         <span class="event-name">${ev.name_en}</span>
+        ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
         ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
         <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
       </div>
-      <div class="event-pokemon-grid">
+      ${(ev.pokemon || []).length ? '' : `<p class="ev-empty">${i18n.t('ev_empty')}</p>`}
+      <div class="event-pokemon-grid"${(ev.pokemon || []).length ? '' : ' hidden'}>
         ${(ev.pokemon || []).map(p => {
           const best = Calc.computeOptimalFastest(p, state.balls);       // meilleure Pokeball automatique (meme choix que le calculateur)
           const ball = best ? i18n.ballName(best.key) : '';
@@ -561,6 +570,7 @@ function eventCard(ev, { edit = false } = {}) {
 
 async function loadEvents() {
   const container = $('events-list');
+  $('event-add-btn').hidden = !canEditEvents();
   const events = await getEvents(true);
   if (!events.length) {
     container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
@@ -581,23 +591,52 @@ document.addEventListener('click', e => {
     return;
   }
   if (e.target.closest('.event-edit-btn')) showPage('admin');
+  if (e.target.closest('#event-add-btn')) { showPage('admin'); setTimeout(() => $('event-slug')?.focus(), 400); }
 });
 
 /* ══════════════ ACCUEIL : raccourcis ══════════════ */
-/* Explorer ; Favoris (methodes Money making + boites d'evenements) ; sans aucun favori, l'evenement en cours s'il y en a un. */
+/* Explorer ; Favoris (methodes Money making + boites d'evenements + "+" pour en ajouter) ;
+   Suggestions : evenements d'actualite (5 jours avant le debut -> 5 jours apres la fin), un a la fois, en rotation. */
+const DAY = 86400000, SUGGEST_BEFORE = 5, SUGGEST_AFTER = 5, EVENT_DAYS = 15, ROTATE_MS = 8000;
+const dayStart = iso => new Date(`${iso}T00:00:00`).getTime();
+const inSuggestWindow = ev => {
+  if (!ev.starts_at) return false;
+  const start = dayStart(ev.starts_at), end = ev.ends_at ? dayStart(ev.ends_at) : start + EVENT_DAYS * DAY;
+  const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  return today >= start - SUGGEST_BEFORE * DAY && today <= end + SUGGEST_AFTER * DAY;
+};
+
+let rotateTimer = 0;
 async function renderHome() {
   const el = $('home-shortcuts'); if (!el) return;
+  clearInterval(rotateTimer);
   const sec = (title, body) => body ? `<section class="home-section"><h2 class="home-title">${i18n.t(title)}</h2>${body}</section>` : '';
+  const addCard = (go, ic, tipKey) => `<button type="button" class="home-card is-add" data-go="${go}" data-tip="${i18n.t(tipKey)}" aria-label="${i18n.t(tipKey)}"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>`;
   const paint = evs => {
     const slugs = evFavs(), methods = Money.homeFavCards(), favEvents = evs.filter(ev => slugs.includes(ev.slug));
-    const live = methods || favEvents.length ? [] : evs.filter(isLive);
+    const suggest = evs.filter(inSuggestWindow);
     el.innerHTML =
       sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
-      sec('home_favs', (methods ? `<div class="home-grid">${methods}</div>` : '') + (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
-      sec('home_live', live.length ? `<div class="home-events">${live.map(ev => eventCard(ev)).join('')}</div>` : '');
+      sec('home_favs', `<div class="home-grid">${methods}${addCard('#money', 'add', 'home_add_method')}${addCard('#events', 'add', 'home_add_event')}</div>` +
+        (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
+      sec('home_suggest', suggest.length ? `<div class="home-suggest">${suggest.map((ev, i) => `<div class="hs-slide${i ? '' : ' is-on'}">${eventCard(ev)}</div>`).join('')}${
+        suggest.length > 1 ? `<div class="hs-dots">${suggest.map((_, i) => `<button type="button" class="hs-dot${i ? '' : ' is-on'}" data-slide="${i}" aria-label="${i + 1}/${suggest.length}"></button>`).join('')}</div>` : ''}</div>` : '');
+    if (suggest.length > 1) startRotation(el.querySelector('.home-suggest'));
   };
   paint(eventsData || []);
   if (!eventsData) { try { paint(await getEvents()); } catch { /* hors ligne : on garde l'affichage sans evenements */ } }
+}
+
+function startRotation(box) {
+  const slides = [...box.querySelectorAll('.hs-slide')], dots = [...box.querySelectorAll('.hs-dot')];
+  let i = 0, paused = false;
+  const go = n => { i = (n + slides.length) % slides.length; slides.forEach((s, k) => s.classList.toggle('is-on', k === i)); dots.forEach((d, k) => d.classList.toggle('is-on', k === i)); };
+  box.addEventListener('mouseenter', () => { paused = true; });
+  box.addEventListener('mouseleave', () => { paused = false; });
+  box.addEventListener('focusin', () => { paused = true; });
+  box.addEventListener('focusout', () => { paused = false; });
+  dots.forEach(d => d.addEventListener('click', () => go(Number(d.dataset.slide))));
+  rotateTimer = setInterval(() => { if (!paused && state.page === 'calc') go(i + 1); }, ROTATE_MS);
 }
 
 /* ══════════════ USER SESSION (OIDC) ══════════════ */

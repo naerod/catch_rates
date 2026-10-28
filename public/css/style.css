@@ -244,7 +244,6 @@ main {
   font-weight: 700;
   color: var(--accent);
 }
-[data-theme="dark"] .page-title h1 { text-shadow: 0 0 30px rgba(var(--accent-rgb),0.25); }
 .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
 
 /* ══════════════ SEARCH ══════════════ */
@@ -256,20 +255,21 @@ main {
 
 .search-row {
   display: flex;
-  align-items: center;
+  align-items: stretch;   /* le bouton historique prend la hauteur de la barre de recherche */
   gap: 0.5rem;
 }
 .search-row .search-box { flex: 1; min-width: 0; }
 
 .history-toggle-btn {
   flex-shrink: 0;
-  width: 44px; height: 44px;
+  width: 52px; height: auto;   /* carre : meme hauteur que la barre de recherche (~52 px) */
   border-radius: var(--radius-lg);
 }
 
 .search-box {
   display: flex;
   align-items: center;
+  min-height: 52px;
   background: var(--input-bg);
   border: 2px solid var(--card-border);
   border-radius: var(--radius-lg);
@@ -281,7 +281,7 @@ main {
   box-shadow: var(--glow);
 }
 
-.search-icon { color: var(--text-muted); font-size: 1rem; margin-right: 0.6rem; flex-shrink: 0; }
+.search-icon { color: var(--text-muted); font-size: 22px; margin-right: 0.6rem; flex-shrink: 0; user-select: none; }
 
 #pokemon-search {
   flex: 1;
@@ -292,7 +292,9 @@ main {
   font-size: 1.05rem;
   font-family: var(--font-body);
   padding: 0.85rem 0;
+  border-radius: 0; box-shadow: none; width: auto; min-width: 0;   /* neutralise la regle generale input[type=text] (cadre interne visible au focus) */
 }
+#pokemon-search:focus { border: none; box-shadow: none; }
 #pokemon-search::placeholder { color: var(--text-muted); }
 
 .search-clear {
@@ -1312,3 +1314,16 @@ footer {
 }
 #site-tip.is-below::after { bottom: auto; top: -6px; transform: rotate(225deg); }
 @media (prefers-reduced-motion: reduce) { #site-tip { transition: none; } }
+
+/* Evenements : icone de type, tag prevision, etat vide, bouton d'ajout */
+.ev-icon { display: inline-grid; place-items: center; width: 24px; height: 24px; flex: none; }
+.ev-icon svg { width: 22px; height: 22px; fill: currentColor; }
+.ev-halloween { color: #f08a24; } .ev-xmas { color: #e5484d; } .ev-lny { color: #f5b942; }
+.ev-tag { padding: 0.1rem 0.55rem; border-radius: 1em; border: 1px dashed var(--accent); color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.ev-empty { padding: 1.25rem; color: var(--text-dim); font-size: 0.85rem; text-align: center; }
+.events-toolbar { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
+.events-toolbar[hidden], #event-add-btn[hidden] { display: none; }
+#event-add-btn { width: 40px; height: 40px; }
+
+.page-title h1.site-title { display: inline-flex; align-items: center; gap: 0.75rem; }
+.site-title img { width: 48px; height: 48px; object-fit: contain; }
