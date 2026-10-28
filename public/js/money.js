@@ -65,7 +65,7 @@ const Money = (() => {
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
     if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)
-    if (c === '~') return leadMode ? `<span class="tk-act tk-stack" data-mon="${rest}">${monSprite(rest)}<b>${esc(name(data.mons, rest))}</b></span>` : `<b class="tk-act" data-mon="${rest}">${esc(name(data.mons, rest))}</b>`;
+    if (c === '~') return leadMode ? `<span class="tk-act tk-stack" data-mon="${rest}">${monSprite(rest)}<b>${esc(name(data.mons, rest))}</b></span>` : `<span class="tk-act" data-mon="${rest}">${monSprite(rest, false)}<b>${esc(name(data.mons, rest))}</b></span>`;
     if (c === '.') return `<b class="tk-move">${esc(t('mv_' + rest))}</b>`;
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
@@ -73,7 +73,7 @@ const Money = (() => {
       return `<span class="tk-opp">${sprite(dex, name(data.opponents, dex), 'is-opp')}${lv}</span>`;
     }
     const [mon, move] = tk.split('.');
-    return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<b class="tk-act tk-move" data-mon="${mon}">${esc(t('mv_' + move))}</b>`;
+    return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<span class="tk-act" data-mon="${mon}">${monSprite(mon, false)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
   }
   const line = (l, n) => {
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
