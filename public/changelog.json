@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.3",
+      "date": "2026-10-28",
+      "title": { "fr": "« Event swarms » en français", "en": "\"Event swarms\" in French" },
+      "fr": ["En français, le bouton « Essaims d'événements » redevient « Event swarms » (barre du haut et accueil)."],
+      "en": ["In French, the \"Essaims d'événements\" button goes back to \"Event swarms\" (top bar and home page)."]
+    },
+    {
       "v": "3.17.2",
       "date": "2026-10-28",
       "title": { "fr": "Passe de contrôle avant la production", "en": "Pre-production check" },
