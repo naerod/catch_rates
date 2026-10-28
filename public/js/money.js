@@ -8,7 +8,6 @@ const Money = (() => {
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], src: '/data/technical-route.json' },
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], src: '/data/gym-rerun.json' },
   ];
-  const PREFS = 'money.prefs';                                        // timecodes : communs a toutes les methodes
   const FAVS = 'money.favs';
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -18,22 +17,19 @@ const Money = (() => {
   const datas = {};                                                   // donnees deja chargees, par methode
   let data = null;                                                    // donnees de la methode ouverte
   let loading = false;
-  const state = { method: null, region: null, tc: true, view: 'route' };   // region : region a faire defiler en vue (lien profond)
+  const state = { method: null, region: null, view: 'route' };   // region : region a faire defiler en vue (lien profond)
 
   /* ── Persistance : hash (#money/gym-rerun[/kanto]) puis localStorage ── */
   function restore() {
-    try { Object.assign(state, JSON.parse(localStorage.getItem(PREFS)) || {}); } catch { /* stockage indisponible */ }
     const seg = location.hash.slice(1).split('/').slice(1);
     if (seg[0] === state.method) seg.shift();
     state.view = seg[0] === 'team' ? 'team' : 'route';
     if (state.view === 'team') seg.shift();
     state.region = data.regions.find(r => r.id === seg[0])?.id || null;
-    state.tc = state.tc !== false;
   }
   /* Historique : chaque changement d'ecran est une entree, le retour arriere du navigateur reste dans le site. */
   const push = h => { if (location.hash !== h) history.pushState({ m: 1 }, '', h); };
   function persist(navigate = false) {
-    try { localStorage.setItem(PREFS, JSON.stringify({ tc: state.tc })); } catch { /* idem */ }
     const h = `#money/${state.method}${state.view === 'team' ? '/team' : ''}`;
     if (navigate) push(h); else history.replaceState({ m: 1 }, '', h);
   }
@@ -52,7 +48,7 @@ const Money = (() => {
     const it = gymItems[id];
     if (!it) return '';
     const label = esc(t('it_' + it));
-    return `<span class="item-badge" data-item="${it}" title="${label}"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="${label}" width="30" height="30"></span>`;
+    return `<span class="item-badge" data-item="${it}" data-tip="${esc(name(data.mons, id))}&#10;${label}"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="${label}" width="30" height="30"></span>`;
   }
   const monSprite = (id, withItem = true) => {
     const s = sprite(data.mons[id].dex, name(data.mons, id));
@@ -89,11 +85,13 @@ const Money = (() => {
   /* Entre deux cartes : soin conseille apres le combat, puis les objets a changer avant le suivant. */
   function between(a) {
     if (!a) return '';
-    const heal = a.heal ? `<span class="after-chip is-heal">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}${a.healMon ? monSprite(a.healMon, false) : ''}</span>` : '';
+    const healTip = a.heal ? esc(`${t('gr_heal_' + a.heal)}\n${t('gr_heal_hint_' + a.heal)}`) : '';
+    const heal = a.heal ? `<span class="after-chip is-heal" data-tip="${healTip}" tabindex="0">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}${a.healMon ? monSprite(a.healMon, false) : ''}</span>` : '';
     const swaps = (a.switch || []).map(s => {
       const label = esc(`${name(data.mons, s.mon)} → ${t('it_' + s.item)}`);
-      return `<span class="after-chip is-swap" data-item="${s.item}" title="${label}" aria-label="${label}">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
-        `<img class="swap-item" src="/gym-rerun/items/${ITEM_ICON[s.item]}.png" alt="" width="30" height="30"><span>${esc(t('it_' + s.item))}</span>${s.exit ? `<span class="tk-word">${esc(t('gr_on_exit'))}</span>` : ''}</span>`;
+      const tip = esc(`${name(data.mons, s.mon)} → ${t('it_' + s.item)}\n${t('gr_swap_hint')}${s.exit ? ' · ' + t('gr_on_exit') : ''}`);
+      return `<span class="after-chip is-swap" data-item="${s.item}" data-tip="${tip}" aria-label="${label}" tabindex="0">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
+        `<img class="swap-item" src="/gym-rerun/items/${ITEM_ICON[s.item]}.png" alt="" width="30" height="30">${s.exit ? icon('logout') : ''}</span>`;
     }).join('');
     return `<div class="gym-between">${heal}${swaps}</div>`;
   }
@@ -275,12 +273,6 @@ const Money = (() => {
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
 
-  function modeUI() {
-    $('money-tc').checked = state.tc;
-    $('money-tc').closest('label').hidden = !data.regions.some(r => r.gyms.some(g => g.time != null));
-    $('money-method').classList.toggle('no-tc', !state.tc);
-  }
-
   /* ── Page "Team building guide" : l'equipe a construire et les points d'attention, tires des donnees de la methode ── */
   function teamPage() {
     const tg = data.teamGuide || {};
@@ -317,7 +309,7 @@ const Money = (() => {
 
   function renderAll(animate) {
     $('money-method').classList.toggle('is-team', state.view === 'team');
-    setTitle(); infoBar(); modeUI();
+    setTitle(); infoBar();
     if (state.view === 'team') { teamPage(); return; }
     stage(animate);
     if (state.region) { $('region-' + state.region)?.scrollIntoView(); state.region = null; }
@@ -389,7 +381,6 @@ const Money = (() => {
       const b = e.target.closest('[data-method]'); if (b) { push('#money/' + b.dataset.method); enter(b.dataset.method); }
     });
     $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
-    $('money-tc').addEventListener('change', e => { state.tc = e.target.checked; persist(); modeUI(); });
     const panel = $('money-charm');
     panel.addEventListener('beforetoggle', e => {                    // se place sous le bouton, a droite de l'ecran
       if (e.newState !== 'open') return;

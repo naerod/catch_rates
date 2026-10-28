@@ -187,7 +187,6 @@
 .tc-toggle { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--text-dim); cursor: pointer; white-space: nowrap; }
 .tc-toggle input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
 .tc-toggle .material-symbols-outlined { font-size: 18px; }
-.no-tc .gym-chip.is-time { display: none; }
 
 
 /* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
@@ -390,3 +389,5 @@ naerod-header { transition: transform 0.25s ease; }
 
 /* Mode sombre : texte presque blanc sur Money making (le gris #b0b0b0 fatigue la lecture du guide) */
 [data-theme="dark"] #page-money { --text: #fafafa; --text-dim: #f3f3f3; --text-muted: #d2d2d2; }
+.after-chip.is-swap .material-symbols-outlined { color: #1f2430; }
+.after-chip.is-swap:focus-visible, .after-chip.is-heal:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

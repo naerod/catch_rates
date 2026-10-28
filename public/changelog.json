@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.14.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Infobulles du site, puces en icônes, temps de référence permanent", "en": "Site tooltips, icon-only chips, permanent reference time" },
+      "fr": ["Nouvelle infobulle aux couleurs du site (titre en gras + explication), qui remplace l'infobulle basique du navigateur partout : bouton Riches Charm, étoiles, tuiles d'événements, pastilles d'objet…", "Les boutons « changement d'objet » n'affichent plus que des icônes (Pokémon, objet, et « à la sortie » le cas échéant) ; le détail apparaît au survol. Le bouton de soin explique, au survol, ce que signifie « Heal », « Heal if needed » ou « Heal if required ».", "La case « Reference time » est supprimée : les temps de référence sont toujours affichés."],
+      "en": ["New site-colored tooltip (bold title + explanation) replacing the browser's basic tooltip everywhere: Riches Charm button, stars, event tiles, item badges…", "Item-swap buttons now show icons only (Pokémon, item, and \"on exit\" when relevant); details appear on hover. The heal button explains on hover what \"Heal\", \"Heal if needed\" or \"Heal if required\" means.", "The \"Reference time\" checkbox is removed: reference times are always shown."]
+    },
+    {
       "v": "3.13.5",
       "date": "2026-10-28",
       "title": { "fr": "Money making : texte encore plus blanc en mode sombre", "en": "Money making: even whiter text in dark mode" },

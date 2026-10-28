@@ -1292,3 +1292,23 @@ footer {
 .admin-event-dates { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-left: auto; font-size: 0.75rem; color: var(--text-dim); }
 .admin-event-dates label { display: flex; flex-direction: column; gap: 0.15rem; }
 .admin-event-dates input { font: inherit; color: var(--text); background: var(--bg3); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 0.25rem 0.4rem; }
+
+/* ══════════════ INFOBULLE (js/tooltip.js) ══════════════ */
+#site-tip {
+  position: fixed; z-index: 2000; max-width: min(280px, calc(100vw - 16px)); padding: 0.5rem 0.75rem; pointer-events: none;
+  display: flex; flex-direction: column; gap: 0.15rem;
+  background: var(--card); color: var(--text); border: 1px solid var(--accent); border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 0 12px rgba(var(--accent-rgb), 0.18); font-size: 0.8rem; line-height: 1.35;
+  opacity: 0; transform: translateY(4px); transition: opacity 0.14s ease, transform 0.14s ease;
+}
+#site-tip.is-below { transform: translateY(-4px); }
+#site-tip.is-on { opacity: 1; transform: none; }
+#site-tip[hidden] { display: none; }
+#site-tip strong { font-weight: 700; }
+#site-tip span { color: var(--text-dim); font-size: 0.75rem; }
+#site-tip::after {           /* petite fleche vers l'element */
+  content: ''; position: absolute; left: var(--arrow-x, 50%); bottom: -6px; width: 10px; height: 10px; margin-left: -5px;
+  background: var(--card); border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent); transform: rotate(45deg);
+}
+#site-tip.is-below::after { bottom: auto; top: -6px; transform: rotate(225deg); }
+@media (prefers-reduced-motion: reduce) { #site-tip { transition: none; } }
