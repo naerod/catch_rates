@@ -389,4 +389,4 @@ naerod-header { transition: transform 0.25s ease; }
 .home-card[class*="tone-"]:hover > .material-symbols-outlined:last-child { color: var(--tone); }
 
 /* Mode sombre : texte presque blanc sur Money making (le gris #b0b0b0 fatigue la lecture du guide) */
-[data-theme="dark"] #page-money { --text-dim: #e2e2e2; --text-muted: #b9b9b9; }
+[data-theme="dark"] #page-money { --text: #fafafa; --text-dim: #f3f3f3; --text-muted: #d2d2d2; }
