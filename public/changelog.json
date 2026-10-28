@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.7",
+      "date": "2026-10-28",
+      "title": { "fr": "Carte Goldenrod corrigée", "en": "Goldenrod map fixed" },
+      "fr": ["La carte de Goldenrod (Johto) pointait la mauvaise ville ; la flèche désigne maintenant la grande ville."],
+      "en": ["The Goldenrod (Johto) map pointed at the wrong town; the arrow now targets the big city."]
+    },
+    {
       "v": "3.17.6",
       "date": "2026-10-28",
       "title": { "fr": "Cartes Pewter et Cinnabar corrigées", "en": "Pewter and Cinnabar maps fixed" },
