@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.15.2",
+      "date": "2026-10-28",
+      "title": { "fr": "Photo de profil dans la barre", "en": "Profile photo in the top bar" },
+      "fr": ["Une fois connecté, la barre affiche la photo de ton profil central naerod (celle de tout l'écosystème) au lieu d'une simple initiale ; sans photo, l'initiale reste."],
+      "en": ["Once signed in, the top bar shows your central naerod profile photo (the one shared across the ecosystem) instead of a plain initial; without a photo, the initial stays."]
+    },
+    {
       "v": "3.15.1",
       "date": "2026-10-28",
       "title": { "fr": "Libellé de la section suggestions", "en": "Suggestions section label" },

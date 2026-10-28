@@ -180,6 +180,14 @@ app.get('/auth/logout', async (req, res) => {
   req.session.destroy(() => res.redirect(endSession));
 });
 
+// Photo de profil : service central naerod-profile (auth.naerod.com, ou preprod-auth.naerod.com depuis une preprod).
+// Si le profil n'a pas de photo (404) ou si le service n'est pas encore en prod, la barre retombe sur l'initiale.
+const avatarUrl = (req, username) => {
+  const host = String(req.get('x-forwarded-host') || req.hostname || '').split(',')[0];
+  const base = host.startsWith('preprod-') ? 'https://preprod-auth.naerod.com' : 'https://auth.naerod.com';
+  return `${base}/avatar/${encodeURIComponent(username)}?w=160`;
+};
+
 app.get('/api/auth/me', (req, res) => {
   if (!req.session?.oidcUser) return res.json({ authenticated: false });
   const { username, name, email, groups } = req.session.oidcUser;
@@ -187,7 +195,7 @@ app.get('/api/auth/me', (req, res) => {
   const isEventManager = groups.some(g => ['catchr-event-managers', 'catchr-admins'].includes(g));
   const isUser         = groups.some(g => CATCHR_GROUPS.includes(g));
   res.json({
-    authenticated: true, username, name, email,
+    authenticated: true, username, name, email, avatar: avatarUrl(req, username),
     role: isAdmin ? 'admin' : isEventManager ? 'event-manager' : isUser ? 'user' : 'none',
     isAdmin, isEventManager, isUser,
   });
