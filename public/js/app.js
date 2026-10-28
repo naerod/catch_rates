@@ -16,7 +16,8 @@ const state = {
 const HP_VALUES = [1, 25, 50, 75, 100];
 
 const $ = id => document.getElementById(id);
-const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;   // grande image : fiche du resultat uniquement
+const miniIcon = id => `/gym-rerun/icons/${id}.png`;                                                          // petite icone 8 bits locale : listes, recherche, evenements
 
 /* ══════════════ THEME ══════════════ */
 /* Le bouton, la persistance et l attribut data-theme sont geres par
@@ -28,22 +29,53 @@ const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/s
    plutot que de naviguer lui-meme, le routage reste au site. */
 document.addEventListener('naerod:navigate', e => {
   e.preventDefault();          // on revendique le routage, sinon le header
-  showPage(e.detail.page);     // renverrait vers l accueil (cas /changelog)
+  showPage(e.detail.page, true);  // renverrait vers l accueil (cas /changelog)
 });
 
 // Arrivee depuis une autre page (ex. /changelog#events) : ouvrir la bonne vue.
 addEventListener('DOMContentLoaded', () => {
-  const p = location.hash.slice(1);
+  const p = location.hash.slice(1).split('/')[0];
   if (p && document.getElementById('page-' + p)) showPage(p);
 });
 
-function showPage(page) {
+/* Defilement conserve apres un rafraichissement (par onglet, par adresse). */
+history.scrollRestoration = 'manual';
+const SCROLL_KEY = 'catchr-scroll';
+let scrollReady = false, scrollTimer = 0;
+const saveScroll = () => { try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify({ h: location.hash, y: scrollY })); } catch { /* stockage indisponible */ } };
+addEventListener('scroll', () => { if (!scrollReady) return; clearTimeout(scrollTimer); scrollTimer = setTimeout(saveScroll, 150); }, { passive: true });
+addEventListener('pagehide', () => { if (scrollReady) saveScroll(); });
+addEventListener('load', () => {
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(SCROLL_KEY)); } catch { /* idem */ }
+  if (!saved || saved.h !== location.hash || !saved.y) { scrollReady = true; return; }
+  let tries = 0;                                                  // le contenu (donnees, images) arrive apres le chargement : on reessaie
+  const timer = setInterval(() => {
+    scrollTo(0, saved.y);
+    if (++tries >= 30 || Math.abs(scrollY - saved.y) < 2) { clearInterval(timer); scrollReady = true; }
+  }, 100);
+});
+
+// Retour / avance du navigateur : afficher la page de l'adresse (money gere ses sous-ecrans lui-meme).
+addEventListener('popstate', () => {
+  const p = location.hash.slice(1).split('/')[0] || 'calc';
+  if (p !== state.page && document.getElementById('page-' + p)) showPage(p, p === 'money' && !location.hash.split('/')[1]);
+});
+
+function showPage(page, fresh = false) {
   state.page = page;
+  document.documentElement.dataset.page = page;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   // L etat actif de la nav appartient au header partage : on le lui declare.
   document.querySelector('naerod-header')?.setAttribute('active', page);
   $('page-' + page).classList.add('active');
+  // L'adresse suit la page affichee : un rafraichissement revient ici (money gere sa propre adresse).
+  if (page !== 'money' && location.hash.slice(1).split('/')[0] !== page) history.replaceState(history.state, '', page === 'calc' ? location.pathname + location.search : '#' + page);
+  document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
+  document.querySelector('.layout-grid').classList.toggle('is-events', page === 'events');
 
+  if (page === 'calc') renderHome();                              // favoris a jour
+  if (page === 'money') Money.open(fresh);
   if (page === 'events') loadEvents();
   if (page === 'admin') initAdmin();
 }
@@ -116,7 +148,7 @@ function renderDropdown(pokemon) {
   activeSearchIndex = -1;
   searchDropdown.innerHTML = pokemon.map(p => `
     <div class="search-item" data-id="${p.id}">
-      <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+      <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
       <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
       <span class="search-item-name">${p.name}</span>
       <span class="search-item-rate">${p.catch_rate}</span>
@@ -313,7 +345,7 @@ function computeAvgStats(r) {
   return { turns: Math.round(totalTurns), cost: r.avgCost };
 }
 
-function buildTechniqueChips(technique) {
+function techniqueLabels(technique) {
   const chips = [];
   if (technique.quick) chips.push({ label: i18n.t('turn1_badge'), cls: 'chip-timer' });
   if (technique.soak)  chips.push({ label: i18n.t('technique_soak'), cls: 'chip-night' });
@@ -328,8 +360,10 @@ function buildTechniqueChips(technique) {
   if (technique.status === 'burn')   chips.push({ label: i18n.t('technique_burn'),   cls: 'chip-burn' });
   if (technique.night) chips.push({ label: i18n.t('technique_night'), cls: 'chip-night' });
   if (technique.timer) chips.push({ label: i18n.t('technique_wait10'), cls: 'chip-timer' });
-  return chips.map(c => `<span class="technique-chip ${c.cls}">${c.label}</span>`).join('');
+  return chips;
 }
+const chipsHTML = chips => chips.map(c => `<span class="technique-chip ${c.cls}">${c.label}</span>`).join('');
+const buildTechniqueChips = technique => chipsHTML(techniqueLabels(technique));
 
 function renderResultCard(type, r) {
   const name = i18n.ballName(r.key);
@@ -473,50 +507,149 @@ document.addEventListener('langchange', () => {
     updateResults();
   }
   renderHistory();
+  renderHome();
+  if (state.page === 'events') loadEvents();
 });
 
 /* ══════════════ EVENTS PAGE ══════════════ */
-async function loadEvents() {
-  const res = await fetch('/api/events');
-  const events = await res.json();
-  const container = $('events-list');
+/* Donnees partagees entre la page Events, l'accueil et l'admin (une seule source). */
+const EV_FAVS = 'catchr.favEvents';
+const evFavs = () => { try { return JSON.parse(localStorage.getItem(EV_FAVS)) || []; } catch { return []; } };
+const toggleEvFav = slug => {
+  const f = evFavs(), n = f.includes(slug) ? f.filter(x => x !== slug) : [...f, slug];
+  try { localStorage.setItem(EV_FAVS, JSON.stringify(n)); } catch { /* stockage indisponible */ }
+};
+let eventsData = null;
+async function getEvents(fresh = false) {
+  if (eventsData && !fresh) return eventsData;
+  const list = await (await fetch('/api/events')).json();          // deja trie du plus recent au plus ancien
+  eventsData = await Promise.all(list.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json())));
+  await ensureBalls();
+  return eventsData;
+}
+// Edition reservee aux comptes admin / gestionnaire d'evenements (session du site, pas la porte Authentik de la preprod)
+const canEditEvents = () => !!(currentOidcUser?.isAdmin || currentOidcUser?.isEventManager);
+const isLive = ev => {                                              // en cours : date du jour entre debut et fin (inclus)
+  const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return !!ev.starts_at && !!ev.ends_at && ev.starts_at <= today && today <= ev.ends_at;
+};
 
+const EVENT_ICONS = {   // SVG sobres (une couleur), reconnaissables a petite taille
+  halloween: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M11 2.5h2v3.2c5-.6 9 3 9 7.6 0 4.2-3.8 7.7-10 7.7S2 17.500 2 13.300c0-4.600 4-8.200 9-7.600zM7.500 10.500l2 3.200h-4zM16.500 10.500l2 3.200h-4zM7.500 16.500h9l-1.500 2.500-1.500-1.200-1.500 1.200-1.500-1.200L9 19z"/></svg>',
+  xmas: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.500 17.500C5 9 8.500 4.500 14 4.500c1.800 0 3.200.6 4 1.800L20.500 17.500z"/><rect x="2.500" y="16.500" width="19" height="4.500" rx="2.250" opacity=".55"/><circle cx="19" cy="5.500" r="2.500"/></svg>',
+  lny: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.500 14.500A9 9 0 0 1 9.500 3.500a9 9 0 1 0 11 11z"/></svg>',
+};
+
+function eventCard(ev, { edit = false } = {}) {
+  const fav = evFavs().includes(ev.slug), favLabel = i18n.t(fav ? 'money_fav_remove' : 'money_fav_add');
+  return `
+    <div class="event-card">
+      <div class="event-card-header">
+        ${EVENT_ICONS[ev.kind] ? `<span class="ev-icon ev-${ev.kind}">${EVENT_ICONS[ev.kind]}</span>` : ''}
+        <span class="event-name">${ev.name_en}</span>
+        ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
+        ${ev.unverified ? `<span class="ev-tag" data-tip="${i18n.t('ev_unverified_tip')}">${i18n.t('ev_unverified')}</span>` : ''}
+        ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
+        <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
+      </div>
+      ${(ev.pokemon || []).length ? '' : `<p class="ev-empty">${i18n.t('ev_empty')}</p>`}
+      <div class="event-pokemon-grid"${(ev.pokemon || []).length ? '' : ' hidden'}>
+        ${(ev.pokemon || []).map(p => {
+          const best = Calc.computeOptimalFastest(p, state.balls);       // meilleure Pokeball automatique (meme choix que le calculateur)
+          const ball = best ? i18n.ballName(best.key) : '';
+          // Conditions pour atteindre ce taux : PV (y compris "PV pleins"), statut, nuit, attente du Timer Ball...
+          const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique)] : [];
+          // Tout le detail est au survol : taux de capture, Pokeball, chance et conditions (PV, statut, nuit, attente)
+          const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? [conds.map(c => c.label).join(' · ')] : [])] : [])].join('\n');
+          return `
+          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}" aria-label="${tip.replace(/\n/g, ', ')}" tabindex="0">
+            <span class="ep-icon">
+              <img width="80" height="60" src="${miniIcon(p.id)}" alt="" loading="lazy" />
+              ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="" width="28" height="28" loading="lazy" />` : ''}
+            </span>
+            <span class="ep-name">${p.name}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+async function loadEvents() {
+  const container = $('events-list');
+  $('event-add-btn').hidden = !canEditEvents();
+  const events = await getEvents(true);
   if (!events.length) {
     container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
     return;
   }
+  // Separateurs d'annee, discrets : la liste est deja triee du plus recent au plus ancien
+  let year = '';
+  container.innerHTML = events.map(ev => {
+    const y = (ev.starts_at || ev.created_at || '').slice(0, 4);
+    const sep = y && y !== year ? `<h2 class="year-sep" aria-label="${y}"><span>${y}</span></h2>` : '';
+    year = y || year;
+    return sep + eventCard(ev, { edit: canEditEvents() });
+  }).join('');
+}
 
-  const detailed = await Promise.all(
-    events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
-  );
-  container.innerHTML = detailed.map(ev => `
-    <div class="event-card">
-      <div class="event-card-header">
-        <span class="event-name">${ev.name_en}</span>
-        <button class="btn btn-sm btn-outline event-edit-btn">Edit</button>
-      </div>
-      <div class="event-pokemon-grid">
-        ${(ev.pokemon || []).map(p => `
-          <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}">
-            <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
-            <span class="ep-name">${p.name}</span>
-            <span class="ep-rate">${p.catch_rate}</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
+document.addEventListener('click', e => {
+  const item = e.target.closest('.event-pokemon-item');
+  if (item) { showPage('calc'); selectPokemonById(Number(item.dataset.id)); return; }
+  const fav = e.target.closest('[data-evfav]');
+  if (fav) {
+    toggleEvFav(fav.dataset.evfav);
+    const on = evFavs().includes(fav.dataset.evfav), label = i18n.t(on ? 'money_fav_remove' : 'money_fav_add');
+    document.querySelectorAll(`[data-evfav="${fav.dataset.evfav}"]`).forEach(b => { b.setAttribute('aria-pressed', on); b.title = label; b.setAttribute('aria-label', label); });
+    if (state.page === 'calc') renderHome();
+    return;
+  }
+  if (e.target.closest('.event-edit-btn')) showPage('admin');
+  if (e.target.closest('#event-add-btn')) { showPage('admin'); setTimeout(() => $('event-slug')?.focus(), 400); }
+});
 
-  container.querySelectorAll('.event-pokemon-item').forEach(item => {
-    item.addEventListener('click', () => {
-      showPage('calc');
-      selectPokemonById(Number(item.dataset.id));
-    });
-  });
+/* ══════════════ ACCUEIL : raccourcis ══════════════ */
+/* Explorer ; Favoris (methodes Money making + boites d'evenements + "+" pour en ajouter) ;
+   Suggestions : evenements d'actualite (5 jours avant le debut -> 5 jours apres la fin), un a la fois, en rotation. */
+const DAY = 86400000, SUGGEST_BEFORE = 5, SUGGEST_AFTER = 5, EVENT_DAYS = 15, ROTATE_MS = 8000;
+const dayStart = iso => new Date(`${iso}T00:00:00`).getTime();
+const inSuggestWindow = ev => {
+  if (!ev.starts_at) return false;
+  const start = dayStart(ev.starts_at), end = ev.ends_at ? dayStart(ev.ends_at) : start + EVENT_DAYS * DAY;
+  const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  return today >= start - SUGGEST_BEFORE * DAY && today <= end + SUGGEST_AFTER * DAY;
+};
 
-  container.querySelectorAll('.event-edit-btn').forEach(btn => {
-    btn.addEventListener('click', () => showPage('admin'));
-  });
+let rotateTimer = 0;
+async function renderHome() {
+  const el = $('home-shortcuts'); if (!el) return;
+  clearInterval(rotateTimer);
+  const sec = (title, body) => body ? `<section class="home-section"><h2 class="home-title">${i18n.t(title)}</h2>${body}</section>` : '';
+  const addCard = (go, ic, tipKey) => `<button type="button" class="home-card is-add" data-go="${go}" data-tip="${i18n.t(tipKey)}" aria-label="${i18n.t(tipKey)}"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>`;
+  const paint = evs => {
+    const slugs = evFavs(), methods = Money.homeFavCards(), favEvents = evs.filter(ev => slugs.includes(ev.slug));
+    const suggest = evs.filter(inSuggestWindow);
+    el.innerHTML =
+      sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
+      sec('home_favs', `<div class="home-grid">${methods}${addCard('#money', 'add', 'home_add_method')}${addCard('#events', 'add', 'home_add_event')}</div>` +
+        (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
+      sec('home_suggest', suggest.length ? `<div class="home-suggest">${suggest.map((ev, i) => `<div class="hs-slide${i ? '' : ' is-on'}">${eventCard(ev)}</div>`).join('')}${
+        suggest.length > 1 ? `<div class="hs-dots">${suggest.map((_, i) => `<button type="button" class="hs-dot${i ? '' : ' is-on'}" data-slide="${i}" aria-label="${i + 1}/${suggest.length}"></button>`).join('')}</div>` : ''}</div>` : '');
+    if (suggest.length > 1) startRotation(el.querySelector('.home-suggest'));
+  };
+  paint(eventsData || []);
+  if (!eventsData) { try { paint(await getEvents()); } catch { /* hors ligne : on garde l'affichage sans evenements */ } }
+}
+
+function startRotation(box) {
+  const slides = [...box.querySelectorAll('.hs-slide')], dots = [...box.querySelectorAll('.hs-dot')];
+  let i = 0, paused = false;
+  const go = n => { i = (n + slides.length) % slides.length; slides.forEach((s, k) => s.classList.toggle('is-on', k === i)); dots.forEach((d, k) => d.classList.toggle('is-on', k === i)); };
+  box.addEventListener('mouseenter', () => { paused = true; });
+  box.addEventListener('mouseleave', () => { paused = false; });
+  box.addEventListener('focusin', () => { paused = true; });
+  box.addEventListener('focusout', () => { paused = false; });
+  dots.forEach(d => d.addEventListener('click', () => go(Number(d.dataset.slide))));
+  rotateTimer = setInterval(() => { if (!paused && state.page === 'calc') go(i + 1); }, ROTATE_MS);
 }
 
 /* ══════════════ USER SESSION (OIDC) ══════════════ */
@@ -527,6 +660,7 @@ let currentOidcUser = null;
 
 document.addEventListener('naerod:user', e => {
   currentOidcUser = e.detail.user;
+  if (state.page === 'events') loadEvents();                       // le bouton Edit depend du compte, connu apres coup
   // L utilisateur arrive de façon asynchrone : si la page Admin est deja
   // ouverte, on la reevalue avec la session maintenant connue.
   if (state.page === 'admin') initAdmin();
@@ -769,6 +903,7 @@ $('create-event-btn').addEventListener('click', async () => {
   const slug = $('event-slug').value.trim();
   const name_en = $('event-name-en').value.trim();
   const active = true;
+  const starts_at = $('event-start').value, ends_at = $('event-end').value;
   $('event-form-error').style.display = 'none';
   if (!slug || !name_en) {
     $('event-form-error').textContent = 'All fields required.';
@@ -778,11 +913,12 @@ $('create-event-btn').addEventListener('click', async () => {
   const res = await fetch('/api/admin/events', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slug, name_en, name_fr: '', active })
+    body: JSON.stringify({ slug, name_en, name_fr: '', active, starts_at, ends_at })
   });
   if (res.ok) {
     $('event-slug').value = '';
     $('event-name-en').value = '';
+    $('event-start').value = ''; $('event-end').value = '';
     loadAdminEvents();
   } else {
     const d = await res.json();
@@ -792,12 +928,7 @@ $('create-event-btn').addEventListener('click', async () => {
 });
 
 async function loadAdminEvents() {
-  const res = await fetch('/api/events');
-  const events = await res.json();
-  const detailed = await Promise.all(
-    events.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json()))
-  );
-  renderAdminEvents(detailed);
+  renderAdminEvents(await getEvents(true));
 }
 
 function renderAdminEvents(events) {
@@ -807,13 +938,13 @@ function renderAdminEvents(events) {
   container.innerHTML = events.map((ev, idx) => `
     <div class="admin-event-row" data-event-id="${ev.id}">
       <div class="admin-event-top">
-        <div class="aer-order-btns">
-          <button class="btn-order move-up-btn" data-idx="${idx}" ${idx === 0 ? 'disabled' : ''}>▲</button>
-          <button class="btn-order move-down-btn" data-idx="${idx}" ${idx === events.length - 1 ? 'disabled' : ''}>▼</button>
-        </div>
         <div class="admin-event-info">
           <div class="aei-name">${ev.name_en}</div>
           <div class="aei-slug">${ev.slug}</div>
+        </div>
+        <div class="admin-event-dates">
+          <label>${i18n.t('ev_start')}<input type="date" class="ev-date" data-field="starts_at" value="${ev.starts_at || ''}" /></label>
+          <label>${i18n.t('ev_end')}<input type="date" class="ev-date" data-field="ends_at" value="${ev.ends_at || ''}" /></label>
         </div>
         <div class="admin-event-actions">
           <button class="btn btn-sm btn-danger delete-event-btn" data-id="${ev.id}">
@@ -824,7 +955,7 @@ function renderAdminEvents(events) {
       <div class="admin-event-pokemon">
         ${(ev.pokemon || []).map(p => `
           <div class="admin-pokemon-chip">
-            <img src="${sprite(p.id)}" alt="${p.name}" />
+            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" />
             <span>${p.name}</span>
             <button class="remove-pokemon-btn" data-pid="${p.id}" data-eid="${ev.id}">✕</button>
           </div>
@@ -839,23 +970,16 @@ function renderAdminEvents(events) {
   `).join('');
 
 
-  // Reorder arrows
-  const reorder = async (fromIdx, toIdx) => {
-    const reordered = [...events];
-    const [moved] = reordered.splice(fromIdx, 1);
-    reordered.splice(toIdx, 0, moved);
-    await fetch('/api/admin/events/reorder', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: reordered.map(e => e.id) })
-    });
-    loadAdminEvents();
-  };
-  container.querySelectorAll('.move-up-btn').forEach(btn => {
-    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) - 1));
-  });
-  container.querySelectorAll('.move-down-btn').forEach(btn => {
-    btn.addEventListener('click', () => reorder(Number(btn.dataset.idx), Number(btn.dataset.idx) + 1));
+  // Dates de debut / fin : enregistrees des qu'on les change (le tri et "en cours" en dependent)
+  container.querySelectorAll('.admin-event-row').forEach(row => {
+    row.querySelectorAll('.ev-date').forEach(inp => inp.addEventListener('change', async () => {
+      const get = f => row.querySelector(`[data-field="${f}"]`).value;
+      const res = await fetch(`/api/admin/events/${row.dataset.eventId}/dates`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ starts_at: get('starts_at'), ends_at: get('ends_at') })
+      });
+      if (res.ok) loadAdminEvents();
+    }));
   });
 
   // Delete event
@@ -895,7 +1019,7 @@ function renderAdminEvents(events) {
         if (!data.length) { dropdown.style.display = 'none'; return; }
         dropdown.innerHTML = data.slice(0, 8).map(p => `
           <div class="search-item" data-id="${p.id}">
-            <img src="${sprite(p.id)}" alt="${p.name}" loading="lazy" />
+            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
             <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
             <span class="search-item-name">${p.name}</span>
           </div>
@@ -1002,7 +1126,7 @@ function renderHistory() {
     }
     return `
       <div class="history-item" data-id="${h.id}">
-        <img class="history-item-sprite" src="${h.spriteUrl}" alt="${h.name}" />
+        <img class="history-item-sprite" src="${miniIcon(h.id)}" width="40" height="30" alt="${h.name}" />
         <div class="history-item-info">
           <div class="history-item-name">${h.name}</div>
           ${badgeHtml}

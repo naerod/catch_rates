@@ -1,0 +1,406 @@
+/* ════════════════════════════════════════════
+   Money making — page des methodes de farm
+   ════════════════════════════════════════════ */
+
+/* Couleurs des Pokemon de l'equipe : lisibles sur fond sombre ET clair (AA) */
+:root, [data-theme="dark"] {
+  --mon-typhlosion: #ff6b6b; --mon-togekiss: var(--text); --mon-blastoise: #5b9bff;
+  --mon-vanilluxe: #8fc8ff; --mon-weezing: #e07bc8; --mon-garchomp: #b983ff;
+}
+[data-theme="light"] {
+  --mon-typhlosion: #c21f1f; --mon-togekiss: var(--text); --mon-blastoise: #1d4ed8;
+  --mon-vanilluxe: #0b6fa8; --mon-weezing: #a3238e; --mon-garchomp: #7c2dd1;
+}
+[data-mon="typhlosion"] { --mon: var(--mon-typhlosion); }
+[data-mon="togekiss"]   { --mon: var(--mon-togekiss); }
+[data-mon="blastoise"]  { --mon: var(--mon-blastoise); }
+[data-mon="vanilluxe"]  { --mon: var(--mon-vanilluxe); }
+[data-mon="weezing"]    { --mon: var(--mon-weezing); }
+[data-mon="garchomp"]   { --mon: var(--mon-garchomp); }
+
+/* Ligne de lead : fond legerement plus fonce que la carte */
+:root, [data-theme="dark"] { --lead-bg: rgba(0, 0, 0, 0.35); }
+[data-theme="light"] { --lead-bg: rgba(0, 0, 0, 0.07); }
+
+/* Couleurs des types (generation 5) : l'encadre est semi-transparent, il tient sur les deux themes */
+:root {
+  --type-normal: #a3a7ad; --type-fire: #ee8130; --type-water: #6390f0; --type-electric: #f7d02c; --type-grass: #7ac74c;
+  --type-ice: #96d9d6; --type-fighting: #c22e28; --type-poison: #a33ea1; --type-ground: #e2bf65; --type-flying: #a98ff3;
+  --type-psychic: #f95587; --type-bug: #a6b91a; --type-rock: #b6a136; --type-ghost: #735797; --type-dragon: #6f35fc;
+  --type-dark: #705746; --type-steel: #b7b7ce;
+}
+
+/* Cette page a besoin de largeur : l'ecran d'une region fait 16:9 */
+.layout-grid.is-wide { grid-template-columns: 1fr minmax(0, 1800px) 1fr; }
+.layout-grid.is-wide .history-panel { display: none; }
+
+/* ── Menu des methodes ── */
+.money-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 560px)); gap: 1rem; }
+.money-card {
+  display: flex; align-items: center; gap: 1.5rem; min-height: 176px; padding: 1.5rem 2rem; text-align: left;
+  background: var(--card); color: var(--text); border: 2px solid var(--card-border); border-radius: var(--radius-lg);
+  font: 700 1.75rem var(--font-head); cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.money-card > span:nth-child(2) { flex: 1; }
+.money-card .material-symbols-outlined:first-child { font-size: 72px; color: var(--accent); }
+.money-card .material-symbols-outlined:last-child { font-size: 32px; color: var(--text-muted); transition: transform 0.18s, color 0.18s; }
+.money-card:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); box-shadow: var(--glow); }
+.money-card:hover .material-symbols-outlined:last-child { color: var(--accent); transform: translateX(4px); }
+#money-menu.is-entering, #money-method.is-entering { animation: stage-in 0.24s ease-out; }
+
+/* ── Methode ouverte : une seule page, les regions s'empilent ── */
+#page-money.in-method .page-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
+.layout-grid.is-wide main { padding: 0.5rem 1.5rem 3rem; }
+#money-method:not([hidden]) { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.money-head {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; padding: 0; min-height: 60px;   /* meme hauteur que la barre du site */
+  background: var(--bg);
+}
+.money-head-left, .money-head-right { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.money-head-right { margin-left: auto; }
+.money-head .btn { min-height: 44px; font-size: 0.9rem; }
+@media (pointer: fine) { .money-head .btn { min-height: 36px; padding: 0.15rem 0.75rem; } }
+.money-method-name { font: 700 1.25rem var(--font-head); color: var(--accent); }
+
+/* ── Bandeau d'infos : une seule ligne, sans cadres ── */
+.money-info { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.5rem; font-size: 0.8rem; color: var(--text-dim); }
+.info-item { display: inline-flex; align-items: center; gap: 0.5rem; list-style: none; }
+.info-label { font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.info-total strong { font: 700 1.1rem var(--font-head); color: var(--accent); }
+.info-stocks { display: inline-flex; gap: 0.75rem; }
+.info-stock b { margin-right: 0.25rem; color: var(--text); }
+.info-note { font-size: 0.8rem; color: var(--text-muted); }
+.info-item .material-symbols-outlined { font-size: 18px; }
+.info-team { gap: 0.75rem; }
+.info-team li { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--mon); font-weight: 700; }
+.info-team { display: inline-flex; gap: 0.5rem; list-style: none; }
+
+/* ── Scene : la region occupe tout le reste de la fenetre ── */
+/* Une region = un titre et ses arenes, lues comme un livre (1 2 / 3 4 / ...). */
+.region + .region { margin-top: 3rem; }
+.region-title { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--card-border); font: 700 2rem var(--font-head); color: var(--text); scroll-margin-top: 150px; }
+.stage-body { font-size: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5em; align-items: stretch; }   /* cartes d'une meme ligne a hauteur egale : pas de trou */
+@media (max-width: 1099px) { .stage-body { grid-template-columns: minmax(0, 1fr); } }   /* une colonne, meme ordre */
+.money-stage.is-entering .region { animation: stage-in 0.24s ease-out; }
+@keyframes stage-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.gym {
+  display: grid; grid-template-columns: clamp(120px, 26%, 260px) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 0 0.8em; padding: 0.7em; align-items: start; container-type: inline-size;
+  background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
+}
+.gym-map { width: 100%; height: auto; border-radius: 4px; background: var(--bg3); }
+.gym-head { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; }
+.gym-exc { grid-column: 1 / -1; align-self: stretch; display: flex; flex-direction: column; gap: 0.4em; min-width: 0; margin-top: 0.5em; }
+.gym-title { font: 700 1.25em var(--font-head); color: var(--text); }
+.gym-num { color: var(--accent); margin-right: 0.25em; }
+.gym-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25em 0.75em; min-width: 0; }
+.gym-tip { display: flex; align-items: center; gap: 0.35em; min-width: 0; font-size: 0.8em; color: var(--text-dim); }
+.gym-tip .material-symbols-outlined { font-size: 1.2em; }
+
+/* ── Lignes de strategie ── */
+.gym-line { display: flex; align-items: center; min-width: 0; gap: 0.4em; line-height: 1.35; }
+.gym-line.is-variant { font-size: 0.85em; color: var(--text-dim); }     /* exceptions : 15 % plus petites que le lead */
+.gym-line.is-cont { margin-left: 1.75em; }                                  /* suite ("into") : legerement decalee */
+.gym-seg { display: inline-flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.3em; }
+.gym-line.is-lead { font-size: clamp(11px, 2.1cqi, 17px); }   /* suit la largeur de la fiche */
+.gym-line .material-symbols-outlined { font-size: 1.3em; color: var(--text-muted); flex: none; }
+.gym-line-body { display: flex; flex-wrap: wrap; min-width: 0; align-items: center; gap: 0.3em 0.4em; }
+.tk-act { white-space: nowrap; display: inline-flex; align-items: center; gap: 0.6em; color: var(--mon, var(--text)); }
+.tk-move { font-weight: 700; }
+.tk-plus { color: var(--text-muted); font-size: 0.85em; }
+.tk-raw { color: var(--text-muted); }
+.tk-word { font-style: italic; }
+.tk-opp { display: inline-flex; align-items: center; gap: 0.4em; }
+.tk-lvl { padding: 0 0.4em; border-radius: 1em; background: var(--bg4); color: var(--orange); font-size: 0.8em; font-weight: 700; }
+
+.sprite-box { position: relative; display: inline-flex; flex: none; --k: 1; }   /* --k : echelle entiere de l'icone 40x30 */
+.sprite.icon { width: calc(40px * var(--k)); height: calc(30px * var(--k)); flex: none; image-rendering: pixelated; }
+.sprite.is-opp { filter: drop-shadow(0 0 1px var(--card-border)); }
+
+/* ── Etats : chargement (squelette) et erreur ── */
+.is-skeleton .gym { min-height: 8em; border-style: dashed; animation: skel 1.2s ease-in-out infinite alternate; }
+@keyframes skel { from { opacity: 0.45; } to { opacity: 0.85; } }
+.money-state { display: grid; justify-items: center; gap: 0.75rem; padding: 3rem 1rem; text-align: center; color: var(--text-dim); }
+.money-state .material-symbols-outlined { font-size: 48px; color: var(--text-muted); }
+
+.money-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.money-menu[hidden], #money-method[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .money-card { transition: none; }
+  .money-stage.is-entering .region, .is-skeleton .gym, #money-menu.is-entering, #money-method.is-entering { animation: none; }
+}
+
+.tk-trainer { font-weight: 700; color: var(--text); }
+
+/* Bulle d'objet : petite, en bas a droite du sprite */
+.item-badge {
+  position: absolute; right: -0.35em; bottom: -0.35em; display: grid; place-items: center; width: 1.8em; height: 1.8em;
+  border-radius: 50%; background: var(--card); border: 1px solid var(--card-border);
+}
+.item-badge img { width: 1.45em; height: 1.45em; }
+.item-badge[data-item=choice_specs], .after-chip.is-swap[data-item=choice_specs] { background: #fff3b0; }
+.item-badge[data-item=choice_scarf], .after-chip.is-swap[data-item=choice_scarf] { background: #bfdcff; }
+.item-badge[data-item=choice_band], .after-chip.is-swap[data-item=choice_band] { background: #ffd6c4; }
+.item-badge[data-item=black_glasses], .after-chip.is-swap[data-item=black_glasses] { background: #c9ccd3; }
+
+/* Favoris */
+.money-item { position: relative; }
+.money-item .money-card { width: 100%; }
+.fav-btn {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; color: var(--text-muted);
+  border: 0; border-radius: 50%; cursor: pointer; transition: color 0.18s, background 0.18s, transform 0.18s;
+}
+.fav-btn:hover { color: var(--accent); background: var(--accent-glow); }
+.fav-btn[aria-pressed="true"] { color: var(--accent); }
+.fav-btn[aria-pressed="true"] .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.fav-btn:active { transform: scale(0.9); }
+.fav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.money-item .fav-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+.money-head .fav-btn { width: 36px; height: 36px; }
+@media (prefers-reduced-motion: reduce) { .fav-btn { transition: none; } }
+
+/* Titre : tip a cote du nom, puces (temps, a passer ?) a droite */
+.gym-chips { display: inline-flex; align-items: center; gap: 0.5em; margin-left: auto; flex: none; }
+.gym-chip, .after-chip {
+  display: inline-flex; align-items: center; gap: 0.25em; padding: 0.1em 0.5em; border-radius: 1em; white-space: nowrap;
+  background: var(--bg4); color: var(--text-dim); font-size: 0.8em; font-weight: 600;
+}
+.gym-chip .material-symbols-outlined, .after-chip .material-symbols-outlined { font-size: 1.2em; }
+.gym-chip.is-warn { color: var(--orange); }
+.gym-note { display: flex; align-items: flex-start; gap: 0.5em; font-size: 0.85em; color: var(--text-dim); line-height: 1.3; }
+.gym-note .material-symbols-outlined { font-size: 1.3em; flex: none; }
+
+/* Pied de carte : soin conseille, objets a changer avant le combat suivant */
+.gym-between { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; margin-top: auto; padding-top: 0.5em; justify-content: flex-end; }   /* soin et changements d'objet : en bas a droite de la carte */
+.after-chip.is-heal { order: 2; padding: 0.3em 1.2em; background: var(--red); color: #fff; font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }   /* soin : en bas a droite, rouge plein, lisible sur les deux themes */
+.after-chip.is-swap { gap: 0.4em; color: var(--text); padding: 0.2em 0.9em 0.2em 0.7em; }
+.after-chip.is-heal, .after-chip.is-swap { box-sizing: border-box; height: 36px; padding-block: 0; font-size: 0.64em; font-weight: 700; }   /* meme taille pour le soin et les changements d'objet */
+.swap-item { width: 28px; height: 28px; image-rendering: pixelated; }   /* objet lisible, pas proportionnel au texte de la puce */
+.gym-note.is-end { font-size: 0.8em; }
+.info-item.is-require { color: var(--orange); }
+
+/* Timecodes */
+.tc-toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tc-toggle { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; color: var(--text-dim); cursor: pointer; white-space: nowrap; }
+.tc-toggle input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.tc-toggle .material-symbols-outlined { font-size: 18px; }
+
+
+/* Mobile : rien ne depasse de l'ecran (320 px), les cartes passent en colonne */
+@media (max-width: 899px) {
+  .gym { grid-template-columns: minmax(0, 1fr); }
+  .gym-map { max-width: 320px; }
+  .gym-seg, .gym-line-body { flex-wrap: wrap; }
+  .gym-top { flex-wrap: wrap; }
+  .gym-tip { white-space: normal; }
+  .money-info { gap: 0.25rem 1rem; }
+  .info-team { margin-left: 0; flex-wrap: wrap; }
+}
+
+/* ── Calculateur de charm ── */
+.info-charm { margin-left: auto; }
+.charm-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 34px; padding: 0.15rem 0.75rem; cursor: pointer;
+  background: var(--accent-glow); color: var(--accent); border: 1px solid var(--accent); border-radius: var(--radius);
+  font: 600 0.85rem var(--font-head); transition: background 0.18s;
+}
+.charm-btn:hover { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+.charm-btn:focus-visible, .btn-icon-sm:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.charm-panel {
+  position: fixed; inset: auto 1rem auto auto; top: var(--charm-top, 140px); margin: 0; width: min(600px, calc(100vw - 2rem));
+  max-height: calc(100dvh - var(--charm-top, 140px) - 1rem); overflow: auto; padding: 1rem;
+  background: var(--card); color: var(--text); border: 1px solid var(--accent); border-radius: var(--radius-lg); box-shadow: var(--shadow);
+}
+.charm-panel:popover-open { animation: stage-in 0.2s ease-out; }
+.charm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.charm-head h3 { display: inline-flex; align-items: center; gap: 0.5rem; font: 700 1.25rem var(--font-head); color: var(--accent); }
+.btn-icon-sm {
+  display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; background: transparent; color: var(--text-dim);
+  border: 0; border-radius: 50%; cursor: pointer;
+}
+.btn-icon-sm:hover { background: var(--bg4); color: var(--text); }
+.charm-table { width: 100%; margin: 0.75rem 0 0.25rem; border-collapse: collapse; font-size: 0.9rem; }
+.charm-table th, .charm-table td { padding: 0.35rem 0.5rem; text-align: right; border-bottom: 1px solid var(--card-border); font-variant-numeric: tabular-nums; }
+.charm-table th:first-child, .charm-table td:first-child { text-align: left; }
+.charm-table thead th { font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.charm-table tbody th { font-weight: 600; }
+.charm-table tr.is-best { background: var(--accent-glow); }
+.charm-table tr.is-best .net { color: var(--accent); font-weight: 700; }
+.best-chip { display: inline-flex; align-items: center; gap: 0.2rem; margin-left: 0.5rem; padding: 0 0.4rem; border-radius: 1em; background: var(--accent); color: var(--on-accent); font-size: 0.7rem; font-weight: 700; }
+.best-chip .material-symbols-outlined { font-size: 14px; }
+.price-field { display: inline-flex; align-items: center; gap: 0.15rem; }
+.price-field input { width: 7.5rem; padding: 0.25rem 0.4rem; text-align: right; background: var(--input-bg); color: var(--text); border: 1px solid var(--card-border); border-radius: 6px; font: inherit; }
+.price-field input:focus-visible { outline: 2px solid var(--accent); }
+.charm-status { margin: 0.25rem 0 0.75rem; font-size: 0.8rem; color: var(--text-muted); }
+.charm-panel h4 { margin-bottom: 0.5rem; font: 700 1rem var(--font-head); }
+.charm-panel h4 small { font-weight: 500; color: var(--text-muted); }
+.charm-gyms { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
+.charm-region { padding: 0.4rem 0.6rem; border: 1px solid var(--card-border); border-radius: var(--radius); }
+.charm-region legend { padding: 0 0.3rem; font: 600 0.8rem var(--font-head); color: var(--text-dim); }
+.charm-gym { display: flex; align-items: center; gap: 0.4rem; min-height: 26px; font-size: 0.82rem; cursor: pointer; }
+.charm-gym input { accent-color: var(--accent); }
+.charm-gym small { margin-left: auto; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.charm-foot { display: flex; justify-content: flex-end; margin-top: 0.75rem; }
+.charm-foot .btn { min-height: 34px; gap: 0.35rem; }
+@media (prefers-reduced-motion: reduce) { .charm-panel:popover-open { animation: none; } }
+
+/* ── En-tete ── */
+.btn-icon-only { width: 44px; padding: 0 !important; justify-content: center; }
+@media (pointer: fine) { .btn-icon-only { width: 36px; } }
+.money-head-right > span { display: inline-flex; align-items: center; }
+.guide-link { gap: 0.35rem; text-decoration: none; white-space: nowrap; }
+.guide-link .material-symbols-outlined { font-size: 18px; }
+.guide-link.is-soon { opacity: 0.6; cursor: not-allowed; }
+.info-btn { border: 1px solid var(--card-border); border-radius: var(--radius); width: 36px; height: 36px; }
+.charm-btn .cb-name { font-weight: 600; }
+.charm-btn .cb-net { font-weight: 700; font-variant-numeric: tabular-nums; }
+.info-panel { width: min(460px, calc(100vw - 2rem)); }
+.info-list { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; }
+.info-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; color: var(--text-dim); }
+.info-list strong { font: 700 1.25rem var(--font-head); color: var(--accent); }
+.info-list .info-stocks { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; }
+.info-list .info-stock b { margin-right: 0.25rem; color: var(--text); }
+
+/* ── Tags de methode (menu et en-tete) ── */
+.money-tags { display: inline-flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { padding: 0.05rem 0.5rem; border-radius: 1em; border: 1px solid var(--card-border); background: var(--bg4); color: var(--text-dim); font: 600 0.7rem var(--font-head); letter-spacing: 0.04em; }
+.mc-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex: 1; }
+.mc-name { font: 700 1.5rem var(--font-head); }
+.money-card > .mc-text + .material-symbols-outlined { margin-left: auto; }
+.gym-chip.is-optional { color: var(--accent); }
+
+/* ── Page « Team building guide » ── */
+#money-method.is-team .money-head-right, #money-method.is-team .money-head-center { display: none; }
+.tp { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: 1rem; padding-bottom: 1rem; font-size: 0.95rem; }
+.tp-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.75rem; align-content: start; }
+.tp-mon, .tp-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 0.75rem 1rem; }
+.tp-mon { display: flex; flex-direction: column; gap: 0.6rem; border-top: 3px solid var(--mon, var(--card-border)); }
+.tp-mon[data-mon="typhlosion"] { --mon: var(--mon-typhlosion); } .tp-mon[data-mon="togekiss"] { --mon: var(--mon-togekiss); }
+.tp-mon[data-mon="blastoise"] { --mon: var(--mon-blastoise); } .tp-mon[data-mon="vanilluxe"] { --mon: var(--mon-vanilluxe); }
+.tp-mon[data-mon="weezing"] { --mon: var(--mon-weezing); } .tp-mon[data-mon="garchomp"] { --mon: var(--mon-garchomp); }
+.tp-mon-head { display: flex; align-items: center; gap: 0.75rem; }
+.tp-mon-head h3 { font: 700 1.35rem var(--font-head); color: var(--mon); }
+.tp-mon .sprite-box { --k: 3; }
+.tp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.25rem; }
+.tp-lv { font: 600 0.8rem var(--font-head); color: var(--text-dim); }
+.type-chip { padding: 0 0.55rem; border-radius: 1em; border: 1px solid color-mix(in srgb, var(--t) 75%, transparent); background: color-mix(in srgb, var(--t) 30%, transparent); font-size: 0.75rem; font-weight: 600; }
+.tp-row { display: flex; flex-direction: column; gap: 0.25rem; }
+.tp-label { font: 600 0.7rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.tp-item { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; }
+.tp-item img, .tp-stock img { width: 24px; height: 24px; }
+.tp-moves { display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; list-style: none; }
+.tp-moves li { display: inline-flex; align-items: baseline; gap: 0.25rem; }
+.tp-moves b { color: var(--mon); }
+.tp-moves small { color: var(--text-muted); }
+.tp-swaps { display: flex; flex-direction: column; gap: 0.2rem; list-style: none; font-size: 0.85rem; color: var(--text-dim); }
+.tp-swaps li { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.tp-side { display: flex; flex-direction: column; gap: 0.75rem; align-content: start; }
+.tp-card h3 { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; font: 700 1.05rem var(--font-head); color: var(--accent); }
+.tp-stock { display: flex; flex-direction: column; gap: 0.4rem; list-style: none; }
+.tp-stock li { display: flex; align-items: center; gap: 0.5rem; }
+.tp-stock b { min-width: 1.5ch; color: var(--accent); }
+.tp-gym { padding: 0 0.4rem; border-radius: 1em; background: var(--bg4); font-size: 0.75rem; white-space: nowrap; }
+@media (max-width: 899px) { .tp { grid-template-columns: minmax(0, 1fr); } .tp-team { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── Police lisible (DA : Google Sans Flex) sur cette page ── */
+#page-money { --font-head: 'Google Sans Flex', 'Google Sans', system-ui, sans-serif; --font-body: var(--font-head); }
+
+.tp-notes { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; }
+.tp-notes li { display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.35; }
+.tp-notes .material-symbols-outlined { flex: none; font-size: 22px; color: var(--orange); }
+.charm-img { flex: none; width: 24px; height: 24px; margin-right: 0.4rem; vertical-align: middle; image-rendering: pixelated; }
+.charm-btn .charm-img { margin-right: 0; }
+
+/* ── Equipement de depart, en tete du guide d'equipe ── */
+.tp-start { margin-bottom: 1rem; padding: 1rem 1.25rem; background: var(--card); border: 1px solid var(--accent); border-radius: var(--radius-lg); }
+.tp-start h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; font: 700 1.25rem var(--font-head); color: var(--accent); }
+.tp-start ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; list-style: none; }
+.tp-start li { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center; }
+.tp-start li b { color: var(--mon); font: 700 1rem var(--font-head); }
+.tp-start .sprite-box { --k: 3; }
+
+/* Ligne principale : le sprite de chaque Pokemon au-dessus de son attaque */
+.tk-stack { display: inline-flex; flex-direction: column; align-items: center; gap: 0.35em; text-align: center; }
+.is-lead .tk-plus, .is-lead .tk-word { align-self: flex-start; margin-top: 0.9em; }
+.gym-line.is-lead { margin: 0.4em 0 0.2em; }
+
+/* Parentheses du guide collees au texte (l'ecart --g est celui des jetons voisins) */
+.tk-open { margin-right: calc(-1 * var(--g, 0.3em)); } .tk-close { margin-left: calc(-1 * var(--g, 0.3em)); }
+/* Ligne principale : sprites un peu plus grands et plus espaces pour occuper la largeur */
+.is-lead { --g: 0.8em; width: 100%; }
+.is-lead .gym-line-body, .is-lead .gym-seg { gap: 0.3em var(--g); }
+.is-lead .sprite-box { --k: 2; }
+.is-lead .tk-raw { align-self: flex-start; margin-top: 0.9em; }
+.is-lead .gym-seg { align-items: flex-start; }
+
+/* Fiche etroite : icones de la ligne principale a l'echelle 1 (40x30) pour que tout tienne a cote de la carte */
+@container (max-width: 599px) { .is-lead .sprite-box { --k: 1; } }
+
+/* Panneau central : equipe de depart + objets, clic = Team building guide */
+.money-head-center { margin: 0 auto; }
+.start-panel { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0.9rem; cursor: pointer; color: var(--text-dim); background: var(--card); border: 1px solid var(--accent); border-radius: var(--radius-lg); }
+.start-panel:hover { background: var(--bg4); }
+.start-panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.start-panel ul { display: flex; gap: 1rem; list-style: none; }
+.start-panel .sprite-box { --k: 1; }
+
+/* Defilement : les deux barres se retirent vers le bas et reviennent vers le haut */
+naerod-header { transition: transform 0.25s ease; }
+.bars-hidden naerod-header { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { naerod-header { transition: none; } }
+.start-panel .item-badge { font-size: 11px; right: -0.5em; bottom: -0.3em; }   /* pastille proportionnee aux petits sprites */
+.start-panel .sprite.icon { width: 48px; height: 36px; }   /* +20 % (echelle non entiere, accepte ici) */
+.start-panel .item-badge { font-size: 13px; }
+.start-panel { gap: 1rem; }   /* air entre le 6e sprite et la fleche */
+.after-chip.is-swap[data-item] { color: #1f2430; }   /* texte sombre sur fond pastel, dans les deux themes */
+.gym-head .gym-between { margin-top: auto; }
+.gym-head:has(.gym-between) { align-self: stretch; }
+
+/* ── Accueil : raccourcis ── */
+.home-shortcuts { display: flex; flex-direction: column; gap: 1.75rem; max-width: 1000px; margin: 1.75rem auto 0; }
+.home-title { margin-bottom: 0.6rem; font: 700 0.8rem var(--font-head); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0.75rem; }
+#page-calc:has(#pokemon-card:not([style*="none"])) .home-shortcuts { display: none; }
+.home-card {
+  display: flex; align-items: center; gap: 1rem; min-height: 88px; padding: 1rem 1.25rem; text-align: left; cursor: pointer;
+  background: var(--card); color: var(--text); border: 2px solid var(--card-border); border-radius: var(--radius-lg);
+  font: 700 1.15rem var(--font-head); transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.home-card.is-fav { border-color: var(--accent); }
+.home-card > .material-symbols-outlined:first-child { font-size: 40px; color: var(--accent); }
+.home-card > .material-symbols-outlined:last-child { font-size: 24px; color: var(--text-muted); margin-left: auto; transition: transform 0.18s, color 0.18s; }
+.hc-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; min-width: 0; }
+.home-card:hover { border-color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); box-shadow: var(--glow); }
+.home-card:hover > .material-symbols-outlined:last-child { color: var(--accent); transform: translateX(3px); }
+.home-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.home-events { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 1rem; }
+.home-grid + .home-events { margin-top: 0.75rem; }
+
+/* Une section = une couleur partout : memes jetons que les boutons de la barre du haut */
+.home-card.tone-events { --tone: var(--nrd-nav-tone-events); }
+.home-card.tone-money { --tone: var(--nrd-nav-tone-money); }
+.home-card[class*="tone-"] > .material-symbols-outlined:first-child { color: var(--tone); }
+.home-card[class*="tone-"], .home-card.is-fav[class*="tone-"] { border-color: color-mix(in srgb, var(--tone) 45%, var(--card-border)); }
+.home-card[class*="tone-"]:hover { border-color: var(--tone); background: color-mix(in srgb, var(--tone) 12%, var(--card)); box-shadow: 0 0 14px color-mix(in srgb, var(--tone) 30%, transparent); }
+.home-card[class*="tone-"]:hover > .material-symbols-outlined:last-child { color: var(--tone); }
+
+/* Mode sombre : texte presque blanc sur Money making (le gris #b0b0b0 fatigue la lecture du guide) */
+[data-theme="dark"] #page-money { --text: #fafafa; --text-dim: #f3f3f3; --text-muted: #d2d2d2; }
+.after-chip.is-swap .material-symbols-outlined { color: #1f2430; }
+.after-chip.is-swap:focus-visible, .after-chip.is-heal:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Accueil : cartes "+" pour ajouter un favori, suggestions en rotation */
+.home-card.is-add { justify-content: center; border-style: dashed; color: var(--text-muted); background: transparent; }
+.home-card.is-add > .material-symbols-outlined { font-size: 40px; color: var(--text-muted); margin: 0; }
+.home-card.is-add:hover { border-color: var(--accent); color: var(--accent); }
+.home-card.is-add:hover > .material-symbols-outlined { color: var(--accent); transform: none; }
+.home-suggest { position: relative; }
+.hs-slide { display: none; }
+.hs-slide.is-on { display: block; animation: stage-in 0.24s ease-out; }
+.hs-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.75rem; }
+.hs-dot { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: var(--card-border); cursor: pointer; transition: background 0.18s, transform 0.18s; }
+.hs-dot.is-on { background: var(--accent); transform: scale(1.25); }
+.hs-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

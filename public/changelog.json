@@ -2,6 +2,906 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.2",
+      "date": "2026-10-28",
+      "title": { "fr": "Passe de contrôle avant la production", "en": "Pre-production check" },
+      "fr": ["Correction : trois images vides de la page d'accueil provoquaient une requête inutile au chargement."],
+      "en": ["Fix: three empty images on the home page caused a needless request on load."]
+    },
+    {
+      "v": "3.17.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Séparateurs d'année sur la page Événements", "en": "Year separators on the Events page" },
+      "fr": ["Un séparateur discret (fine ligne et année) distingue 2026, 2025, 2024… dans la liste des événements."],
+      "en": ["A discreet separator (thin line and year) tells 2026, 2025, 2024… apart in the events list."]
+    },
+    {
+      "v": "3.17.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Swarms LNY 2026 et Noël 2025 renseignés", "en": "LNY 2026 and Xmas 2025 swarms filled in" },
+      "fr": ["LNY 2026 : les 47 Pokémon de swarm, d'après le tableur communautaire « Fastest Swarm Pokémon Catching Guide ».", "Noël 2025 : aucune liste publiée ; la même liste que Noël 2024 est affichée avec le tag « À confirmer » (les vidéos et le forum ne citent que des espèces de ce lot).", "Halloween 2024 est retiré (aucune liste disponible)."],
+      "en": ["LNY 2026: the 47 swarm Pokémon, from the community spreadsheet \"Fastest Swarm Pokémon Catching Guide\".", "Xmas 2025: no published list; the Xmas 2024 list is shown with a \"To confirm\" tag (videos and the forum only mention species from that pool).", "Halloween 2024 is removed (no list available)."]
+    },
+    {
+      "v": "3.16.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Tuiles d'événements épurées, détail au survol", "en": "Cleaner event tiles, details on hover" },
+      "fr": ["Les tuiles d'événements n'affichent plus que le sprite, la Pokéball conseillée (pastille) et le nom ; taux de capture, chance, PV, statut, nuit et attente apparaissent au survol (et au clavier). Valable aussi sur l'accueil."],
+      "en": ["Event tiles now show only the sprite, the recommended Poké Ball (badge) and the name; catch rate, chance, HP, status, night and wait appear on hover (and keyboard focus). Also applies on the home page."]
+    },
+    {
+      "v": "3.16.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : conditions de capture sur chaque tuile", "en": "Events: capture conditions on each tile" },
+      "fr": ["Chaque tuile d'événement indique maintenant les conditions pour atteindre le taux affiché : PV (1 PV, PV pleins, ou un pourcentage), statut (sommeil…), nuit (Dusk Ball), attente de 10 tours (Timer Ball), Soak.", "Le survol de la tuile résume : Pokémon, Pokéball, taux et conditions."],
+      "en": ["Each event tile now shows the conditions needed to reach the displayed rate: HP (1 HP, full HP, or a percentage), status (sleep…), night (Dusk Ball), 10-turn wait (Timer Ball), Soak.", "Hovering a tile summarizes: Pokémon, Poké Ball, rate and conditions."]
+    },
+    {
+      "v": "3.15.2",
+      "date": "2026-10-28",
+      "title": { "fr": "Photo de profil dans la barre", "en": "Profile photo in the top bar" },
+      "fr": ["Une fois connecté, la barre affiche la photo de ton profil central naerod (celle de tout l'écosystème) au lieu d'une simple initiale ; sans photo, l'initiale reste."],
+      "en": ["Once signed in, the top bar shows your central naerod profile photo (the one shared across the ecosystem) instead of a plain initial; without a photo, the initial stays."]
+    },
+    {
+      "v": "3.15.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Libellé de la section suggestions", "en": "Suggestions section label" },
+      "fr": ["En anglais, la section « Suggestions » de l'accueil s'appelle désormais « Suggested »."],
+      "en": ["In English, the home page \"Suggestions\" section is now called \"Suggested\"."]
+    },
+    {
+      "v": "3.15.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Accueil CatchR, événements 2024-2026, favoris et suggestions", "en": "CatchR home, 2024-2026 events, favourites and suggestions" },
+      "fr": ["Accueil : titre « CatchR » avec le logo (sans effet de halo) et sous-titre « Catch Rate Calculator for PokeMMO — Gen 3-5 formula » ; barre de recherche corrigée (plus de cadre interne), loupe Material Symbols au lieu de l'emoji, bouton historique de la même hauteur.", "Événements ajoutés : Halloween 2024, Halloween 2025, Noël 2025, LNY 2026 et Halloween 2026 (tag « Prévision », basé sur Halloween 2025), avec une icône par type (citrouille, bonnet de Père Noël, lune). Seules les listes de swarms vérifiées sont renseignées (Noël 2024, Halloween 2025 partiel) ; les autres affichent « Liste des swarms pas encore disponible ».", "Accueil : la section Favoris propose deux cartes « + » pour ajouter une méthode ou un événement ; nouvelle section « Suggestions » qui affiche, en rotation, les événements d'actualité (5 jours avant le début jusqu'à 5 jours après la fin).", "Le bouton Admin quitte la barre : les comptes autorisés ont le bouton Edit sur chaque événement et un bouton « + » sur la page Événements."],
+      "en": ["Home: \"CatchR\" title with the logo (no glow) and subtitle \"Catch Rate Calculator for PokeMMO — Gen 3-5 formula\"; search bar fixed (no inner frame), Material Symbols magnifier instead of the emoji, history button the same height.", "Events added: Halloween 2024, Halloween 2025, Xmas 2025, LNY 2026 and Halloween 2026 (\"Forecast\" tag, based on Halloween 2025), with one icon per type (pumpkin, Santa hat, moon). Only verified swarm lists are filled in (Xmas 2024, partial Halloween 2025); the others show \"Swarm list not available yet\".", "Home: the Favourites section offers two \"+\" cards to add a method or an event; new \"Suggestions\" section rotating through current events (from 5 days before the start to 5 days after the end).", "The Admin button leaves the top bar: authorized accounts get an Edit button on each event and a \"+\" button on the Events page."]
+    },
+    {
+      "v": "3.14.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Infobulles du site, puces en icônes, temps de référence permanent", "en": "Site tooltips, icon-only chips, permanent reference time" },
+      "fr": ["Nouvelle infobulle aux couleurs du site (titre en gras + explication), qui remplace l'infobulle basique du navigateur partout : bouton Riches Charm, étoiles, tuiles d'événements, pastilles d'objet…", "Les boutons « changement d'objet » n'affichent plus que des icônes (Pokémon, objet, et « à la sortie » le cas échéant) ; le détail apparaît au survol. Le bouton de soin explique, au survol, ce que signifie « Heal », « Heal if needed » ou « Heal if required ».", "La case « Reference time » est supprimée : les temps de référence sont toujours affichés."],
+      "en": ["New site-colored tooltip (bold title + explanation) replacing the browser's basic tooltip everywhere: Riches Charm button, stars, event tiles, item badges…", "Item-swap buttons now show icons only (Pokémon, item, and \"on exit\" when relevant); details appear on hover. The heal button explains on hover what \"Heal\", \"Heal if needed\" or \"Heal if required\" means.", "The \"Reference time\" checkbox is removed: reference times are always shown."]
+    },
+    {
+      "v": "3.13.5",
+      "date": "2026-10-28",
+      "title": { "fr": "Money making : texte encore plus blanc en mode sombre", "en": "Money making: even whiter text in dark mode" },
+      "fr": ["En mode sombre, le texte du guide passe à un blanc presque pur (#f3f3f3) et les titres à #fafafa."],
+      "en": ["In dark mode, the guide text is now almost pure white (#f3f3f3) and titles #fafafa."]
+    },
+    {
+      "v": "3.13.4",
+      "date": "2026-10-28",
+      "title": { "fr": "Money making : texte plus clair en mode sombre", "en": "Money making: lighter text in dark mode" },
+      "fr": ["En mode sombre, le texte du guide (lignes d'exception, notes, étiquettes) passe du gris à un blanc quasi pur, comme les titres."],
+      "en": ["In dark mode, the guide text (exception lines, notes, labels) goes from grey to near-white, like the titles."]
+    },
+    {
+      "v": "3.13.3",
+      "date": "2026-10-28",
+      "title": { "fr": "Boîtes d'événements sans espace vide", "en": "Event boxes without empty space" },
+      "fr": ["Les tuiles occupent toute la largeur de la boîte (plus de bande vide à droite) et chaque boîte a la hauteur de son contenu (plus de vide en bas)."],
+      "en": ["Tiles fill the whole width of the box (no empty strip on the right) and each box is as tall as its content (no empty space at the bottom)."]
+    },
+    {
+      "v": "3.13.2",
+      "date": "2026-10-28",
+      "title": { "fr": "Couleurs cohérentes sur l'accueil", "en": "Consistent colors on the home page" },
+      "fr": ["Sur l'accueil, « Money making » (et tes méthodes favorites) sont dorés et « Event swarms » bleu, comme dans la barre du haut."],
+      "en": ["On the home page, \"Money making\" (and your favourite methods) are gold and \"Event swarms\" blue, like in the top bar."]
+    },
+    {
+      "v": "3.13.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Connexion / Inscription, Edit réservé aux gestionnaires", "en": "Log in / Sign up, Edit for managers only" },
+      "fr": ["Le bouton « Sign in » devient « Connexion / Inscription » (la page Authentik gère les deux).", "Le bouton Edit des événements n'apparaît que pour les comptes admin ou gestionnaire d'événements ; l'étoile prend sa place à droite."],
+      "en": ["The \"Sign in\" button becomes \"Log in / Sign up\" (the Authentik page handles both).", "The events Edit button only appears for admin or event-manager accounts; the star takes its place on the right."]
+    },
+    {
+      "v": "3.13.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : tri par date, favoris et événement en cours", "en": "Events: date sorting, favourites and live event" },
+      "fr": ["Les événements sont triés du plus récent au plus ancien : le plus récent est toujours en haut à gauche.", "Chaque événement a une étoile : en favori, sa boîte complète s'affiche dans la section « Favoris » de l'accueil.", "Sans aucun favori, l'accueil affiche la boîte de l'événement en cours (section « En cours ») ; rien s'il n'y en a pas.", "Admin : dates de début et de fin pour chaque événement (le tri et « en cours » en dépendent) ; les flèches de tri manuel disparaissent."],
+      "en": ["Events are sorted newest to oldest: the newest is always at the top left.", "Each event has a star: when favourited, its full box appears in the home page \"Favourites\" section.", "With no favourites at all, the home page shows the box of the live event (\"Live now\" section); nothing if there is none.", "Admin: start and end dates per event (sorting and \"live\" depend on them); the manual sort arrows are gone."]
+    },
+    {
+      "v": "3.12.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : 4 tuiles par ligne, meilleure Pokéball, boutons colorés", "en": "Events: 4 tiles per row, best Poké Ball, colored buttons" },
+      "fr": ["Accueil : « Event swarms » et « Money making » ont leur propre section « Explorer » ; une seconde section « Favoris » affiche tes méthodes Money making favorites (masquée s'il n'y en a pas).", "Dans la barre du haut, « Event swarms » reste toujours bleu et « Money making » toujours doré, quelle que soit la page.", "Les cartes d'événements sont plus larges (2 par ligne, 4 Pokémon par ligne dans chaque carte).", "Chaque Pokémon affiche la meilleure Pokéball (même choix automatique que le calculateur) en pastille sur son sprite, avec sa chance de capture à côté du taux."],
+      "en": ["Home: \"Event swarms\" and \"Money making\" get their own \"Explore\" section; a second \"Favourites\" section lists your favourite Money making methods (hidden when there are none).", "In the top bar, \"Event swarms\" is always blue and \"Money making\" always gold, whatever the page.", "Event cards are wider (2 per row, 4 Pokémon per row in each card).", "Each Pokémon shows its best Poké Ball (same automatic pick as the calculator) as a badge on its sprite, with its catch chance next to the catch rate."]
+    },
+    {
+      "v": "3.12.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Accueil avec raccourcis", "en": "Home page shortcuts" },
+      "fr": ["La page d'accueil affiche des raccourcis : tes méthodes Money making en favori, puis « Essaims d'événements » et « Money making ».", "Le bouton « Calculateur » disparaît de la barre (le logo ramène à l'accueil) ; « Events » devient « Event swarms »."],
+      "en": ["The home page shows shortcuts: your favourite Money making methods, then \"Event swarms\" and \"Money making\".", "The \"Calculator\" button is removed from the top bar (the logo goes home); \"Events\" becomes \"Event swarms\"."]
+    },
+    {
+      "v": "3.11.5",
+      "date": "2026-10-28",
+      "title": { "fr": "Barre du haut identique sur tout le site", "en": "Same top bar across the whole site" },
+      "fr": ["La barre du haut (dont « Money making ») est maintenant définie en un seul endroit et reste identique sur toutes les pages, y compris le journal des modifications."],
+      "en": ["The top bar (including \"Money making\") is now defined in one place and is identical on every page, including the changelog."]
+    },
+    {
+      "v": "3.11.4",
+      "date": "2026-10-28",
+      "title": { "fr": "Rafraîchir garde la page et le défilement", "en": "Refresh keeps the page and scroll position" },
+      "fr": ["Après un rafraîchissement, le site revient sur la page où tu étais (Money making, Événements, Admin…) au lieu du calculateur, et retrouve le niveau de défilement."],
+      "en": ["After a refresh the site returns to the page you were on (Money making, Events, Admin…) instead of the calculator, and restores the scroll position."]
+    },
+    {
+      "v": "3.11.3",
+      "date": "2026-10-28",
+      "title": { "fr": "Icônes des événements plus grandes et nettes", "en": "Larger, crisper event icons" },
+      "fr": ["Les icônes de la page Événements passent à 80×60 px (échelle ×2 exacte) : pixels nets, plus gros d'environ un tiers."],
+      "en": ["Event page icons are now 80×60 px (exact ×2 scale): crisp pixels, about a third larger."]
+    },
+    {
+      "v": "3.11.2",
+      "date": "2026-10-28",
+      "title": { "fr": "États : une seule ligne, boutons principaux centrés", "en": "Statuses on one line, main buttons centered" },
+      "fr": ["Gel, Paralysie, Poison et Brûlure tiennent sur une seule ligne ; Sommeil et Nuit gardent leur taille et sont centrés."],
+      "en": ["Freeze, Paralysis, Poison and Burn fit on a single line; Sleep and Night keep their size and are centered."]
+    },
+    {
+      "v": "3.11.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Curseur de PV : étiquettes alignées", "en": "HP slider: aligned labels" },
+      "fr": ["Les étiquettes 1 % / 25 % / 50 % / 75 % / 100 % sont centrées exactement sous chaque cran du curseur."],
+      "en": ["The 1% / 25% / 50% / 75% / 100% labels are centered exactly under each slider notch."]
+    },
+    {
+      "v": "3.11.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Icônes 8 bits partout, soin remonté", "en": "8-bit icons everywhere, heal moved up" },
+      "fr": ["Recherche, événements, historique et administration utilisent les mêmes petites icônes 8 bits que Money making (locales, plus rapides à charger). La grande image de la fiche du résultat ne change pas.", "Money making : sur les cartes à une seule option de 2 Pokémon, le bouton de soin remonte à côté de la carte au lieu de laisser une ligne vide."],
+      "en": ["Search, events, history and admin use the same small 8-bit icons as Money making (local, faster to load). The large image on the result card is unchanged.", "Money making: on cards with a single 2-Pokémon option, the heal button moves up beside the map instead of leaving an empty row."]
+    },
+    {
+      "v": "3.10.13",
+      "date": "2026-10-28",
+      "title": { "fr": "Changement d'objet coloré", "en": "Color-coded item swap" },
+      "fr": ["Le bouton de changement d'objet reprend la couleur pastel de l'objet (jaune, bleu, pêche, gris)."],
+      "en": ["The item-swap button uses the item's pastel color (yellow, blue, peach, grey)."]
+    },
+    {
+      "v": "3.10.12",
+      "date": "2026-10-28",
+      "title": { "fr": "Soin et changement d'objet : même hauteur, objet lisible", "en": "Heal and item swap: same height, readable item" },
+      "fr": ["Le bouton de soin a exactement la même hauteur que celui de changement d'objet ; l'icône de l'objet y est agrandie."],
+      "en": ["The heal button is now exactly as tall as the item-swap button; the item icon inside it is larger."]
+    },
+    {
+      "v": "3.10.11",
+      "date": "2026-10-28",
+      "title": { "fr": "Mahogany : Dragon Claw à privilégier", "en": "Mahogany: prefer Dragon Claw" },
+      "fr": ["Mahogany : la mention « Dragon Claw sur Articuno / … » sort de la ligne principale et devient une info ⓘ en première ligne d'exceptions."],
+      "en": ["Mahogany: the \"Dragon Claw on Articuno / …\" note leaves the main line and becomes an ⓘ info as the first exception line."]
+    },
+    {
+      "v": "3.10.10",
+      "date": "2026-10-28",
+      "title": { "fr": "Flèche du panneau d'équipe dégagée", "en": "Starting-team arrow spaced out" },
+      "fr": ["Plus d'espace entre le dernier sprite du panneau d'équipe et la flèche."],
+      "en": ["More space between the last starting-team sprite and the arrow."]
+    },
+    {
+      "v": "3.10.9",
+      "date": "2026-10-28",
+      "title": { "fr": "Sprites du panneau d'équipe agrandis", "en": "Larger starting-team sprites" },
+      "fr": ["Les sprites du panneau d'équipe de départ sont agrandis de 20 %."],
+      "en": ["The starting-team panel sprites are 20% larger."]
+    },
+    {
+      "v": "3.10.8",
+      "date": "2026-10-28",
+      "title": { "fr": "Deux barres de même hauteur", "en": "Both bars the same height" },
+      "fr": ["La barre du titre fait désormais la même hauteur (60 px) que la barre du site ; le panneau de l'équipe de départ est réduit en conséquence."],
+      "en": ["The title bar is now the same height (60 px) as the site bar; the starting-team panel is scaled down to fit."]
+    },
+    {
+      "v": "3.10.7",
+      "date": "2026-10-28",
+      "title": { "fr": "Seconde barre non fixe", "en": "Second bar no longer fixed" },
+      "fr": ["La barre du titre (équipe de départ, temps de référence, Riches Charm) défile avec la page au lieu de rester collée en haut."],
+      "en": ["The title bar (starting team, reference time, Riches Charm) now scrolls with the page instead of staying pinned."]
+    },
+    {
+      "v": "3.10.6",
+      "date": "2026-10-28",
+      "title": { "fr": "Barres masquées au défilement", "en": "Bars hide on scroll" },
+      "fr": ["Les deux barres du haut se retirent quand on descend dans la page et reviennent dès qu'on remonte, sans retourner tout en haut."],
+      "en": ["Both top bars slide away when scrolling down and come back as soon as you scroll up, without going back to the top."]
+    },
+    {
+      "v": "3.10.5",
+      "date": "2026-10-28",
+      "title": { "fr": "Équipe de départ en haut de page, exceptions plus lisibles", "en": "Starting team at the top, clearer exceptions" },
+      "fr": ["Le bouton « Team building guide » devient un grand panneau centré avec les 6 Pokémon et leur objet de départ ; un clic ouvre le guide.", "Items starting set dans l'ordre : Blastoise, Weezing, Togekiss, Garchomp, Typhlosion, Vanilluxe.", "Les informations sans adversaire (ex. Goldenrod) ont une icône ⓘ ; la flèche reste pour les lignes « vs. ».", "Les suites « into … » restent sur la même ligne (Olivine…).", "Pewter : « Lead with … and … » retiré, il reste Blastoise + Weezing.", "Choice Band : fond pastel pêche au lieu du blanc."],
+      "en": ["The \"Team building guide\" button becomes a large centered panel with the 6 Pokémon and their starting item; a click opens the guide.", "Items starting set in order: Blastoise, Weezing, Togekiss, Garchomp, Typhlosion, Vanilluxe.", "Information with no opponent (e.g. Goldenrod) gets an ⓘ icon; the arrow stays for \"vs.\" lines.", "\"into …\" follow-ups stay on the same line (Olivine…).", "Pewter: \"Lead with … and …\" removed, Blastoise + Weezing remain.", "Choice Band: pastel peach background instead of white."]
+    },
+    {
+      "v": "3.10.4",
+      "date": "2026-10-27",
+      "title": { "fr": "Exceptions \"prioritize\", info de fin de combat, soin et objets", "en": "Prioritize exceptions, end-of-battle info, heal and items" },
+      "fr": ["« Prioritize [Pokémon] » sort de la ligne principale : première exception, avec une icône info.", "L'info « Change channel… » (Canalave) passe tout en bas de la carte, car elle concerne la fin du combat.", "Le soin est toujours en bas à droite, même quand la carte n'a aucune exception (Cerulean).", "Soin et changements d'objet réduits de 25 %."],
+      "en": ["\"Prioritize [Pokémon]\" leaves the main line: first exception, with an info icon.", "The \"Change channel…\" info (Canalave) moves to the bottom of the card, as it applies at the end of the battle.", "The heal chip is always at the bottom right, even when the card has no exceptions (Cerulean).", "Heal and item-swap chips are 25% smaller."]
+    },
+    {
+      "v": "3.10.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Objets plus visibles et colorés", "en": "Larger, color-coded items" },
+      "fr": ["Les icônes d'objet sont agrandies de 25 % et ont un fond pastel : jaune (Choice Specs), bleu (Choice Scarf), blanc (Choice Band), gris (Black Glasses)."],
+      "en": ["Item icons are 25% larger with a pastel background: yellow (Choice Specs), blue (Choice Scarf), white (Choice Band), grey (Black Glasses)."]
+    },
+    {
+      "v": "3.10.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Tailles adaptées à la largeur de chaque fiche", "en": "Sizes follow each card's width" },
+      "fr": ["La ligne principale reste à côté de la carte sur tous les écrans ; la taille du texte et des icônes suit la largeur de la fiche, sans débordement ni vide à droite de la carte."],
+      "en": ["The main line stays beside the map on every screen; text and icon sizes follow the card's width, with no overflow and no empty space next to the map."]
+    },
+    {
+      "v": "3.10.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Adaptation aux écrans moyens, objets et soins alignés", "en": "Medium-screen fit, aligned items and heals" },
+      "fr": ["Écrans moyens (1080p avec zoom, portables) : la ligne principale passe sous la carte sur toute la largeur de la fiche, le texte suit la largeur de l'écran, plus de débordement.", "Les changements d'objet ont la même taille que le soin et sont bien en bas à droite de la carte."],
+      "en": ["Medium screens (1080p with zoom, laptops): the main line moves under the map across the card's full width, text follows the screen width, no more overflow.", "Item changes are the same size as the heal and sit at the bottom right of the card."]
+    },
+    {
+      "v": "3.10.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Icônes 8 bits comme dans le jeu", "en": "8-bit icons like in the game" },
+      "fr": ["Les Pokémon s'affichent avec leurs icônes de menu 8 bits (celles de l'équipe et du PC), en pixels nets et sans cadre ; l'équipe de départ et les fiches les montrent en plus grand.", "Chargement quasi instantané : chaque icône pèse environ 300 octets (les anciens GIF animés faisaient 50 à 70 Ko)."],
+      "en": ["Pokémon are shown with their 8-bit menu icons (as in the team and PC screens), with crisp pixels and no frame; the starting set and cards show them larger.", "Near-instant loading: each icon is about 300 bytes (the old animated GIFs were 50 to 70 KB)."]
+    },
+    {
+      "v": "3.9.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Espace mieux rempli, parenthèses collées, objets à droite", "en": "Better filled space, tight parentheses, items on the right" },
+      "fr": ["Ligne principale : sprites plus grands et plus espacés pour occuper la largeur de la carte.", "Les parenthèses sont collées au texte (plus d'espace après « ( » ni avant « ) »).", "Les changements d'objet passent en bas à droite, à côté du soin."],
+      "en": ["Main line: larger, more widely spaced sprites to use the card's width.", "Parentheses stick to the text (no more space after \"(\" or before \")\").", "Item changes move to the bottom right, next to the heal."]
+    },
+    {
+      "v": "3.9.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Sootopolis : Mantine entre parenthèses", "en": "Sootopolis: Mantine in parentheses" },
+      "fr": ["Sootopolis : « (prioritize Mantine) » est entre parenthèses, comme dans le guide."],
+      "en": ["Sootopolis: \"(prioritize Mantine)\" is in parentheses, as in the guide."]
+    },
+    {
+      "v": "3.9.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Soin en rouge en bas à droite ; Mantine sur la ligne de Lapras", "en": "Heal in red at the bottom right; Mantine on the Lapras line" },
+      "fr": ["Le soin (HEAL, HEAL IF NEEDED, HEAL IF REQUIRED) passe en bas à droite de la carte, en rouge plein, lisible en thème sombre comme en thème clair.", "Sootopolis : « prioritize Mantine » est sur la même ligne que Lapras."],
+      "en": ["Heal (HEAL, HEAL IF NEEDED, HEAL IF REQUIRED) moves to the bottom right of the card, solid red, readable in dark and light themes.", "Sootopolis: \"prioritize Mantine\" is on the same line as Lapras."]
+    },
+    {
+      "v": "3.9.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Nouvelle mise en page des cartes d'arène", "en": "New gym card layout" },
+      "fr": ["Carte d'arène : carte à gauche, nom et temps de référence à droite, puis les Pokémon au-dessus de leurs attaques ; les exceptions occupent toute la largeur en dessous.", "Sootopolis : « prioritize Mantine » est rattaché à la ligne de Lapras (et plus une exception à part)."],
+      "en": ["Gym card: map on the left, name and reference time on the right, then the Pokémon above their moves; exceptions use the full width below.", "Sootopolis: \"prioritize Mantine\" is attached to the Lapras line (no longer a separate exception)."]
+    },
+    {
+      "v": "3.8.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Sootopolis : Shock Wave (if available) et Mantine prioritaire", "en": "Sootopolis: Shock Wave (if available) and Mantine priority" },
+      "fr": ["Sootopolis (Lapras) : « Shock Wave (if available) », et la consigne « prioritize » Mantine devient une ligne à part, valable dans tous les cas.", "Les parenthèses du guide sont désormais affichées telles qu'écrites."],
+      "en": ["Sootopolis (Lapras): \"Shock Wave (if available)\", and the \"prioritize\" Mantine instruction becomes its own line, valid in all cases.", "The guide's parentheses are now shown as written."]
+    },
+    {
+      "v": "3.8.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Chaque Pokémon au-dessus de son attaque", "en": "Each Pokémon above its move" },
+      "fr": ["Sur la ligne principale de chaque arène, le sprite de chaque Pokémon se place au-dessus de son attaque ; la rangée de sprites séparée disparaît, et le vide aussi."],
+      "en": ["On each gym's main line, every Pokémon's sprite sits above its move; the separate sprite row is gone, and so is the empty space."]
+    },
+    {
+      "v": "3.7.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Correction du « mv_undefined » et mises à jour immédiates", "en": "Fix for \"mv_undefined\" and instant updates" },
+      "fr": ["Correction : le « ? » de certaines lignes (Mauville…) s'affichait « mv_undefined » quand le navigateur gardait une ancienne version du script.", "Les scripts et styles sont maintenant versionnés : une nouvelle version du site s'affiche tout de suite, sans attendre l'expiration du cache (4 h)."],
+      "en": ["Fix: the \"?\" on some lines (Mauville…) showed \"mv_undefined\" when the browser kept an old script version.", "Scripts and styles are now versioned: a new site version shows up immediately, without waiting for the cache (4 h) to expire."]
+    },
+    {
+      "v": "3.7.1",
+      "date": "2026-10-27",
+      "title": { "fr": "« Timecodes » devient « Temps de référence »", "en": "\"Timecodes\" becomes \"Reference time\"" },
+      "fr": ["Le bouton « Timecodes » s'appelle désormais « Temps de référence »."],
+      "en": ["The \"Timecodes\" button is now called \"Reference time\"."]
+    },
+    {
+      "v": "3.7.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Équipement de départ en tête du guide d'équipe", "en": "Items starting set at the top of the team guide" },
+      "fr": ["Nouveau bandeau « Items starting set » en haut du Team building guide : les 6 Pokémon avec l'objet à leur faire tenir au départ. Il remplace la ligne « Objet de départ » de chaque fiche."],
+      "en": ["New \"Items starting set\" banner at the top of the Team building guide: the 6 Pokémon with the item each must hold at the start. It replaces the \"Starting item\" line of each card."]
+    },
+    {
+      "v": "3.6.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Retour arrière du navigateur", "en": "Browser back button" },
+      "fr": ["Le bouton retour du navigateur (et avance) fonctionne entre le menu, la méthode et le Team building guide, sans quitter le site ni repasser par la connexion."],
+      "en": ["The browser back (and forward) button works between the menu, the method and the Team building guide, without leaving the site or going back through sign-in."]
+    },
+    {
+      "v": "3.6.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Détails du guide d'origine ajoutés", "en": "Original guide details added" },
+      "fr": [
+        "Eterna, Oreburgh, Mistralton : le switch se fait au tour 1.",
+        "Mistralton : le changement d'objet de Blastoise se fait à la sortie.",
+        "Canalave (Golem) : l'alternative Water Spout + Assurance, avec les « ? » du guide.",
+        "Vermilion (Politoed) : Lanturn survit et Garchomp meurt à Laser Glace.",
+        "Mauville (Zebstrika) : l'Air Balloon et les « ? » du guide."
+      ],
+      "en": [
+        "Eterna, Oreburgh, Mistralton: the switch happens at Turn 1.",
+        "Mistralton: Blastoise's item change happens on exit.",
+        "Canalave (Golem): the Water Spout + Assurance alternative, with the guide's \"?\".",
+        "Vermilion (Politoed): Lanturn survives and Garchomp dies to Ice Beam.",
+        "Mauville (Zebstrika): the Air Balloon and the guide's \"?\"."
+      ]
+    },
+    {
+      "v": "3.5.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Le « / » du guide est restitué tel quel", "en": "The guide's \"/\" is shown as written" },
+      "fr": ["Le « / » du guide (Hyper Voice / Shock Wave, Houndoom / Arcanine…) s'affiche tel qu'écrit, sans interprétation."],
+      "en": ["The guide's \"/\" (Hyper Voice / Shock Wave, Houndoom / Arcanine…) is shown as written, without interpretation."]
+    },
+    {
+      "v": "3.5.2",
+      "date": "2026-10-27",
+      "title": { "fr": "« ou » au lieu de la double flèche", "en": "\"or\" instead of the double arrow" },
+      "fr": ["Quand le guide propose l'un ou l'autre (Hyper Voice ou Shock Wave, Houndoom ou Arcanine…), la page affiche maintenant le mot « ou »."],
+      "en": ["When the guide offers one or the other (Hyper Voice or Shock Wave, Houndoom or Arcanine…), the page now shows the word \"or\"."]
+    },
+    {
+      "v": "3.5.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Cartes plus compactes et sans trous", "en": "Tighter cards, no gaps" },
+      "fr": ["Les « + » entre les attaques sont plus petits et plus proches du texte.", "Les cartes d'une même ligne ont la même hauteur (plus de vide entre deux lignes) et la carte de l'arène est plus grande."],
+      "en": ["The \"+\" between moves are smaller and closer to the text.", "Cards on the same row share the same height (no gap between rows) and the gym map is larger."]
+    },
+    {
+      "v": "3.5.0",
+      "date": "2026-10-27",
+      "title": { "fr": "Talents, natures, IV et EV ; icônes des charms", "en": "Abilities, natures, IVs and EVs; charm icons" },
+      "fr": [
+        "Team building guide : talent, nature, IV et EV de chacun des 6 Pokémon, en tête de chaque fiche.",
+        "Icônes de l'Amulet Coin et du Riches Charm dans le calculateur de charm et sur son bouton."
+      ],
+      "en": [
+        "Team building guide: ability, nature, IVs and EVs of each of the 6 Pokémon, at the top of each card.",
+        "Amulet Coin and Riches Charm icons in the charm calculator and on its button."
+      ]
+    },
+    {
+      "v": "3.4.4",
+      "date": "2026-10-27",
+      "title": { "fr": "Soin et changement d'objet dans la carte", "en": "Heal and item swap inside the card" },
+      "fr": ["Le soin (HEAL) et les changements d'objet sont de retour à l'intérieur de la carte de leur arène, en bas à gauche."],
+      "en": ["Heal and item swaps are back inside their gym's card, at the bottom left."]
+    },
+    {
+      "v": "3.4.3",
+      "date": "2026-10-27",
+      "title": { "fr": "Notes du guide dans le Team building guide", "en": "Guide notes in the Team building guide" },
+      "fr": ["Les notes générales (Vanilluxe requis, ocarina…) quittent le haut de la page des régions et passent dans le Team building guide."],
+      "en": ["General notes (Vanilluxe required, ocarina…) leave the top of the regions page and move into the Team building guide."]
+    },
+    {
+      "v": "3.4.2",
+      "date": "2026-10-27",
+      "title": { "fr": "Cartes 4 fois plus légères", "en": "Maps 4x lighter" },
+      "fr": ["Les cartes des arènes passent de 576 à 320 px de large (1,3 Mo → 0,3 Mo au total) : elles s'affichent à ~160 px, la netteté est inchangée."],
+      "en": ["Gym maps go from 576 to 320 px wide (1.3 MB → 0.3 MB in total): they display at ~160 px, sharpness is unchanged."]
+    },
+    {
+      "v": "3.4.1",
+      "date": "2026-10-27",
+      "title": { "fr": "Adversaires sans nom", "en": "Opponents without names" },
+      "fr": ["Les adversaires s'affichent avec leur sprite seul, sans leur nom."],
+      "en": ["Opponents are shown with their sprite only, without their name."]
+    },
+    {
+      "v": "3.4.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Cartes d'arène plus lisibles, comme le guide d'origine",
+        "en": "Clearer gym cards, like the original guide"
+      },
+      "fr": [
+        "Les Pokémon du combat s'affichent une seule fois (avec leur objet) sous le titre de l'arène ; les attaques sont du texte coloré, sans sprite devant chacune.",
+        "Les adversaires gardent leur sprite, avec leur nom.",
+        "Le soin (HEAL) est un repère bien visible entre deux arènes."
+      ],
+      "en": [
+        "The battle's Pokémon are shown once (with their item) under the gym title; moves are coloured text, with no sprite in front of each.",
+        "Opponents keep their sprite, with their name.",
+        "Healing (HEAL) is a clear marker between gyms."
+      ]
+    },
+    {
+      "v": "3.3.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Guide d'équipe épuré, notes dans le guide",
+        "en": "Cleaner team guide, notes in the guide"
+      },
+      "fr": [
+        "Page « Team building guide » : retrait des points d'attention et des gains attendus (déjà dans le guide).",
+        "Les notes générales (Vanilluxe requis, ocarina) passent en tête de la page du guide ; le conseil de soin avec 2:30 restantes est désormais sur la carte Striaton.",
+        "Retrait de la note « 47 min restantes » de Sinnoh."
+      ],
+      "en": [
+        "\"Team building guide\" page: removed the points of attention and expected gains (already in the guide).",
+        "General notes (Vanilluxe required, ocarina) now sit at the top of the guide page; the heal advice with 2:30 left is now on the Striaton card.",
+        "Removed the Sinnoh \"47 min left\" note."
+      ]
+    },
+    {
+      "v": "3.2.1",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Images instantanées",
+        "en": "Instant images"
+      },
+      "fr": [
+        "Les sprites s'affichent tout de suite en image fixe (1 Ko) ; l'animation (GIF) ne se charge que pour les arènes proches de l'écran.",
+        "Les cartes des régions suivantes se chargent au défilement."
+      ],
+      "en": [
+        "Sprites show immediately as a still image (1 KB); the animation (GIF) only loads for gyms near the screen.",
+        "Maps of the following regions load as you scroll."
+      ]
+    },
+    {
+      "v": "3.2.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Une seule page, toutes les régions",
+        "en": "One page, all regions"
+      },
+      "fr": [
+        "Plus de slider ni de boutons de région : les régions s'enchaînent sur la même page, chacune avec son titre, et la page défile.",
+        "En-tête simplifié : retour, titre et favori à gauche ; timecodes, guide d'équipe et charm à droite ; il reste visible pendant le défilement.",
+        "La vue linéaire disparaît (elle n'avait plus de sens sans slider).",
+        "Titres et lignes longs qui passent à la ligne au lieu de déborder de leur carte."
+      ],
+      "en": [
+        "No more slider or region buttons: regions follow each other on a single page, each with its own title, and the page scrolls.",
+        "Simpler header: back, title and favourite on the left; timecodes, team guide and charm on the right; it stays visible while scrolling.",
+        "The linear view is gone (it made no sense without the slider).",
+        "Long titles and lines now wrap instead of overflowing their card."
+      ]
+    },
+    {
+      "v": "3.1.0",
+      "date": "2026-10-27",
+      "title": {
+        "fr": "Lecture en livre, sprites homogènes, police lisible",
+        "en": "Book reading order, uniform sprites, readable font"
+      },
+      "fr": [
+        "Les arènes se lisent comme un livre : 1 et 2 sur la première ligne, 3 et 4 sur la suivante, etc.",
+        "Tous les sprites ont la même taille, quel que soit le Pokémon.",
+        "Police Google Sans Flex sur la page Money making, interface plus aérée et plus d'espace entre un sprite et son attaque.",
+        "Chargement des images plus rapide (plus de chargement différé, mise en cache) ; la page défile au lieu de réduire le texte sous 14 px ; en-tête adapté aux écrans moyens."
+      ],
+      "en": [
+        "Gyms read like a book: 1 and 2 on the first row, 3 and 4 on the next, and so on.",
+        "All sprites share the same size, whatever the Pokémon.",
+        "Google Sans Flex font on the Money making page, airier layout and more space between a sprite and its move.",
+        "Faster image loading (no lazy loading, caching); the page scrolls instead of shrinking text below 14 px; header adapted to medium screens."
+      ]
+    },
+    {
+      "v": "3.0.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Deux stratégies, en-tête sur une ligne, page d'équipe",
+        "en": "Two strategies, one-line header, team page"
+      },
+      "fr": [
+        "Deux méthodes dans le menu : « 6 Pillars - Technical route (2026) » (nouveau guide) et « 6 Pillars - Diabolus (2025) », avec les étiquettes ITEM SWAP et X.ITEMLESS.",
+        "En-tête de la méthode sur une seule ligne : bouton retour réduit à l'icône, titre court, calculateur de charm compact.",
+        "Nouvelle page « Team building guide » : les 6 Pokémon, leurs attaques, leurs objets et changements d'objet, la réserve à emporter, les points d'attention et les gains attendus (remplace équipe, réserve et contrainte Vanilluxe de l'en-tête).",
+        "Arènes optionnelles marquées (Pewter, Nacrene) et décochées par défaut dans le calculateur.",
+        "Corrections : connexion (Sign in) rétablie."
+      ],
+      "en": [
+        "Two methods in the menu: \"6 Pillars - Technical route (2026)\" (new guide) and \"6 Pillars - Diabolus (2025)\", with ITEM SWAP and X.ITEMLESS tags.",
+        "Method header on a single line: back button reduced to an icon, short title, compact charm calculator.",
+        "New \"Team building guide\" page: the 6 Pokémon, their moves, items and item changes, the stockpile to bring, points of attention and expected gains (replaces the team, stockpile and Vanilluxe requirement of the header).",
+        "Optional gyms marked (Pewter, Nacrene) and unticked by default in the calculator.",
+        "Fixes: sign-in restored."
+      ]
+    },
+    {
+      "v": "2.3.2",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Connexion corrigée",
+        "en": "Sign-in fixed"
+      },
+      "fr": [
+        "Le bouton « Sign in » fonctionne de nouveau : le serveur utilisait de mauvaises adresses Authentik (404). Il lit maintenant les adresses officielles du fournisseur de connexion.",
+        "La déconnexion renvoie vers le bon site (prod ou preprod)."
+      ],
+      "en": [
+        "The \"Sign in\" button works again: the server was using wrong Authentik addresses (404). It now reads the provider's official endpoints.",
+        "Sign-out now returns to the right site (prod or preprod)."
+      ]
+    },
+    {
+      "v": "2.3.1",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Nouveau nom de la stratégie",
+        "en": "New strategy name"
+      },
+      "fr": [
+        "La stratégie s'appelle désormais « 6 Pillars : Diabolus - ITEM SWAP - X.ITEMLESS - VARIATION ».",
+        "En-tête de la méthode : l'équipe et la navigation restent groupées à droite, même quand la ligne passe sur deux rangées."
+      ],
+      "en": [
+        "The strategy is now called \"6 Pillars : Diabolus - ITEM SWAP - X.ITEMLESS - VARIATION\".",
+        "Method header: the team and navigation stay grouped on the right, even when the row wraps onto two lines."
+      ]
+    },
+    {
+      "v": "2.3.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Calculateur de charm",
+        "en": "Charm calculator"
+      },
+      "fr": [
+        "Nouveau calculateur de charm dans naerod's 6 Pillars : il compare Pièce Rune (×1,5), Charme Richesse 75 % (×1,75) et 100 % (×2) et affiche le meilleur choix.",
+        "Les arènes sont celles du guide, cochées automatiquement (modifiables) ; les prix du marché sont récupérés automatiquement et restent modifiables à la main.",
+        "Option Donateur (+5 % de gains)."
+      ],
+      "en": [
+        "New charm calculator in naerod's 6 Pillars: it compares Amulet Coin (×1.5), Riches Charm 75% (×1.75) and 100% (×2) and shows the best choice.",
+        "Gyms are the guide's, ticked automatically (editable); market prices are fetched automatically and can be edited by hand.",
+        "Donator option (+5% gains)."
+      ]
+    },
+    {
+      "v": "2.2.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Vue linéaire, timecodes optionnels",
+        "en": "Linear view, optional timecodes"
+      },
+      "fr": [
+        "Nouvelle vue linéaire : l'arène en cours est en grand, la précédente grisée et les suivantes en petit, toujours au moins 3 arènes à l'écran. La molette, les flèches, le balayage et les boutons avancent d'une arène à la fois, avec animation.",
+        "Bascule entre vue grille et vue linéaire dans l'en-tête de la méthode ; le choix est mémorisé.",
+        "Case « Timecodes » pour afficher ou masquer les temps cibles.",
+        "Soins et changements d'objets placés entre deux cartes, comme dans le guide.",
+        "Mobile : plus aucun débordement horizontal."
+      ],
+      "en": [
+        "New linear view: the current gym is large, the previous one greyed out and the next ones small, always at least 3 gyms on screen. Mouse wheel, arrows, swipe and buttons move one gym at a time, with animation.",
+        "Switch between grid and linear view in the method header; your choice is remembered.",
+        "\"Timecodes\" checkbox to show or hide the target times.",
+        "Heals and item swaps sit between two cards, as in the guide.",
+        "Mobile: no more horizontal overflow."
+      ]
+    },
+    {
+      "v": "2.1.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Accent bleu partagé, boutons de la barre cerclés",
+        "en": "Shared blue accent, outlined top bar buttons"
+      },
+      "fr": [
+        "Calculator et Events partagent le même bleu d'accentuation ; Money making reste doré.",
+        "Les boutons de la barre du haut ont un contour coloré léger, plus marqué au survol et sur la page active."
+      ],
+      "en": [
+        "Calculator and Events share the same blue accent; Money making stays gold.",
+        "The top bar buttons have a light coloured outline, stronger on hover and on the current page."
+      ]
+    },
+    {
+      "v": "2.0.1",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "« Switch out » uniformisé",
+        "en": "Uniform \"switch out\""
+      },
+      "fr": [
+        "Toutes les phrases « switch out X into Y » ont la même forme : le Pokémon qui entre est suivi directement de son attaque, sur une seule ligne (Eterna, Mistralton, Mahogany, Nacrene)."
+      ],
+      "en": [
+        "Every \"switch out X into Y\" sentence now has the same form: the incoming Pokémon is directly followed by its move, on a single line (Eterna, Mistralton, Mahogany, Nacrene)."
+      ]
+    },
+    {
+      "v": "2.0.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "naerod's 6 Pillars : fidèle au guide",
+        "en": "naerod's 6 Pillars: faithful to the guide"
+      },
+      "fr": [
+        "Le site suit désormais le guide : on commence par Hoenn et Sootopolis, avec toutes les arènes (Hoenn 7, Sinnoh 5, Kanto 6, Johto 7, Unova 7) et le bonus Undella.",
+        "Chaque arène affiche son temps cible, le soin conseillé après le combat et les objets à changer avant le suivant.",
+        "Les objets des bulles viennent des cartes du guide, ligne de lead uniquement.",
+        "Les exceptions qui enchaînent sur une action passent sur une ligne de suite, avec flèche.",
+        "L'équipe est désormais dans la barre du haut ; la contrainte de Vanilluxe (Séisme critique de Garchomp) est rappelée."
+      ],
+      "en": [
+        "The site now follows the guide: it starts with Hoenn and Sootopolis, with every gym (Hoenn 7, Sinnoh 5, Kanto 6, Johto 7, Unova 7) plus the Undella bonus.",
+        "Each gym shows its target time, the recommended heal after the fight and the items to swap before the next one.",
+        "Bubble items come from the guide's cards, on the lead line only.",
+        "Exceptions that chain into an action move to a follow-up line, with an arrow.",
+        "The team now sits in the top bar; the Vanilluxe requirement (Garchomp's critical Earthquake) is reminded."
+      ]
+    },
+    {
+      "v": "1.10.1",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Objets sur la ligne de lead uniquement",
+        "en": "Items on the lead line only"
+      },
+      "fr": [
+        "Les bulles d'objets ne s'affichent plus que sur la ligne de lead de chaque arène."
+      ],
+      "en": [
+        "Item bubbles now only appear on each gym's lead line."
+      ]
+    },
+    {
+      "v": "1.10.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Sinnoh, Johto, Unova, objets et favoris",
+        "en": "Sinnoh, Johto, Unova, items and favourites"
+      },
+      "fr": [
+        "naerod's 6 Pillars couvre maintenant les 5 régions : Hoenn, Sinnoh, Kanto, Johto et Unova.",
+        "Une petite bulle sur chaque sprite de l'équipe indique l'objet à faire tenir avant le combat (Black Glasses, Choice Scarf, Choice Specs, Choice Band).",
+        "Sprites lissés, sans effet pixélisé.",
+        "Les cartes sont réparties en deux colonnes indépendantes ; une ligne trop longue peut passer à la ligne avant un « into » plutôt que de rapetisser le texte.",
+        "Favoris : une étoile sur chaque méthode du menu Money making ; les favoris passent en tête."
+      ],
+      "en": [
+        "naerod's 6 Pillars now covers all 5 regions: Hoenn, Sinnoh, Kanto, Johto and Unova.",
+        "A small bubble on each team sprite shows the item to equip before the fight (Black Glasses, Choice Scarf, Choice Specs, Choice Band).",
+        "Smoothed sprites, no more pixelated look.",
+        "Cards are laid out in two independent columns; a line that is too long may wrap before an \"into\" instead of shrinking the text.",
+        "Favourites: a star on each method in the Money making menu; favourites come first."
+      ]
+    },
+    {
+      "v": "1.9.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Lead mis en avant, cartes uniformisées",
+        "en": "Highlighted lead, uniform cards"
+      },
+      "fr": [
+        "La ligne de lead (première ligne de chaque arène) a un fond légèrement plus foncé.",
+        "Chaque ligne de stratégie tient sur une seule ligne.",
+        "Les exceptions sont 15 % plus petites que le lead ; leurs suites (« into ») sont décalées et précédées d'une flèche droite.",
+        "Le message d'information (ex. Vermilion) est à droite du titre, sur la même ligne.",
+        "Des icônes à la place des caractères « + », « / », « ( » « ) » et « , »."
+      ],
+      "en": [
+        "The lead line (first line of each gym) has a slightly darker background.",
+        "Each strategy line fits on a single line.",
+        "Exceptions are 15% smaller than the lead; their follow-ups (\"into\") are indented and preceded by a straight arrow.",
+        "The info message (e.g. Vermilion) sits to the right of the title, on the same line.",
+        "Icons instead of the \"+\", \"/\", \"(\", \")\" and \",\" characters."
+      ]
+    },
+    {
+      "v": "1.8.1",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Encadrés des sprites uniformes",
+        "en": "Uniform sprite boxes"
+      },
+      "fr": [
+        "Les encadrés derrière les sprites ont tous la même taille, avec une petite marge.",
+        "Une seule couleur par encadré : celle du type, ou la couleur dominante du Pokémon pour un double type."
+      ],
+      "en": [
+        "The boxes behind the sprites are all the same size, with a small margin.",
+        "One colour per box: the type colour, or the Pokémon's dominant colour for a dual type."
+      ]
+    },
+    {
+      "v": "1.8.0",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Sprites plus gros, encadrés par type",
+        "en": "Bigger sprites, boxed by type"
+      },
+      "fr": [
+        "Sprites des Pokémon plus grands.",
+        "Un encadré derrière chaque sprite prend la couleur du type du Pokémon (deux couleurs pour un double type), pour mieux les repérer."
+      ],
+      "en": [
+        "Bigger Pokémon sprites.",
+        "A box behind each sprite takes the colour of the Pokémon's type (two colours for a dual type), making them easier to spot."
+      ]
+    },
+    {
+      "v": "1.7.3",
+      "date": "2026-10-24",
+      "title": {
+        "fr": "Sprite de Vanilluxe corrigé",
+        "en": "Vanilluxe sprite fixed"
+      },
+      "fr": [
+        "Vanilluxe affichait le sprite d'un autre Pokémon : corrigé."
+      ],
+      "en": [
+        "Vanilluxe was showing another Pokémon's sprite: fixed."
+      ]
+    },
+    {
+      "v": "1.7.2",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Nouvelles cartes",
+        "en": "New maps"
+      },
+      "fr": [
+        "Cartes des arènes refaites à la main avec des flèches plus visibles, plus nettes."
+      ],
+      "en": [
+        "Gym maps redone by hand with clearer, more visible arrows."
+      ]
+    },
+    {
+      "v": "1.7.1",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Interface plus compacte",
+        "en": "More compact interface"
+      },
+      "fr": [
+        "Boutons et textes de l'en-tête de la méthode plus petits sur ordinateur (taille tactile conservée sur mobile).",
+        "Plafond sur la taille du texte des cartes."
+      ],
+      "en": [
+        "Smaller buttons and text in the method header on desktop (touch-sized on mobile).",
+        "Upper limit on the card text size."
+      ]
+    },
+    {
+      "v": "1.7.0",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "naerod's 6 Pillars : une région par écran",
+        "en": "naerod's 6 Pillars: one region per screen"
+      },
+      "fr": [
+        "La méthode s'appelle désormais « naerod's 6 Pillars ».",
+        "Mise en page compacte : chaque région tient entièrement dans la fenêtre, le texte s'adapte à la taille de l'écran.",
+        "« Suivant » et la flèche droite passent à la région suivante, « Précédent » et la flèche gauche reviennent en arrière.",
+        "Icône de l'onglet (favicon) : la Timer Ball."
+      ],
+      "en": [
+        "The method is now called \"naerod's 6 Pillars\".",
+        "Compact layout: each region fits entirely in the window, and the text adapts to the screen size.",
+        "\"Next\" and the right arrow go to the next region, \"Previous\" and the left arrow go back.",
+        "Tab icon (favicon): the Timer Ball."
+      ]
+    },
+    {
+      "v": "1.6.4",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Boutons du menu plus grands",
+        "en": "Bigger menu buttons"
+      },
+      "fr": [
+        "Les boutons du menu Money making sont plus grands : icône, texte et zone cliquable."
+      ],
+      "en": [
+        "The Money making menu buttons are bigger: icon, text and click area."
+      ]
+    },
+    {
+      "v": "1.6.3",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Menu des méthodes",
+        "en": "Methods menu"
+      },
+      "fr": [
+        "« Money making » ouvre maintenant un menu des méthodes, pour l'instant une seule : Gym Rerun 6 Pillars.",
+        "Bouton « Toutes les méthodes » pour revenir au menu ; chaque méthode a son lien direct."
+      ],
+      "en": [
+        "\"Money making\" now opens a menu of methods, for now just one: Gym Rerun 6 Pillars.",
+        "\"All methods\" button to go back to the menu; each method has its own direct link."
+      ]
+    },
+    {
+      "v": "1.6.2",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Une couleur par page",
+        "en": "One colour per page"
+      },
+      "fr": [
+        "Couleur d'accentuation propre à chaque page : rouge pour le calculateur, bleu pour les événements, doré pour Money making.",
+        "Ordre de la barre : Calculator, Events, Money making."
+      ],
+      "en": [
+        "Each page now has its own accent colour: red for the calculator, blue for events, gold for Money making.",
+        "Top bar order: Calculator, Events, Money making."
+      ]
+    },
+    {
+      "v": "1.6.1",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Nouvelle palette",
+        "en": "New palette"
+      },
+      "fr": [
+        "Fond neutre #111111 / #151515 en thème sombre, à la place du bleu nuit.",
+        "Nouvelle couleur d'accentuation ambre, assortie à l'Amulet Coin."
+      ],
+      "en": [
+        "Neutral #111111 / #151515 background in dark theme, replacing the navy blue.",
+        "New amber accent colour, matching the Amulet Coin."
+      ]
+    },
+    {
+      "v": "1.6.0",
+      "date": "2026-10-23",
+      "title": {
+        "fr": "Money making : Gym Rerun 6 Pillars",
+        "en": "Money making: Gym Rerun 6 Pillars"
+      },
+      "fr": [
+        "Nouvel onglet « Money making » dans la barre du haut, avec une première méthode : la Gym Rerun 6 Pillars.",
+        "Hoenn et Kanto : chaque région tient sur un seul écran 16:9, avec la carte, les attaques et les cas particuliers de chaque arène.",
+        "Bouton « Suivant » (ou flèche droite du clavier) pour passer à l'arène suivante ; la progression est mémorisée."
+      ],
+      "en": [
+        "New \"Money making\" tab in the top bar, starting with the Gym Rerun 6 Pillars method.",
+        "Hoenn and Kanto: each region fits on a single 16:9 screen, with the map, the moves and the special cases of every gym.",
+        "\"Next\" button (or the right arrow key) to move to the next gym; your progress is remembered."
+      ]
+    },
+    {
+      "v": "1.5.1",
+      "date": "2026-09-21",
+      "title": {
+        "fr": "Journal des versions commun",
+        "en": "Shared changelog"
+      },
+      "fr": [
+        "Le Journal des versions est désormais la brique commune à tous les sites naerod : il évolue partout en même temps.",
+        "Titres, états et libellés du journal traduits dans les 10 langues du site (le contenu des entrées reste en français et en anglais).",
+        "Dates affichées dans la langue choisie."
+      ],
+      "en": [
+        "The Changelog is now the building block shared by every naerod site: it evolves everywhere at once.",
+        "Changelog headings, states and labels translated into all 10 site languages (entry contents stay in French and English).",
+        "Dates shown in the selected language."
+      ]
+    },
+    {
       "v": "1.5",
       "date": "2026-09-20",
       "title": {

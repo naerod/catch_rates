@@ -1,0 +1,1599 @@
+{
+  "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier. gym.profit = gains de base d'une arene (source CharmCalc, c4vv.github.io/CharmCalc) ; Striaton = 3 champions ; Undella = Marian + Yan (optionnel, decoche par defaut). pokepaste = URL du pokepaste de l'equipe (lien « Team building guide », contient aussi la contrainte Vanilluxe/Garchomp).",
+  "total": 442000,
+  "team": [
+    "typhlosion",
+    "togekiss",
+    "blastoise",
+    "vanilluxe",
+    "weezing",
+    "garchomp"
+  ],
+  "stock": [
+    {
+      "item": "black_glasses",
+      "qty": 1
+    },
+    {
+      "item": "choice_specs",
+      "qty": 2
+    },
+    {
+      "item": "choice_scarf",
+      "qty": 2
+    }
+  ],
+  "mons": {
+    "typhlosion": {
+      "dex": 157,
+      "en": "Typhlosion",
+      "fr": "Typhlosion",
+      "type": "fire"
+    },
+    "togekiss": {
+      "dex": 468,
+      "en": "Togekiss",
+      "fr": "Togekiss",
+      "type": "normal"
+    },
+    "blastoise": {
+      "dex": 9,
+      "en": "Blastoise",
+      "fr": "Tortank",
+      "type": "water"
+    },
+    "vanilluxe": {
+      "dex": 584,
+      "en": "Vanilluxe",
+      "fr": "Blizzaroi",
+      "type": "ice"
+    },
+    "weezing": {
+      "dex": 110,
+      "en": "Weezing",
+      "fr": "Smogogo",
+      "type": "poison"
+    },
+    "garchomp": {
+      "dex": 445,
+      "en": "Garchomp",
+      "fr": "Carchacrok",
+      "type": "dragon"
+    }
+  },
+  "opponents": {
+    "229": {
+      "en": "Houndoom",
+      "fr": "Démolosse",
+      "type": "dark"
+    },
+    "59": {
+      "en": "Arcanine",
+      "fr": "Arcanin",
+      "type": "fire"
+    },
+    "279": {
+      "en": "Pelipper",
+      "fr": "Pelipper",
+      "type": "water"
+    },
+    "227": {
+      "en": "Skarmory",
+      "fr": "Airmure",
+      "type": "steel"
+    },
+    "277": {
+      "en": "Swellow",
+      "fr": "Hélédelle",
+      "type": "flying"
+    },
+    "523": {
+      "en": "Zebstrika",
+      "fr": "Zébribon",
+      "type": "electric"
+    },
+    "76": {
+      "en": "Golem",
+      "fr": "Grolem",
+      "type": "rock"
+    },
+    "454": {
+      "en": "Toxicroak",
+      "fr": "Toxicroak",
+      "type": "poison"
+    },
+    "272": {
+      "en": "Ludicolo",
+      "fr": "Ludicolo",
+      "type": "grass"
+    },
+    "142": {
+      "en": "Aerodactyl",
+      "fr": "Ptéra",
+      "type": "flying"
+    },
+    "260": {
+      "en": "Swampert",
+      "fr": "Laggron",
+      "type": "water"
+    },
+    "196": {
+      "en": "Espeon",
+      "fr": "Mentali",
+      "type": "psychic"
+    },
+    "202": {
+      "en": "Wobbuffet",
+      "fr": "Qulbutoké",
+      "type": "psychic"
+    },
+    "71": {
+      "en": "Victreebel",
+      "fr": "Empiflor",
+      "type": "grass"
+    },
+    "38": {
+      "en": "Ninetales",
+      "fr": "Feunard",
+      "type": "fire"
+    },
+    "407": {
+      "en": "Roserade",
+      "fr": "Roserade",
+      "type": "grass"
+    },
+    "392": {
+      "en": "Infernape",
+      "fr": "Simiabraz",
+      "type": "fire"
+    },
+    "620": {
+      "en": "Mienshao",
+      "fr": "Mushana",
+      "type": "fighting"
+    },
+    "476": {
+      "en": "Probopass",
+      "fr": "Tarinorme",
+      "type": "rock"
+    },
+    "248": {
+      "en": "Tyranitar",
+      "fr": "Tyranocif",
+      "type": "rock"
+    },
+    "530": {
+      "en": "Excadrill",
+      "fr": "Minotaupe",
+      "type": "steel"
+    },
+    "346": {
+      "en": "Cradily",
+      "fr": "Vacilys",
+      "type": "rock"
+    },
+    "376": {
+      "en": "Metagross",
+      "fr": "Métalosse",
+      "type": "steel"
+    },
+    "319": {
+      "en": "Sharpedo",
+      "fr": "Sharpedo",
+      "type": "water"
+    },
+    "123": {
+      "en": "Scyther",
+      "fr": "Insécateur",
+      "type": "bug"
+    },
+    "144": {
+      "en": "Articuno",
+      "fr": "Artikodin",
+      "type": "ice"
+    },
+    "365": {
+      "en": "Walrein",
+      "fr": "Kaimorse",
+      "type": "ice"
+    },
+    "473": {
+      "en": "Mamoswine",
+      "fr": "Mammochon",
+      "type": "ground"
+    },
+    "362": {
+      "en": "Glalie",
+      "fr": "Oniglali",
+      "type": "ice"
+    },
+    "478": {
+      "en": "Froslass",
+      "fr": "Momartik",
+      "type": "ice"
+    },
+    "521": {
+      "en": "Unfezant",
+      "fr": "Déflaisan",
+      "type": "normal"
+    },
+    "500": {
+      "en": "Emboar",
+      "fr": "Roitiflam",
+      "type": "fire"
+    },
+    "503": {
+      "en": "Samurott",
+      "fr": "Clamiral",
+      "type": "water"
+    },
+    "419": {
+      "en": "Floatzel",
+      "fr": "Mustéflott",
+      "type": "water"
+    },
+    "234": {
+      "en": "Stantler",
+      "fr": "Cerfrousse",
+      "type": "normal"
+    },
+    "9": {
+      "en": "Blastoise",
+      "fr": "Tortank",
+      "type": "water"
+    },
+    "130": {
+      "en": "Gyarados",
+      "fr": "Léviator",
+      "type": "water"
+    },
+    "131": {
+      "en": "Lapras",
+      "fr": "Lokhlass",
+      "type": "water"
+    },
+    "226": {
+      "en": "Mantine",
+      "fr": "Démanta",
+      "type": "water"
+    },
+    "327": {
+      "en": "Spinda",
+      "fr": "Spinda",
+      "type": "normal"
+    },
+    "352": {
+      "en": "Kecleon",
+      "fr": "Kecleon",
+      "type": "grass"
+    },
+    "186": {
+      "en": "Politoed",
+      "fr": "Tarpaud",
+      "type": "water"
+    },
+    "212": {
+      "en": "Scizor",
+      "fr": "Cizayox",
+      "type": "fighting"
+    },
+    "80": {
+      "en": "Slowbro",
+      "fr": "Flagadoss",
+      "type": "psychic"
+    },
+    "101": {
+      "en": "Electrode",
+      "fr": "Électrode",
+      "type": "electric"
+    },
+    "6": {
+      "en": "Charizard",
+      "fr": "Dracaufeu",
+      "type": "fire"
+    },
+    "547": {
+      "en": "Whimsicott",
+      "fr": "Farfaduvet",
+      "type": "grass"
+    },
+    "508": {
+      "en": "Stoutland",
+      "fr": "Lainergie",
+      "type": "normal"
+    },
+    "542": {
+      "en": "Leavanny",
+      "fr": "Charmillon",
+      "type": "bug"
+    },
+    "628": {
+      "en": "Braviary",
+      "fr": "Gueriaigle",
+      "type": "flying"
+    },
+    "630": {
+      "en": "Mandibuzz",
+      "fr": "Vostourno",
+      "type": "dark"
+    },
+    "581": {
+      "en": "Swanna",
+      "fr": "Lakmécygne",
+      "type": "water"
+    },
+    "587": {
+      "en": "Emolga",
+      "fr": "Emolga",
+      "type": "electric"
+    },
+    "596": {
+      "en": "Galvantula",
+      "fr": "Mygavolt",
+      "type": "electric"
+    },
+    "302": {
+      "en": "Sableye",
+      "fr": "Ténéfix",
+      "type": "ghost"
+    },
+    "389": {
+      "en": "Torterra",
+      "fr": "Torterra",
+      "type": "grass"
+    },
+    "18": {
+      "en": "Pidgeot",
+      "fr": "Roucarnage",
+      "type": "flying"
+    },
+    "145": {
+      "en": "Zapdos",
+      "fr": "Électhor",
+      "type": "electric"
+    }
+  },
+  "regions": [
+    {
+      "id": "hoenn",
+      "name": "Hoenn",
+      "mapSize": [
+        320,
+        200
+      ],
+      "gyms": [
+        {
+          "id": "sootopolis",
+          "name": "Sootopolis",
+          "time": 59,
+          "items": {
+            "weezing": "choice_band",
+            "blastoise": "choice_specs",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #130 , @follow_with typhlosion.swift + garchomp.earthquake @instead"
+            },
+            {
+              "i": 1,
+              "s": "@vs #131 , @follow_into togekiss.hyper_voice / .shock_wave ( @if_available ) + garchomp.earthquake ( @prioritize #226 )"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 9360
+        },
+        {
+          "id": "lavaridge",
+          "name": "Lavaridge",
+          "time": 57,
+          "items": {
+            "blastoise": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.helping_hand"
+            },
+            {
+              "i": 1,
+              "s": "@vs #229 / #59:85 , togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 8944
+        },
+        {
+          "id": "mauville",
+          "name": "Mauville",
+          "time": 56,
+          "items": {
+            "typhlosion": "choice_specs",
+            "garchomp": "choice_band",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "? @vs #523 @air_balloon , @switch_out ~garchomp @into togekiss.hyper_voice ?"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 8840
+        },
+        {
+          "id": "dewford",
+          "name": "Dewford",
+          "time": 54,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_specs"
+              }
+            ]
+          },
+          "profit": 8736
+        },
+        {
+          "id": "fortree",
+          "name": "Fortree",
+          "time": 53,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "blastoise.fake_out ( @prioritize #277 ) + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #279 / #227 , @use blastoise.water_spout @instead_of .fake_out"
+            },
+            {
+              "i": 1,
+              "s": "@vs #277 , @follow_into vanilluxe.blizzard + togekiss.hyper_voice @instead"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 9152
+        },
+        {
+          "id": "rustboro",
+          "name": "Rustboro",
+          "time": 51,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            }
+          ],
+          "profit": 8632
+        },
+        {
+          "id": "petalburg",
+          "name": "Petalburg",
+          "time": 49,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into typhlosion.eruption + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #327 , @follow_into typhlosion.eruption + garchomp.earthquake @then vanilluxe.blizzard + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #352 , @follow_up_with togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 9048
+        }
+      ]
+    },
+    {
+      "id": "sinnoh",
+      "name": "Sinnoh",
+      "mapSize": [
+        320,
+        249
+      ],
+      "gyms": [
+        {
+          "id": "eterna",
+          "name": "Eterna",
+          "time": 46,
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.swift + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #38 , typhlosion.eruption + @switch_out ~togekiss @into weezing.assurance @at_turn1"
+            },
+            {
+              "i": 1,
+              "s": "@vs #407 , typhlosion.eruption + togekiss.hyper_voice"
+            }
+          ],
+          "profit": 8736
+        },
+        {
+          "id": "veilstone",
+          "name": "Veilstone",
+          "time": 44,
+          "items": {
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + togekiss.helping_hand"
+            },
+            {
+              "i": 1,
+              "s": "@vs #392 , typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #620 , typhlosion.incinerate + togekiss.hyper_voice"
+            }
+          ],
+          "profit": 8944
+        },
+        {
+          "id": "oreburgh",
+          "name": "Oreburgh",
+          "time": 43,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "vanilluxe": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #476 @lead , @switch_out ~weezing @into vanilluxe.blizzard @at_turn1"
+            },
+            {
+              "i": 1,
+              "s": "@vs #248 @and #530 @lead , @if #346 @and #80 @sent_together , @use weezing.assurance @on #346 @turns4"
+            }
+          ],
+          "profit": 8632
+        },
+        {
+          "id": "canalave",
+          "name": "Canalave",
+          "time": 41,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #376 , @follow_up_with typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #76 , @use weezing.incinerate ? blastoise.water_spout + weezing.assurance ? @turns4"
+            },
+            {
+              "i": 1,
+              "s": "@warn_cradily"
+            }
+          ],
+          "tip": "tip_channel",
+          "skip": true,
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 9152
+        },
+        {
+          "id": "pastoria",
+          "name": "Pastoria",
+          "time": 39,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.fake_out ( @prioritize #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "profit": 9048
+        }
+      ]
+    },
+    {
+      "id": "kanto",
+      "name": "Kanto",
+      "mapSize": [
+        320,
+        240
+      ],
+      "gyms": [
+        {
+          "id": "vermilion",
+          "name": "Vermilion",
+          "time": 38,
+          "items": {
+            "typhlosion": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.dragon_claw"
+            },
+            {
+              "i": 1,
+              "s": "@vs #186 , typhlosion.swift + garchomp.earthquake @into vanilluxe.blizzard ?"
+            },
+            {
+              "i": 1,
+              "s": "@warn_lanturn"
+            },
+            {
+              "i": 1,
+              "s": "@if ~vanilluxe @dies_crit_eq , @send_out togekiss.hyper_voice"
+            }
+          ],
+          "tip": "tip_vermilion",
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "vanilluxe",
+                "item": "choice_specs"
+              }
+            ]
+          },
+          "profit": 8840
+        },
+        {
+          "id": "pewter",
+          "name": "Pewter",
+          "time": 36,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "togekiss": "choice_specs",
+            "typhlosion": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "~blastoise + ~weezing"
+            },
+            {
+              "i": 1,
+              "s": "@vs #260 , @use blastoise.water_spout + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #272 / #142 , @use blastoise.water_spout + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #76 / #454 , @use blastoise.water_spout + weezing.assurance"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "weezing",
+                "item": "black_glasses"
+              }
+            ]
+          },
+          "profit": 8632
+        },
+        {
+          "id": "cinnabar",
+          "name": "Cinnabar",
+          "time": 34,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "black_glasses"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.rain_dance , @then weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #59 , @switch_out ~weezing @into vanilluxe.blizzard"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "weezing",
+                "item": "choice_band"
+              }
+            ]
+          },
+          "profit": 9256
+        },
+        {
+          "id": "celadon",
+          "name": "Celadon",
+          "time": 32,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #71 , @follow_up_with typhlosion.eruption + garchomp.dragon_claw"
+            }
+          ],
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "vanilluxe",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 8944
+        },
+        {
+          "id": "saffron",
+          "name": "Saffron",
+          "time": 29,
+          "items": {
+            "typhlosion": "choice_specs",
+            "garchomp": "choice_band",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #212 / #131 @lead , typhlosion.eruption + garchomp.dragon_claw @protect_furret"
+            }
+          ],
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_specs"
+              }
+            ]
+          },
+          "profit": 9152
+        },
+        {
+          "id": "cerulean",
+          "name": "Cerulean",
+          "time": 27,
+          "items": {
+            "garchomp": "choice_band",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "garchomp.sunny_day + weezing.explosion @into typhlosion.eruption + togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 8736
+        }
+      ]
+    },
+    {
+      "id": "johto",
+      "name": "Johto",
+      "mapSize": [
+        320,
+        200
+      ],
+      "gyms": [
+        {
+          "id": "olivine",
+          "name": "Olivine",
+          "time": 25,
+          "items": {
+            "typhlosion": "choice_specs",
+            "weezing": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #376 @lead , typhlosion.eruption + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "after": {
+            "heal": "required",
+            "switch": [
+              {
+                "mon": "typhlosion",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 9152
+        },
+        {
+          "id": "azalea",
+          "name": "Azalea",
+          "time": 24,
+          "items": {
+            "blastoise": "choice_specs",
+            "weezing": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            },
+            {
+              "i": 1,
+              "s": "@vs #123 @lead , weezing.incinerate"
+            }
+          ],
+          "tip": "tip_channel",
+          "after": {
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 8736
+        },
+        {
+          "id": "violet",
+          "name": "Violet",
+          "time": 22,
+          "items": {
+            "typhlosion": "choice_scarf",
+            "blastoise": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "after": {
+            "switch": [
+              {
+                "mon": "typhlosion",
+                "item": "choice_specs"
+              }
+            ]
+          },
+          "profit": 8632
+        },
+        {
+          "id": "blackthorn",
+          "name": "Blackthorn",
+          "time": 20,
+          "items": {
+            "blastoise": "choice_scarf",
+            "weezing": "choice_band",
+            "vanilluxe": "choice_scarf",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.explosion @into vanilluxe.blizzard + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #9 , blastoise.fake_out @on #9"
+            }
+          ],
+          "profit": 9360
+        },
+        {
+          "id": "cianwood",
+          "name": "Cianwood",
+          "time": 19,
+          "items": {
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "profit": 9048
+        },
+        {
+          "id": "goldenrod",
+          "name": "Goldenrod",
+          "time": 18,
+          "items": {
+            "togekiss": "choice_specs",
+            "garchomp": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@sub_into ~typhlosion @if ~garchomp @faints"
+            },
+            {
+              "i": 1,
+              "s": "~togekiss @first_slot @and ~garchomp @second_slot"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 8840
+        },
+        {
+          "id": "mahogany",
+          "name": "Mahogany",
+          "time": 16,
+          "items": {
+            "weezing": "choice_band",
+            "garchomp": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "weezing.explosion + garchomp.dragon_claw @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@prefer garchomp.dragon_claw @on #144 @and #365"
+            },
+            {
+              "i": 1,
+              "s": "@vs #473 , @follow_up_with blastoise.water_spout + typhlosion.eruption"
+            },
+            {
+              "i": 1,
+              "s": "@vs #362 , weezing.explosion + @switch_out ~garchomp @into ~blastoise"
+            },
+            {
+              "i": 1,
+              "s": "@follow_up_with typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+            },
+            {
+              "i": 1,
+              "s": "@vs #478 , weezing.explosion + garchomp.sunny_day @into typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "togekiss",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 9256
+        }
+      ]
+    },
+    {
+      "id": "unova",
+      "name": "Unova",
+      "mapSize": [
+        320,
+        210
+      ],
+      "gyms": [
+        {
+          "id": "castelia",
+          "name": "Castelia",
+          "time": 14,
+          "items": {
+            "typhlosion": "choice_specs",
+            "blastoise": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + blastoise.water_spout"
+            }
+          ],
+          "after": {
+            "heal": "maybe"
+          },
+          "profit": 8840
+        },
+        {
+          "id": "nimbasa",
+          "name": "Nimbasa",
+          "time": 12,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "heal": "yes"
+          },
+          "profit": 8944
+        },
+        {
+          "id": "mistralton",
+          "name": "Mistralton",
+          "time": 10,
+          "items": {
+            "blastoise": "choice_scarf",
+            "vanilluxe": "choice_scarf",
+            "weezing": "choice_band"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@vs #521 , vanilluxe.blizzard + @switch_out ~blastoise @into weezing.assurance @at_turn1"
+            }
+          ],
+          "after": {
+            "heal": "yes",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_specs",
+                "exit": true
+              }
+            ]
+          },
+          "profit": 9152
+        },
+        {
+          "id": "driftveil",
+          "name": "Driftveil",
+          "time": 8,
+          "items": {
+            "blastoise": "choice_specs",
+            "weezing": "choice_band",
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "blastoise.water_spout + weezing.assurance"
+            }
+          ],
+          "after": {
+            "heal": "maybe",
+            "switch": [
+              {
+                "mon": "blastoise",
+                "item": "choice_scarf"
+              }
+            ]
+          },
+          "profit": 9048
+        },
+        {
+          "id": "opelucid",
+          "name": "Opelucid",
+          "time": 6,
+          "items": {
+            "typhlosion": "choice_specs",
+            "vanilluxe": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "typhlosion.eruption + vanilluxe.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@if #500 @survives_kos ~vanilluxe , @send_out blastoise.blizzard"
+            },
+            {
+              "i": 1,
+              "s": "@if #503 @survives_kos ~typhlosion , @send_out togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "heal": "maybe"
+          },
+          "profit": 9360
+        },
+        {
+          "id": "striaton",
+          "name": "Striaton",
+          "time": 4,
+          "items": {
+            "blastoise": "choice_scarf",
+            "togekiss": "choice_scarf",
+            "typhlosion": "choice_specs"
+          },
+          "lines": [
+            {
+              "s": "@vs =Chili , blastoise.water_spout + togekiss.hyper_voice",
+              "lead": true
+            },
+            {
+              "s": "@vs =Cress , typhlosion.eruption / .incinerate + togekiss.hyper_voice",
+              "lead": true
+            },
+            {
+              "s": "@vs =Cilan , typhlosion.eruption + togekiss.hyper_voice",
+              "lead": true
+            },
+            {
+              "i": 1,
+              "s": "@vs #419 , @use typhlosion.helping_hand + togekiss.hyper_voice @into vanilluxe.blizzard + togekiss.hyper_voice"
+            }
+          ],
+          "after": {
+            "heal": "maybe"
+          },
+          "profit": 25896,
+          "tip": "tip_heal_230"
+        },
+        {
+          "id": "nacrene",
+          "name": "Nacrene",
+          "time": 0,
+          "items": {
+            "weezing": "choice_band",
+            "garchomp": "choice_band",
+            "typhlosion": "choice_specs",
+            "togekiss": "choice_scarf"
+          },
+          "lines": [
+            {
+              "s": "weezing.explosion + garchomp.sunny_day @into typhlosion.eruption + togekiss.hyper_voice"
+            },
+            {
+              "i": 1,
+              "s": "@vs #234 , weezing.explosion + @switch_out ~garchomp @into ~typhlosion"
+            },
+            {
+              "i": 1,
+              "s": "@then @follow_with togekiss.hyper_voice + garchomp.earthquake"
+            }
+          ],
+          "after": {
+            "heal": "maybe"
+          },
+          "profit": 8736,
+          "optional": true
+        },
+        {
+          "id": "undella",
+          "name": "Undella",
+          "bonus": true,
+          "tip": "tip_route13",
+          "lines": [],
+          "profit": 10800,
+          "optional": true
+        }
+      ]
+    }
+  ],
+  "size": {
+    "157": [
+      59,
+      72
+    ],
+    "468": [
+      86,
+      52
+    ],
+    "9": [
+      70,
+      66
+    ],
+    "110": [
+      85,
+      67
+    ],
+    "445": [
+      83,
+      80
+    ],
+    "229": [
+      77,
+      72
+    ],
+    "59": [
+      75,
+      69
+    ],
+    "279": [
+      95,
+      76
+    ],
+    "227": [
+      69,
+      70
+    ],
+    "277": [
+      72,
+      59
+    ],
+    "523": [
+      74,
+      75
+    ],
+    "76": [
+      72,
+      57
+    ],
+    "454": [
+      68,
+      60
+    ],
+    "272": [
+      84,
+      80
+    ],
+    "142": [
+      94,
+      82
+    ],
+    "260": [
+      76,
+      60
+    ],
+    "196": [
+      63,
+      58
+    ],
+    "202": [
+      53,
+      58
+    ],
+    "71": [
+      65,
+      71
+    ],
+    "584": [
+      63,
+      73
+    ],
+    "38": [
+      74,
+      73
+    ],
+    "407": [
+      71,
+      58
+    ],
+    "392": [
+      80,
+      74
+    ],
+    "620": [
+      87,
+      70
+    ],
+    "476": [
+      65,
+      84
+    ],
+    "248": [
+      88,
+      76
+    ],
+    "530": [
+      91,
+      77
+    ],
+    "346": [
+      58,
+      78
+    ],
+    "376": [
+      83,
+      58
+    ],
+    "319": [
+      72,
+      72
+    ],
+    "123": [
+      54,
+      61
+    ],
+    "144": [
+      73,
+      81
+    ],
+    "365": [
+      77,
+      70
+    ],
+    "473": [
+      84,
+      73
+    ],
+    "362": [
+      59,
+      62
+    ],
+    "478": [
+      35,
+      75
+    ],
+    "521": [
+      69,
+      76
+    ],
+    "500": [
+      92,
+      76
+    ],
+    "503": [
+      95,
+      80
+    ],
+    "419": [
+      67,
+      71
+    ],
+    "234": [
+      57,
+      78
+    ],
+    "130": [
+      102,
+      84
+    ],
+    "131": [
+      68,
+      72
+    ],
+    "226": [
+      82,
+      77
+    ],
+    "327": [
+      39,
+      52
+    ],
+    "352": [
+      65,
+      55
+    ],
+    "186": [
+      51,
+      79
+    ],
+    "212": [
+      75,
+      73
+    ],
+    "80": [
+      62,
+      60
+    ],
+    "101": [
+      48,
+      52
+    ],
+    "6": [
+      87,
+      89
+    ],
+    "547": [
+      63,
+      71
+    ],
+    "508": [
+      74,
+      71
+    ],
+    "542": [
+      49,
+      76
+    ],
+    "628": [
+      102,
+      110
+    ],
+    "630": [
+      56,
+      71
+    ],
+    "581": [
+      137,
+      69
+    ],
+    "587": [
+      80,
+      77
+    ],
+    "596": [
+      68,
+      56
+    ],
+    "302": [
+      43,
+      49
+    ],
+    "389": [
+      78,
+      80
+    ],
+    "18": [
+      58,
+      68
+    ],
+    "145": [
+      96,
+      71
+    ]
+  },
+  "teamGuide": {
+    "types": {
+      "typhlosion": [
+        "fire"
+      ],
+      "togekiss": [
+        "normal",
+        "flying"
+      ],
+      "blastoise": [
+        "water"
+      ],
+      "vanilluxe": [
+        "ice"
+      ],
+      "weezing": [
+        "poison"
+      ],
+      "garchomp": [
+        "dragon",
+        "ground"
+      ]
+    },
+    "start": {
+      "blastoise": "choice_specs",
+      "weezing": "choice_band",
+      "togekiss": "choice_specs",
+      "garchomp": "choice_band",
+      "typhlosion": "choice_specs",
+      "vanilluxe": "choice_scarf"
+    },
+    "attention": [
+      {
+        "icon": "warning",
+        "key": "gr_requires"
+      },
+      {
+        "icon": "flight",
+        "key": "gr_ocarina"
+      }
+    ],
+    "mons": {
+      "typhlosion": {
+        "ability": "Blaze",
+        "nature": "Modest",
+        "ivs": "10-31 HP / 10-31 Def / 31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "togekiss": {
+        "ability": "Hustle",
+        "nature": "Modest",
+        "ivs": "31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "blastoise": {
+        "ability": "Torrent",
+        "nature": "Mild",
+        "ivs": "0-25 HP / 0-25 Def / 31 SpAtk / 31 Spe",
+        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+      },
+      "vanilluxe": {
+        "ability": "Snow Warning",
+        "nature": "Modest",
+        "ivs": "28-31 HP* / 28-31 Def* / 31 SpAtk / 31 Spe",
+        "evs": "6 Def / 252 SpAtk / 252 Spe"
+      },
+      "weezing": {
+        "ability": "Reactive Gas",
+        "nature": "Adamant",
+        "ivs": "31 Atk / 31 Spe",
+        "evs": "252 Atk / 6 Def / 252 Spe"
+      },
+      "garchomp": {
+        "ability": "Sand Veil / Rough Skin*",
+        "nature": "Lonely",
+        "ivs": "0-8 HP* / 0-8 Def* / 31 Atk / 25-31 SpDef / 31 Spe",
+        "evs": "252 Atk / 26 SpDef / 232 Spe"
+      }
+    }
+  }
+}

@@ -36,8 +36,50 @@ function dbRun(sql, params = []) {
   return { lastInsertRowid: row ? row.id : null };
 }
 
+
+// Evenements saisonniers PokeMMO. Dates : wiki PokeMMO (debut) ; fin = fin du minuteur du charme d'event, a defaut debut + 14 jours.
+// Swarms : seulement ceux verifies (Noel 2024 = guide officiel ; Halloween 2025 = guide communautaire d'Alisae, liste partielle).
+// Idempotent : n'ecrase ni les dates ni les listes deja saisies via l'admin.
+function seedEvents() {
+  // LNY 2026 : tableur communautaire « Fastest Swarm Pokémon Catching Guide » (47 especes). Nidoran apparait deux fois (F et M).
+  const L26 = ['Ekans', 'Meowth', 'Minccino', 'Numel', 'Poochyena', 'Sandshrew', 'Spinda', 'Spoink', 'Nidoran-F', 'Nidoran-M', 'Swinub', 'Deerling', 'Dunsparce', 'Growlithe', 'Mankey', 'Munna', 'Pikachu', 'Ponyta', 'Buneary', 'Cottonee', 'Meditite', 'Hippopotas', 'Gyarados', 'Raticate', 'Luxio', 'Rhyhorn', 'Vigoroth', 'Electrike', 'Flaaffy', 'Pidgeotto', 'Staravia', 'Seviper', 'Fearow', 'Girafarig', 'Riolu', 'Espeon', 'Tauros', 'Onix', 'Aipom', 'Combusken', 'Gabite', 'Miltank', 'Stantler', 'Dragonair', 'Electabuzz', 'Charmeleon', 'Monferno'];
+  // Noel 2025 : aucune liste publiee ; les videos et le forum ne citent que des especes du lot de Noel 2024 -> meme lot, marque « a confirmer ».
+  const X25 = ['Seel', 'Dewgong', 'Staryu', 'Lapras', 'Pineco', 'Swinub', 'Delibird', 'Stantler', 'Smoochum', 'Treecko', 'Snorunt', 'Spheal', 'Chingling', 'Snover', 'Glaceon', 'Deerling'];
+  const H25 = ['Drifloon', 'Skorupi', 'Houndour', 'Seviper', 'Zorua', 'Gligar', 'Sableye', 'Misdreavus', 'Umbreon', 'Murkrow'];
+  const EVENTS = [
+    { slug: 'lny-2025',       name: 'LNY 2025',       kind: 'lny',       start: '2025-01-29', end: '2025-02-12' },
+    { slug: 'xmas-2024',      name: 'XMAS 2024',      kind: 'xmas',      start: '2024-12-24', end: '2025-01-07' },
+    { slug: 'halloween-2025', name: 'HALLOWEEN 2025', kind: 'halloween', start: '2025-10-31', end: '2025-11-14', mons: H25 },
+    { slug: 'xmas-2025',      name: 'XMAS 2025',      kind: 'xmas',      start: '2025-12-24', end: '2026-01-08', mons: X25, unverified: 1 },
+    { slug: 'lny-2026',       name: 'LNY 2026',       kind: 'lny',       start: '2026-02-18', end: '2026-03-03', mons: L26 },
+    { slug: 'halloween-2026', name: 'HALLOWEEN 2026', kind: 'halloween', start: '2026-10-31', end: '2026-11-14', mons: H25, forecast: 1 },
+  ];
+  // Halloween 2024 retire (aucune liste de swarms disponible) : seulement si la ligne est intacte (jamais touchee depuis l'amorcage)
+  dbRun("DELETE FROM events WHERE slug = 'halloween-2024' AND starts_at = '2024-10-31' AND id NOT IN (SELECT event_id FROM event_pokemon)");
+  for (const e of EVENTS) {
+    if (!dbGet('SELECT id FROM events WHERE slug = ?', [e.slug]))
+      dbRun('INSERT INTO events (slug, name_en, name_fr, active, forecast) VALUES (?, ?, ?, 1, ?)', [e.slug, e.name, e.name, e.forecast || 0]);
+    const row = dbGet('SELECT id, starts_at, ends_at, kind FROM events WHERE slug = ?', [e.slug]);
+    if (!row.starts_at) dbRun('UPDATE events SET starts_at = ?, ends_at = COALESCE(ends_at, ?) WHERE id = ?', [e.start, e.end, row.id]);
+    if (!row.kind) dbRun('UPDATE events SET kind = ? WHERE id = ?', [e.kind, row.id]);
+    if (e.unverified && !dbGet('SELECT 1 AS x FROM event_pokemon WHERE event_id = ?', [row.id])) dbRun('UPDATE events SET unverified = 1 WHERE id = ?', [row.id]);
+    if (e.mons && !dbGet('SELECT 1 AS x FROM event_pokemon WHERE event_id = ?', [row.id]))
+      for (const n of e.mons) {
+        const p = dbGet('SELECT id FROM pokemon WHERE lower(name) = lower(?)', [n]);
+        if (p) dbRun('INSERT OR IGNORE INTO event_pokemon (event_id, pokemon_id) VALUES (?, ?)', [row.id, p.id]);
+      }
+  }
+}
+
 // ─── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
+// Cloudflare garde les statiques 4 h cote navigateur : on versionne leurs URL (?v=<version du changelog>) pour qu'un deploiement les renouvelle tout de suite.
+const APP_V = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'changelog.json'), 'utf8')).versions[0].v;
+const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8')
+  .replace(/((?:src|href)="\/(?:js|css)\/[^"]+\.(?:js|css))"/g, `$1?v=${APP_V}"`)
+  .replace('</head>', `  <meta name="app-version" content="${APP_V}" />\n</head>`);
+app.get(['/', '/index.html'], (req, res) => res.type('html').send(INDEX_HTML));
+app.use('/gym-rerun', express.static(path.join(__dirname, 'public', 'gym-rerun'), { maxAge: '1d' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ball-images', express.static(path.join(__dirname, 'db', 'images')));
 app.use(session({
@@ -69,7 +111,26 @@ function requireAdmin(req, res, next) {
 }
 
 // ─── OIDC Routes ──────────────────────────────────────────────────────────────
-app.get('/auth/login', (req, res) => {
+// Authentik expose authorize/token/userinfo au niveau /application/o/ (pas sous le slug de l'application) ;
+// seul end-session est propre au slug. On lit donc les adresses dans le document de decouverte
+// (mis en cache), avec un repli sur les chemins standards d'Authentik.
+let oidcMeta = null;
+async function oidcEndpoints() {
+  if (oidcMeta) return oidcMeta;
+  const base = OIDC_ISSUER.replace(/\/[^/]+$/, '');                    // https://auth.naerod.com/application/o
+  const fallback = {
+    authorization_endpoint: `${base}/authorize/`, token_endpoint: `${base}/token/`,
+    userinfo_endpoint: `${base}/userinfo/`, end_session_endpoint: `${OIDC_ISSUER}/end-session/`,
+  };
+  try {
+    const r = await fetch(`${OIDC_ISSUER}/.well-known/openid-configuration`, { signal: AbortSignal.timeout(8000) });
+    if (r.ok) { oidcMeta = { ...fallback, ...(await r.json()) }; return oidcMeta; }
+  } catch (e) { console.error('[OIDC] discovery:', e.message); }
+  return fallback;                                                     // pas mis en cache : on reessaiera
+}
+const APP_ORIGIN = new URL(OIDC_REDIRECT_URI).origin;                  // prod ou preprod, selon l'environnement
+
+app.get('/auth/login', async (req, res) => {
   const state        = crypto.randomBytes(16).toString('hex');
   const codeVerifier = crypto.randomBytes(32).toString('base64url');
   const codeChallenge = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
@@ -81,7 +142,7 @@ app.get('/auth/login', (req, res) => {
     redirect_uri: OIDC_REDIRECT_URI, scope: 'openid email profile',
     state, code_challenge: codeChallenge, code_challenge_method: 'S256',
   });
-  res.redirect(`${OIDC_ISSUER}/authorize/?${params}`);
+  res.redirect(`${(await oidcEndpoints()).authorization_endpoint}?${params}`);
 });
 
 app.get('/auth/callback', async (req, res) => {
@@ -92,7 +153,8 @@ app.get('/auth/callback', async (req, res) => {
   delete req.session.oidcCodeVerifier;
   delete req.session.oidcRedirect;
   try {
-    const tokenRes = await fetch(`${OIDC_ISSUER}/token/`, {
+    const meta = await oidcEndpoints();
+    const tokenRes = await fetch(meta.token_endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -103,7 +165,7 @@ app.get('/auth/callback', async (req, res) => {
     });
     if (!tokenRes.ok) throw new Error(`Token exchange: ${tokenRes.status}`);
     const { access_token } = await tokenRes.json();
-    const userRes = await fetch(`${OIDC_ISSUER}/userinfo/`, {
+    const userRes = await fetch(meta.userinfo_endpoint, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
     if (!userRes.ok) throw new Error(`Userinfo: ${userRes.status}`);
@@ -119,10 +181,18 @@ app.get('/auth/callback', async (req, res) => {
   }
 });
 
-app.get('/auth/logout', (req, res) => {
-  const endSession = `${OIDC_ISSUER}/end-session/?redirect_uri=${encodeURIComponent('https://catchr.naerod.com')}`;
+app.get('/auth/logout', async (req, res) => {
+  const endSession = `${(await oidcEndpoints()).end_session_endpoint}?redirect_uri=${encodeURIComponent(APP_ORIGIN)}`;
   req.session.destroy(() => res.redirect(endSession));
 });
+
+// Photo de profil : service central naerod-profile (auth.naerod.com, ou preprod-auth.naerod.com depuis une preprod).
+// Si le profil n'a pas de photo (404) ou si le service n'est pas encore en prod, la barre retombe sur l'initiale.
+const avatarUrl = (req, username) => {
+  const host = String(req.get('x-forwarded-host') || req.hostname || '').split(',')[0];
+  const base = host.startsWith('preprod-') ? 'https://preprod-auth.naerod.com' : 'https://auth.naerod.com';
+  return `${base}/avatar/${encodeURIComponent(username)}?w=160`;
+};
 
 app.get('/api/auth/me', (req, res) => {
   if (!req.session?.oidcUser) return res.json({ authenticated: false });
@@ -131,7 +201,7 @@ app.get('/api/auth/me', (req, res) => {
   const isEventManager = groups.some(g => ['catchr-event-managers', 'catchr-admins'].includes(g));
   const isUser         = groups.some(g => CATCHR_GROUPS.includes(g));
   res.json({
-    authenticated: true, username, name, email,
+    authenticated: true, username, name, email, avatar: avatarUrl(req, username),
     role: isAdmin ? 'admin' : isEventManager ? 'event-manager' : isUser ? 'user' : 'none',
     isAdmin, isEventManager, isUser,
   });
@@ -188,7 +258,8 @@ app.get('/api/pokeballs', (req, res) => {
 
 // ─── Events ───────────────────────────────────────────────────────────────────
 app.get('/api/events', (req, res) => {
-  res.json(dbAll('SELECT * FROM events ORDER BY sort_order ASC, created_at DESC'));
+  // Du plus recent au plus ancien : date de debut, a defaut date de creation ; egalite -> dernier ajoute d'abord
+  res.json(dbAll("SELECT * FROM events ORDER BY COALESCE(starts_at, substr(created_at, 1, 10)) DESC, id DESC"));
 });
 
 app.get('/api/events/:slug', (req, res) => {
@@ -230,21 +301,16 @@ app.get('/api/admin/check', (req, res) => {
 });
 
 // ─── Admin Events ──────────────────────────────────────────────────────────────
-app.put('/api/admin/events/reorder', requireAuth, (req, res) => {
-  const { ids } = req.body;
-  if (!Array.isArray(ids)) return res.status(400).json({ error: 'ids must be an array' });
-  ids.forEach((id, i) => dbRun('UPDATE events SET sort_order=? WHERE id=?', [i, id]));
-  saveDb();
-  res.json({ success: true });
-});
-
+const isDate = v => v == null || v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v);
 app.post('/api/admin/events', requireAuth, (req, res) => {
-  const { slug, name_en, name_fr, active } = req.body;
+  const { slug, name_en, name_fr, active, starts_at, ends_at } = req.body;
   if (!slug || !name_en) return res.status(400).json({ error: 'Missing fields' });
+  if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
   try {
+    const kind = ['halloween', 'xmas', 'lny'].find(k => slug.toLowerCase().startsWith(k)) || null;   // icone de l'evenement, deduite du slug
     const result = dbRun(
-      'INSERT INTO events (slug, name_en, name_fr, active) VALUES (?, ?, ?, ?)',
-      [slug, name_en, name_fr, active ? 1 : 0]
+      'INSERT INTO events (slug, name_en, name_fr, active, starts_at, ends_at, kind) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [slug, name_en, name_fr || '', active ? 1 : 0, starts_at || null, ends_at || null, kind]
     );
     saveDb();
     res.json({ id: result.lastInsertRowid, slug, name_en, name_fr, active: active ? 1 : 0 });
@@ -263,6 +329,14 @@ app.put('/api/admin/events/:id', requireAuth, (req, res) => {
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
+});
+
+app.put('/api/admin/events/:id/dates', requireAuth, (req, res) => {
+  const { starts_at, ends_at } = req.body;
+  if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
+  dbRun('UPDATE events SET starts_at=?, ends_at=? WHERE id=?', [starts_at || null, ends_at || null, req.params.id]);
+  saveDb();
+  res.json({ success: true });
 });
 
 app.delete('/api/admin/events/:id', requireAuth, (req, res) => {
@@ -346,6 +420,35 @@ app.delete('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
   res.json({ success: true });
 });
 
+// ─── Prix du marche des charms (GTL PokeMMO) ───────────────────────────────────
+// Meme source que CharmCalc : l'API publique apis.fiereu.de. Mise en cache cote serveur (10 min),
+// le navigateur n'appelle jamais l'API externe ; si elle tombe, on sert le dernier prix connu.
+const CHARM_IDS = { amulet_coin: 5223, riches_75: 1412, riches_100: 1413 };
+let priceCache = null;           // { at, prices }
+app.get('/api/prices', async (req, res) => {
+  const fresh = priceCache && Date.now() - priceCache.at < 10 * 60 * 1000;
+  if (!fresh) {
+    try {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 8000);
+      const r = await fetch('https://apis.fiereu.de/pokemmoprices/v1/items', { signal: ctl.signal });
+      clearTimeout(timer);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const list = await r.json();
+      const prices = {};
+      for (const [key, id] of Object.entries(CHARM_IDS)) {
+        const it = list.find(i => i.item_id === id);
+        if (it) prices[key] = { price: it.price, listings: it.listings, updated: it.last_updated };
+      }
+      if (Object.keys(prices).length === 3) priceCache = { at: Date.now(), prices };
+    } catch (err) {
+      console.error('prices:', err.message);
+    }
+  }
+  if (!priceCache) return res.status(502).json({ error: 'Market prices unavailable' });
+  res.json({ fetchedAt: priceCache.at, stale: !fresh && Date.now() - priceCache.at >= 10 * 60 * 1000, prices: priceCache.prices });
+});
+
 // ─── Serve SPA ─────────────────────────────────────────────────────────────────
 // Journal des versions (pas de .html dans les URL publiques)
 app.get('/changelog', (req, res) => {
@@ -366,6 +469,12 @@ app.get('*', (req, res) => {
   const fileBuffer = fs.readFileSync(DB_PATH);
   db = new SQL.Database(fileBuffer);
   db.run('PRAGMA foreign_keys = ON;');
+  // Migrations : dates de debut/fin d'evenement (tri par recence, "en cours") ; sort_order pour les bases anciennes
+  const evCols = dbAll('PRAGMA table_info(events)').map(c => c.name);
+  for (const [col, ddl] of [['sort_order', 'INTEGER DEFAULT 0'], ['starts_at', 'TEXT'], ['ends_at', 'TEXT'], ['kind', 'TEXT'], ['forecast', 'INTEGER DEFAULT 0'], ['unverified', 'INTEGER DEFAULT 0']])
+    if (!evCols.includes(col)) db.run(`ALTER TABLE events ADD COLUMN ${col} ${ddl}`);
+  seedEvents();
+  saveDb();
 
   app.listen(PORT, () => {
     console.log(`CatchR running at http://localhost:${PORT}`);

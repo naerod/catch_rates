@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+  <script>document.documentElement.dataset.page = location.hash.slice(1).split("/")[0] || "calc";</script>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CatchR — PokeMMO</title>
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/money.css" />
   <!-- Umami analytics (self-hosted, sans cookie) -->
   <script defer src="https://umami.naerod.com/s.js" data-website-id="73848ced-9a37-46a4-b294-0f54b56f505e"></script>
 </head>
@@ -35,21 +37,21 @@
     <!-- ══════════════ CALCULATOR PAGE ══════════════ -->
     <section id="page-calc" class="page active">
       <div class="page-title">
-        <h1 data-i18n="calc_title">Catch Rate Calculator</h1>
-        <p class="subtitle" data-i18n="calc_subtitle">PokeMMO — Gen 3-5 formula</p>
+        <h1 class="site-title"><img src="/logo.png" alt="" width="48" height="48" />CatchR</h1>
+        <p class="subtitle" data-i18n="calc_subtitle">Catch Rate Calculator for PokeMMO — Gen 3-5 formula</p>
       </div>
 
       <!-- 1. Search -->
       <div class="search-wrapper">
         <div class="search-row">
           <div class="search-box">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon material-symbols-outlined" aria-hidden="true">search</span>
             <input type="text" id="pokemon-search" autocomplete="off"
               data-i18n-placeholder="search_placeholder" placeholder="Search Pokémon..." />
             <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear">✕</button>
           </div>
           <button class="btn-icon history-toggle-btn" id="history-toggle" title="History" aria-label="Toggle history">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12 6 12 12 16 14"/>
             </svg>
@@ -58,9 +60,12 @@
         <div id="search-dropdown" class="search-dropdown" style="display:none"></div>
       </div>
 
+      <!-- Raccourcis : favoris Money making + sections (masqués dès qu'un Pokémon est affiché) -->
+      <div id="home-shortcuts" class="home-shortcuts"></div>
+
       <!-- Pokémon card -->
       <div id="pokemon-card" class="pokemon-card" style="display:none">
-        <img id="pokemon-sprite" src="" alt="" class="pokemon-sprite" />
+        <img id="pokemon-sprite" alt="" class="pokemon-sprite" />
         <div class="pokemon-info">
           <div class="pokemon-id">#<span id="pokemon-id-display"></span></div>
           <div class="pokemon-name" id="pokemon-name-display"></div>
@@ -93,7 +98,7 @@
             <span class="result-title" data-i18n="best_title">⚡ Fastest</span>
           </div>
           <div class="result-ball-row">
-            <img id="best-ball-img" src="" alt="" class="result-ball-img" />
+            <img id="best-ball-img" alt="" class="result-ball-img" />
             <div class="result-ball-name" id="best-ball-name">—</div>
           </div>
           <div class="result-rate-big" id="best-rate">—</div>
@@ -106,7 +111,7 @@
             <span class="result-title" data-i18n="cheap_title">💰 Economical</span>
           </div>
           <div class="result-ball-row">
-            <img id="cheap-ball-img" src="" alt="" class="result-ball-img" />
+            <img id="cheap-ball-img" alt="" class="result-ball-img" />
             <div class="result-ball-name" id="cheap-ball-name">—</div>
           </div>
           <div class="result-rate-big" id="cheap-rate">—</div>
@@ -198,12 +203,39 @@
         <h1 data-i18n="events_title">PokeMMO Events</h1>
         <p class="subtitle" data-i18n="events_subtitle">Swarm Pokémon by event</p>
       </div>
+      <div class="events-toolbar"><button type="button" id="event-add-btn" class="btn-icon" hidden data-tip="Add an event" aria-label="Add an event"><span class="material-symbols-outlined" aria-hidden="true">add</span></button></div>
       <div id="events-list" class="events-list">
         <div class="loading-spinner">Loading...</div>
       </div>
     </section>
 
     <!-- ══════════════ ADMIN PAGE ══════════════ -->
+    <!-- ══════════════ MONEY MAKING PAGE ══════════════ -->
+    <section id="page-money" class="page">
+      <div class="page-title">
+        <h1 data-i18n="money_title">Money making</h1>
+      </div>
+      <nav id="money-menu" class="money-menu" aria-label="Methods"></nav>
+      <div id="money-method" hidden>
+        <div class="money-head">
+          <div class="money-head-left">
+            <button type="button" id="money-back" class="btn btn-outline btn-icon-only">
+              <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+            </button>
+            <h2 id="money-method-name" class="money-method-name"></h2>
+            <span id="money-tags" class="money-tags"></span>
+            <span id="money-fav"></span>
+          </div>
+          <span id="money-guide" class="money-head-center"></span>
+          <div class="money-head-right">
+            <span id="money-charm-slot"></span>
+          </div>
+        </div>
+        <div id="money-charm" class="charm-panel" popover></div>
+        <div id="money-stage" class="money-stage"></div>
+      </div>
+    </section>
+
     <section id="page-admin" class="page">
       <div id="admin-login" class="admin-login-wrapper">
         <div class="admin-login-card">
@@ -299,6 +331,14 @@
                 <label>Name</label>
                 <input type="text" id="event-name-en" placeholder="XMAS 2025" />
               </div>
+              <div class="form-group">
+                <label data-i18n="ev_start">Start</label>
+                <input type="date" id="event-start" />
+              </div>
+              <div class="form-group">
+                <label data-i18n="ev_end">End</label>
+                <input type="date" id="event-end" />
+              </div>
               <button class="btn btn-primary" id="create-event-btn" data-i18n="btn_create_event">Create Event</button>
             </div>
           </div>
@@ -337,14 +377,15 @@
 
   <footer>
     <p>CatchR — PokeMMO community tool — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span>
-      · <a href="/changelog" class="ver-badge" id="ver-badge">v—</a></p>
+      · <naerod-version src="/changelog.json"></naerod-version></p>
   </footer>
 
   <script type="module" src="https://static.dorianjulien.com/ui/header/v1.js"></script>
   <script src="/js/i18n.js"></script>
+  <script src="/js/tooltip.js"></script>
   <script src="/js/calc.js"></script>
   <script src="/js/warnings.js"></script>
+  <script src="/js/money.js"></script>
   <script src="/js/app.js"></script>
-  <script src="/js/version-badge.js"></script>
 </body>
 </html>
