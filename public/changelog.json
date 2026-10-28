@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.16.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Événements : conditions de capture sur chaque tuile", "en": "Events: capture conditions on each tile" },
+      "fr": ["Chaque tuile d'événement indique maintenant les conditions pour atteindre le taux affiché : PV (1 PV, PV pleins, ou un pourcentage), statut (sommeil…), nuit (Dusk Ball), attente de 10 tours (Timer Ball), Soak.", "Le survol de la tuile résume : Pokémon, Pokéball, taux et conditions."],
+      "en": ["Each event tile now shows the conditions needed to reach the displayed rate: HP (1 HP, full HP, or a percentage), status (sleep…), night (Dusk Ball), 10-turn wait (Timer Ball), Soak.", "Hovering a tile summarizes: Pokémon, Poké Ball, rate and conditions."]
+    },
+    {
       "v": "3.15.2",
       "date": "2026-10-28",
       "title": { "fr": "Photo de profil dans la barre", "en": "Profile photo in the top bar" },

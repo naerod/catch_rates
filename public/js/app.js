@@ -345,7 +345,7 @@ function computeAvgStats(r) {
   return { turns: Math.round(totalTurns), cost: r.avgCost };
 }
 
-function buildTechniqueChips(technique) {
+function techniqueLabels(technique) {
   const chips = [];
   if (technique.quick) chips.push({ label: i18n.t('turn1_badge'), cls: 'chip-timer' });
   if (technique.soak)  chips.push({ label: i18n.t('technique_soak'), cls: 'chip-night' });
@@ -360,8 +360,10 @@ function buildTechniqueChips(technique) {
   if (technique.status === 'burn')   chips.push({ label: i18n.t('technique_burn'),   cls: 'chip-burn' });
   if (technique.night) chips.push({ label: i18n.t('technique_night'), cls: 'chip-night' });
   if (technique.timer) chips.push({ label: i18n.t('technique_wait10'), cls: 'chip-timer' });
-  return chips.map(c => `<span class="technique-chip ${c.cls}">${c.label}</span>`).join('');
+  return chips;
 }
+const chipsHTML = chips => chips.map(c => `<span class="technique-chip ${c.cls}">${c.label}</span>`).join('');
+const buildTechniqueChips = technique => chipsHTML(techniqueLabels(technique));
 
 function renderResultCard(type, r) {
   const name = i18n.ballName(r.key);
@@ -554,14 +556,18 @@ function eventCard(ev, { edit = false } = {}) {
         ${(ev.pokemon || []).map(p => {
           const best = Calc.computeOptimalFastest(p, state.balls);       // meilleure Pokeball automatique (meme choix que le calculateur)
           const ball = best ? i18n.ballName(best.key) : '';
+          // Conditions pour atteindre ce taux : PV (y compris "PV pleins"), statut, nuit, attente du Timer Ball...
+          const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique)] : [];
+          const tip = best ? `${p.name}\n${ball} — ${Calc.formatPercent(best.probability)}${conds.length ? `\n${conds.map(c => c.label).join(' · ')}` : ''}` : p.name;
           return `
-          <div class="event-pokemon-item" data-id="${p.id}" title="${p.name}${best ? ` — ${ball} ${Calc.formatPercent(best.probability)}` : ''}">
+          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}">
             <span class="ep-icon">
               <img width="80" height="60" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
               ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="${ball}" width="28" height="28" loading="lazy" />` : ''}
             </span>
             <span class="ep-name">${p.name}</span>
             <span class="ep-stats"><span class="ep-rate">${p.catch_rate}</span>${best ? `<span class="ep-best">${Calc.formatPercent(best.probability)}</span>` : ''}</span>
+            ${conds.length ? `<span class="ep-conds">${chipsHTML(conds)}</span>` : ''}
           </div>`;
         }).join('')}
       </div>
