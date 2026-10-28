@@ -582,7 +582,14 @@ async function loadEvents() {
     container.innerHTML = `<p class="loading-spinner">${i18n.t('no_events')}</p>`;
     return;
   }
-  container.innerHTML = events.map(ev => eventCard(ev, { edit: canEditEvents() })).join('');
+  // Separateurs d'annee, discrets : la liste est deja triee du plus recent au plus ancien
+  let year = '';
+  container.innerHTML = events.map(ev => {
+    const y = (ev.starts_at || ev.created_at || '').slice(0, 4);
+    const sep = y && y !== year ? `<h2 class="year-sep" aria-label="${y}"><span>${y}</span></h2>` : '';
+    year = y || year;
+    return sep + eventCard(ev, { edit: canEditEvents() });
+  }).join('');
 }
 
 document.addEventListener('click', e => {

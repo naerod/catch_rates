@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.1",
+      "date": "2026-10-28",
+      "title": { "fr": "Séparateurs d'année sur la page Événements", "en": "Year separators on the Events page" },
+      "fr": ["Un séparateur discret (fine ligne et année) distingue 2026, 2025, 2024… dans la liste des événements."],
+      "en": ["A discreet separator (thin line and year) tells 2026, 2025, 2024… apart in the events list."]
+    },
+    {
       "v": "3.17.0",
       "date": "2026-10-28",
       "title": { "fr": "Swarms LNY 2026 et Noël 2025 renseignés", "en": "LNY 2026 and Xmas 2025 swarms filled in" },
