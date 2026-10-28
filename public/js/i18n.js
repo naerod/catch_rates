@@ -4,7 +4,7 @@
 
 const translations = {
   en: {
-    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_suggest: 'Suggested', home_add_method: 'Add a method to your favourites', home_add_event: 'Add an event to your favourites', ev_forecast: 'Forecast', ev_empty: 'Swarm list not available yet.', ev_add: 'Add an event', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
+    nav_calc: 'Calculator', home_explore: 'Explore', home_favs: 'Favourites', home_suggest: 'Suggested', home_add_method: 'Add a method to your favourites', home_add_event: 'Add an event to your favourites', ev_forecast: 'Forecast', ev_unverified: 'To confirm', ev_unverified_tip: 'Swarm list not officially published: same pool as Xmas 2024, to be confirmed.', ev_empty: 'Swarm list not available yet.', ev_add: 'Add an event', ev_start: 'Start', ev_end: 'End', nav_events: 'Event swarms', nav_admin: 'Admin',
     nrd_login: "Log in / Sign up",
     nav_money: 'Money making', money_title: 'Money making', money_back: 'All methods', money_fav_add: 'Add to favourites', money_fav_remove: 'Remove from favourites',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: 'Team building guide', gr_team_guide_soon: 'Pokepaste coming soon', gr_info: 'Run info', gr_prev: 'Previous', gr_next: 'Next', gr_restart: 'Restart', gr_first: 'This is the first region',
@@ -134,7 +134,7 @@ const translations = {
     history_close: "Close",
   },
   fr: {
-    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', home_suggest: 'Suggestions', home_add_method: 'Ajouter une méthode à vos favoris', home_add_event: 'Ajouter un événement à vos favoris', ev_forecast: 'Prévision', ev_empty: 'Liste des swarms pas encore disponible.', ev_add: 'Ajouter un événement', ev_start: 'Début', ev_end: 'Fin', nav_events: "Essaims d'événements", nav_admin: 'Admin',
+    nav_calc: 'Calculateur', home_explore: 'Explorer', home_favs: 'Favoris', home_suggest: 'Suggestions', home_add_method: 'Ajouter une méthode à vos favoris', home_add_event: 'Ajouter un événement à vos favoris', ev_forecast: 'Prévision', ev_unverified: 'À confirmer', ev_unverified_tip: 'Liste de swarms non publiée officiellement : même lot que Noël 2024, à confirmer.', ev_empty: 'Liste des swarms pas encore disponible.', ev_add: 'Ajouter un événement', ev_start: 'Début', ev_end: 'Fin', nav_events: "Essaims d'événements", nav_admin: 'Admin',
     nrd_login: "Connexion / Inscription",
     nav_money: 'Money making', money_title: "Gagner de l'argent", money_back: 'Toutes les méthodes', money_fav_add: 'Ajouter aux favoris', money_fav_remove: 'Retirer des favoris',
     gr_name: '6 Pillars - Diabolus (2025)', gr_short: 'Diabolus (2025)', gr_tech_name: '6 Pillars - Technical route (2026)', gr_tech_short: 'Technical route (2026)', gr_team_guide: "Guide de construction d'équipe", gr_team_guide_soon: 'Pokepaste bientôt disponible', gr_info: 'Infos du parcours', gr_prev: 'Précédent', gr_next: 'Suivant', gr_restart: 'Recommencer', gr_first: 'Ceci est la première région',

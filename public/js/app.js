@@ -548,6 +548,7 @@ function eventCard(ev, { edit = false } = {}) {
         ${EVENT_ICONS[ev.kind] ? `<span class="ev-icon ev-${ev.kind}">${EVENT_ICONS[ev.kind]}</span>` : ''}
         <span class="event-name">${ev.name_en}</span>
         ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
+        ${ev.unverified ? `<span class="ev-tag" data-tip="${i18n.t('ev_unverified_tip')}">${i18n.t('ev_unverified')}</span>` : ''}
         ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
         <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
       </div>

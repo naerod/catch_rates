@@ -41,22 +41,28 @@ function dbRun(sql, params = []) {
 // Swarms : seulement ceux verifies (Noel 2024 = guide officiel ; Halloween 2025 = guide communautaire d'Alisae, liste partielle).
 // Idempotent : n'ecrase ni les dates ni les listes deja saisies via l'admin.
 function seedEvents() {
+  // LNY 2026 : tableur communautaire « Fastest Swarm Pokémon Catching Guide » (47 especes). Nidoran apparait deux fois (F et M).
+  const L26 = ['Ekans', 'Meowth', 'Minccino', 'Numel', 'Poochyena', 'Sandshrew', 'Spinda', 'Spoink', 'Nidoran-F', 'Nidoran-M', 'Swinub', 'Deerling', 'Dunsparce', 'Growlithe', 'Mankey', 'Munna', 'Pikachu', 'Ponyta', 'Buneary', 'Cottonee', 'Meditite', 'Hippopotas', 'Gyarados', 'Raticate', 'Luxio', 'Rhyhorn', 'Vigoroth', 'Electrike', 'Flaaffy', 'Pidgeotto', 'Staravia', 'Seviper', 'Fearow', 'Girafarig', 'Riolu', 'Espeon', 'Tauros', 'Onix', 'Aipom', 'Combusken', 'Gabite', 'Miltank', 'Stantler', 'Dragonair', 'Electabuzz', 'Charmeleon', 'Monferno'];
+  // Noel 2025 : aucune liste publiee ; les videos et le forum ne citent que des especes du lot de Noel 2024 -> meme lot, marque « a confirmer ».
+  const X25 = ['Seel', 'Dewgong', 'Staryu', 'Lapras', 'Pineco', 'Swinub', 'Delibird', 'Stantler', 'Smoochum', 'Treecko', 'Snorunt', 'Spheal', 'Chingling', 'Snover', 'Glaceon', 'Deerling'];
   const H25 = ['Drifloon', 'Skorupi', 'Houndour', 'Seviper', 'Zorua', 'Gligar', 'Sableye', 'Misdreavus', 'Umbreon', 'Murkrow'];
   const EVENTS = [
     { slug: 'lny-2025',       name: 'LNY 2025',       kind: 'lny',       start: '2025-01-29', end: '2025-02-12' },
     { slug: 'xmas-2024',      name: 'XMAS 2024',      kind: 'xmas',      start: '2024-12-24', end: '2025-01-07' },
-    { slug: 'halloween-2024', name: 'HALLOWEEN 2024', kind: 'halloween', start: '2024-10-31', end: '2024-11-14' },
     { slug: 'halloween-2025', name: 'HALLOWEEN 2025', kind: 'halloween', start: '2025-10-31', end: '2025-11-14', mons: H25 },
-    { slug: 'xmas-2025',      name: 'XMAS 2025',      kind: 'xmas',      start: '2025-12-24', end: '2026-01-08' },
-    { slug: 'lny-2026',       name: 'LNY 2026',       kind: 'lny',       start: '2026-02-18', end: '2026-03-03' },
+    { slug: 'xmas-2025',      name: 'XMAS 2025',      kind: 'xmas',      start: '2025-12-24', end: '2026-01-08', mons: X25, unverified: 1 },
+    { slug: 'lny-2026',       name: 'LNY 2026',       kind: 'lny',       start: '2026-02-18', end: '2026-03-03', mons: L26 },
     { slug: 'halloween-2026', name: 'HALLOWEEN 2026', kind: 'halloween', start: '2026-10-31', end: '2026-11-14', mons: H25, forecast: 1 },
   ];
+  // Halloween 2024 retire (aucune liste de swarms disponible) : seulement si la ligne est intacte (jamais touchee depuis l'amorcage)
+  dbRun("DELETE FROM events WHERE slug = 'halloween-2024' AND starts_at = '2024-10-31' AND id NOT IN (SELECT event_id FROM event_pokemon)");
   for (const e of EVENTS) {
     if (!dbGet('SELECT id FROM events WHERE slug = ?', [e.slug]))
       dbRun('INSERT INTO events (slug, name_en, name_fr, active, forecast) VALUES (?, ?, ?, 1, ?)', [e.slug, e.name, e.name, e.forecast || 0]);
     const row = dbGet('SELECT id, starts_at, ends_at, kind FROM events WHERE slug = ?', [e.slug]);
     if (!row.starts_at) dbRun('UPDATE events SET starts_at = ?, ends_at = COALESCE(ends_at, ?) WHERE id = ?', [e.start, e.end, row.id]);
     if (!row.kind) dbRun('UPDATE events SET kind = ? WHERE id = ?', [e.kind, row.id]);
+    if (e.unverified && !dbGet('SELECT 1 AS x FROM event_pokemon WHERE event_id = ?', [row.id])) dbRun('UPDATE events SET unverified = 1 WHERE id = ?', [row.id]);
     if (e.mons && !dbGet('SELECT 1 AS x FROM event_pokemon WHERE event_id = ?', [row.id]))
       for (const n of e.mons) {
         const p = dbGet('SELECT id FROM pokemon WHERE lower(name) = lower(?)', [n]);
@@ -465,7 +471,7 @@ app.get('*', (req, res) => {
   db.run('PRAGMA foreign_keys = ON;');
   // Migrations : dates de debut/fin d'evenement (tri par recence, "en cours") ; sort_order pour les bases anciennes
   const evCols = dbAll('PRAGMA table_info(events)').map(c => c.name);
-  for (const [col, ddl] of [['sort_order', 'INTEGER DEFAULT 0'], ['starts_at', 'TEXT'], ['ends_at', 'TEXT'], ['kind', 'TEXT'], ['forecast', 'INTEGER DEFAULT 0']])
+  for (const [col, ddl] of [['sort_order', 'INTEGER DEFAULT 0'], ['starts_at', 'TEXT'], ['ends_at', 'TEXT'], ['kind', 'TEXT'], ['forecast', 'INTEGER DEFAULT 0'], ['unverified', 'INTEGER DEFAULT 0']])
     if (!evCols.includes(col)) db.run(`ALTER TABLE events ADD COLUMN ${col} ${ddl}`);
   seedEvents();
   saveDb();

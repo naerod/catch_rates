@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.0",
+      "date": "2026-10-28",
+      "title": { "fr": "Swarms LNY 2026 et Noël 2025 renseignés", "en": "LNY 2026 and Xmas 2025 swarms filled in" },
+      "fr": ["LNY 2026 : les 47 Pokémon de swarm, d'après le tableur communautaire « Fastest Swarm Pokémon Catching Guide ».", "Noël 2025 : aucune liste publiée ; la même liste que Noël 2024 est affichée avec le tag « À confirmer » (les vidéos et le forum ne citent que des espèces de ce lot).", "Halloween 2024 est retiré (aucune liste disponible)."],
+      "en": ["LNY 2026: the 47 swarm Pokémon, from the community spreadsheet \"Fastest Swarm Pokémon Catching Guide\".", "Xmas 2025: no published list; the Xmas 2024 list is shown with a \"To confirm\" tag (videos and the forum only mention species from that pool).", "Halloween 2024 is removed (no list available)."]
+    },
+    {
       "v": "3.16.1",
       "date": "2026-10-28",
       "title": { "fr": "Tuiles d'événements épurées, détail au survol", "en": "Cleaner event tiles, details on hover" },
