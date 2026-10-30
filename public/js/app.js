@@ -69,8 +69,11 @@ function showPage(page, fresh = false) {
   // L etat actif de la nav appartient au header partage : on le lui declare.
   document.querySelector('naerod-header')?.setAttribute('active', page);
   $('page-' + page).classList.add('active');
-  // L'adresse suit la page affichee : un rafraichissement revient ici (money gere sa propre adresse).
-  if (page !== 'money' && location.hash.slice(1).split('/')[0] !== page) history.replaceState(history.state, '', page === 'calc' ? location.pathname + location.search : '#' + page);
+  // L'adresse suit la page affichee : une NOUVELLE entree d'historique, pour que le bouton retour revienne a la page precedente.
+  if (location.hash.slice(1).split('/')[0] !== page) {
+    const url = page === 'calc' ? location.pathname + location.search : '#' + page;
+    if (url !== location.pathname + location.search + location.hash) history.pushState(null, '', url);
+  }
   document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
   document.querySelector('.layout-grid').classList.toggle('is-events', page === 'events');
 
