@@ -1564,9 +1564,9 @@
     "start": {
       "blastoise": "choice_specs",
       "weezing": "choice_band",
-      "togekiss": "choice_specs",
-      "garchomp": "choice_band",
       "typhlosion": "choice_specs",
+      "garchomp": "choice_band",
+      "togekiss": "choice_specs",
       "vanilluxe": "choice_scarf"
     },
     "attention": [
@@ -1600,8 +1600,7 @@
             "m": "helping_hand"
           },
           {
-            "m": "incinerate",
-            "rec": true
+            "m": "incinerate"
           }
         ]
       },
@@ -1640,11 +1639,11 @@
             "m": "blizzard"
           },
           {
-            "m": "surf",
-            "hm": true
+            "m": "fake_out"
           },
           {
-            "m": "fake_out"
+            "m": "surf",
+            "hm": true
           }
         ]
       },
@@ -1675,7 +1674,8 @@
             "m": "assurance"
           },
           {
-            "m": "incinerate"
+            "m": "incinerate",
+            "opt": true
           },
           {
             "m": "rain_dance"
@@ -1695,11 +1695,11 @@
             "m": "dragon_claw"
           },
           {
-            "m": "cut",
-            "hm": true
+            "m": "sunny_day"
           },
           {
-            "m": "sunny_day"
+            "m": "cut",
+            "hm": true
           }
         ]
       }

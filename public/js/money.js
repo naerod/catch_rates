@@ -285,7 +285,7 @@ const Money = (() => {
       const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
-        extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" aria-label="${esc(t('tp_unused'))}">${icon('add')}</li>` :
+        extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" data-tip="${esc(t('tp_free_slot'))}" tabindex="0">${icon('add')}</li>` :
         `<li class="${m.opt || m.rec ? 'is-opt' : 'is-req'}"><b class="tk-move">${esc(t('mv_' + m.m))}</b>` +
         (m.hm ? `<span class="tp-i" data-tip="${esc(t('tp_hm_tip'))}" tabindex="0">${icon('info')}</span>` : m.rec ? `<span class="tp-i is-rec" data-tip="${esc(t('tp_rec_tip'))}" tabindex="0">${icon('info')}</span>` : '') + '</li>').join('')}</ol></div>` : '') + '</article>';
     }).join('');
