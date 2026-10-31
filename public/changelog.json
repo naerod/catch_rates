@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.14",
+      "date": "2026-10-31",
+      "title": { "fr": "Guide d'équipe : attaques et natures", "en": "Team guide: moves and natures" },
+      "fr": ["Team building guide : les 4 attaques de chaque Pokémon, en grille 2×2 (1 2 / 3 4), et l'effet de la nature (ex. Mild [+SpA|-Def])."],
+      "en": ["Team building guide: each Pokémon's 4 moves in a 2×2 grid (1 2 / 3 4), and the nature's effect (e.g. Mild [+SpA|-Def])."]
+    },
+    {
       "v": "3.17.13",
       "date": "2026-10-31",
       "title": { "fr": "Guide d'équipe : ordre des Pokémon", "en": "Team guide: Pokémon order" },

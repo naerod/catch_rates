@@ -285,7 +285,7 @@ const Money = (() => {
       const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
-        extra + '</article>';
+        extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => `<li>${m ? `<b class="tk-move">${esc(t('mv_' + m))}</b>` : '<span class="tp-empty">—</span>'}</li>`).join('')}</ol></div>` : '') + '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');

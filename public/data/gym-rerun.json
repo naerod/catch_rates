@@ -1566,39 +1566,75 @@
     "mons": {
       "typhlosion": {
         "ability": "Blaze",
-        "nature": "Modest",
+        "nature": "Modest [+SpA|-Atk]",
         "ivs": "10-31 HP / 10-31 Def / 31 SpAtk / 31 Spe",
-        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+        "evs": "252 SpAtk / 6 SpD / 252 Spe",
+        "moves": [
+          "eruption",
+          "swift",
+          "incinerate",
+          "helping_hand"
+        ]
       },
       "togekiss": {
         "ability": "Hustle",
-        "nature": "Modest",
+        "nature": "Modest [+SpA|-Atk]",
         "ivs": "31 SpAtk / 31 Spe",
-        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+        "evs": "252 SpAtk / 6 SpD / 252 Spe",
+        "moves": [
+          "hyper_voice",
+          "helping_hand",
+          null,
+          "fly"
+        ]
       },
       "blastoise": {
         "ability": "Torrent",
-        "nature": "Mild",
+        "nature": "Mild [+SpA|-Def]",
         "ivs": "0-25 HP / 0-25 Def / 31 SpAtk / 31 Spe",
-        "evs": "252 SpAtk / 6 SpD / 252 Spe"
+        "evs": "252 SpAtk / 6 SpD / 252 Spe",
+        "moves": [
+          "water_spout",
+          "blizzard",
+          "surf",
+          "fake_out"
+        ]
       },
       "vanilluxe": {
         "ability": "Snow Warning",
-        "nature": "Modest",
+        "nature": "Modest [+SpA|-Atk]",
         "ivs": "28-31 HP* / 28-31 Def* / 31 SpAtk / 31 Spe",
-        "evs": "6 Def / 252 SpAtk / 252 Spe"
+        "evs": "6 Def / 252 SpAtk / 252 Spe",
+        "moves": [
+          "blizzard",
+          null,
+          null,
+          null
+        ]
       },
       "weezing": {
         "ability": "Reactive Gas",
-        "nature": "Adamant",
+        "nature": "Adamant [+Atk|-SpA]",
         "ivs": "31 Atk / 31 Spe",
-        "evs": "252 Atk / 6 Def / 252 Spe"
+        "evs": "252 Atk / 6 Def / 252 Spe",
+        "moves": [
+          "explosion",
+          "assurance",
+          "incinerate",
+          "rain_dance"
+        ]
       },
       "garchomp": {
         "ability": "Sand Veil / Rough Skin*",
-        "nature": "Lonely",
+        "nature": "Lonely [+Atk|-Def]",
         "ivs": "0-8 HP* / 0-8 Def* / 31 Atk / 25-31 SpDef / 31 Spe",
-        "evs": "252 Atk / 26 SpDef / 232 Spe"
+        "evs": "252 Atk / 26 SpDef / 232 Spe",
+        "moves": [
+          "earthquake",
+          "dragon_claw",
+          "sunny_day",
+          "cut"
+        ]
       }
     }
   }
