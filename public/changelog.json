@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.37",
+      "date": "2026-10-31",
+      "title": { "fr": "Pastille Exemple plus soignée", "en": "Nicer Example badge" },
+      "fr": ["Pastille « Exemple » des favoris : fond dégradé aux couleurs du site, icône étincelle, halo discret."],
+      "en": ["Favourites “Example” badge: gradient background in the site colours, sparkle icon, soft halo."]
+    },
+    {
       "v": "3.17.36",
       "date": "2026-10-31",
       "title": { "fr": "Anglais : « Pokemon » sans accent", "en": "English: “Pokemon” without accent" },

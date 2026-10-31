@@ -219,7 +219,7 @@ const Money = (() => {
   }
 
   const tagsHTML = (m, guest = false) => {
-    const tags = [...(guest ? [`<span class="tag is-example">${esc(t('money_example'))}</span>`] : []), ...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
+    const tags = [...(guest ? [`<span class="tag is-example">${icon('auto_awesome')}${esc(t('money_example'))}</span>`] : []), ...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
     return tags.length ? `<span class="money-tags">${tags.join('')}</span>` : '';
   };
 
