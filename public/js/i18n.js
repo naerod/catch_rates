@@ -27,7 +27,7 @@ const translations = {
     gr_send_out: 'send out', gr_lead: 'lead', gr_sent_together: 'are sent out together at Turn 2', gr_turns4: '(4 turns)', gr_at_turn1: 'at Turn 1', gr_on_exit: 'on exit', gr_air_balloon: 'Air Balloon', gr_warn_lanturn: 'Lanturn survives and Garchomp dies to Ice Beam',
     gr_warn_cradily: 'Warning: high chance of Cradily surviving', gr_survives_kos: 'survives and KOs', gr_sub_into: 'sub into', gr_faints: 'faints',
     gr_first_slot: 'first slot', gr_second_slot: 'second slot', gr_for: 'for', gr_hard_switches_into: 'hard switches into',
-    gr_carracosta_survives: 'Low chance of 4 turns if Carracosta survives', gr_curse_body: 'Low chance of 4 turns if Gengar procs Curse Body', gr_protect_furret: '(Lapras lead has Protect Furret: 4 turns)', mv_shock_wave: 'Shock Wave', mv_surf: 'Surf', mv_cut: 'Cut', mv_fly: 'Fly',
+    gr_carracosta_survives: 'Low chance of 4 turns if Carracosta survives', gr_curse_body: 'Low chance of 4 turns if Gengar procs Cursed Body', gr_protect_furret: '(Lapras lead has Protect Furret: 4 turns)', mv_shock_wave: 'Shock Wave', mv_surf: 'Surf', mv_cut: 'Cut', mv_fly: 'Fly',
     charm_title: 'Charm calculator', charm_none: 'No charm', charm_amulet: 'Amulet Coin', charm_r75: 'Riches Charm 75%', charm_r100: 'Riches Charm 100%',
     charm_best: 'Best choice', charm_price: 'Price', charm_gain: 'Gains', charm_net: 'Net profit', charm_donator: 'Donator (+5% gains)',
     charm_gyms: 'Gyms in the run', charm_reset: 'Reset to the guide', charm_close: 'Close', charm_use_market: 'Use the market price',

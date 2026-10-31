@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.20",
+      "date": "2026-10-31",
+      "title": { "fr": "Notes Saffron et Cerulean", "en": "Saffron and Cerulean notes" },
+      "fr": ["Notes sur le risque de 4 tours à Saffron (Corps Maudit d'Ectoplasma) et à Cerulean (Mégapagos qui survit)."],
+      "en": ["Notes on the 4-turn risk at Saffron (Gengar's Cursed Body) and Cerulean (Carracosta surviving)."]
+    },
+    {
       "v": "3.17.19",
       "date": "2026-10-31",
       "title": { "fr": "Cerulean : risque de 4 tours", "en": "Cerulean: 4-turn risk" },
@@ -13,7 +20,7 @@
       "date": "2026-10-31",
       "title": { "fr": "Saffron : risque de 4 tours", "en": "Saffron: 4-turn risk" },
       "fr": ["Arène de Saffron : ajout d'une note sur la faible chance de 4 tours si Ectoplasma déclenche Corps Maudit."],
-      "en": ["Saffron gym: added a note about the low chance of 4 turns if Gengar procs Curse Body."]
+      "en": ["Saffron gym: added a note about the low chance of 4 turns if Gengar procs Cursed Body."]
     },
     {
       "v": "3.17.17",
