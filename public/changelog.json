@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.23",
+      "date": "2026-10-31",
+      "title": { "fr": "Thème sombre : couleurs exactes", "en": "Dark theme: exact colors" },
+      "fr": ["Thème sombre : fond #000000, cartes #0d0f10 et barre du haut #000104."],
+      "en": ["Dark theme: background #000000, cards #0d0f10 and top bar #000104."]
+    },
+    {
       "v": "3.17.22",
       "date": "2026-10-31",
       "title": { "fr": "Guide d'équipe : ajustements", "en": "Team guide: adjustments" },
