@@ -375,6 +375,7 @@ naerod-header { transition: transform 0.25s ease; }
 .after-chip.is-swap[data-item] { color: var(--chip-text, #1f2430); }   /* texte sombre sur fond pastel, dans les deux themes */
 .gym-head .gym-between { margin-top: auto; }
 .gym-head:has(.gym-between) { align-self: stretch; }
+.gym:has(> .gym-head .gym-between) { grid-template-rows: 1fr; }   /* carte sans exception : la ligne unique prend toute la hauteur, le soin/switch reste en bas a droite */
 
 /* ── Accueil : raccourcis ── */
 .home-shortcuts { display: flex; flex-direction: column; gap: 1.75rem; max-width: 1000px; margin: 1.75rem auto 0; }

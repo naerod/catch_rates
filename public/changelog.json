@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.30",
+      "date": "2026-10-31",
+      "title": { "fr": "Cartes courtes : switch en bas à droite", "en": "Short cards: switch icon bottom right" },
+      "fr": ["Les cartes sans exception (ex. Dewford) gardent le soin et le changement d'objet en bas à droite, même quand la carte voisine est plus haute."],
+      "en": ["Cards without exceptions (e.g. Dewford) keep the heal and item-switch chips at the bottom right, even when the neighbouring card is taller."]
+    },
+    {
       "v": "3.17.29",
       "date": "2026-10-31",
       "title": { "fr": "Exceptions : repères T1 / T2", "en": "Exceptions: T1 / T2 markers" },
