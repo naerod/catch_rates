@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.17",
+      "date": "2026-10-31",
+      "title": { "fr": "Canalave : badge retiré", "en": "Canalave: badge removed" },
+      "fr": ["Gym Rerun : le badge « Passer ? (non confirmé) » est retiré de l'arène de Canalave."],
+      "en": ["Gym Rerun: the “Skip? (unconfirmed)” badge is removed from the Canalave gym."]
+    },
+    {
       "v": "3.17.16",
       "date": "2026-10-31",
       "title": { "fr": "Thème sombre : couleurs plus lisibles", "en": "Dark theme: more readable colors" },

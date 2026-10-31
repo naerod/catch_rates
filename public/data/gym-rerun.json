@@ -650,7 +650,6 @@
             }
           ],
           "tip": "tip_channel",
-          "skip": true,
           "after": {
             "heal": "yes"
           },
