@@ -84,12 +84,22 @@ const Money = (() => {
     if (k < 1 || !tk.slice(0, k).every(x => MARKERS.has(x) || /^[#=]/.test(x)) || !tk.slice(0, k).some(x => /^@(vs|vs_rest|t1|t2)$/.test(x))) return l.s;
     return [...tk.slice(0, k), '@use', ...tk.slice(k)].join(' ');
   }
+  /* Guide a deux tours : « A + B into C + D » devient « T1 A + B T2 C + D », comme dans la Technical route. */
+  function withTurns(s) {
+    const tk = s.split(' '), isAct = x => /^[a-z]+\.[a-z_0-9]+$/.test(x);
+    let hit = false;
+    tk.forEach((x, i) => { if (x === '@into' && isAct(tk[i - 1] || '') && isAct(tk[i + 1] || '')) { tk[i] = '@t2'; hit = true; } });
+    if (!hit) return s;
+    const k = tk.findIndex(isAct), u = tk.indexOf('@use');
+    if (tk.slice(0, k).every(x => /^(@vs|@lead|@use|,|\/|\?|[#=].*)$/.test(x))) tk.splice(u >= 0 && u < k ? u : k, 0, '@t1');
+    return tk.join(' ');
+  }
   const line = (l, n) => {
-    l = { ...l, s: withUse(l) };
+    l = { ...l, s: withUse(data.turns ? { ...l, s: withTurns(l.s) } : l) };
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
     return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info || !/@vs\b/.test(l.s) && !cont ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
-    `<span class="gym-line-body">${l.s.split(/ (?=@into )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
+    `<span class="gym-line-body">${l.s.split(/ (?=@(?:into|t2) )/).map(seg => `<span class="gym-seg">${seg.split(' ').map(token).join('')}</span>`).join('')}</span></p>`;
   };
 
   /* Entre deux cartes : soin conseille apres le combat, puis les objets a changer avant le suivant. */
