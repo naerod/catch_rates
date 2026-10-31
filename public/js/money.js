@@ -5,8 +5,14 @@
 
 const Money = (() => {
   const METHODS = [
-    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, src: '/data/technical-route.json' },
-    { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], src: '/data/gym-rerun.json' },
+    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
+    { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
+  ];
+  /* Raccourcis : sources deja couvertes par les guides (Google Docs et outils), ouvertes directement dans un nouvel onglet. */
+  const LINKS = [
+    { icon: 'description', nameKey: 'gr_name', tag: 'Google Docs', url: 'https://docs.google.com/document/d/1IGXFIme7KwcPT_MAq5ibbzs2nkJkAsoISEDRKQtfWuk/edit' },
+    { icon: 'description', nameKey: 'gr_tech_name', tag: 'Google Docs', url: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit' },
+    { icon: 'calculate', name: 'CharmCalc', tag: 'Tool', url: 'https://c4vv.github.io/CharmCalc/' },
   ];
   const FAVS = 'money.favs';
   const isWip = m => m.wip && location.hostname === 'catchr.naerod.com';   // en construction : visible seulement en preprod
@@ -212,16 +218,23 @@ const Money = (() => {
     });
   }
 
-  const tagsHTML = m => { const tags = isWip(m) ? ['WIP', ...m.tags] : m.tags; return tags.length ? `<span class="money-tags">${tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</span>` : ''; };
+  const tagsHTML = m => {
+    const tags = [...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
+    return tags.length ? `<span class="money-tags">${tags.join('')}</span>` : '';
+  };
 
   function menu(animate) {
     const el = $('money-menu');
-    const first = new Map([...el.children].map(c => [c.dataset.id, c.getBoundingClientRect()]));
+    const first = new Map([...el.querySelectorAll('.money-item')].map(c => [c.dataset.id, c.getBoundingClientRect()]));
     const sorted = [...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id));        // tri stable : favoris d'abord
-    el.innerHTML = sorted.map(m =>
-      `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
+    const guides = sorted.map(m =>
+      `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
+    const links = LINKS.map(l =>
+      `<a class="money-card is-link" href="${l.url}" target="_blank" rel="noopener noreferrer">${icon(l.icon)}<span class="mc-text"><span class="mc-name">${esc(l.name || t(l.nameKey))}</span><span class="money-tags"><span class="tag">${esc(l.tag)}</span></span></span>${icon('open_in_new')}</a>`).join('');
+    el.innerHTML = `<section class="money-section"><h2 class="money-section-title">${esc(t('money_guides'))}</h2><div class="money-grid">${guides}</div></section>` +
+      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_shortcuts'))}</h2><div class="money-grid">${links}</div></section>`;
     if (!animate) return;
-    [...el.children].forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
+    el.querySelectorAll('.money-item').forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
       const a = first.get(c.dataset.id), b = c.getBoundingClientRect();
       if (!a || (a.left === b.left && a.top === b.top)) return;
       c.animate([{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px)` }, { transform: 'none' }], { duration: 250, easing: 'ease-in-out' });
@@ -355,7 +368,7 @@ const Money = (() => {
     view(method);
     if (isWip(METHODS.find(m => m.id === method))) {
       data = null; $('money-guide').innerHTML = ''; $('money-charm-slot').innerHTML = '';
-      $('money-stage').innerHTML = `<div class="money-state">${icon('construction')}<p>${esc(t('money_wip'))}</p></div>`;
+      $('money-stage').innerHTML = `<div class="money-state">${icon('construction')}<p>${esc(t('money_wip'))}</p><a class="btn btn-outline" href="${METHODS.find(m => m.id === method).doc}" target="_blank" rel="noopener noreferrer">${icon('open_in_new')}${esc(t('money_wip_cta'))}</a></div>`;
       return;
     }
     data = datas[method] || null;

@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.32",
+      "date": "2026-10-31",
+      "title": { "fr": "Money making : Guides et Raccourcis", "en": "Money making: Guides and Shortcuts" },
+      "fr": ["Menu Money making en deux sections : « Guides » (6 Pillars Diabolus avec encoche verte, Technical route avec l'étiquette « En construction ») et « Raccourcis » (Google Docs des guides, CharmCalc).", "Technical route en construction : message et bouton vers le guide d'origine.", "Cerulean : le nom de Mégapagos est remplacé par son sprite."],
+      "en": ["Money making menu split into two sections: “Guides” (6 Pillars Diabolus with a green check, Technical route with a “Work in progress” label) and “Shortcuts” (the guides' Google Docs, CharmCalc).", "Technical route under construction: message and button to the original guide.", "Cerulean: Carracosta's name is replaced by its sprite."]
+    },
+    {
       "v": "3.17.31",
       "date": "2026-10-31",
       "title": { "fr": "Saffron : sprite d'Ectoplasma", "en": "Saffron: Gengar sprite" },

@@ -39,7 +39,13 @@
 .layout-grid.is-wide .history-panel { display: none; }
 
 /* ── Menu des methodes ── */
-.money-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 560px)); gap: 1rem; }
+.money-menu { display: flex; flex-direction: column; gap: 2rem; }
+.money-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 560px)); gap: 1rem; }
+.money-section-title { margin-bottom: 0.75rem; font: 700 1.1rem var(--font-head); letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); }
+.money-card.is-link { text-decoration: none; }
+.mc-live { display: inline-flex; margin-left: 0.4rem; vertical-align: middle; color: var(--green); }
+.mc-live .material-symbols-outlined { font-size: 1em !important; color: var(--green) !important; }
+.tag.is-wip { color: var(--orange); border-color: var(--orange); }
 .money-card {
   display: flex; align-items: center; gap: 1.5rem; min-height: 176px; padding: 1.5rem 2rem; text-align: left;
   background: var(--card); color: var(--text); border: 2px solid var(--card-border); border-radius: var(--radius-lg);

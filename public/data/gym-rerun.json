@@ -877,7 +877,7 @@
             },
             {
               "i": 1,
-              "s": "#565 @carracosta_survives"
+              "s": "@curse_if $565 @survives"
             }
           ],
           "after": {
