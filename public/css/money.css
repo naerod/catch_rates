@@ -296,9 +296,13 @@
 .tp-label { font: 600 0.7rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
 .tp-item { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; }
 .tp-item img, .tp-stock img { width: 24px; height: 24px; }
-.tp-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1rem; list-style: none; }    /* 1 2 / 3 4 : comme en jeu */
-.tp-slots li { padding: 0.35rem 0.6rem; border-radius: 6px; background: var(--bg3); font-weight: 700; }
-.tp-slots b { color: var(--mon); } .tp-empty { color: var(--text-muted); }
+.tp-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.6rem; list-style: none; }    /* 1 2 / 3 4 : comme en jeu */
+.tp-slots li { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; min-height: 2.2rem; padding: 0.35rem 0.6rem; border-radius: 6px; background: var(--bg3); font-weight: 700; }
+.tp-slots .is-req { border: 2px solid var(--mon); }                       /* obligatoire : encadre */
+.tp-slots .is-opt { border: 2px dashed var(--text-muted); }               /* optionnel / conseille */
+.tp-slots .is-empty { border: 2px dashed var(--card-border); background: transparent; justify-content: center; color: var(--text-muted); }
+.tp-slots b { color: var(--mon); }
+.tp-i { display: inline-flex; color: var(--text-dim); cursor: help; } .tp-i .material-symbols-outlined { font-size: 18px; } .tp-i.is-rec { color: var(--orange); }
 .tp-moves { display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; list-style: none; }
 .tp-moves li { display: inline-flex; align-items: baseline; gap: 0.25rem; }
 .tp-moves b { color: var(--mon); }

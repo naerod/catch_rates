@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.15",
+      "date": "2026-10-31",
+      "title": { "fr": "Guide d'équipe : attaques complétées", "en": "Team guide: moves completed" },
+      "fr": ["Attaques de chaque Pokémon dans l'ordre du jeu ; obligatoires encadrées, optionnelles en pointillés, emplacements inutilisés marqués d'un plus.", "Pastille (i) sur Surf, Coupe et Vol (CS obligatoires) et sur Incinerate de Typhlosion (conseillé)."],
+      "en": ["Each Pokémon's moves in game order; mandatory moves framed, optional ones dashed, unused slots marked with a plus.", "(i) badge on Surf, Cut and Fly (mandatory HMs) and on Typhlosion's Incinerate (recommended)."]
+    },
+    {
       "v": "3.17.14",
       "date": "2026-10-31",
       "title": { "fr": "Guide d'équipe : attaques et natures", "en": "Team guide: moves and natures" },

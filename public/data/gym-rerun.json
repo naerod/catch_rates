@@ -1570,10 +1570,19 @@
         "ivs": "10-31 HP / 10-31 Def / 31 SpAtk / 31 Spe",
         "evs": "252 SpAtk / 6 SpD / 252 Spe",
         "moves": [
-          "eruption",
-          "swift",
-          "incinerate",
-          "helping_hand"
+          {
+            "m": "eruption"
+          },
+          {
+            "m": "swift"
+          },
+          {
+            "m": "helping_hand"
+          },
+          {
+            "m": "incinerate",
+            "rec": true
+          }
         ]
       },
       "togekiss": {
@@ -1582,10 +1591,20 @@
         "ivs": "31 SpAtk / 31 Spe",
         "evs": "252 SpAtk / 6 SpD / 252 Spe",
         "moves": [
-          "hyper_voice",
-          "helping_hand",
-          null,
-          "fly"
+          {
+            "m": "hyper_voice"
+          },
+          {
+            "m": "helping_hand"
+          },
+          {
+            "m": "shock_wave",
+            "opt": true
+          },
+          {
+            "m": "fly",
+            "hm": true
+          }
         ]
       },
       "blastoise": {
@@ -1594,10 +1613,19 @@
         "ivs": "0-25 HP / 0-25 Def / 31 SpAtk / 31 Spe",
         "evs": "252 SpAtk / 6 SpD / 252 Spe",
         "moves": [
-          "water_spout",
-          "blizzard",
-          "surf",
-          "fake_out"
+          {
+            "m": "water_spout"
+          },
+          {
+            "m": "blizzard"
+          },
+          {
+            "m": "surf",
+            "hm": true
+          },
+          {
+            "m": "fake_out"
+          }
         ]
       },
       "vanilluxe": {
@@ -1606,7 +1634,9 @@
         "ivs": "28-31 HP* / 28-31 Def* / 31 SpAtk / 31 Spe",
         "evs": "6 Def / 252 SpAtk / 252 Spe",
         "moves": [
-          "blizzard",
+          {
+            "m": "blizzard"
+          },
           null,
           null,
           null
@@ -1618,10 +1648,18 @@
         "ivs": "31 Atk / 31 Spe",
         "evs": "252 Atk / 6 Def / 252 Spe",
         "moves": [
-          "explosion",
-          "assurance",
-          "incinerate",
-          "rain_dance"
+          {
+            "m": "explosion"
+          },
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "incinerate"
+          },
+          {
+            "m": "rain_dance"
+          }
         ]
       },
       "garchomp": {
@@ -1630,10 +1668,19 @@
         "ivs": "0-8 HP* / 0-8 Def* / 31 Atk / 25-31 SpDef / 31 Spe",
         "evs": "252 Atk / 26 SpDef / 232 Spe",
         "moves": [
-          "earthquake",
-          "dragon_claw",
-          "sunny_day",
-          "cut"
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "dragon_claw"
+          },
+          {
+            "m": "cut",
+            "hm": true
+          },
+          {
+            "m": "sunny_day"
+          }
         ]
       }
     }
