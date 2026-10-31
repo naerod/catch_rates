@@ -180,6 +180,7 @@
 .after-chip.is-heal, .after-chip.is-swap { box-sizing: border-box; height: 36px; padding-block: 0; font-size: 0.64em; font-weight: 700; }   /* meme taille pour le soin et les changements d'objet */
 .swap-item { width: 28px; height: 28px; image-rendering: pixelated; }   /* objet lisible, pas proportionnel au texte de la puce */
 .gym-note.is-end { font-size: 0.8em; }
+.guide-note { font-size: 0.9em; margin: 0 0 1rem; }
 .info-item.is-require { color: var(--orange); }
 
 /* Timecodes */
@@ -333,7 +334,8 @@
 .is-lead { --g: 0.8em; width: 100%; }
 .is-lead .gym-line-body, .is-lead .gym-seg { gap: 0.3em var(--g); }
 .is-lead .sprite-box { --k: 2; }
-.is-lead .tk-raw { align-self: flex-start; margin-top: 0.9em; }
+.is-lead .tk-raw, .is-lead .tk-trainer { align-self: flex-start; margin-top: 0.9em; }
+.is-lead .gym-seg > .tk-move { align-self: flex-end; }          /* attaque seule (ex. « / Incinerate ») : a la hauteur des libelles d'attaque */
 .is-lead .gym-seg { align-items: flex-start; }
 
 /* Fiche etroite : icones de la ligne principale a l'echelle 1 (40x30) pour que tout tienne a cote de la carte */

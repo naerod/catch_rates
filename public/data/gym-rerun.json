@@ -1,5 +1,6 @@
 {
   "_comment": "Gym Rerun 6 Pillars. Une ligne = une chaine de jetons separes par des espaces : mon.move (sprite + attaque coloree), ~mon (sprite seul), #dex ou #dex:niveau (adversaire), .move (attaque seule), @cle (connecteur traduit gr_<cle>), + / , ( ) tels quels. i = retrait (variante). type = couleur de l'encadre du sprite : une seule, celle du type (generation 5) ou, pour un double type, celle qui ressemble le plus au Pokemon. gym.items = objet tenu par chaque Pokemon de l'equipe AVANT ce combat (bulle sur le sprite). Source : ancien guide (equipement de depart + SWITCH TO ...), a verifier. gym.profit = gains de base d'une arene (source CharmCalc, c4vv.github.io/CharmCalc) ; Striaton = 3 champions ; Undella = Marian + Yan (optionnel, decoche par defaut). pokepaste = URL du pokepaste de l'equipe (lien « Team building guide », contient aussi la contrainte Vanilluxe/Garchomp).",
+  "note": "note_pre_nerf",
   "total": 442000,
   "team": [
     "typhlosion",
