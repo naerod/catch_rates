@@ -269,9 +269,10 @@ const Money = (() => {
       (g.time != null ? `<span class="gym-chip is-time">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
     const endNote = endTip ? `<p class="gym-note is-end">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
-    const expanded = [...g.lines];
-    const pri = expanded[0]?.s.match(/ \( (@prioritize #\d+) \)/);   // "(prioritize X)" sort de la ligne principale : 1re exception, avec une icone info
-    if (pri) { expanded[0] = { ...expanded[0], s: expanded[0].s.replace(pri[0], '') }; expanded.splice(1, 0, { i: 1, info: true, s: pri[1] }); }
+    const expanded = g.lines.flatMap(l => {                       // "(prioritize X)" sort de sa ligne : ligne suivante, avec une icone info
+      const m = l.s.match(/ \( (@prioritize #\d+) \)/);
+      return m ? [{ ...l, s: l.s.replace(m[0], '') }, { i: 1, info: true, s: m[1] }] : [l];
+    });
     curItems = g.items || {};
     const lead = [], exc = [];                                    // ligne principale a cote de la carte, exceptions pleine largeur dessous
     expanded.forEach((l, n) => (n === 0 || l.lead ? lead : exc).push(line(l, n)));

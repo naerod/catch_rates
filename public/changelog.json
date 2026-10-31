@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.27",
+      "date": "2026-10-31",
+      "title": { "fr": "Sootopolis : prioritaire sur sa ligne", "en": "Sootopolis: prioritize on its own line" },
+      "fr": ["Sootopolis : « prioritize Mantine » passe à la ligne, avec l'icône (i), comme dans les autres arènes."],
+      "en": ["Sootopolis: “prioritize Mantine” now goes on its own line with the (i) icon, like in the other gyms."]
+    },
+    {
       "v": "3.17.26",
       "date": "2026-10-31",
       "title": { "fr": "Diabolus : repères T1 / T2", "en": "Diabolus: T1 / T2 markers" },
