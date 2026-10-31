@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.13",
+      "date": "2026-10-31",
+      "title": { "fr": "Guide d'équipe : ordre des Pokémon", "en": "Team guide: Pokémon order" },
+      "fr": ["Team building guide : les Pokémon suivent le même ordre que le bandeau de l'en-tête."],
+      "en": ["Team building guide: the Pokémon follow the same order as the header strip."]
+    },
+    {
       "v": "3.17.12",
       "date": "2026-10-31",
       "title": { "fr": "Guide d'équipe : HM obligatoires et Ocarina", "en": "Team guide: mandatory HMs and Ocarina" },

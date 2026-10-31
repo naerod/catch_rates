@@ -279,7 +279,8 @@ const Money = (() => {
     const tg = data.teamGuide || {};
     const itemChip = it => `<span class="tp-item"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
-    const mons = data.team.map(id => {
+    const order = tg.start ? Object.keys(tg.start) : data.team;      // meme ordre que le bandeau de l'en-tete
+    const mons = order.map(id => {
       const x = (tg.mons || {})[id] || {};
       const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
@@ -289,7 +290,7 @@ const Money = (() => {
     const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
-    const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${data.team.map(id =>
+    const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
       `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';
     $('money-stage').innerHTML = startSet +
       `<div class="tp"><section class="tp-team" aria-label="${esc(t('tp_team'))}">${mons}</section>` +
