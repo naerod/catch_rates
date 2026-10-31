@@ -441,7 +441,7 @@
             },
             {
               "i": 1,
-              "s": "@vs @air_balloon #523 , @switch_out ~garchomp @into togekiss.hyper_voice"
+              "s": "@vs #523 , @switch_into togekiss.hyper_voice"
             }
           ],
           "after": {
@@ -761,11 +761,11 @@
             },
             {
               "i": 1,
-              "s": "@sub_into ~typhlosion @if ~garchomp @faints"
+              "s": "~garchomp @first_slot @and ~togekiss @second_slot"
             },
             {
               "i": 1,
-              "s": "~garchomp @first_slot @and ~togekiss @second_slot"
+              "s": "@sub_into ~typhlosion @if ~garchomp @faints"
             }
           ],
           "after": {

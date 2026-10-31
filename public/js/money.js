@@ -76,7 +76,16 @@ const Money = (() => {
     const [mon, move] = tk.split('.');
     return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<span class="tk-act" data-mon="${mon}">${monSprite(mon, false)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
   }
+  /* Variante « vs. X , Pokemon.attaque » ou « T2 Pokemon.attaque » : on insere « use » pour faire une vraie phrase. */
+  const MARKERS = new Set(['@vs', '@vs_rest', '@t1', '@t2', '#', ',', '/', '?', '@lead']);
+  function withUse(l) {
+    if (!l.i) return l.s;
+    const tk = l.s.split(' '), k = tk.findIndex(x => /^[a-z]+\.[a-z_0-9]+$/.test(x) || x[0] === '~');
+    if (k < 1 || !tk.slice(0, k).every(x => MARKERS.has(x) || /^[#=]/.test(x)) || !tk.slice(0, k).some(x => /^@(vs|vs_rest|t1|t2)$/.test(x))) return l.s;
+    return [...tk.slice(0, k), '@use', ...tk.slice(k)].join(' ');
+  }
   const line = (l, n) => {
+    l = { ...l, s: withUse(l) };
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
     return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info || !/@vs\b/.test(l.s) && !cont ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
