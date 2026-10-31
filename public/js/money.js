@@ -269,7 +269,7 @@ const Money = (() => {
   function stage(animate) {
     const el = $('money-stage');
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
-    el.innerHTML = (data.note ? `<p class="gym-note guide-note">${icon('info')}<span>${esc(t('gr_' + data.note))}</span></p>` : '') + data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
+    el.innerHTML = [].concat(data.note || []).map(k => `<p class="gym-note guide-note">${icon('info')}<span>${esc(t('gr_' + k))}</span></p>`).join('') + data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
       `<div class="stage-body">${r.gyms.map((g, i) => card(g, i, r)).join('')}</div></section>`).join('');
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
