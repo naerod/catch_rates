@@ -5,8 +5,8 @@
 
 const Money = (() => {
   const METHODS = [
-    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
+    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
   ];
   /* Raccourcis : sources deja couvertes par les guides (Google Docs et outils), ouvertes directement dans un nouvel onglet. */
   const LINKS = [
