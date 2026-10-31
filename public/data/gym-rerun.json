@@ -421,6 +421,7 @@
         {
           "id": "mauville",
           "name": "Mauville",
+          "charm": true,
           "time": 56,
           "items": {
             "typhlosion": "choice_specs",

@@ -90,6 +90,8 @@
   display: grid; grid-template-columns: clamp(120px, 26%, 260px) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 0 0.8em; padding: 0.7em; align-items: start; container-type: inline-size;
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
+.gym { position: relative; }
+.gym-charm { position: absolute; top: -10px; left: -10px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--card); border: 1px solid var(--card-border); z-index: 1; }
 .gym-map { width: 100%; height: auto; border-radius: 4px; background: var(--bg3); }
 .gym-head { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; }
 .gym-exc { grid-column: 1 / -1; align-self: stretch; display: flex; flex-direction: column; gap: 0.4em; min-width: 0; margin-top: 0.5em; }
