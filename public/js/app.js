@@ -628,7 +628,12 @@ async function renderHome() {
   const el = $('home-shortcuts'); if (!el) return;
   clearInterval(rotateTimer);
   const sec = (title, body) => body ? `<section class="home-section"><h2 class="home-title">${i18n.t(title)}</h2>${body}</section>` : '';
-  const addCard = (go, ic, tipKey) => `<button type="button" class="home-card is-add" data-go="${go}" data-tip="${i18n.t(tipKey)}" aria-label="${i18n.t(tipKey)}"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>`;
+  // Sans compte, les favoris n'ont pas de sens : le « + » mene a la creation de compte (flux d'inscription Authentik, retour sur le site).
+  const signupHref = () => `https://${location.hostname.startsWith('preprod-') ? 'preprod-auth' : 'auth'}.naerod.com/if/flow/default-enrollment-flow/?next=${encodeURIComponent(location.origin + '/')}`;
+  const addCard = (go, ic, tipKey) => {
+    const inner = `data-tip="${i18n.t(tipKey)}" aria-label="${i18n.t(tipKey)}"><span class="material-symbols-outlined" aria-hidden="true">add</span>`;
+    return currentOidcUser ? `<button type="button" class="home-card is-add" data-go="${go}" ${inner}</button>` : `<a class="home-card is-add" href="${signupHref()}" ${inner}</a>`;
+  };
   const paint = evs => {
     const slugs = evFavs(), methods = Money.homeFavCards(!currentOidcUser), favEvents = evs.filter(ev => slugs.includes(ev.slug));
     const suggest = evs.filter(inSuggestWindow);

@@ -431,3 +431,4 @@ naerod-header { transition: transform 0.25s ease; }
 
 .sprite-inline { height: 2.6em; width: auto; margin: -0.7em 0; image-rendering: pixelated; vertical-align: middle; }
 .tag.is-example { color: var(--accent); border-color: var(--accent); }
+.home-card.is-add { text-decoration: none; }
