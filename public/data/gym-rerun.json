@@ -63,6 +63,7 @@
     }
   },
   "opponents": {
+    "94": { "en": "Gengar", "fr": "Ectoplasma", "type": "ghost" },
     "229": {
       "en": "Houndoom",
       "fr": "Démolosse",
@@ -831,6 +832,10 @@
             {
               "i": 1,
               "s": "@vs #212 / #131 @lead , typhlosion.eruption + garchomp.dragon_claw @protect_furret"
+            },
+            {
+              "i": 1,
+              "s": "#94 @curse_body"
             }
           ],
           "after": {
