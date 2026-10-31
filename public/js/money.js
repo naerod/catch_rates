@@ -84,18 +84,18 @@ const Money = (() => {
     if (k < 1 || !tk.slice(0, k).every(x => MARKERS.has(x) || /^[#=]/.test(x)) || !tk.slice(0, k).some(x => /^@(vs|vs_rest|t1|t2)$/.test(x))) return l.s;
     return [...tk.slice(0, k), '@use', ...tk.slice(k)].join(' ');
   }
-  /* Guide a deux tours : « A + B into C + D » devient « T1 A + B T2 C + D », comme dans la Technical route. */
-  function withTurns(s) {
-    const tk = s.split(' '), isAct = x => /^[a-z]+\.[a-z_0-9]+$/.test(x);
-    let hit = false;
-    tk.forEach((x, i) => { if (x === '@into' && isAct(tk[i - 1] || '') && isAct(tk[i + 1] || '')) { tk[i] = '@t2'; hit = true; } });
-    if (!hit) return s;
-    const k = tk.findIndex(isAct), u = tk.indexOf('@use');
-    if (tk.slice(0, k).every(x => /^(@vs|@lead|@use|,|\/|\?|[#=].*)$/.test(x))) tk.splice(u >= 0 && u < k ? u : k, 0, '@t1');
-    return tk.join(' ');
+  /* Exception a deux tours : « vs. X , A + B @into C + D » devient deux lignes, « T1 use A + B » puis « → T2 use C + D » (comme la Technical route). */
+  function splitTurns(l) {
+    if (!l.i) return [l];
+    const tk = l.s.split(' '), isAct = x => /^[a-z]+\.[a-z_0-9]+$/.test(x);
+    const c = tk.findIndex((x, i) => x === '@into' && isAct(tk[i - 1] || '') && isAct(tk[i + 1] || ''));
+    if (c < 0) return [l];
+    const head = tk.slice(0, c), k = head.findIndex(isAct), u = head.indexOf('@use');
+    if (head.slice(0, k).every(x => /^(@vs|@lead|@use|,|\/|\?|[#=].*)$/.test(x))) head.splice(u >= 0 && u < k ? u : k, 0, '@t1');
+    return [{ ...l, s: head.join(' ') }, { i: 2, s: ['@t2', ...tk.slice(c + 1)].join(' ') }];
   }
   const line = (l, n) => {
-    l = { ...l, s: withUse(data.turns ? { ...l, s: withTurns(l.s) } : l) };
+    l = { ...l, s: withUse(l) };
     leadMode = n === 0 || !!l.lead; gymItems = leadMode ? curItems : {};
     const cont = l.s.startsWith('@into') || l.i === 2;           // suite d'une exception : fleche droite, legerement decalee
     return `<p class="gym-line${l.i ? ' is-variant' : ''}${n === 0 || l.lead ? ' is-lead' : ''}${cont ? ' is-cont' : ''}">${l.i ? icon(l.info || !/@vs\b/.test(l.s) && !cont ? 'info' : cont ? 'arrow_right_alt' : 'subdirectory_arrow_right') : ''}` +
@@ -271,7 +271,7 @@ const Money = (() => {
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     const expanded = g.lines.flatMap(l => {                       // "(prioritize X)" sort de sa ligne : ligne suivante, avec une icone info
       const m = l.s.match(/ \( (@prioritize #\d+) \)/);
-      return m ? [{ ...l, s: l.s.replace(m[0], '') }, { i: 1, info: true, s: m[1] }] : [l];
+      return m ? [{ ...l, s: l.s.replace(m[0], '') }, { i: 1, info: true, s: m[1] }] : splitTurns(l);
     });
     curItems = g.items || {};
     const lead = [], exc = [];                                    // ligne principale a cote de la carte, exceptions pleine largeur dessous
