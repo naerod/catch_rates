@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.12",
+      "date": "2026-10-31",
+      "title": { "fr": "Guide d'équipe : HM obligatoires et Ocarina", "en": "Team guide: mandatory HMs and Ocarina" },
+      "fr": ["Team building guide : ajout de la ligne Vol, Coupe et Surf obligatoires (Togekiss, Carchacrok, Tortank, dans leur dernier slot) et de l'Ocarina de téléportation conseillé.", "Les IV sont mis en évidence ; les listes d'attaques utilisées et de changements d'objet sont retirées des fiches."],
+      "en": ["Team building guide: added a line for the mandatory Fly, Cut and Surf (Togekiss, Garchomp, Blastoise, in their last slot) and the recommended Teleport Ocarina.", "IVs are highlighted; the moves-used and item-changes lists are removed from the cards."]
+    },
+    {
       "v": "3.17.11",
       "date": "2026-10-31",
       "title": { "fr": "Gym Rerun : note, charm et alignement Striaton", "en": "Gym Rerun: note, charm and Striaton alignment" },

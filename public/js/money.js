@@ -277,25 +277,14 @@ const Money = (() => {
   /* ── Page "Team building guide" : l'equipe a construire et les points d'attention, tires des donnees de la methode ── */
   function teamPage() {
     const tg = data.teamGuide || {};
-    const gyms = data.regions.flatMap(r => r.gyms.map(g => ({ r, g })));
-    const used = {};                                                // mon -> move -> arenes ou elle sert
-    for (const { g } of gyms) for (const l of g.lines) for (const tk of l.s.split(' ')) {
-      const m = tk.match(/^([a-z]+)\.([a-z_0-9]+)$/);
-      if (m && data.mons[m[1]]) (((used[m[1]] ??= {})[m[2]]) ??= new Set()).add(g.name);
-    }
-    const swaps = {};                                               // mon -> changements d'objet, dans l'ordre du parcours
-    for (const { g } of gyms) for (const s of g.after?.switch || []) (swaps[s.mon] ??= []).push({ gym: g.name, item: s.item });
     const itemChip = it => `<span class="tp-item"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
     const mons = data.team.map(id => {
-      const x = (tg.mons || {})[id] || {}, moves = Object.entries(used[id] || {}).sort((a, b) => b[1].size - a[1].size);
-      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
+      const x = (tg.mons || {})[id] || {};
+      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
-        extra +
-        `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ul class="tp-moves">${moves.map(([mv, set]) => `<li title="${esc([...set].join(', '))}"><b class="tk-move">${esc(t('mv_' + mv))}</b><small>×${set.size}</small></li>`).join('')}</ul></div>` +
-        (swaps[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_swaps'))}</span><ol class="tp-swaps">${swaps[id].map(s => `<li><span>${esc(t('tp_after'))} ${esc(s.gym)}</span>${itemChip(s.item)}</li>`).join('')}</ol></div>` : '') +
-        '</article>';
+        extra + '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');

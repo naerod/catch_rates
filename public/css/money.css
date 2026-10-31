@@ -291,6 +291,8 @@
 .tp-lv { font: 600 0.8rem var(--font-head); color: var(--text-dim); }
 .type-chip { padding: 0 0.55rem; border-radius: 1em; border: 1px solid color-mix(in srgb, var(--t) 75%, transparent); background: color-mix(in srgb, var(--t) 30%, transparent); font-size: 0.75rem; font-weight: 600; }
 .tp-row { display: flex; flex-direction: column; gap: 0.25rem; }
+.tp-row.is-ivs { padding: 0.4rem 0.6rem; border-radius: 6px; background: color-mix(in srgb, var(--mon) 14%, transparent); border-left: 3px solid var(--mon); }
+.tp-row.is-ivs > span:last-child { font: 700 1.05rem var(--font-head); color: var(--text); }
 .tp-label { font: 600 0.7rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
 .tp-item { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 600; }
 .tp-item img, .tp-stock img { width: 24px; height: 24px; }

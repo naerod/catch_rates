@@ -1551,11 +1551,15 @@
     },
     "attention": [
       {
+        "icon": "priority_high",
+        "key": "gr_hms"
+      },
+      {
         "icon": "warning",
         "key": "gr_requires"
       },
       {
-        "icon": "flight",
+        "icon": "music_note",
         "key": "gr_ocarina"
       }
     ],
