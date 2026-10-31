@@ -218,8 +218,8 @@ const Money = (() => {
     });
   }
 
-  const tagsHTML = m => {
-    const tags = [...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
+  const tagsHTML = (m, guest = false) => {
+    const tags = [...(guest ? [`<span class="tag is-example">${esc(t('money_example'))}</span>`] : []), ...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
     return tags.length ? `<span class="money-tags">${tags.join('')}</span>` : '';
   };
 
@@ -447,7 +447,7 @@ const Money = (() => {
 
   /* Accueil : cartes de raccourci (la page d'accueil, dans app.js, les assemble en sections). */
   const homeCard = (go, ic, label, tags = '', cls = '', tone = '') => `<button type="button" class="home-card${cls}${tone ? ' tone-' + tone : ''}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
-  const homeFavCards = () => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav', 'money')).join('');
+  const homeFavCards = guest => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m, guest), ' is-fav', 'money')).join('');   // guest : pas de compte, les favoris ne sont qu'un exemple
 
   return { open, homeCard, homeFavCards };
 })();

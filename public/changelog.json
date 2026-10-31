@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.34",
+      "date": "2026-10-31",
+      "title": { "fr": "Favoris : pastille Exemple", "en": "Favourites: Example badge" },
+      "fr": ["Accueil : sans compte connecté, les guides en favoris affichent une pastille « Exemple »."],
+      "en": ["Home: when not signed in, favourite guides show an “Example” badge."]
+    },
+    {
       "v": "3.17.33",
       "date": "2026-10-31",
       "title": { "fr": "Menu : Diabolus en premier", "en": "Menu: Diabolus first" },

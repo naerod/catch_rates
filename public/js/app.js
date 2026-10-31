@@ -1,6 +1,7 @@
 /* ════════════════════════════════════════════
    app.js — Main UI logic
    ════════════════════════════════════════════ */
+let currentOidcUser = null;                                  // compte connu apres coup (evenement naerod:user) ; declare ici car renderHome() s'execute au chargement
 
 /* ── State ── */
 const state = {
@@ -629,7 +630,7 @@ async function renderHome() {
   const sec = (title, body) => body ? `<section class="home-section"><h2 class="home-title">${i18n.t(title)}</h2>${body}</section>` : '';
   const addCard = (go, ic, tipKey) => `<button type="button" class="home-card is-add" data-go="${go}" data-tip="${i18n.t(tipKey)}" aria-label="${i18n.t(tipKey)}"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>`;
   const paint = evs => {
-    const slugs = evFavs(), methods = Money.homeFavCards(), favEvents = evs.filter(ev => slugs.includes(ev.slug));
+    const slugs = evFavs(), methods = Money.homeFavCards(!currentOidcUser), favEvents = evs.filter(ev => slugs.includes(ev.slug));
     const suggest = evs.filter(inSuggestWindow);
     el.innerHTML =
       sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
@@ -659,10 +660,9 @@ function startRotation(box) {
 /* <naerod-header> appelle /api/auth/me, affiche le bouton de connexion ou le
    menu de compte, et publie le resultat. Le site n en garde que ce dont la
    page Admin a besoin. */
-let currentOidcUser = null;
-
 document.addEventListener('naerod:user', e => {
   currentOidcUser = e.detail.user;
+  if (state.page === 'calc') renderHome();                         // la pastille « Exemple » des favoris depend du compte, connu apres coup
   if (state.page === 'events') loadEvents();                       // le bouton Edit depend du compte, connu apres coup
   // L utilisateur arrive de façon asynchrone : si la page Admin est deja
   // ouverte, on la reevalue avec la session maintenant connue.
