@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.16",
+      "date": "2026-10-31",
+      "title": { "fr": "Thème sombre : couleurs plus lisibles", "en": "Dark theme: more readable colors" },
+      "fr": ["Thème sombre : fond, cartes, bordures et texte plus contrastés ; pastilles d'objet (Choice Specs/Scarf/Band) foncées au lieu de pastel ; rouge du bouton Heal plus sombre."],
+      "en": ["Dark theme: more contrasted background, cards, borders and text; item chips (Choice Specs/Scarf/Band) are dark instead of pastel; darker red for the Heal button."]
+    },
+    {
       "v": "3.17.15",
       "date": "2026-10-31",
       "title": { "fr": "Guide d'équipe : attaques complétées", "en": "Team guide: moves completed" },

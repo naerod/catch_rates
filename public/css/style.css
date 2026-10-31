@@ -8,23 +8,23 @@
 /* ── Dark theme (default) ── */
 :root,
 [data-theme="dark"] {
-  --bg: #111111;
-  --bg2: #151515;
+  --bg: #0a0a0a;
+  --bg2: #0c0e10;
   --bg3: #1b1b1b;
   --bg4: #222222;
-  --card: #151515;
-  --card-border: #2c2c2c;
+  --card: #0c0e10;
+  --card-border: #84837a;
   --accent: #f5b942;
   --on-accent: #1a1200;
   --accent-rgb: 245,185,66;
   --accent2: #e0a020;
   --accent-glow: rgba(var(--accent-rgb),0.13);
-  --text: #ececec;
-  --text-muted: #8a8a8a;
-  --text-dim: #b0b0b0;
+  --text: #fcfaff;
+  --text-muted: #a8a8a8;
+  --text-dim: #cfd0d4;
   --green: #22c55e;
   --yellow: #eab308;
-  --red: #ef4444;
+  --red: #b50e0e;
   --purple: #a855f7;
   --orange: #f97316;
   --shadow: 0 4px 24px rgba(0,0,0,0.5);
