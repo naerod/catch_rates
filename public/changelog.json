@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.19",
+      "date": "2026-10-31",
+      "title": { "fr": "Cerulean : risque de 4 tours", "en": "Cerulean: 4-turn risk" },
+      "fr": ["Arène de Cerulean : ajout d'une note sur la faible chance de 4 tours si Mégapagos survit."],
+      "en": ["Cerulean gym: added a note about the low chance of 4 turns if Carracosta survives."]
+    },
+    {
       "v": "3.17.18",
       "date": "2026-10-31",
       "title": { "fr": "Saffron : risque de 4 tours", "en": "Saffron: 4-turn risk" },
