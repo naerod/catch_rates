@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.31",
+      "date": "2026-10-31",
+      "title": { "fr": "Saffron : sprite d'Ectoplasma", "en": "Saffron: Gengar sprite" },
+      "fr": ["Saffron : le nom d'Ectoplasma est remplacé par son sprite dans la note sur Corps Maudit."],
+      "en": ["Saffron: Gengar's name is replaced by its sprite in the Cursed Body note."]
+    },
+    {
       "v": "3.17.30",
       "date": "2026-10-31",
       "title": { "fr": "Cartes courtes : switch en bas à droite", "en": "Short cards: switch icon bottom right" },

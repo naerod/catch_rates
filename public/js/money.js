@@ -68,6 +68,7 @@ const Money = (() => {
     if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)
     if (c === '~') return leadMode ? `<span class="tk-act tk-stack" data-mon="${rest}">${monSprite(rest)}<b>${esc(name(data.mons, rest))}</b></span>` : `<span class="tk-act" data-mon="${rest}">${monSprite(rest, false)}<b>${esc(name(data.mons, rest))}</b></span>`;
     if (c === '.') return `<b class="tk-move">${esc(t('mv_' + rest))}</b>`;
+    if (c === '$') return `<img class="sprite-inline" src="/gym-rerun/sprites/${rest}.png" alt="${esc(name(data.opponents, rest))}" width="96" height="96" decoding="async">`;   // grand sprite dans une phrase
     if (c === '#') {
       const [dex, lvl] = rest.split(':');
       const lv = lvl ? `<span class="tk-lvl">${esc(t('gr_lvl'))} ${+lvl}</span>` : '';
