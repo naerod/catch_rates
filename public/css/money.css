@@ -91,7 +91,7 @@
   background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
 }
 .gym { position: relative; }
-.gym-charm { position: absolute; top: -10px; left: -10px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--card); border: 1px solid var(--card-border); z-index: 1; }
+.gym-charm { position: absolute; top: -14px; left: -14px; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--card); border: 1px solid var(--card-border); z-index: 1; }
 .gym-map { width: 100%; height: auto; border-radius: 4px; background: var(--bg3); }
 .gym-head { display: flex; flex-direction: column; gap: 0.4em; min-width: 0; }
 .gym-exc { grid-column: 1 / -1; align-self: stretch; display: flex; flex-direction: column; gap: 0.4em; min-width: 0; margin-top: 0.5em; }

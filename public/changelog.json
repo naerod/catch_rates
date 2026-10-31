@@ -2,7 +2,7 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
-      "v": "3.17.10",
+      "v": "3.17.11",
       "date": "2026-10-31",
       "title": { "fr": "Gym Rerun : note, charm et alignement Striaton", "en": "Gym Rerun: note, charm and Striaton alignment" },
       "fr": ["Petite icône du Riches Charm sur l'arène 3 (Mauville) : moment conseillé pour le lancer.", "Ajout en haut du guide Diabolus d'une note : guide fait avant le nerf de 2025 mais toujours valable, et quand lancer le charm.", "Arène de Striaton : les noms des champions et « Incinerate » sont alignés avec les icônes."],

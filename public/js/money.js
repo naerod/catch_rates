@@ -259,7 +259,7 @@ const Money = (() => {
     // 1 seule option a 2 Pokemon, aucune exception : le soin remonte a cote de la carte au lieu d'une ligne vide en dessous
     const compact = !exc.length && !endNote && (expanded[0]?.s.match(/[a-z]+\.[a-z_0-9]+|~[a-z]+/g) || []).length <= 2;
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
-      (g.charm ? `<span class="gym-charm" data-tip="${esc(t('gr_charm_start'))}" tabindex="0"><img src="/gym-rerun/items/riches-charm.png" alt="${esc(t('gr_charm_start'))}" width="24" height="24"></span>` : '') +
+      (g.charm ? `<span class="gym-charm" data-tip="${esc(t('gr_charm_start'))}" tabindex="0"><img src="/gym-rerun/items/riches-charm.png" alt="${esc(t('gr_charm_start'))}" width="32" height="32"></span>` : '') +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
       `${note}${lead.join('')}${compact ? between(g.after) : ''}</div>` +
