@@ -5,10 +5,11 @@
 
 const Money = (() => {
   const METHODS = [
-    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], src: '/data/technical-route.json' },
+    { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, src: '/data/technical-route.json' },
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], src: '/data/gym-rerun.json' },
   ];
   const FAVS = 'money.favs';
+  const isWip = m => m.wip && location.hostname === 'catchr.naerod.com';   // en construction : visible seulement en preprod
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const t = k => i18n.t(k);
@@ -191,7 +192,7 @@ const Money = (() => {
     });
   }
 
-  const tagsHTML = m => m.tags.length ? `<span class="money-tags">${m.tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</span>` : '';
+  const tagsHTML = m => { const tags = isWip(m) ? ['WIP', ...m.tags] : m.tags; return tags.length ? `<span class="money-tags">${tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</span>` : ''; };
 
   function menu(animate) {
     const el = $('money-menu');
@@ -331,6 +332,11 @@ const Money = (() => {
 
   function enter(method) {
     view(method);
+    if (isWip(METHODS.find(m => m.id === method))) {
+      data = null; $('money-guide').innerHTML = ''; $('money-charm-slot').innerHTML = '';
+      $('money-stage').innerHTML = `<div class="money-state">${icon('construction')}<p>${esc(t('money_wip'))}</p></div>`;
+      return;
+    }
     data = datas[method] || null;
     if (data) { restore(); renderAll(false); persist(); loadMarket(); } else load();
   }
