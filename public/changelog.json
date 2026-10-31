@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.17.38",
+      "date": "2026-10-31",
+      "title": { "fr": "Interface plus compacte", "en": "More compact interface" },
+      "fr": ["Tailles réduites sur tout le site : police de base, boutons, icônes, cartes de l'accueil et de Money making, sprites des guides."],
+      "en": ["Sizes reduced across the site: base font, buttons, icons, home and Money making cards, guide sprites."]
+    },
+    {
       "v": "3.17.37",
       "date": "2026-10-31",
       "title": { "fr": "Pastille Exemple plus soignée", "en": "Nicer Example badge" },

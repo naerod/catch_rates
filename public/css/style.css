@@ -91,7 +91,7 @@
   --nrd-nav-border-current: var(--accent);
 }
 
-html { font-size: 16px; scroll-behavior: smooth; }
+html { font-size: 14px; scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
@@ -264,14 +264,14 @@ main {
 
 .history-toggle-btn {
   flex-shrink: 0;
-  width: 52px; height: auto;   /* carre : meme hauteur que la barre de recherche (~52 px) */
+  width: 44px; height: auto;   /* carre : meme hauteur que la barre de recherche (~44 px) */
   border-radius: var(--radius-lg);
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  min-height: 52px;
+  min-height: 44px;
   background: var(--input-bg);
   border: 2px solid var(--card-border);
   border-radius: var(--radius-lg);
@@ -283,7 +283,7 @@ main {
   box-shadow: var(--glow);
 }
 
-.search-icon { color: var(--text-muted); font-size: 22px; margin-right: 0.6rem; flex-shrink: 0; user-select: none; }
+.search-icon { color: var(--text-muted); font-size: 18px; margin-right: 0.6rem; flex-shrink: 0; user-select: none; }
 
 #pokemon-search {
   flex: 1;
@@ -357,7 +357,7 @@ main {
 }
 
 .pokemon-sprite {
-  width: 88px; height: 88px;
+  width: 72px; height: 72px;
   image-rendering: pixelated;
 }
 [data-theme="dark"] .pokemon-sprite {
@@ -1265,7 +1265,7 @@ footer {
 /* Badge de version (pied de page) → /changelog */
 .ver-badge { color: var(--text-dim); }
 .ver-badge:hover { color: var(--accent); }
-.btn-icon .material-symbols-outlined { font-size: 20px; }
+.btn-icon .material-symbols-outlined { font-size: 17px; }
 
 /* ══════════════ ACCENT PAR PAGE ══════════════
    Calculator, Events (et Admin) = bleu ; Money making = dore (valeurs par defaut ci-dessus).
@@ -1326,10 +1326,10 @@ footer {
 .ev-empty { padding: 1.25rem; color: var(--text-dim); font-size: 0.85rem; text-align: center; }
 .events-toolbar { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
 .events-toolbar[hidden], #event-add-btn[hidden] { display: none; }
-#event-add-btn { width: 40px; height: 40px; }
+#event-add-btn { width: 34px; height: 34px; }
 
 .page-title h1.site-title { display: inline-flex; align-items: center; gap: 0.75rem; }
-.site-title img { width: 48px; height: 48px; object-fit: contain; }
+.site-title img { width: 38px; height: 38px; object-fit: contain; }
 
 /* Tuile d'evenement : conditions pour atteindre le taux (PV, statut, nuit, attente) */
 .ep-conds { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2rem; margin-top: 0.15rem; }
