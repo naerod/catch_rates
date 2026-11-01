@@ -702,7 +702,7 @@ main {
   color: var(--accent);
 }
 
-.toggle-night.active { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
+.toggle-alpha.active, .toggle-night.active { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
 .status-sleep.active  { border-color: var(--purple); background: rgba(168,85,247,0.1);  color: var(--purple); }
 .status-freeze.active { border-color: #67e8f9;       background: rgba(103,232,249,0.1); color: #67e8f9; }
 .status-para.active   { border-color: var(--yellow); background: rgba(234,179,8,0.1);   color: var(--yellow); }

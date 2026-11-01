@@ -4,12 +4,16 @@
 let currentOidcUser = null;                                  // compte connu apres coup (evenement naerod:user) ; declare ici car renderHome() s'execute au chargement
 
 /* ── State ── */
+const ALPHA_RATE = 10;
+const effPokemon = () => state.alpha ? { ...state.pokemon, catch_rate: ALPHA_RATE } : state.pokemon;
+
 const state = {
   pokemon: null,
   balls: [],
   hp: 100,             // Actual HP value: 1 | 25 | 50 | 75 | 100
   status: 'none',      // none | sleep | freeze | para | poison | burn
   night: false,
+  alpha: false,        // PokeMMO alpha: catch rate fixed at 10 (shortcut: ignores the few exceptions)
   page: 'calc',
   recoilWarnings: null // { suicideMoves: [], recoilMoves: [] } — fetched from API
 };
@@ -186,7 +190,7 @@ async function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves
   $('pokemon-id-display').textContent = String(p.id).padStart(3,'0');
   $('pokemon-name-display').textContent = p.name;
   $('pokemon-gen-badge').textContent = `${i18n.t('gen_label')} ${p.generation}`;
-  $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${p.catch_rate}`;
+  $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${effPokemon().catch_rate}`;
   $('pokemon-card').style.display = '';
 
   // Show sections (all-balls only visible when params are open)
@@ -198,7 +202,7 @@ async function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves
 
   // Add to history with the best (fastest) result
   await ensureBalls();
-  const optBest = Calc.computeOptimalFastest(p, state.balls);
+  const optBest = Calc.computeOptimalFastest(effPokemon(), state.balls);
   addToHistory(p, optBest);
 }
 
@@ -236,6 +240,13 @@ document.querySelectorAll('.hp-label-item').forEach(el => {
 updateSliderStyle(4);
 
 /* ══════════════ CONDITION TOGGLES ══════════════ */
+$('toggle-alpha').addEventListener('click', () => {
+  state.alpha = !state.alpha;
+  $('toggle-alpha').classList.toggle('active', state.alpha);
+  $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${effPokemon().catch_rate}`;
+  updateResults();
+});
+
 $('toggle-night').addEventListener('click', () => {
   state.night = !state.night;
   $('toggle-night').classList.toggle('active', state.night);
@@ -289,7 +300,7 @@ async function updateResults() {
   }
 
   // Quickable banner (Quick Ball at full HP, no status)
-  const qbProb = Calc.probability(state.pokemon.catch_rate, 100, 5, 1);
+  const qbProb = Calc.probability(effPokemon().catch_rate, 100, 5, 1);
   const banner = $('quickable-banner');
   banner.style.display = qbProb >= 0.75 ? '' : 'none';
   if (qbProb >= 0.75) {
@@ -301,8 +312,8 @@ async function updateResults() {
   }
 
   // Optimal result cards — computed automatically, independent of current state sliders
-  const optBest  = Calc.computeOptimalFastest(state.pokemon, state.balls);
-  const optCheap = Calc.computeOptimalCheapest(state.pokemon, state.balls);
+  const optBest  = Calc.computeOptimalFastest(effPokemon(), state.balls);
+  const optCheap = Calc.computeOptimalCheapest(effPokemon(), state.balls);
 
   const bestCard  = document.querySelector('.best-card');
   const cheapCard = document.querySelector('.cheap-card');
@@ -317,7 +328,7 @@ async function updateResults() {
 
   // All balls grid — uses current state (HP slider / status toggles), only when panel is open
   if (paramsOpen) {
-    const results   = Calc.computeAll(state.pokemon, state.balls, state);
+    const results   = Calc.computeAll(effPokemon(), state.balls, state);
     const gridBest  = Calc.getBest(results);
     const gridCheap = Calc.getCheapest(results);
     renderAllBallsGrid(results, gridBest, gridCheap);
@@ -507,7 +518,7 @@ function getCondLabel(r, pokemon) {
 document.addEventListener('langchange', () => {
   if (state.pokemon) {
     $('pokemon-gen-badge').textContent = `${i18n.t('gen_label')} ${state.pokemon.generation}`;
-    $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${state.pokemon.catch_rate}`;
+    $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${effPokemon().catch_rate}`;
     updateResults();
   }
   renderHistory();
