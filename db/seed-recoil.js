@@ -68,6 +68,15 @@ const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv
     insert.run([dexNumber, pokemonName, moveName, level, recoilType]);
     count++;
   }
+  // CT / tuteur (db/recoil-machine-moves.json, level 0) : disponible à tout niveau, remplace l'entrée par niveau
+  const MACHINE_PATH = path.join(__dirname, 'recoil-machine-moves.json');
+  if (fs.existsSync(MACHINE_PATH)) {
+    for (const m of JSON.parse(fs.readFileSync(MACHINE_PATH, 'utf8'))) {
+      db.run('DELETE FROM pokemon_recoil_moves WHERE dex_number = ? AND move_name = ?', [m.dex, m.move]);
+      insert.run([m.dex, m.name, m.move, 0, m.type]);
+      count++;
+    }
+  }
   insert.free();
 
   if (skipped > 0) console.warn(`  Skipped ${skipped} malformed lines.`);
