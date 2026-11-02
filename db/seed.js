@@ -180,6 +180,15 @@ function getGeneration(id) {
       insertRecoil.run([dexNumber, pokemonName, moveName, level, recoilType]);
       recoilCount++;
     }
+    // CT / tuteur (level 0) : remplace l'entrée par niveau ; voir seed-recoil.js
+    const MACHINE_PATH = path.join(__dirname, 'recoil-machine-moves.json');
+    if (fs.existsSync(MACHINE_PATH)) {
+      for (const m of JSON.parse(fs.readFileSync(MACHINE_PATH, 'utf8'))) {
+        db.run('DELETE FROM pokemon_recoil_moves WHERE dex_number = ? AND move_name = ?', [m.dex, m.move]);
+        insertRecoil.run([m.dex, m.name, m.move, 0, m.type]);
+        recoilCount++;
+      }
+    }
     insertRecoil.free();
 
     const chk = db.prepare('SELECT COUNT(*) as cnt FROM pokemon_recoil_moves');
