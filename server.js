@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DB_PATH = path.join(__dirname, 'db', 'catchrates.db');
+const DB_PATH = process.env.CATCHR_DB_PATH || path.join(__dirname, 'db', 'catchrates.db');   // surchargeable (tests)
 
 // ─── DB helpers ───────────────────────────────────────────────────────────────
 let db;
@@ -460,11 +460,8 @@ app.get('*', (req, res) => {
 });
 
 // ─── Start ─────────────────────────────────────────────────────────────────────
-(async () => {
-  if (!fs.existsSync(DB_PATH)) {
-    console.error('Database not found. Run: npm run seed');
-    process.exit(1);
-  }
+async function init() {
+  if (!fs.existsSync(DB_PATH)) throw new Error('Database not found. Run: npm run seed');
   const SQL = await initSqlJs();
   const fileBuffer = fs.readFileSync(DB_PATH);
   db = new SQL.Database(fileBuffer);
@@ -475,8 +472,13 @@ app.get('*', (req, res) => {
     if (!evCols.includes(col)) db.run(`ALTER TABLE events ADD COLUMN ${col} ${ddl}`);
   seedEvents();
   saveDb();
+  return app;
+}
 
-  app.listen(PORT, () => {
-    console.log(`CatchR running at http://localhost:${PORT}`);
-  });
-})();
+module.exports = { app, init, getDb: () => db };
+
+if (require.main === module) {
+  init().then(() => {
+    app.listen(PORT, () => console.log(`CatchR running at http://localhost:${PORT}`));
+  }).catch(e => { console.error(e.message); process.exit(1); });
+}
