@@ -37,3 +37,13 @@ test('seed : refuse d\'ecraser une base existante sans --force', () => {
   assert.throws(() => execFileSync(process.execPath, [path.join(__dirname, '..', 'db', 'seed.js')], { env: { ...process.env, CATCHR_DB_PATH: dbPath }, stdio: 'pipe' }));
   assert.ok(fs.readFileSync(dbPath).equals(before));
 });
+
+test('sauvegarde atomique : aucun fichier temporaire laisse, base relisible', async () => {
+  const s = await startServer({ ALLOW_LOCAL_ADMIN: '1' });
+  try {
+    const dir = require('path').dirname(s.dbPath);
+    assert.deepStrictEqual(fs.readdirSync(dir).filter(f => f.includes('.tmp-')), []);
+    const SQL = await initSqlJs();
+    assert.ok(new SQL.Database(fs.readFileSync(s.dbPath)).exec('SELECT count(*) FROM pokemon')[0].values[0][0] > 600);
+  } finally { await s.close(); }
+});

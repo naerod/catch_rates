@@ -13,9 +13,12 @@ const DB_PATH = process.env.CATCHR_DB_PATH || path.join(__dirname, 'db', 'catchr
 // ─── DB helpers ───────────────────────────────────────────────────────────────
 let db;
 
+// Ecriture atomique : fichier temporaire puis rename (un crash pendant l'ecriture ne laisse jamais une base tronquee)
 function saveDb() {
   const data = db.export();
-  fs.writeFileSync(DB_PATH, Buffer.from(data));
+  const tmp = `${DB_PATH}.tmp-${process.pid}`;
+  fs.writeFileSync(tmp, Buffer.from(data));
+  fs.renameSync(tmp, DB_PATH);
 }
 
 function dbAll(sql, params = []) {
