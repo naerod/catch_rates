@@ -31,3 +31,29 @@ test('Routes admin refusees sans session', async () => {
   assert.strictEqual((await s.req('/api/admin/events/1', { method: 'DELETE' })).status, 401);
   assert.strictEqual((await s.req('/api/admin/users')).status, 401);
 });
+
+test('recherche : jokers LIKE traites comme du texte, q borne', async () => {
+  const all = await (await s.req('/api/pokemon/search?q=%25')).json();
+  assert.strictEqual(all.length, 0);
+  const under = await (await s.req('/api/pokemon/search?q=_')).json();
+  assert.strictEqual(under.length, 0);
+  const r = await s.req('/api/pokemon/search?q[]=a&q[]=b');
+  assert.strictEqual(r.status, 200);
+  const long = await s.req('/api/pokemon/search?q=' + 'a'.repeat(5000));
+  assert.strictEqual(long.status, 200);
+});
+
+test('API inconnue : 404 JSON ; route SPA : page versionnee', async () => {
+  const r = await s.req('/api/nexiste-pas');
+  assert.strictEqual(r.status, 404);
+  assert.match(r.headers.get('content-type'), /json/);
+  const spa = await s.req('/une/page');
+  assert.match(await spa.text(), /app-version/);
+});
+
+test('JSON invalide : 400 JSON sans pile d\'appels', async () => {
+  const r = await fetch(s.base + '/api/admin/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{oops' });
+  assert.strictEqual(r.status, 400);
+  const body = await r.text();
+  assert.doesNotMatch(body, /at .*\.js/);
+});
