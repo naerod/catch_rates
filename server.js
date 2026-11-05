@@ -4,6 +4,7 @@ const initSqlJs = require('sql.js');
 const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
+const { hashPassword, verifyPassword, needsRehash } = require('./lib/passwords');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -286,9 +287,12 @@ app.get('/api/events/:slug', (req, res) => {
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
-  const hash = crypto.createHash('sha256').update(password).digest('hex');
-  const user = dbGet('SELECT * FROM admin_users WHERE username = ? AND password_hash = ?', [username, hash]);
-  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+  const user = dbGet('SELECT * FROM admin_users WHERE username = ?', [String(username)]);
+  if (!user || !verifyPassword(String(password), user.password_hash)) return res.status(401).json({ error: 'Invalid credentials' });
+  if (needsRehash(user.password_hash)) {                                // ancien SHA-256 sans sel -> scrypt
+    dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hashPassword(String(password)), user.id]);
+    saveDb();
+  }
   req.session.adminId = user.id;
   req.session.adminUsername = user.username;
   req.session.adminRole = user.role;
@@ -374,7 +378,7 @@ app.delete('/api/admin/events/:eventId/pokemon/:pokemonId', requireAuth, (req, r
 app.post('/api/admin/change-password', requireAuth, (req, res) => {
   const { password } = req.body;
   if (!password || password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
-  const hash = crypto.createHash('sha256').update(password).digest('hex');
+  const hash = hashPassword(password);
   dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hash, req.session.adminId]);
   saveDb();
   res.json({ success: true });
@@ -390,7 +394,7 @@ app.post('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
   if (!username || !password || !['admin', 'manager'].includes(role))
     return res.status(400).json({ error: 'Missing or invalid fields' });
   if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
-  const hash = crypto.createHash('sha256').update(password).digest('hex');
+  const hash = hashPassword(password);
   try {
     const result = dbRun('INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', [username, hash, role]);
     saveDb();
@@ -407,7 +411,7 @@ app.put('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
   try {
     if (password) {
       if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
-      const hash = crypto.createHash('sha256').update(password).digest('hex');
+      const hash = hashPassword(password);
       dbRun('UPDATE admin_users SET username=?, role=?, password_hash=? WHERE id=?', [username, role, hash, req.params.id]);
     } else {
       dbRun('UPDATE admin_users SET username=?, role=? WHERE id=?', [username, role, req.params.id]);
