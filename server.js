@@ -229,9 +229,10 @@ app.get('/api/auth/me', (req, res) => {
 
 // ─── Pokémon ───────────────────────────────────────────────────────────────────
 app.get('/api/pokemon/search', (req, res) => {
-  const q = req.query.q || '';
+  // q borne et jokers LIKE (% _) echappes : la recherche porte sur le texte saisi, rien d'autre
+  const q = (typeof req.query.q === 'string' ? req.query.q : '').slice(0, 50).replace(/[\\%_]/g, c => '\\' + c);
   const rows = dbAll(
-    'SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon WHERE name LIKE ? LIMIT 20',
+    "SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon WHERE name LIKE ? ESCAPE '\\' LIMIT 20",
     [`%${q}%`]
   );
   res.json(rows);
@@ -504,8 +505,17 @@ app.get('/changelog', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'changelog.html'));
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// API inconnue : 404 JSON (et non la page HTML de l'application)
+app.use('/api', (req, res) => res.status(404).json({ error: 'Not found' }));
+
+// SPA : meme page versionnee que '/' (URL ?v= pour le cache Cloudflare)
+app.get('*', (req, res) => res.type('html').send(INDEX_HTML));
+
+// Erreurs : JSON sans pile d'appels (corps JSON invalide, trop gros, exception imprevue)
+app.use((err, req, res, _next) => {
+  const status = err.status || err.statusCode || 500;
+  if (status >= 500) console.error('[error]', err);
+  res.status(status).json({ error: status >= 500 ? 'Internal error' : (err.expose ? err.message : 'Bad request') });
 });
 
 // ─── Start ─────────────────────────────────────────────────────────────────────
