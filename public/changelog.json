@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.19.0",
+      "date": "2026-11-05",
+      "title": { "fr": "Fiabilité et accessibilité", "en": "Reliability and accessibility" },
+      "fr": ["Sécurité et fiabilité renforcées.", "Meilleure lisibilité (contrastes) et affichage corrigé sur petits écrans.", "Textes français complétés."],
+      "en": ["Improved security and reliability.", "Better readability (contrast) and fixed layout on small screens.", "Completed French texts."]
+    },
+    {
       "v": "3.18.2",
       "date": "2026-11-02",
       "title": { "fr": "Correctif avertissements CT", "en": "TM warnings fix" },
