@@ -83,12 +83,19 @@ app.get(['/', '/index.html'], (req, res) => res.type('html').send(INDEX_HTML));
 app.use('/gym-rerun', express.static(path.join(__dirname, 'public', 'gym-rerun'), { maxAge: '1d' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ball-images', express.static(path.join(__dirname, 'db', 'images')));
+// Derriere le reverse proxy (Cloudflare / proxy local) : X-Forwarded-Proto rend req.secure fiable -> cookie Secure en HTTPS.
+app.set('trust proxy', 1);
+if (!process.env.SESSION_SECRET) console.warn('[session] SESSION_SECRET absent : secret aleatoire genere au demarrage.');
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'change-me-in-production-pokemmo-secret',
+  name: 'catchr.sid',
+  secret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex'),
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }
+  cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'lax', secure: 'auto' }
 }));
+
+// Nouvel identifiant de session a chaque connexion (anti-fixation de session)
+const regenerate = req => new Promise((ok, ko) => req.session.regenerate(e => (e ? ko(e) : ok())));
 
 // ─── OIDC Config ──────────────────────────────────────────────────────────────
 const OIDC_ISSUER     = (process.env.OIDC_ISSUER || 'https://auth.naerod.com/application/o/catchr').replace(/\/$/, '');
@@ -182,6 +189,7 @@ app.get('/auth/callback', async (req, res) => {
     });
     if (!userRes.ok) throw new Error(`Userinfo: ${userRes.status}`);
     const u = await userRes.json();
+    await regenerate(req);
     req.session.oidcUser = {
       sub: u.sub, username: u.preferred_username,
       name: u.name, email: u.email, groups: u.groups || [],
@@ -288,7 +296,7 @@ app.get('/api/events/:slug', (req, res) => {
 });
 
 // ─── Admin Auth ────────────────────────────────────────────────────────────────
-app.post('/api/admin/login', (req, res) => {
+app.post('/api/admin/login', async (req, res) => {
   if (!LOCAL_ADMIN) return res.status(403).json({ error: 'Local login disabled, use SSO' });
   const { username, password } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
@@ -299,6 +307,7 @@ app.post('/api/admin/login', (req, res) => {
     dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hashPassword(String(password)), user.id]);
     saveDb();
   }
+  try { await regenerate(req); } catch { return res.status(500).json({ error: 'Session error' }); }
   req.session.adminId = user.id;
   req.session.adminUsername = user.username;
   req.session.adminRole = user.role;

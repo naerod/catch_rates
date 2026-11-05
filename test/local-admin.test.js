@@ -45,3 +45,22 @@ test('corps de requete invalide : pas de crash', async () => {
     assert.ok([400, 401].includes(r.status));
   } finally { await s.close(); }
 });
+
+test('cookie de session durci et regenere a la connexion', async () => {
+  const s = await startServer({ ALLOW_LOCAL_ADMIN: '1' });
+  try {
+    s.mod.getDb().run("INSERT INTO admin_users (username, password_hash) VALUES ('fix', ?)", [require('../lib/passwords').hashPassword('pw-fixation')]);
+    // Une session pre-existante (creee par /auth/login)
+    const pre = await fetch(s.base + '/auth/login', { redirect: 'manual' }).catch(() => null);
+    const preCookie = pre?.headers.get('set-cookie') || '';
+    const r = await fetch(s.base + '/api/admin/login', {
+      method: 'POST', headers: { 'content-type': 'application/json', cookie: preCookie.split(';')[0] },
+      body: JSON.stringify({ username: 'fix', password: 'pw-fixation' }),
+    });
+    assert.strictEqual(r.status, 200);
+    const sc = r.headers.get('set-cookie');
+    assert.match(sc, /HttpOnly/i);
+    assert.match(sc, /SameSite=Lax/i);
+    if (preCookie) assert.notStrictEqual(sc.split(';')[0], preCookie.split(';')[0]);
+  } finally { await s.close(); }
+});
