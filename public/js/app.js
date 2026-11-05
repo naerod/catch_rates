@@ -395,7 +395,7 @@ function renderResultCard(type, r) {
   if (avgStatsEl) {
     const stats = computeAvgStats(r);
     if (stats) {
-      avgStatsEl.textContent = `~${stats.turns} ${i18n.t('turns_label')} · ~${Calc.formatCost(stats.cost)} avg cost`;
+      avgStatsEl.textContent = `~${stats.turns} ${i18n.t('turns_label')} · ~${Calc.formatCost(stats.cost)} ${i18n.t('avg_cost_label')}`;
       avgStatsEl.style.display = '';
     } else {
       avgStatsEl.style.display = 'none';
@@ -1079,7 +1079,7 @@ function renderAdminEvents(events) {
 /* ══════════════ HISTORY ══════════════ */
 const HISTORY_KEY = 'catchCalc_history';
 const HISTORY_MAX = 15;
-let historyData = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+let historyData = (() => { try { const h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); return Array.isArray(h) ? h : []; } catch { return []; } })();   // stockage bloque ou corrompu
 
 const historyPanel = $('history-panel');
 const historyListEl = $('history-list');
@@ -1103,7 +1103,7 @@ historyPanel.addEventListener('click', e => {
 // Clear history
 $('history-clear-btn').addEventListener('click', () => {
   historyData = [];
-  localStorage.removeItem(HISTORY_KEY);
+  try { localStorage.removeItem(HISTORY_KEY); } catch { /* stockage indisponible */ }
   renderHistory();
 });
 
@@ -1125,7 +1125,7 @@ function addToHistory(pokemon, bestResult) {
   // Cap at max
   if (historyData.length > HISTORY_MAX) historyData.length = HISTORY_MAX;
 
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(historyData));
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyData)); } catch { /* stockage indisponible */ }
   renderHistory();
 }
 
