@@ -303,7 +303,7 @@ app.post('/api/admin/login', async (req, res) => {
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
   const user = dbGet('SELECT * FROM admin_users WHERE username = ?', [String(username)]);
   if (!user || !verifyPassword(String(password), user.password_hash)) return res.status(401).json({ error: 'Invalid credentials' });
-  if (DEFAULT_PASSWORDS.includes(String(password))) return res.status(403).json({ error: 'Default password refused: reset it (npm run seed or ADMIN_PASSWORD)' });
+  if (DEFAULT_PASSWORDS.includes(String(password))) return res.status(403).json({ error: 'Default password refused: change it (see README, local admin account)' });
   if (needsRehash(user.password_hash)) {                                // ancien SHA-256 sans sel -> scrypt
     dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hashPassword(String(password)), user.id]);
     saveDb();

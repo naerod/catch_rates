@@ -4,7 +4,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const { hashPassword } = require('../lib/passwords');
 
-const DB_PATH = path.join(__dirname, 'catchrates.db');
+const DB_PATH = process.env.CATCHR_DB_PATH || path.join(__dirname, 'catchrates.db');
 const DATA_PATH = path.join(__dirname, '..', 'pokemon_data.json');
 const TYPES_PATH = path.join(__dirname, 'pokemon_types.json');
 
@@ -18,6 +18,11 @@ function getGeneration(id) {
 }
 
 (async () => {
+  // Le seed RECREE la base de zero : on refuse d'ecraser une base existante (donnees de prod) sans --force.
+  if (fs.existsSync(DB_PATH) && !process.argv.includes('--force')) {
+    console.error(`Base existante (${DB_PATH}) : le seed l'ecraserait. Sauvegardez-la puis relancez avec : npm run seed -- --force`);
+    process.exit(1);
+  }
   const SQL = await initSqlJs();
   const db = new SQL.Database();
 
