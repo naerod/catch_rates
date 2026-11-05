@@ -73,7 +73,7 @@ function seedEvents() {
 }
 
 // ─── Middleware ────────────────────────────────────────────────────────────────
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
 // Cloudflare garde les statiques 4 h cote navigateur : on versionne leurs URL (?v=<version du changelog>) pour qu'un deploiement les renouvelle tout de suite.
 const APP_V = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'changelog.json'), 'utf8')).versions[0].v;
 const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8')
@@ -327,16 +327,29 @@ app.get('/api/admin/check', (req, res) => {
 });
 
 // ─── Admin Events ──────────────────────────────────────────────────────────────
-const isDate = v => v == null || v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v);
+// Validation des entrees admin : types, longueurs, formats (les valeurs sont ensuite affichees a tous les visiteurs)
+const isDate = v => v == null || v === '' || (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(`${v}T00:00:00Z`)) && new Date(`${v}T00:00:00Z`).toISOString().startsWith(v));
+const normSlug = v => (typeof v === 'string' && /^[a-z0-9][a-z0-9-]{0,63}$/.test(v.trim().toLowerCase()) ? v.trim().toLowerCase() : null);
+const normName = (v, { optional = false } = {}) => {
+  if (optional && (v == null || v === '')) return '';
+  return typeof v === 'string' && v.trim() && v.trim().length <= 100 ? v.trim() : null;
+};
+const isId = v => /^\d{1,9}$/.test(String(v));
+const isPassword = v => typeof v === 'string' && v.length >= 6 && v.length <= 200;
+const isUsername = v => typeof v === 'string' && /^[\w.@-]{1,64}$/.test(v);
+const badId = (res) => res.status(400).json({ error: 'Invalid id' });
 app.post('/api/admin/events', requireAuth, (req, res) => {
-  const { slug, name_en, name_fr, active, starts_at, ends_at } = req.body;
-  if (!slug || !name_en) return res.status(400).json({ error: 'Missing fields' });
+  const { active, starts_at, ends_at } = req.body;
+  const slug = normSlug(req.body.slug), name_en = normName(req.body.name_en), name_fr = normName(req.body.name_fr, { optional: true });
+  if (!req.body.slug || !req.body.name_en) return res.status(400).json({ error: 'Missing fields' });
+  if (!slug) return res.status(400).json({ error: 'Invalid slug (a-z, 0-9, -)' });
+  if (name_en == null || name_fr == null) return res.status(400).json({ error: 'Invalid name (max 100 chars)' });
   if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
   try {
     const kind = ['halloween', 'xmas', 'lny'].find(k => slug.toLowerCase().startsWith(k)) || null;   // icone de l'evenement, deduite du slug
     const result = dbRun(
       'INSERT INTO events (slug, name_en, name_fr, active, starts_at, ends_at, kind) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [slug, name_en, name_fr || '', active ? 1 : 0, starts_at || null, ends_at || null, kind]
+      [slug, name_en, name_fr, active ? 1 : 0, starts_at || null, ends_at || null, kind]
     );
     saveDb();
     res.json({ id: result.lastInsertRowid, slug, name_en, name_fr, active: active ? 1 : 0 });
@@ -346,7 +359,10 @@ app.post('/api/admin/events', requireAuth, (req, res) => {
 });
 
 app.put('/api/admin/events/:id', requireAuth, (req, res) => {
-  const { slug, name_en, name_fr, active } = req.body;
+  if (!isId(req.params.id)) return badId(res);
+  const slug = normSlug(req.body.slug), name_en = normName(req.body.name_en), name_fr = normName(req.body.name_fr, { optional: true });
+  const { active } = req.body;
+  if (!slug || name_en == null || name_fr == null) return res.status(400).json({ error: 'Missing or invalid fields' });
   try {
     dbRun('UPDATE events SET slug=?, name_en=?, name_fr=?, active=? WHERE id=?',
       [slug, name_en, name_fr, active ? 1 : 0, req.params.id]);
@@ -358,6 +374,7 @@ app.put('/api/admin/events/:id', requireAuth, (req, res) => {
 });
 
 app.put('/api/admin/events/:id/dates', requireAuth, (req, res) => {
+  if (!isId(req.params.id)) return badId(res);
   const { starts_at, ends_at } = req.body;
   if (!isDate(starts_at) || !isDate(ends_at)) return res.status(400).json({ error: 'Invalid date (YYYY-MM-DD)' });
   dbRun('UPDATE events SET starts_at=?, ends_at=? WHERE id=?', [starts_at || null, ends_at || null, req.params.id]);
@@ -366,6 +383,7 @@ app.put('/api/admin/events/:id/dates', requireAuth, (req, res) => {
 });
 
 app.delete('/api/admin/events/:id', requireAuth, (req, res) => {
+  if (!isId(req.params.id)) return badId(res);
   dbRun('DELETE FROM events WHERE id=?', [req.params.id]);
   saveDb();
   res.json({ success: true });
@@ -373,7 +391,8 @@ app.delete('/api/admin/events/:id', requireAuth, (req, res) => {
 
 app.post('/api/admin/events/:id/pokemon', requireAuth, (req, res) => {
   const { pokemon_id } = req.body;
-  if (!pokemon_id) return res.status(400).json({ error: 'Missing pokemon_id' });
+  if (!isId(req.params.id)) return badId(res);
+  if (!pokemon_id || !isId(pokemon_id)) return res.status(400).json({ error: 'Missing pokemon_id' });
   try {
     dbRun('INSERT INTO event_pokemon (event_id, pokemon_id) VALUES (?, ?)', [req.params.id, pokemon_id]);
     saveDb();
@@ -384,6 +403,7 @@ app.post('/api/admin/events/:id/pokemon', requireAuth, (req, res) => {
 });
 
 app.delete('/api/admin/events/:eventId/pokemon/:pokemonId', requireAuth, (req, res) => {
+  if (!isId(req.params.eventId) || !isId(req.params.pokemonId)) return badId(res);
   dbRun('DELETE FROM event_pokemon WHERE event_id=? AND pokemon_id=?',
     [req.params.eventId, req.params.pokemonId]);
   saveDb();
@@ -391,8 +411,9 @@ app.delete('/api/admin/events/:eventId/pokemon/:pokemonId', requireAuth, (req, r
 });
 
 app.post('/api/admin/change-password', requireAuth, (req, res) => {
+  if (!req.session.adminId) return res.status(400).json({ error: 'No local account (password managed by SSO)' });
   const { password } = req.body;
-  if (!password || password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
+  if (!isPassword(password)) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
   const hash = hashPassword(password);
   dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hash, req.session.adminId]);
   saveDb();
@@ -406,9 +427,9 @@ app.get('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
 
 app.post('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
   const { username, password, role } = req.body;
-  if (!username || !password || !['admin', 'manager'].includes(role))
+  if (!isUsername(username) || !password || !['admin', 'manager'].includes(role))
     return res.status(400).json({ error: 'Missing or invalid fields' });
-  if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
+  if (!isPassword(password)) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
   const hash = hashPassword(password);
   try {
     const result = dbRun('INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', [username, hash, role]);
@@ -420,12 +441,13 @@ app.post('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
 });
 
 app.put('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
+  if (!isId(req.params.id)) return badId(res);
   const { username, role, password } = req.body;
-  if (!username || !['admin', 'manager'].includes(role))
+  if (!isUsername(username) || !['admin', 'manager'].includes(role))
     return res.status(400).json({ error: 'Missing or invalid fields' });
   try {
     if (password) {
-      if (password.length < 6) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
+      if (!isPassword(password)) return res.status(400).json({ error: 'Password too short (min 6 chars)' });
       const hash = hashPassword(password);
       dbRun('UPDATE admin_users SET username=?, role=?, password_hash=? WHERE id=?', [username, role, hash, req.params.id]);
     } else {
@@ -439,6 +461,7 @@ app.put('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
 });
 
 app.delete('/api/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
+  if (!isId(req.params.id)) return badId(res);
   if (Number(req.params.id) === req.session.adminId)
     return res.status(400).json({ error: 'Cannot delete your own account' });
   dbRun('DELETE FROM admin_users WHERE id=?', [req.params.id]);
@@ -496,6 +519,12 @@ async function init() {
   const evCols = dbAll('PRAGMA table_info(events)').map(c => c.name);
   for (const [col, ddl] of [['sort_order', 'INTEGER DEFAULT 0'], ['starts_at', 'TEXT'], ['ends_at', 'TEXT'], ['kind', 'TEXT'], ['forecast', 'INTEGER DEFAULT 0'], ['unverified', 'INTEGER DEFAULT 0']])
     if (!evCols.includes(col)) db.run(`ALTER TABLE events ADD COLUMN ${col} ${ddl}`);
+  const auCols = dbAll('PRAGMA table_info(admin_users)').map(c => c.name);
+  if (!auCols.includes('role')) {
+    db.run("ALTER TABLE admin_users ADD COLUMN role TEXT NOT NULL DEFAULT 'manager'");
+    db.run("UPDATE admin_users SET role = 'admin' WHERE id = (SELECT MIN(id) FROM admin_users)");   // compte d'amorcage = admin (cf. db/seed.js)
+  }
+  if (!auCols.includes('created_at')) db.run('ALTER TABLE admin_users ADD COLUMN created_at TEXT');
   seedEvents();
   saveDb();
   return app;
