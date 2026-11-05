@@ -17,7 +17,8 @@ test('connexion locale desactivee par defaut', async () => {
 test('connexion locale activee : mot de passe par defaut refuse, vrai mot de passe accepte et rehache', async () => {
   const s = await startServer({ ALLOW_LOCAL_ADMIN: '1' });
   try {
-    // La base versionnee contient naerod / admin123 (SHA-256) : il doit etre refuse
+    // Comme l'ancienne base versionnee : naerod / admin123 en SHA-256 -> doit etre refuse
+    s.mod.getDb().run("UPDATE admin_users SET password_hash = ? WHERE username = 'naerod'", [crypto.createHash('sha256').update('admin123').digest('hex')]);
     let r = await s.req('/api/admin/login', { method: 'POST', body: { username: 'naerod', password: 'admin123' } });
     assert.strictEqual(r.status, 403);
     r = await s.req('/api/admin/login', { method: 'POST', body: { username: 'naerod', password: 'wrong' } });
