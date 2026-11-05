@@ -1,12 +1,13 @@
 {
   "name": "catchr",
   "version": "1.0.0",
-  "description": "CatchR \u2014 Catch Rate Calculator for PokeMMO",
+  "description": "CatchR — Catch Rate Calculator for PokeMMO",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "seed": "node db/seed.js",
-    "seed:recoil": "node db/seed-recoil.js"
+    "seed:recoil": "node db/seed-recoil.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js"
   },
   "dependencies": {
     "sql.js": "^1.12.0",

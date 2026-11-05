@@ -21,6 +21,8 @@ const state = {
 const HP_VALUES = [1, 25, 50, 75, 100];
 
 const $ = id => document.getElementById(id);
+// Echappement HTML de toute donnee venant du serveur ou du stockage local avant interpolation dans innerHTML (XSS)
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;   // grande image : fiche du resultat uniquement
 const miniIcon = id => `/gym-rerun/icons/${id}.png`;                                                          // petite icone 8 bits locale : listes, recherche, evenements
 
@@ -155,11 +157,11 @@ function renderDropdown(pokemon) {
   if (!pokemon.length) { searchDropdown.style.display = 'none'; return; }
   activeSearchIndex = -1;
   searchDropdown.innerHTML = pokemon.map(p => `
-    <div class="search-item" data-id="${p.id}">
-      <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
-      <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
-      <span class="search-item-name">${p.name}</span>
-      <span class="search-item-rate">${p.catch_rate}</span>
+    <div class="search-item" data-id="${esc(p.id)}">
+      <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(p.name)}" loading="lazy" />
+      <span class="search-item-id">#${esc(String(p.id).padStart(3,'0'))}</span>
+      <span class="search-item-name">${esc(p.name)}</span>
+      <span class="search-item-rate">${esc(p.catch_rate)}</span>
     </div>
   `).join('');
   searchDropdown.style.display = '';
@@ -404,7 +406,7 @@ function renderResultCard(type, r) {
   if (avgStatsEl) {
     const stats = computeAvgStats(r);
     if (stats) {
-      avgStatsEl.textContent = `~${stats.turns} ${i18n.t('turns_label')} · ~${Calc.formatCost(stats.cost)} avg cost`;
+      avgStatsEl.textContent = `~${stats.turns} ${i18n.t('turns_label')} · ~${Calc.formatCost(stats.cost)} ${i18n.t('avg_cost_label')}`;
       avgStatsEl.style.display = '';
     } else {
       avgStatsEl.style.display = 'none';
@@ -561,11 +563,11 @@ function eventCard(ev, { edit = false } = {}) {
     <div class="event-card">
       <div class="event-card-header">
         ${EVENT_ICONS[ev.kind] ? `<span class="ev-icon ev-${ev.kind}">${EVENT_ICONS[ev.kind]}</span>` : ''}
-        <span class="event-name">${ev.name_en}</span>
+        <span class="event-name">${esc(ev.name_en)}</span>
         ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
         ${ev.unverified ? `<span class="ev-tag" data-tip="${i18n.t('ev_unverified_tip')}">${i18n.t('ev_unverified')}</span>` : ''}
         ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
-        <button type="button" class="fav-btn" data-evfav="${ev.slug}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
+        <button type="button" class="fav-btn" data-evfav="${esc(ev.slug)}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
       </div>
       ${(ev.pokemon || []).length ? '' : `<p class="ev-empty">${i18n.t('ev_empty')}</p>`}
       <div class="event-pokemon-grid"${(ev.pokemon || []).length ? '' : ' hidden'}>
@@ -577,7 +579,7 @@ function eventCard(ev, { edit = false } = {}) {
           // Tout le detail est au survol : taux de capture, Pokeball, chance et conditions (PV, statut, nuit, attente)
           const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? ['#' + conds.map(c => `${c.cls}:${c.label}`).join('|')] : [])] : [])].join('\n');
           return `
-          <div class="event-pokemon-item" data-id="${p.id}" data-tip="${tip}" aria-label="${tip.replace(/#?chip-\w+:/g, '').replace(/[#\n]/g, ', ')}" tabindex="0">
+          <div class="event-pokemon-item" data-id="${esc(p.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip.replace(/#?chip-\w+:/g, '').replace(/[#\n]/g, ', '))}" tabindex="0" role="button">
             <span class="ep-icon">
               <img width="80" height="60" src="${miniIcon(p.id)}" alt="" loading="lazy" />
               ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="" width="28" height="28" loading="lazy" />` : ''}
@@ -601,7 +603,7 @@ async function loadEvents() {
   let year = '';
   container.innerHTML = events.map(ev => {
     const y = (ev.starts_at || ev.created_at || '').slice(0, 4);
-    const sep = y && y !== year ? `<h2 class="year-sep" aria-label="${y}"><span>${y}</span></h2>` : '';
+    const sep = y && y !== year ? `<h2 class="year-sep" aria-label="${esc(y)}"><span>${esc(y)}</span></h2>` : '';
     year = y || year;
     return sep + eventCard(ev, { edit: canEditEvents() });
   }).join('');
@@ -614,12 +616,21 @@ document.addEventListener('click', e => {
   if (fav) {
     toggleEvFav(fav.dataset.evfav);
     const on = evFavs().includes(fav.dataset.evfav), label = i18n.t(on ? 'money_fav_remove' : 'money_fav_add');
-    document.querySelectorAll(`[data-evfav="${fav.dataset.evfav}"]`).forEach(b => { b.setAttribute('aria-pressed', on); b.title = label; b.setAttribute('aria-label', label); });
+    document.querySelectorAll(`[data-evfav="${CSS.escape(fav.dataset.evfav)}"]`).forEach(b => { b.setAttribute('aria-pressed', on); b.title = label; b.setAttribute('aria-label', label); });
     if (state.page === 'calc') renderHome();
     return;
   }
   if (e.target.closest('.event-edit-btn')) showPage('admin');
   if (e.target.closest('#event-add-btn')) { showPage('admin'); setTimeout(() => $('event-slug')?.focus(), 400); }
+});
+
+// Clavier : les vignettes de Pokemon (role=button, tabindex=0) s'activent avec Entree / Espace
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const item = e.target.closest?.('.event-pokemon-item');
+  if (!item || e.target !== item) return;
+  e.preventDefault();
+  item.click();
 });
 
 /* ══════════════ ACCUEIL : raccourcis ══════════════ */
@@ -707,6 +718,8 @@ async function initAdmin() {
   } else {
     $('admin-login').style.display = '';
     $('admin-dashboard').style.display = 'none';
+    // Connexion locale desactivee cote serveur : seul le bouton SSO reste
+    $('admin-login').classList.toggle('sso-only', data.localLogin === false);
   }
 }
 
@@ -772,26 +785,26 @@ async function loadUsersList() {
   const res = await fetch('/api/admin/users');
   if (!res.ok) {
     const d = await res.json().catch(() => ({}));
-    $('users-list').innerHTML = `<p style="color:var(--red)">Error ${res.status}: ${d.error || 'Failed to load users'}</p>`;
+    $('users-list').innerHTML = `<p style="color:var(--red)">Error ${res.status}: ${esc(d.error || 'Failed to load users')}</p>`;
     return;
   }
   const users = await res.json();
   const roleLabel = r => r === 'admin' ? 'Administrator' : 'Manager';
   $('users-list').innerHTML = users.map(u => `
-    <div class="admin-user-row" data-uid="${u.id}">
+    <div class="admin-user-row" data-uid="${esc(u.id)}">
       <div class="aur-info">
-        <span class="aur-name">${u.username}</span>
+        <span class="aur-name">${esc(u.username)}</span>
         <span class="aur-role ${u.role === 'admin' ? 'role-admin' : 'role-manager'}">${roleLabel(u.role)}</span>
       </div>
       <div class="aur-actions">
-        <button class="btn btn-sm btn-outline edit-user-btn" data-id="${u.id}" data-username="${u.username}" data-role="${u.role}">Edit</button>
-        <button class="btn btn-sm btn-danger delete-user-btn" data-id="${u.id}" data-username="${u.username}">Delete</button>
+        <button class="btn btn-sm btn-outline edit-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}" data-role="${esc(u.role)}">Edit</button>
+        <button class="btn btn-sm btn-danger delete-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}">Delete</button>
       </div>
-      <div class="aur-edit-form" id="edit-form-${u.id}" style="display:none">
+      <div class="aur-edit-form" id="edit-form-${esc(u.id)}" style="display:none">
         <div class="aur-edit-fields">
           <div class="form-group">
             <label>Username</label>
-            <input type="text" class="ef-username" value="${u.username}" autocomplete="off" />
+            <input type="text" class="ef-username" value="${esc(u.username)}" autocomplete="off" />
           </div>
           <div class="form-group">
             <label>New Password <span style="color:var(--text-muted);font-size:.8em">(leave empty to keep)</span></label>
@@ -805,8 +818,8 @@ async function loadUsersList() {
             </select>
           </div>
           <div class="aur-edit-actions">
-            <button class="btn btn-sm btn-primary save-edit-btn" data-id="${u.id}">Save</button>
-            <button class="btn btn-sm btn-outline cancel-edit-btn" data-id="${u.id}">Cancel</button>
+            <button class="btn btn-sm btn-primary save-edit-btn" data-id="${esc(u.id)}">Save</button>
+            <button class="btn btn-sm btn-outline cancel-edit-btn" data-id="${esc(u.id)}">Cancel</button>
           </div>
           <div class="ef-error alert alert-error" style="display:none"></div>
         </div>
@@ -955,18 +968,18 @@ function renderAdminEvents(events) {
   if (!events.length) { container.innerHTML = '<p style="color:var(--text-muted)">No events yet.</p>'; return; }
 
   container.innerHTML = events.map((ev, idx) => `
-    <div class="admin-event-row" data-event-id="${ev.id}">
+    <div class="admin-event-row" data-event-id="${esc(ev.id)}">
       <div class="admin-event-top">
         <div class="admin-event-info">
-          <div class="aei-name">${ev.name_en}</div>
-          <div class="aei-slug">${ev.slug}</div>
+          <div class="aei-name">${esc(ev.name_en)}</div>
+          <div class="aei-slug">${esc(ev.slug)}</div>
         </div>
         <div class="admin-event-dates">
-          <label>${i18n.t('ev_start')}<input type="date" class="ev-date" data-field="starts_at" value="${ev.starts_at || ''}" /></label>
-          <label>${i18n.t('ev_end')}<input type="date" class="ev-date" data-field="ends_at" value="${ev.ends_at || ''}" /></label>
+          <label>${i18n.t('ev_start')}<input type="date" class="ev-date" data-field="starts_at" value="${esc(ev.starts_at)}" /></label>
+          <label>${i18n.t('ev_end')}<input type="date" class="ev-date" data-field="ends_at" value="${esc(ev.ends_at)}" /></label>
         </div>
         <div class="admin-event-actions">
-          <button class="btn btn-sm btn-danger delete-event-btn" data-id="${ev.id}">
+          <button class="btn btn-sm btn-danger delete-event-btn" data-id="${esc(ev.id)}">
             ${i18n.t('btn_delete')}
           </button>
         </div>
@@ -974,16 +987,16 @@ function renderAdminEvents(events) {
       <div class="admin-event-pokemon">
         ${(ev.pokemon || []).map(p => `
           <div class="admin-pokemon-chip">
-            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" />
-            <span>${p.name}</span>
-            <button class="remove-pokemon-btn" data-pid="${p.id}" data-eid="${ev.id}">✕</button>
+            <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="" />
+            <span>${esc(p.name)}</span>
+            <button type="button" class="remove-pokemon-btn" data-pid="${esc(p.id)}" data-eid="${esc(ev.id)}" aria-label="${esc(i18n.t('btn_delete'))} ${esc(p.name)}">✕</button>
           </div>
         `).join('')}
       </div>
-      <div class="add-pokemon-form" data-event-id="${ev.id}">
-        <input type="text" class="add-pokemon-input" placeholder="${i18n.t('add_pokemon_placeholder')}" />
+      <div class="add-pokemon-form" data-event-id="${esc(ev.id)}">
+        <input type="text" class="add-pokemon-input" placeholder="${esc(i18n.t('add_pokemon_placeholder'))}" aria-label="${esc(i18n.t('add_pokemon_placeholder'))} (${esc(ev.name_en)})" />
         <div class="add-pokemon-dropdown" style="display:none"></div>
-        <button class="btn btn-sm btn-primary add-pokemon-btn" data-eid="${ev.id}">${i18n.t('btn_add_pokemon')}</button>
+        <button class="btn btn-sm btn-primary add-pokemon-btn" data-eid="${esc(ev.id)}">${i18n.t('btn_add_pokemon')}</button>
       </div>
     </div>
   `).join('');
@@ -1037,10 +1050,10 @@ function renderAdminEvents(events) {
         const data = await res.json();
         if (!data.length) { dropdown.style.display = 'none'; return; }
         dropdown.innerHTML = data.slice(0, 8).map(p => `
-          <div class="search-item" data-id="${p.id}">
-            <img width="40" height="30" src="${miniIcon(p.id)}" alt="${p.name}" loading="lazy" />
-            <span class="search-item-id">#${String(p.id).padStart(3,'0')}</span>
-            <span class="search-item-name">${p.name}</span>
+          <div class="search-item" data-id="${esc(p.id)}">
+            <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(p.name)}" loading="lazy" />
+            <span class="search-item-id">#${esc(String(p.id).padStart(3,'0'))}</span>
+            <span class="search-item-name">${esc(p.name)}</span>
           </div>
         `).join('');
         dropdown.style.display = '';
@@ -1077,7 +1090,7 @@ function renderAdminEvents(events) {
 /* ══════════════ HISTORY ══════════════ */
 const HISTORY_KEY = 'catchCalc_history';
 const HISTORY_MAX = 15;
-let historyData = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+let historyData = (() => { try { const h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); return Array.isArray(h) ? h : []; } catch { return []; } })();   // stockage bloque ou corrompu
 
 const historyPanel = $('history-panel');
 const historyListEl = $('history-list');
@@ -1101,7 +1114,7 @@ historyPanel.addEventListener('click', e => {
 // Clear history
 $('history-clear-btn').addEventListener('click', () => {
   historyData = [];
-  localStorage.removeItem(HISTORY_KEY);
+  try { localStorage.removeItem(HISTORY_KEY); } catch { /* stockage indisponible */ }
   renderHistory();
 });
 
@@ -1123,7 +1136,7 @@ function addToHistory(pokemon, bestResult) {
   // Cap at max
   if (historyData.length > HISTORY_MAX) historyData.length = HISTORY_MAX;
 
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(historyData));
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyData)); } catch { /* stockage indisponible */ }
   renderHistory();
 }
 
@@ -1139,15 +1152,15 @@ function renderHistory() {
       const pct = h.bestBallPercent >= 1 ? '100%' : (h.bestBallPercent * 100).toFixed(1) + '%';
       badgeHtml = `
         <div class="history-item-badge">
-          <img src="${Calc.ballSprite(h.bestBallKey)}" alt="${h.bestBallKey}" />
+          <img src="${esc(Calc.ballSprite(h.bestBallKey))}" alt="${esc(i18n.ballName ? i18n.ballName(h.bestBallKey) : h.bestBallKey)}" />
           <span>${pct}</span>
         </div>`;
     }
     return `
-      <div class="history-item" data-id="${h.id}">
-        <img class="history-item-sprite" src="${miniIcon(h.id)}" width="40" height="30" alt="${h.name}" />
+      <div class="history-item" data-id="${esc(h.id)}">
+        <img class="history-item-sprite" src="${miniIcon(esc(h.id))}" width="40" height="30" alt="" />
         <div class="history-item-info">
-          <div class="history-item-name">${h.name}</div>
+          <div class="history-item-name">${esc(h.name)}</div>
           ${badgeHtml}
         </div>
       </div>`;

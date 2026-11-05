@@ -26,7 +26,7 @@
   --green: #22c55e;
   --yellow: #eab308;
   --red: #b50e0e;
-  --purple: #a855f7;
+  --purple: #b47cf9;   /* 5.7:1 sur pastille teintee (etait 4.3) */
   --orange: #f97316;
   --shadow: 0 4px 24px rgba(0,0,0,0.5);
   --glow: 0 0 20px rgba(var(--accent-rgb),0.18);
@@ -55,13 +55,13 @@
   --accent2: #b36b00;
   --accent-glow: rgba(var(--accent-rgb),0.1);
   --text: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #526073;   /* contrastes AA (4.5:1) sur --bg, --card et pastilles teintees */
   --text-dim: #475569;
-  --green: #16a34a;
-  --yellow: #ca8a04;
-  --red: #dc2626;
-  --purple: #7c3aed;
-  --orange: #ea580c;
+  --green: #166534;
+  --yellow: #854d0e;
+  --red: #b91c1c;
+  --purple: #6d28d9;
+  --orange: #9a3412;
   --shadow: 0 4px 16px rgba(0,0,0,0.12);
   --glow: 0 0 16px rgba(var(--accent-rgb),0.15);
   --slider-track: #cbd5e1;
@@ -232,6 +232,7 @@ a { color: var(--accent); text-decoration: none; }
 /* ══════════════ MAIN ══════════════ */
 main {
   grid-column: 2;
+  min-width: 0;          /* un contenu large ne doit pas elargir la colonne (debordement a 320 px) */
   width: 100%;
   padding: 2rem 1.5rem;
 }
@@ -1158,6 +1159,7 @@ input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--accent);
   .layout-grid {
     grid-template-columns: 1fr;
   }
+  main { grid-column: 1; }   /* sinon colonne implicite dimensionnee au contenu : page plus large que l'ecran */
 
   .history-panel {
     position: fixed;
@@ -1261,6 +1263,7 @@ footer {
 
 .admin-login-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--text-dim); font-size: 0.8rem; margin: 0.75rem 0; }
 .admin-login-divider::before, .admin-login-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+.sso-only .admin-login-divider, .sso-only .form-group, .sso-only #login-btn, .sso-only #login-error { display: none !important; }
 
 /* Badge de version (pied de page) → /changelog */
 .ver-badge { color: var(--text-dim); }

@@ -2,8 +2,9 @@ const initSqlJs = require('sql.js');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const { hashPassword } = require('../lib/passwords');
 
-const DB_PATH = path.join(__dirname, 'catchrates.db');
+const DB_PATH = process.env.CATCHR_DB_PATH || path.join(__dirname, 'catchrates.db');
 const DATA_PATH = path.join(__dirname, '..', 'pokemon_data.json');
 const TYPES_PATH = path.join(__dirname, 'pokemon_types.json');
 
@@ -17,6 +18,11 @@ function getGeneration(id) {
 }
 
 (async () => {
+  // Le seed RECREE la base de zero : on refuse d'ecraser une base existante (donnees de prod) sans --force.
+  if (fs.existsSync(DB_PATH) && !process.argv.includes('--force')) {
+    console.error(`Base existante (${DB_PATH}) : le seed l'ecraserait. Sauvegardez-la puis relancez avec : npm run seed -- --force`);
+    process.exit(1);
+  }
   const SQL = await initSqlJs();
   const db = new SQL.Database();
 
@@ -104,10 +110,11 @@ function getGeneration(id) {
   insertBall.free();
   console.log('Inserted Pokéballs.');
 
-  // Seed admin user (SHA-256 of 'admin123')
-  const passwordHash = crypto.createHash('sha256').update('admin123').digest('hex');
-  db.run('INSERT OR IGNORE INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', ['naerod', passwordHash, 'admin']);
-  console.log('Admin user created (naerod / admin123).');
+  // Compte local de secours (desactive cote serveur sauf ALLOW_LOCAL_ADMIN=1) : mot de passe fourni
+  // par ADMIN_PASSWORD, sinon aleatoire et affiche une seule fois. Jamais de mot de passe connu.
+  const adminPassword = process.env.ADMIN_PASSWORD || crypto.randomBytes(12).toString('base64url');
+  db.run('INSERT OR IGNORE INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)', ['naerod', hashPassword(adminPassword), 'admin']);
+  console.log(process.env.ADMIN_PASSWORD ? 'Admin user created (naerod, password from ADMIN_PASSWORD).' : `Admin user created (naerod / ${adminPassword}) - note it now, it is not stored.`);
 
   // Seed events
   db.run("INSERT OR IGNORE INTO events (slug, name_en, name_fr, active, sort_order) VALUES (?, ?, ?, ?, ?)",

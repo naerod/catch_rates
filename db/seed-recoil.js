@@ -10,7 +10,7 @@ const initSqlJs = require('sql.js');
 const path = require('path');
 const fs = require('fs');
 
-const DB_PATH  = path.join(__dirname, 'catchrates.db');
+const DB_PATH  = process.env.CATCHR_DB_PATH || path.join(__dirname, 'catchrates.db');
 const CSV_PATH = path.join(__dirname, 'pokemon_recoil_moves_gen_1_to_5_and_6.csv');
 
 (async () => {
