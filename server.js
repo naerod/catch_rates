@@ -130,13 +130,20 @@ async function oidcEndpoints() {
 }
 const APP_ORIGIN = new URL(OIDC_REDIRECT_URI).origin;                  // prod ou preprod, selon l'environnement
 
+// Retour apres connexion : uniquement un chemin du site (pas d'URL absolue, ni //hote, ni /\hote) -> pas d'open redirect.
+function safeRedirect(rd) {
+  if (typeof rd !== 'string' || !rd.startsWith('/') || rd.startsWith('//') || rd.startsWith('/\\')) return '/';
+  if (/[\u0000-\u001f\\]/.test(rd)) return '/';
+  return rd;
+}
+
 app.get('/auth/login', async (req, res) => {
   const state        = crypto.randomBytes(16).toString('hex');
   const codeVerifier = crypto.randomBytes(32).toString('base64url');
   const codeChallenge = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
   req.session.oidcState        = state;
   req.session.oidcCodeVerifier = codeVerifier;
-  req.session.oidcRedirect     = req.query.rd || '/';
+  req.session.oidcRedirect     = safeRedirect(req.query.rd);
   const params = new URLSearchParams({
     response_type: 'code', client_id: OIDC_CLIENT_ID,
     redirect_uri: OIDC_REDIRECT_URI, scope: 'openid email profile',
@@ -174,7 +181,7 @@ app.get('/auth/callback', async (req, res) => {
       sub: u.sub, username: u.preferred_username,
       name: u.name, email: u.email, groups: u.groups || [],
     };
-    res.redirect(redirect);
+    res.redirect(safeRedirect(redirect));
   } catch (e) {
     console.error('[OIDC] Callback error:', e.message);
     res.redirect('/');
@@ -475,7 +482,7 @@ async function init() {
   return app;
 }
 
-module.exports = { app, init, getDb: () => db };
+module.exports = { app, init, safeRedirect, getDb: () => db };
 
 if (require.main === module) {
   init().then(() => {
