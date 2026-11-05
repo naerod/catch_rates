@@ -1261,6 +1261,7 @@ footer {
 
 .admin-login-divider { display: flex; align-items: center; gap: 0.75rem; color: var(--text-dim); font-size: 0.8rem; margin: 0.75rem 0; }
 .admin-login-divider::before, .admin-login-divider::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+.sso-only .admin-login-divider, .sso-only .form-group, .sso-only #login-btn, .sso-only #login-error { display: none !important; }
 
 /* Badge de version (pied de page) → /changelog */
 .ver-badge { color: var(--text-dim); }

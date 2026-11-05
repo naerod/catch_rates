@@ -96,17 +96,21 @@ const OIDC_CLIENT_ID  = process.env.OIDC_CLIENT_ID;
 const OIDC_CLIENT_SECRET = process.env.OIDC_CLIENT_SECRET;
 const OIDC_REDIRECT_URI  = process.env.OIDC_REDIRECT_URI || 'https://catchr.naerod.com/auth/callback';
 const CATCHR_GROUPS   = ['catchr-users', 'catchr-event-managers', 'catchr-admins'];
+// Comptes locaux (identifiant / mot de passe) : heritage d'avant le SSO, desactives par defaut.
+// ALLOW_LOCAL_ADMIN=1 pour les reactiver. Le mot de passe d'amorcage historique est toujours refuse.
+const LOCAL_ADMIN = process.env.ALLOW_LOCAL_ADMIN === '1';
+const DEFAULT_PASSWORDS = ['admin123'];
 
 // ─── Auth middleware ───────────────────────────────────────────────────────────
 function requireAuth(req, res, next) {
-  if (req.session?.adminId) return next();
+  if (LOCAL_ADMIN && req.session?.adminId) return next();
   const groups = req.session?.oidcUser?.groups || [];
   if (groups.some(g => ['catchr-event-managers', 'catchr-admins'].includes(g))) return next();
   res.status(401).json({ error: 'Unauthorized' });
 }
 
 function requireAdmin(req, res, next) {
-  if (req.session?.adminRole === 'admin') return next();
+  if (LOCAL_ADMIN && req.session?.adminRole === 'admin') return next();
   if ((req.session?.oidcUser?.groups || []).includes('catchr-admins')) return next();
   res.status(403).json({ error: 'Forbidden' });
 }
@@ -285,10 +289,12 @@ app.get('/api/events/:slug', (req, res) => {
 
 // ─── Admin Auth ────────────────────────────────────────────────────────────────
 app.post('/api/admin/login', (req, res) => {
-  const { username, password } = req.body;
+  if (!LOCAL_ADMIN) return res.status(403).json({ error: 'Local login disabled, use SSO' });
+  const { username, password } = req.body || {};
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
   const user = dbGet('SELECT * FROM admin_users WHERE username = ?', [String(username)]);
   if (!user || !verifyPassword(String(password), user.password_hash)) return res.status(401).json({ error: 'Invalid credentials' });
+  if (DEFAULT_PASSWORDS.includes(String(password))) return res.status(403).json({ error: 'Default password refused: reset it (npm run seed or ADMIN_PASSWORD)' });
   if (needsRehash(user.password_hash)) {                                // ancien SHA-256 sans sel -> scrypt
     dbRun('UPDATE admin_users SET password_hash=? WHERE id=?', [hashPassword(String(password)), user.id]);
     saveDb();
@@ -304,10 +310,10 @@ app.post('/api/admin/logout', (req, res) => {
 });
 
 app.get('/api/admin/check', (req, res) => {
-  if (req.session && req.session.adminId) {
-    res.json({ authenticated: true, username: req.session.adminUsername, role: req.session.adminRole });
+  if (LOCAL_ADMIN && req.session && req.session.adminId) {
+    res.json({ authenticated: true, localLogin: true, username: req.session.adminUsername, role: req.session.adminRole });
   } else {
-    res.json({ authenticated: false });
+    res.json({ authenticated: false, localLogin: LOCAL_ADMIN });
   }
 });
 
