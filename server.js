@@ -18,7 +18,14 @@ function saveDb() {
   const data = db.export();
   const tmp = `${DB_PATH}.tmp-${process.pid}`;
   fs.writeFileSync(tmp, Buffer.from(data));
-  fs.renameSync(tmp, DB_PATH);
+  try {
+    fs.renameSync(tmp, DB_PATH);
+  } catch (e) {
+    // Fichier monte seul dans un conteneur (bind mount) ou autre volume : rename impossible -> ecriture directe
+    if (!['EBUSY', 'EXDEV', 'EPERM'].includes(e.code)) throw e;
+    fs.writeFileSync(DB_PATH, Buffer.from(data));
+    fs.rmSync(tmp, { force: true });
+  }
 }
 
 function dbAll(sql, params = []) {
