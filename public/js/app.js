@@ -707,6 +707,8 @@ async function initAdmin() {
   } else {
     $('admin-login').style.display = '';
     $('admin-dashboard').style.display = 'none';
+    // Connexion locale desactivee cote serveur : seul le bouton SSO reste
+    $('admin-login').classList.toggle('sso-only', data.localLogin === false);
   }
 }
 
