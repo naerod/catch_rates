@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.21.1",
+      "date": "2026-11-09",
+      "title": { "fr": "Event : boutons pleine largeur", "en": "Event: full-width buttons" },
+      "fr": ["Les boutons d'event occupent toute la largeur.", "Les guides de l'event choisi s'affichent dans une section à son nom, au même niveau que Guides et Event ; elle change avec l'event et disparaît quand tout est replié."],
+      "en": ["Event buttons now span the full width.", "The chosen event's guides appear in a section named after it, at the same level as Guides and Event; it follows the selected event and disappears when everything is collapsed."]
+    },
+    {
       "v": "3.21.0",
       "date": "2026-11-09",
       "title": { "fr": "Event : un bouton par event", "en": "Event: one button per event" },

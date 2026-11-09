@@ -47,9 +47,9 @@
 .money-menu { display: flex; flex-direction: column; gap: 2rem; }
 .money-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 470px)); gap: 0.8rem; }
 /* Sous-section Event : boutons qui deplient les guides de chaque event */
-.mev-tabs { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.8rem; }
-.mev-tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 0.9rem; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--card); color: var(--text); font: 700 1rem var(--font-head); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-.mev-tab > .material-symbols-outlined:first-child { color: var(--accent); }
+.mev-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0.8rem; }
+.mev-tab { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 1.1rem 1rem; font-size: 1.2rem !important; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--card); color: var(--text); font: 700 1rem var(--font-head); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.mev-tab > .material-symbols-outlined:first-child { color: var(--accent); font-size: 32px; }
 .mev-tab > .material-symbols-outlined:last-child { transition: transform 0.2s; }
 .mev-tab:hover, .mev-tab[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-glow); }
 .mev-tab[aria-expanded="true"] > .material-symbols-outlined:last-child { transform: rotate(180deg); }

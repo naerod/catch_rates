@@ -223,18 +223,24 @@ const Money = (() => {
     return tags.length ? `<span class="money-tags">${tags.join('')}</span>` : '';
   };
 
+  const methodCard = m => `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`;
+  /* Section des guides de l'event ouvert : meme niveau que Guides et Event, absente tant qu'aucun event n'est choisi */
+  function eventGuides(sorted) {
+    if (!openEvent) return '';
+    const list = sorted.filter(m => m.event === openEvent);
+    return `<h2 class="money-section-title">${esc(t('mev_' + openEvent))}</h2>` +
+      (list.length ? `<div class="money-grid">${list.map(methodCard).join('')}</div>` : `<p class="mev-empty">${icon('hourglass_empty')}${esc(t('mev_empty'))}</p>`);
+  }
   function menu(animate) {
     const el = $('money-menu');
     const first = new Map([...el.querySelectorAll('.money-item')].map(c => [c.dataset.id, c.getBoundingClientRect()]));
     const sorted = [...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id));        // tri stable : favoris d'abord
-    const cards = list => list.map(m =>
-      `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
+    const cards = list => list.map(methodCard).join('');
     const guides = cards(sorted.filter(m => !m.section));
-    const events = `<div class="mev-tabs">${EVENTS.map(e => `<button type="button" class="mev-tab" data-event="${e.id}" aria-expanded="${openEvent === e.id}" aria-controls="mev-${e.id}">${icon(e.icon)}<span>${esc(t('mev_' + e.id))}</span>${icon('expand_more')}</button>`).join('')}</div>` +
-      EVENTS.map(e => { const list = sorted.filter(m => m.event === e.id);
-        return `<div class="mev-panel" id="mev-${e.id}"${openEvent === e.id ? '' : ' hidden'}>${list.length ? `<div class="money-grid">${cards(list)}</div>` : `<p class="mev-empty">${icon('hourglass_empty')}${esc(t('mev_empty'))}</p>`}</div>`; }).join('');
+    const events = `<div class="mev-tabs">${EVENTS.map(e => `<button type="button" class="mev-tab" data-event="${e.id}" aria-expanded="${openEvent === e.id}" aria-controls="mev-section">${icon(e.icon)}<span>${esc(t('mev_' + e.id))}</span>${icon('expand_more')}</button>`).join('')}</div>`;
     el.innerHTML = `<section class="money-section"><h2 class="money-section-title">${esc(t('money_guides'))}</h2><div class="money-grid">${guides}</div></section>` +
-      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2>${events}</section>`;
+      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2>${events}</section>` +
+      `<section class="money-section" id="mev-section"${openEvent ? '' : ' hidden'}>${eventGuides(sorted)}</section>`;
     if (!animate) return;
     el.querySelectorAll('.money-item').forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
       const a = first.get(c.dataset.id), b = c.getBoundingClientRect();
@@ -445,8 +451,8 @@ const Money = (() => {
       const ev = e.target.closest('[data-event]'); if (!ev) return;
       openEvent = openEvent === ev.dataset.event ? null : ev.dataset.event;
       $('money-menu').querySelectorAll('[data-event]').forEach(x => x.setAttribute('aria-expanded', x.dataset.event === openEvent));
-      $('money-menu').querySelectorAll('.mev-panel').forEach(p => { p.hidden = p.id !== 'mev-' + openEvent; });
-      if (openEvent) $('mev-' + openEvent).animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'ease-out' });
+      const sec = $('mev-section'); sec.innerHTML = eventGuides([...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id))); sec.hidden = !openEvent;
+      if (openEvent) sec.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'ease-out' });
     });
     $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
     const panel = $('money-charm');
