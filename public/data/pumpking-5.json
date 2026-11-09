@@ -1,0 +1,259 @@
+{
+  "_comment": "Pumpking Hard Mode, 5 Pokémon, peu d'objets. Tableau : doc stratégie 2026 (Ttar Abri T1, Hydreigon Colère T3). Sets : PokePaste JinxedBoon. Variante proche : feuille CNcl. Textes : {en, fr}. Jetons : {mon}, {i:objet}, {m:attaque}, {s:N}.",
+  "charm": false,
+  "credits": {
+    "en": "5-Pokémon low-item line. Builds by JinxedBoon. Turn chart: Tyranitar Protects on turn 1 so Leaf Storm cannot pop the balloon; Hydreigon Outrages on turn 3. Original author unconfirmed.",
+    "fr": "Ligne 5 Pokémon, peu d'objets. Sets de JinxedBoon. Tableau : Tyranocif fait Abri au tour 1 pour que Tempête Verte ne crève pas le ballon ; Trioxhydre fait Colère au tour 3. Auteur d'origine non confirmé."
+  },
+  "source": "https://youtu.be/vBsp-ZxMhPY",
+  "links": [
+    { "href": "https://pokepast.es/9681f891b101eff1", "label": "PokePaste" },
+    { "href": "https://youtu.be/vBsp-ZxMhPY", "label": { "en": "Video", "fr": "Vidéo" } },
+    { "href": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub", "label": "CNcl" }
+  ],
+  "team": ["smeargle", "excadrill", "tyranitar", "krookodile", "hydreigon"],
+  "mons": {
+    "smeargle": { "dex": 235, "en": "Smeargle", "fr": "Queulorior" },
+    "excadrill": { "dex": 530, "en": "Excadrill", "fr": "Minotaupe" },
+    "tyranitar": { "dex": 248, "en": "Tyranitar", "fr": "Tyranocif" },
+    "krookodile": { "dex": 553, "en": "Krookodile", "fr": "Crocorible" },
+    "hydreigon": { "dex": 635, "en": "Hydreigon", "fr": "Trioxhydre" }
+  },
+  "slots": [
+    { "mon": "smeargle" },
+    { "mon": "excadrill" },
+    { "mon": "tyranitar" },
+    {
+      "req": {
+        "en": "Any particle. Flying or Levitate: give it an Iron Ball so Earthquake can hit it.",
+        "fr": "N'importe quelle particule. Vol ou Lévitation : une Balle Fer pour que Séisme puisse la toucher."
+      },
+      "short": {
+        "en": "Any · Iron Ball if Flying",
+        "fr": "Libre · Balle Fer si Vol"
+      }
+    },
+    { "mon": "krookodile" },
+    { "mon": "hydreigon" }
+  ],
+  "phases": [
+    {
+      "cols": ["{smeargle} → {s:4} → {hydreigon}", "{excadrill}", "{tyranitar}"],
+      "turns": [
+        [
+          { "who": "smeargle", "en": "{m:protect}", "fr": "{m:protect}" },
+          "{m:swords_dance}",
+          "{m:protect}"
+        ],
+        [
+          {
+            "who": "s4",
+            "en": "Switch to the particle. If it faints, send {hydreigon}.",
+            "fr": "Switch sur la particule. Si elle tombe, envoie {hydreigon}."
+          },
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        ["{m:outrage}", "{m:double_edge}", "{m:assurance}"]
+      ],
+      "notes": [
+        {
+          "en": "Turn 1 {tyranitar} {m:protect} so Leaf Storm cannot hit the balloon.",
+          "fr": "Tour 1 : {tyranitar} fait {m:protect} pour que Tempête Verte ne touche pas le ballon.",
+          "by": "JinxedBoon",
+          "src": "https://pokepast.es/9681f891b101eff1"
+        },
+        {
+          "en": "Turn 3 {m:outrage} is {hydreigon}, covering the Leer that this line no longer uses.",
+          "fr": "Tour 3 : {m:outrage} est {hydreigon}. Ça remplace le Groz'Yeux que cette ligne ne fait plus.",
+          "by": "JinxedBoon",
+          "src": "https://pokepast.es/9681f891b101eff1"
+        }
+      ]
+    },
+    {
+      "cols": ["{smeargle} → {tyranitar}", "{krookodile}", "{hydreigon}"],
+      "turns": [
+        [
+          { "who": "smeargle", "en": "{m:heal_block}", "fr": "{m:heal_block}" },
+          "{m:protect}",
+          "{i:x_attack} → {krookodile}"
+        ],
+        [
+          "{m:taunt}",
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
+      ],
+      "notes": [
+        {
+          "en": "Turn 1 is still {smeargle}. From turn 2 the first slot is {tyranitar}.",
+          "fr": "Le tour 1 est encore {smeargle}. À partir du tour 2, le premier slot est {tyranitar}.",
+          "by": "CNcl",
+          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+        }
+      ]
+    },
+    {
+      "cols": ["{tyranitar}", "{krookodile}", "{excadrill} → {hydreigon}"],
+      "turns": [
+        [
+          "{m:leer}",
+          "{m:leer}",
+          {
+            "who": "excadrill",
+            "en": "{i:revive} the particle, then send {hydreigon}",
+            "fr": "{i:revive} la particule, puis envoie {hydreigon}"
+          }
+        ],
+        ["{m:assurance}", "{m:earthquake}", "{m:assurance}"],
+        ["{m:assurance}", "{m:crunch}", "{m:assurance}"]
+      ],
+      "notes": [
+        {
+          "en": "Send order for this phase: {tyranitar}, then {krookodile}, then {excadrill}.",
+          "fr": "Ordre d'envoi de cette phase : {tyranitar}, puis {krookodile}, puis {excadrill}.",
+          "by": "CNcl",
+          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "when": {
+        "en": "Particle is Flying or has Levitate",
+        "fr": "La particule est Vol ou a Lévitation"
+      },
+      "do": {
+        "en": "Give it an {i:iron_ball} so {m:earthquake} can hit it.",
+        "fr": "Lui donner une {i:iron_ball} pour que {m:earthquake} puisse la toucher."
+      },
+      "by": "JinxedBoon",
+      "src": "https://pokepast.es/9681f891b101eff1"
+    },
+    {
+      "when": {
+        "en": "Particle is very bulky",
+        "fr": "La particule est très tanky"
+      },
+      "do": {
+        "en": "Phase 1: {tyranitar} {m:leer} on turn 1, or {i:x_attack} → {excadrill} if it is extra bulky. Turn 2: {i:x_attack} → {excadrill} instead of {m:assurance}. Turn 3 stays {m:outrage} / {m:double_edge} / {m:assurance}.",
+        "fr": "Phase 1 : {tyranitar} fait {m:leer} au tour 1, ou {i:x_attack} → {excadrill} si elle est encore plus tanky. Tour 2 : {i:x_attack} → {excadrill} à la place d'{m:assurance}. Le tour 3 reste {m:outrage} / {m:double_edge} / {m:assurance}."
+      },
+      "by": "JinxedBoon",
+      "src": "https://pokepast.es/9681f891b101eff1",
+      "mod": true
+    },
+    {
+      "when": {
+        "en": "Leaf Storm pops the Air Balloon",
+        "fr": "Tempête Verte crève le Ballon"
+      },
+      "do": {
+        "en": "Old line, if turn 1 Protect was not used. Phase 1 turn 1: {m:leer} instead of {m:protect}. Turn 2: {m:protect} instead of {m:assurance}. Phase 3 turn 1: heal {tyranitar} instead of {m:leer}.",
+        "fr": "Ancienne ligne, si le tour 1 n'a pas fait Abri. Phase 1 tour 1 : {m:leer} à la place d'{m:protect}. Tour 2 : {m:protect} à la place d'{m:assurance}. Phase 3 tour 1 : soigner {tyranitar} à la place de {m:leer}."
+      },
+      "by": "JinxedBoon",
+      "src": "https://pokepast.es/9681f891b101eff1",
+      "mod": true
+    },
+    {
+      "when": {
+        "en": "CNcl sheet",
+        "fr": "Feuille CNcl"
+      },
+      "do": {
+        "en": "Same idea, older turns: phase 1 turn 1 {tyranitar} {m:leer}, turn 3 {hydreigon} {m:assurance} / {excadrill} {m:earthquake} / {tyranitar} {m:leer}. No {m:outrage} or {m:double_edge}.",
+        "fr": "Même idée, tours plus anciens : phase 1 tour 1 {tyranitar} {m:leer}, tour 3 {hydreigon} {m:assurance} / {excadrill} {m:earthquake} / {tyranitar} {m:leer}. Pas de {m:outrage} ni de {m:double_edge}."
+      },
+      "by": "CNcl",
+      "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub",
+      "mod": true
+    }
+  ],
+  "stock": [
+    { "item": "x_attack", "qty": 1 },
+    { "item": "revive", "qty": 1 }
+  ],
+  "teamGuide": {
+    "types": {
+      "smeargle": ["normal"],
+      "excadrill": ["ground", "steel"],
+      "tyranitar": ["rock", "dark"],
+      "krookodile": ["ground", "dark"],
+      "hydreigon": ["dark", "dragon"]
+    },
+    "start": {
+      "smeargle": "chilan_berry",
+      "excadrill": "figy_berry",
+      "tyranitar": "air_balloon",
+      "krookodile": "soft_sand",
+      "hydreigon": "choice_band"
+    },
+    "attention": [
+      { "icon": "speed", "key": "pk5_att_speed" },
+      { "icon": "shield", "key": "pk5_att_iv" },
+      { "icon": "inventory_2", "key": "pk5_att_items" }
+    ],
+    "mons": {
+      "smeargle": {
+        "level": 78,
+        "ability": "Technician",
+        "nature": "Naive",
+        "evs": "82 HP / 252 Spe",
+        "ivs": "0 HP / 0 SpD / 31 Spe",
+        "moves": [{ "m": "heal_block" }, { "m": "protect" }, null, null]
+      },
+      "excadrill": {
+        "ability": "Sand Force",
+        "nature": "Jolly / Adamant",
+        "evs": "252 Atk / 100 SpD / 100 Spe",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "note": {
+          "en": "SpD is there to live crits.",
+          "fr": "La Déf. Spé. sert à encaisser les critiques."
+        },
+        "moves": [{ "m": "earthquake" }, { "m": "swords_dance" }, { "m": "double_edge" }, null]
+      },
+      "tyranitar": {
+        "ability": "Sand Stream",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "152 Atk / 132 SpD / 224 Spe",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "note": {
+          "en": "SpD lowers the chance Leaf Storm targets it. Final speed must stay above 213.",
+          "fr": "La Déf. Spé. réduit la chance que Tempête Verte le vise. La vitesse finale doit rester au-dessus de 213."
+        },
+        "moves": [{ "m": "assurance" }, { "m": "taunt" }, { "m": "leer" }, { "m": "protect" }]
+      },
+      "krookodile": {
+        "ability": "Moxie",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 140 Def / 52 Spe",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "note": {
+          "en": "Most forgiving on IVs: missing EVs can cover a weak stat. Do not go too low or Pumpking's AI can change.",
+          "fr": "Le plus tolérant en IV : les EV manquants compensent un stat faible. Ne descends pas trop, l'IA de Pumpking peut changer."
+        },
+        "moves": [{ "m": "earthquake" }, { "m": "crunch" }, { "m": "leer" }, { "m": "protect" }]
+      },
+      "hydreigon": {
+        "ability": "Levitate",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "6 HP / 252 Atk / 252 Def",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "note": {
+          "en": "Speed IV floor is 13+. Choice Band: only Assurance and Outrage.",
+          "fr": "Plancher d'IV Vitesse : 13+. Bandeau Choix : seulement Assurance et Colère."
+        },
+        "moves": [{ "m": "assurance" }, { "m": "outrage" }, null, null]
+      }
+    }
+  }
+}

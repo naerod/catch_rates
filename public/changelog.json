@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.23.3",
+      "date": "2026-11-09",
+      "title": { "fr": "Guide Pumpking 5 Pokémon", "en": "Pumpking 5-Pokemon guide" },
+      "fr": ["Nouvelle page Halloween : Pumpking Hard Mode à 5 Pokémon, peu d'objets.", "Sets de JinxedBoon. Tyranocif fait Abri au tour 1, Trioxhydre fait Colère au tour 3.", "Particule Vol ou Lévitation : Balle Fer. Variante si elle est très tanky, et ancienne ligne si Tempête Verte crève le ballon."],
+      "en": ["New Halloween page: Pumpking Hard Mode with 5 Pokemon, few items.", "Builds by JinxedBoon. Tyranitar Protects on turn 1, Hydreigon Outrages on turn 3.", "Flying or Levitate particle: Iron Ball. Variant if it is very bulky, and the old line if Leaf Storm pops the balloon."]
+    },
+    {
       "v": "3.23.2",
       "date": "2026-11-09",
       "title": { "fr": "Guide Pumpking : retours de Skan", "en": "Pumpking guide: Skan's notes" },

@@ -8,6 +8,7 @@ const Money = (() => {
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
     { id: 'pumpking-3', section: 'event', event: 'halloween', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
+    { id: 'pumpking-5', section: 'event', event: 'halloween', icon: 'skull', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
   ];
   /* Sous-section Event : un bouton par event, qui deplie ses guides */
   const EVENTS = [{ id: 'halloween', icon: 'skull' }, { id: 'christmas', icon: 'ac_unit' }, { id: 'lunar', icon: 'bedtime' }];
@@ -49,7 +50,7 @@ const Money = (() => {
   }
   let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs',
-    chesto_berry: 'chesto-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion' };
+    chesto_berry: 'chesto-berry', figy_berry: 'figy-berry', chilan_berry: 'chilan-berry', shuca_berry: 'shuca-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion', air_balloon: 'air-balloon', soft_sand: 'soft-sand', iron_ball: 'iron-ball' };
   const itemImg = it => ITEM_ICON[it] ? `<img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">` : icon('cookie');   // objet d'event sans sprite
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
   function itemBadge(id) {
@@ -345,7 +346,9 @@ const Money = (() => {
     }).join('');
     const exc = `<section class="ev-exc"><h3>${esc(t('pk_exceptions'))}</h3><dl>${data.exceptions.map(x =>
       `<div${x.mod ? ' class="is-mod"' : ''}><dt>${rich(x.when)}</dt><dd><span>${rich(x.do)} ${by(x)}</span>${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
-    return order + phases + exc + `<p class="ev-credits">${esc(txt(data.credits))} <a href="${data.source}" target="_blank" rel="noopener noreferrer">Bilibili</a></p>`;
+    const links = (data.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer">${esc(txt(l.label))}</a>`).join(" · ");
+    const src = links || (data.source ? `<a href="${esc(data.source)}" target="_blank" rel="noopener noreferrer">Bilibili</a>` : "");
+    return order + phases + exc + `<p class="ev-credits">${esc(txt(data.credits))}${src ? " " + src : ""}</p>`;
   }
 
   function stage(animate) {
@@ -363,7 +366,7 @@ const Money = (() => {
     const itemChip = it => `<span class="tp-item">${itemImg(it)}${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
     const order = tg.start ? Object.keys(tg.start) : data.team;
-    const lv = tg.level ?? 100;      // meme ordre que le bandeau de l'en-tete
+    const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
     const mons = order.map(id => {
       const x = (tg.mons || {})[id] || {};
       const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
