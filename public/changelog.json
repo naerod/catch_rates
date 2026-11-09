@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.22.0",
+      "date": "2026-11-09",
+      "title": { "fr": "Guide Pumpking plus lisible, mobile réparé", "en": "Clearer Pumpking guide, mobile fixed" },
+      "fr": ["Guide Pumpking : les trois phases tiennent sur un écran 1080p. Chaque phase est centrée sur trois slots séparés par des barres verticales, avec le titre et les seuils de PV à gauche et les annotations à droite.", "Le sprite du Pokémon qui agit est à côté de chaque action, et ses attaques prennent sa couleur. Moins d'icônes, ordre de l'équipe sur une seule ligne.", "Mobile : les pages Money making et Events n'étaient plus écrasées dans une colonne étroite."],
+      "en": ["Pumpking guide: all three phases fit on a 1080p screen. Each phase is centred on three slots split by vertical bars, with the title and HP line on the left and notes on the right.", "The acting Pokémon's sprite sits next to each action, and its moves take its colour. Fewer icons, party order on a single line.", "Mobile: Money making and Events pages are no longer squeezed into a narrow column."]
+    },
+    {
       "v": "3.21.1",
       "date": "2026-11-09",
       "title": { "fr": "Event : boutons pleine largeur", "en": "Event: full-width buttons" },

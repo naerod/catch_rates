@@ -41,6 +41,7 @@
 
 /* Cette page a besoin de largeur : l'ecran d'une region fait 16:9 */
 .layout-grid.is-wide { grid-template-columns: 1fr minmax(0, 1800px) 1fr; }
+@media (max-width: 680px) { .layout-grid.is-wide { grid-template-columns: 1fr; } }   /* sinon main (colonne 1) est ecrase sur mobile */
 .layout-grid.is-wide .history-panel { display: none; }
 
 /* ── Menu des methodes ── */
@@ -449,56 +450,89 @@ naerod-header { transition: transform 0.25s ease; }
 .home-card.is-add { text-decoration: none; }
 .gym-charm img { width: 26px; height: 26px; }
 
-/* ════════ Guides d'event (phases tour par tour) ════════ */
-.ev-stage { display: grid; gap: 1rem; }
-.ev-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; min-width: 0; }
-.ev-card h3 { display: flex; align-items: center; gap: 0.4rem; font: 700 1.3rem var(--font-head); margin: 0; }
-.ev-card h3 > .material-symbols-outlined { color: var(--accent); }
-.ev-slots, .ev-exc, .ev-credits { grid-column: 1 / -1; }
-.ev-slots ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.6rem; counter-reset: slot; }
-.ev-slots li { counter-increment: slot; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.2rem; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--card-border); }
-.ev-slots li::before { content: counter(slot); font: 700 0.8rem var(--font-head); color: var(--text-muted, var(--text)); opacity: 0.7; }
-.ev-slots li[data-mon] b { color: var(--mon); }
-.ev-slots li.is-particle { border-style: dashed; }
-.ev-slots li.is-particle > .material-symbols-outlined { color: var(--accent); font-size: 30px; height: 30px; }
-.ev-slots li span:not(.material-symbols-outlined) { font-size: 0.8rem; opacity: 0.85; }
-.ev-table-wrap { overflow-x: auto; }
-.ev-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.ev-table th, .ev-table td { padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--card-border); text-align: left; vertical-align: middle; }
-.ev-table thead th { background: var(--lead-bg); font-weight: 600; }
-.ev-table tbody th { width: 2.5rem; text-align: center; color: var(--accent); font: 700 1rem var(--font-head); }
-.ev-table td.has-alt { background: color-mix(in srgb, var(--accent) 6%, transparent); }
-.ev-table .tk-act, .ev-hp .tk-act, .ev-card .gym-note .tk-act, .ev-exc .tk-act { gap: 0.3em; vertical-align: middle; }
-.ev-table td, .ev-table th { line-height: 2.1; }
-.ev-table td:not(:first-child) { width: 31%; }
-.ev-item, .ev-slot { display: inline-flex; align-items: center; gap: 0.25em; white-space: nowrap; vertical-align: middle; }
-.ev-item img { width: 24px; height: 24px; image-rendering: pixelated; }
-.ev-item .material-symbols-outlined, .ev-slot .material-symbols-outlined { font-size: 20px; color: var(--accent); }
-.ev-alt { display: block; line-height: 2; margin-top: 0.35rem; padding: 0.3rem 0.5rem; border-radius: 6px; border: 1px dashed var(--accent); font-size: 0.85rem; }
-.ev-alt > .material-symbols-outlined, .is-mod > .material-symbols-outlined, .is-mod dt > .material-symbols-outlined, .ev-legend .material-symbols-outlined { color: var(--accent); font-size: 18px; }
-.ev-by { display: inline-flex; align-items: center; gap: 0.15em; padding: 0 0.45em; border-radius: 1em; border: 1px solid var(--card-border); font-size: 0.72rem; font-weight: 600; white-space: nowrap; color: inherit; text-decoration: none; vertical-align: middle; }
-a.ev-by:hover { border-color: var(--accent); color: var(--accent); }
-.ev-by .material-symbols-outlined { font-size: 14px; }
-.ev-hp { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin: 0; }
-.ev-hp > .material-symbols-outlined { color: #e5484d; }
-.gym-note.is-mod { border-left: 3px solid var(--accent); padding-left: 0.5rem; }
-.ev-legend { display: flex; align-items: center; gap: 0.3rem; margin: 0; font-size: 0.85rem; opacity: 0.85; }
-.ev-exc dl { margin: 0; display: grid; gap: 0.5rem; }
-.ev-exc dl > div { display: grid; grid-template-columns: minmax(180px, 1fr) 2fr; gap: 0.75rem; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--card-border); }
-.ev-exc dl > div.is-mod { border: 1px dashed var(--accent); }
-.ev-exc dt { font-weight: 700; line-height: 2.1; }
-.ev-exc dt > .material-symbols-outlined { vertical-align: middle; margin-right: 0.3em; }
-.ev-exc dt > .material-symbols-outlined { color: var(--accent); }
-.ev-exc dd { margin: 0; line-height: 2.1; }
-.ev-alt > .material-symbols-outlined { vertical-align: middle; margin-right: 0.3em; }
-.ev-credits { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.85rem; opacity: 0.8; }
-.ev-col { display: none; }
+/* ════════ Guides d'event (phases tour par tour) ════════
+   Une phase tient sur une bande : titre + PV a gauche, 3 slots centres, annotations a droite.
+   Objectif : les 3 phases sur un ecran 1080p. */
+.ev-stage { display: grid; gap: 0.6rem; }
+.ev-stage h3 { margin: 0; font: 700 1.15rem var(--font-head); }
+.ev-mon { color: var(--mon, var(--text)); font-weight: 700; }
+.ev-slot { color: var(--text-muted); white-space: nowrap; }
+.ev-item { display: inline-flex; align-items: center; gap: 0.2em; white-space: nowrap; vertical-align: middle; }
+.ev-item img { width: 24px; height: 24px; margin: -4px 0; image-rendering: pixelated; }
+.ev-item .material-symbols-outlined { font-size: 20px; }
+.ev-by { display: inline-block; padding: 0 0.45em; border-radius: 1em; border: 1px solid var(--card-border); font-size: 0.7rem; font-weight: 600; line-height: 1.5; white-space: nowrap; color: var(--text-muted); text-decoration: none; vertical-align: 0.1em; }
+a.ev-by { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+a.ev-by:hover { border-color: var(--accent); }
+
+/* Ordre de l'equipe : une seule ligne */
+.ev-order { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 0.45rem 0.8rem; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); }
+.ev-order ol { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.4rem; margin: 0; padding: 0; list-style: none; min-width: min(100%, 640px); }
+.ev-order li { display: flex; align-items: center; gap: 0.35rem; min-width: 0; padding: 0.1rem 0.5rem; border: 1px solid var(--card-border); border-radius: 8px; font-size: 0.85rem; }
+.ev-order li > :last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ev-order li.is-particle { border-style: dashed; color: var(--text-muted); cursor: help; }
+.ev-order li.is-particle > .material-symbols-outlined { color: var(--accent); font-size: 20px; }
+.ev-n { color: var(--accent); font: 700 0.95rem var(--font-head); }
+.ev-legend { margin-left: auto; font-size: 0.8rem; }
+
+/* Bande d'une phase */
+.ev-phase { display: grid; grid-template-columns: minmax(0, 1fr) minmax(640px, 820px) minmax(0, 1fr); gap: 1.2rem; align-items: start; padding: 0.55rem 0.8rem; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); }
+.ev-left { display: grid; gap: 0.5rem; }
+.ev-left h3 { font-size: 1.35rem; }
+.ev-hp ul { display: flex; flex-wrap: wrap; gap: 0.2rem 0.8rem; margin: 0.15rem 0 0; padding: 0; list-style: none; }
+.ev-hp li { display: flex; align-items: center; gap: 0.2rem; }
+.ev-hp b { color: var(--mon); font: 700 1rem var(--font-head); }
+
+/* Tableau : 3 slots separes par des barres verticales */
+.ev-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.92rem; }
+.ev-c-turn { width: 2.6rem; }
+.ev-table th, .ev-table td { padding: 0.12rem 0.55rem; text-align: left; vertical-align: middle; }
+.ev-table thead th { padding-bottom: 0.3rem; font-weight: 600; border-bottom: 1px solid var(--card-border); }
+.ev-table tbody tr + tr > * { border-top: 1px solid color-mix(in srgb, var(--card-border) 35%, transparent); }
+.ev-table th:nth-child(n+2), .ev-table td { border-left: 2px solid var(--card-border); }
+.ev-table tbody th { color: var(--accent); font: 700 0.95rem var(--font-head); text-align: center; }
+.ev-cell { display: flex; align-items: center; gap: 0.4rem; min-height: 32px; }
+.ev-act { min-width: 0; line-height: 1.35; }
+.ev-act .ev-move, .ev-act .ev-item b { color: var(--mon, var(--text)); }
+.ev-actor { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 40px; }
+.ev-actor.is-particle .material-symbols-outlined { color: var(--accent); font-size: 22px; }
+.ev-table thead .sprite-box { flex: none; }
+.ev-alt-mark { display: inline-flex; vertical-align: middle; margin-left: 0.3rem; color: var(--accent); cursor: help; }
+.ev-alt-mark .material-symbols-outlined { font-size: 18px; }
+
+/* Annotations a droite */
+.ev-right { display: grid; gap: 0.35rem; font-size: 0.85rem; line-height: 1.4; }
+.ev-note { margin: 0; padding-left: 0.6rem; border-left: 3px solid var(--card-border); }
+.ev-note.is-mod { border-left: 3px dashed var(--accent); }
+.ev-note.is-warn { border-left-color: var(--red); }
+.ev-turn { color: var(--accent); font-family: var(--font-head); }
+
+/* Imprevus */
+.ev-exc { padding: 0.55rem 0.8rem; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); }
+.ev-exc h3 { margin-bottom: 0.4rem; }
+.ev-exc dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 640px), 1fr)); gap: 0.5rem 1.5rem; font-size: 0.88rem; line-height: 1.45; }
+.ev-exc dl > div { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 0.6rem; padding: 0.3rem 0 0.3rem 0.6rem; border-left: 3px solid var(--card-border); }
+.ev-exc dl > div.is-mod { border-left: 3px dashed var(--accent); }
+.ev-exc dt { font-weight: 700; }
+.ev-exc dd { margin: 0; display: grid; gap: 0.25rem; }
+.ev-credits { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+
+/* Ecran moyen : les annotations passent sous le tableau */
+@media (max-width: 1400px) {
+  .ev-phase { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .ev-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .ev-hp { display: flex; align-items: center; gap: 0.6rem; }
+}
+/* Mobile : un tour = un bloc, une action par ligne */
 @media (max-width: 640px) {
-  .ev-exc dl > div { grid-template-columns: 1fr; gap: 0.3rem; }
-  /* Mobile : un tour = un bloc, chaque action precedee du sprite de son Pokemon */
+  .ev-order { display: grid; gap: 0.4rem; }
+  .ev-order ol { grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
+  .ev-legend { margin-left: 0; }
   .ev-table thead { display: none; }
-  .ev-table tr { display: grid; grid-template-columns: 2rem 1fr; border-bottom: 1px solid var(--card-border); padding: 0.3rem 0; }
+  .ev-table, .ev-table tbody { display: block; }
+  .ev-table tr { display: grid; grid-template-columns: 2.4rem 1fr; padding: 0.25rem 0; }
+  .ev-table tbody tr + tr > * { border-top: 0; }
+  .ev-table tbody tr + tr { border-top: 1px solid var(--card-border); }
   .ev-table tbody th { grid-row: span 3; align-self: center; border: 0; }
-  .ev-table td { display: block; width: auto !important; border: 0; padding: 0.15rem 0.3rem; }
-  .ev-col { display: inline-block; vertical-align: middle; margin-right: 0.4rem; }
+  .ev-table td { border-left: 0; padding: 0.1rem 0.3rem; }
+  .ev-exc dl > div { grid-template-columns: 1fr; gap: 0.2rem; }
 }

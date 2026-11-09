@@ -1156,7 +1156,7 @@ input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--accent);
 
 /* ── History: Mobile overlay ── */
 @media (max-width: 680px) {
-  .layout-grid {
+  .layout-grid, .layout-grid.is-events {   /* is-events gardait 3 colonnes : main ecrase dans la 1re (is-wide : money.css) */
     grid-template-columns: 1fr;
   }
   main { grid-column: 1; }   /* sinon colonne implicite dimensionnee au contenu : page plus large que l'ecran */

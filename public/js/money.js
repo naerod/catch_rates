@@ -309,30 +309,42 @@ const Money = (() => {
       (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div>`) + `</article>`;
   }
 
-  /* ── Guides d'event : phases de combat tour par tour (tableau Pokemon x tours) ── */
+  /* ── Guides d'event : phases de combat tour par tour ──
+     Une phase = titre et seuils de PV a gauche, tableau des 3 slots au centre, annotations a droite.
+     Seul le Pokemon qui agit a un sprite ; ses attaques et objets prennent sa couleur. */
   const txt = v => (v && typeof v === 'object' ? v[i18n.lang] || v.en : v ?? '');
   const rich = v => esc(txt(v)).replace(/\{(?:([mis]):)?(\w+)\}/g, (_, k, id) =>
-    k === 'm' ? `<b class="tk-move">${esc(t('mv_' + id))}</b>`
+    k === 'm' ? `<b class="ev-move">${esc(t('mv_' + id))}</b>`
     : k === 'i' ? `<span class="ev-item">${itemImg(id)}<b>${esc(t('it_' + id))}</b></span>`
-    : k === 's' ? `<span class="ev-slot">${icon('auto_awesome')}${esc(t('pk_slot'))} ${id}</span>`
-    : `<span class="tk-act" data-mon="${id}">${monSprite(id, false)}<b>${esc(name(data.mons, id))}</b></span>`);
-  /* Qui le dit : auteur (+ lien du message source s'il est connu) ; mod = suggestion par rapport a la strategie de base */
-  const by = x => !x?.by ? '' : x.src ? `<a class="ev-by" href="${esc(x.src)}" target="_blank" rel="noopener noreferrer">${icon('link')}${esc(x.by)}</a>` : `<span class="ev-by">${esc(x.by)}</span>`;
-  const alt = x => x?.alt ? `<span class="ev-alt">${icon('tips_and_updates')}<span>${rich(x.alt)}</span>${by(x.alt)}</span>` : '';
-  const cell = x => rich(x) + alt(x);
-  const colMon = c => [...txt(c).matchAll(/\{(\w+)\}/g)].pop()?.[1];   // Pokemon de la colonne (le dernier cite) : repere des cases sur mobile
+    : k === 's' ? `<span class="ev-slot">${esc(t('pk_slot'))} ${id}</span>`
+    : `<b class="ev-mon" data-mon="${id}">${esc(name(data.mons, id))}</b>`);
+  /* Qui le dit : auteur (+ lien du message source s'il est connu) */
+  const by = x => !x?.by ? '' : x.src ? `<a class="ev-by" href="${esc(x.src)}" target="_blank" rel="noopener noreferrer">${esc(x.by)}</a>` : `<span class="ev-by">${esc(x.by)}</span>`;
+  const colMon = c => [...txt(c).matchAll(/\{(\w+)\}/g)].pop()?.[1];   // Pokemon de la colonne : le dernier cite dans l'en-tete
+  const actor = who => /^s\d$/.test(who) ? `<span class="ev-actor is-particle" data-tip="${esc(t('pk_particle'))} · ${esc(t('pk_slot'))} ${who.slice(1)}">${icon('auto_awesome')}</span>` : `<span class="ev-actor">${monSprite(who, false)}</span>`;
+  const note = (x, turn) => `<p class="ev-note${x.mod || turn ? ' is-mod' : ''}${x.warn ? ' is-warn' : ''}">${turn ? `<b class="ev-turn">${turn}</b> ` : ''}${rich(x)} ${by(x)}</p>`;
+
   function phasesStage() {
-    const slots = `<section class="ev-card ev-slots"><h3>${icon('format_list_numbered')}${esc(t('pk_order'))}</h3><ol>${data.slots.map(s => s.mon
-      ? `<li data-mon="${s.mon}">${monSprite(s.mon, false)}<b>${esc(name(data.mons, s.mon))}</b></li>`
-      : `<li class="is-particle">${icon('auto_awesome')}<b>${esc(t('pk_particle'))}</b><span>${esc(txt(s.req))}</span></li>`).join('')}</ol></section>`;
-    const phases = data.phases.map((p, n) => `<article class="ev-card ev-phase" style="--n:${n}"><h3><span class="gym-num">${n + 1}.</span>${esc(t('pk_phase'))} ${n + 1}</h3>` +
-      `<div class="ev-table-wrap"><table class="ev-table"><thead><tr><th scope="col">${esc(t('pk_turn'))}</th>${p.cols.map(c => `<th scope="col">${rich(c)}</th>`).join('')}</tr></thead>` +
-      `<tbody>${p.turns.map((row, i) => `<tr><th scope="row">${i + 1}</th>${row.map((c, k) => `<td${c?.alt ? ' class="has-alt"' : ''}><span class="ev-col" data-mon="${colMon(p.cols[k])}">${monSprite(colMon(p.cols[k]), false)}</span>${cell(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` +
-      (p.hp ? `<p class="ev-hp">${icon('favorite')}<span class="tp-label">${esc(t('pk_hp_line'))}</span>${Object.entries(p.hp).map(([m, v]) => `<span class="tk-act" data-mon="${m}">${monSprite(m, false)}<b>${esc(v)}</b></span>`).join('')}</p>` : '') +
-      (p.notes || []).map(x => `<p class="gym-note${x.mod ? ' is-mod' : ''}">${icon(x.mod ? 'tips_and_updates' : x.icon)}<span>${rich(x)} ${by(x)}</span></p>`).join('') + '</article>').join('');
-    const exc = `<section class="ev-card ev-exc"><h3>${icon('report')}${esc(t('pk_exceptions'))}</h3><p class="ev-legend">${icon('tips_and_updates')}${esc(t('pk_suggested'))}</p><dl>${data.exceptions.map(x =>
-      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${icon(x.mod ? 'tips_and_updates' : x.icon)}${rich(x.when)}</dt><dd>${rich(x.do)} ${by(x)}${alt(x)}</dd></div>`).join('')}</dl></section>`;
-    return slots + phases + exc + `<p class="ev-credits">${icon('groups')}<span>${esc(txt(data.credits))} <a href="${data.source}" target="_blank" rel="noopener noreferrer">Bilibili</a></span></p>`;
+    const order = `<section class="ev-order"><h3>${esc(t('pk_order'))}</h3><ol>${data.slots.map((x, i) => x.mon
+      ? `<li data-mon="${x.mon}"><b class="ev-n">${i + 1}</b>${monSprite(x.mon, false)}<b class="ev-mon">${esc(name(data.mons, x.mon))}</b></li>`
+      : `<li class="is-particle" data-tip="${esc(t('pk_particle'))}&#10;${esc(txt(x.req))}" tabindex="0"><b class="ev-n">${i + 1}</b>${icon('auto_awesome')}<span>${esc(txt(x.short))}</span></li>`).join('')}</ol>` +
+      `<span class="ev-legend"><span class="ev-note is-mod">${esc(t('pk_suggested'))}</span></span></section>`;
+    const phases = data.phases.map((p, n) => {
+      const mons = p.cols.map(colMon);
+      const alts = [];
+      const rows = p.turns.map((row, i) => `<tr><th scope="row">T${i + 1}</th>${row.map((c, k) => {
+        const who = c?.who || mons[k];
+        if (c?.alt) alts.push(note(c.alt, `T${i + 1}`));
+        return `<td data-mon="${who}"><span class="ev-cell">${actor(who)}<span class="ev-act">${rich(c)}${c?.alt ? `<span class="ev-alt-mark" data-tip="${esc(t('pk_suggested'))}" tabindex="0">${icon('tips_and_updates')}</span>` : ''}</span></span></td>`;
+      }).join('')}</tr>`).join('');
+      const hp = p.hp ? `<div class="ev-hp"><span class="tp-label">${esc(t('pk_hp_line'))}</span><ul>${Object.entries(p.hp).map(([m, v]) => `<li data-mon="${m}">${monSprite(m, false)}<b>${esc(v)}</b></li>`).join('')}</ul></div>` : '';
+      return `<article class="ev-phase" style="--n:${n}"><div class="ev-left"><h3><span class="gym-num">${n + 1}.</span>${esc(t('pk_phase'))} ${n + 1}</h3>${hp}</div>` +
+        `<table class="ev-table"><colgroup><col class="ev-c-turn"><col><col><col></colgroup><thead><tr><th scope="col"></th>${p.cols.map((c, k) => `<th scope="col" data-mon="${mons[k]}"><span class="ev-cell">${monSprite(mons[k], false)}<span>${rich(c)}</span></span></th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>` +
+        `<div class="ev-right">${(p.notes || []).map(x => note(x)).join('')}${alts.join('')}</div></article>`;
+    }).join('');
+    const exc = `<section class="ev-exc"><h3>${esc(t('pk_exceptions'))}</h3><dl>${data.exceptions.map(x =>
+      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${rich(x.when)}</dt><dd><span>${rich(x.do)} ${by(x)}</span>${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
+    return order + phases + exc + `<p class="ev-credits">${esc(txt(data.credits))} <a href="${data.source}" target="_blank" rel="noopener noreferrer">Bilibili</a></p>`;
   }
 
   function stage(animate) {
