@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.20.2",
+      "date": "2026-11-09",
+      "title": { "fr": "Barre du haut : même fond que le site", "en": "Top bar: same background as the site" },
+      "fr": ["La barre du haut reprend exactement la couleur de fond du site, en thème sombre comme en clair."],
+      "en": ["The top bar now uses exactly the site background colour, in both dark and light themes."]
+    },
+    {
       "v": "3.20.1",
       "date": "2026-11-09",
       "title": { "fr": "Money making épuré", "en": "Cleaner Money making" },

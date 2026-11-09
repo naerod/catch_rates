@@ -9,7 +9,7 @@
 :root,
 [data-theme="dark"] {
   --bg: #000000;
-  --topbar: #000104;
+  --topbar: var(--bg);   /* barre = fond du site */
   --bg2: #0d0f10;
   --bg3: #1b1b1b;
   --bg4: #222222;
@@ -42,7 +42,7 @@
 
 /* ── Light theme ── */
 [data-theme="light"] {
-  --topbar: #e2e8f0;
+  --topbar: var(--bg);
   --bg: #f0f4f8;
   --bg2: #e2e8f0;
   --bg3: #d8e4f0;
