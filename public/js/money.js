@@ -7,8 +7,11 @@ const Money = (() => {
   const METHODS = [
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
-    { id: 'pumpking-3', section: 'event', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['HALLOWEEN 2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
+    { id: 'pumpking-3', section: 'event', event: 'halloween', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
   ];
+  /* Sous-section Event : un bouton par event, qui deplie ses guides */
+  const EVENTS = [{ id: 'halloween', icon: 'skull' }, { id: 'christmas', icon: 'ac_unit' }, { id: 'lunar', icon: 'bedtime' }];
+  let openEvent = null;
   const FAVS = 'money.favs';
   const isWip = m => m.wip && location.hostname === 'catchr.naerod.com';   // en construction : visible seulement en preprod
   const $ = id => document.getElementById(id);
@@ -226,9 +229,12 @@ const Money = (() => {
     const sorted = [...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id));        // tri stable : favoris d'abord
     const cards = list => list.map(m =>
       `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
-    const guides = cards(sorted.filter(m => !m.section)), events = cards(sorted.filter(m => m.section === 'event'));
+    const guides = cards(sorted.filter(m => !m.section));
+    const events = `<div class="mev-tabs">${EVENTS.map(e => `<button type="button" class="mev-tab" data-event="${e.id}" aria-expanded="${openEvent === e.id}" aria-controls="mev-${e.id}">${icon(e.icon)}<span>${esc(t('mev_' + e.id))}</span>${icon('expand_more')}</button>`).join('')}</div>` +
+      EVENTS.map(e => { const list = sorted.filter(m => m.event === e.id);
+        return `<div class="mev-panel" id="mev-${e.id}"${openEvent === e.id ? '' : ' hidden'}>${list.length ? `<div class="money-grid">${cards(list)}</div>` : `<p class="mev-empty">${icon('hourglass_empty')}${esc(t('mev_empty'))}</p>`}</div>`; }).join('');
     el.innerHTML = `<section class="money-section"><h2 class="money-section-title">${esc(t('money_guides'))}</h2><div class="money-grid">${guides}</div></section>` +
-      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2><div class="money-grid">${events}</div></section>`;
+      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2>${events}</section>`;
     if (!animate) return;
     el.querySelectorAll('.money-item').forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
       const a = first.get(c.dataset.id), b = c.getBoundingClientRect();
@@ -436,6 +442,11 @@ const Money = (() => {
     });
     $('money-menu').addEventListener('click', e => {
       const b = e.target.closest('[data-method]'); if (b) { push('#money/' + b.dataset.method); enter(b.dataset.method); }
+      const ev = e.target.closest('[data-event]'); if (!ev) return;
+      openEvent = openEvent === ev.dataset.event ? null : ev.dataset.event;
+      $('money-menu').querySelectorAll('[data-event]').forEach(x => x.setAttribute('aria-expanded', x.dataset.event === openEvent));
+      $('money-menu').querySelectorAll('.mev-panel').forEach(p => { p.hidden = p.id !== 'mev-' + openEvent; });
+      if (openEvent) $('mev-' + openEvent).animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: 'ease-out' });
     });
     $('money-back').addEventListener('click', () => (state.view === 'team' ? setView('route') : view(null)));
     const panel = $('money-charm');

@@ -46,6 +46,15 @@
 /* ── Menu des methodes ── */
 .money-menu { display: flex; flex-direction: column; gap: 2rem; }
 .money-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 470px)); gap: 0.8rem; }
+/* Sous-section Event : boutons qui deplient les guides de chaque event */
+.mev-tabs { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.8rem; }
+.mev-tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 0.9rem; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--card); color: var(--text); font: 700 1rem var(--font-head); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.mev-tab > .material-symbols-outlined:first-child { color: var(--accent); }
+.mev-tab > .material-symbols-outlined:last-child { transition: transform 0.2s; }
+.mev-tab:hover, .mev-tab[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-glow); }
+.mev-tab[aria-expanded="true"] > .material-symbols-outlined:last-child { transform: rotate(180deg); }
+.mev-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mev-empty { display: flex; align-items: center; gap: 0.4rem; margin: 0; color: var(--text-muted); }
 .money-section-title { margin-bottom: 0.75rem; font: 700 1.1rem var(--font-head); letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); }
 .mc-live { display: inline-flex; margin-left: 0.4rem; vertical-align: middle; color: var(--green); }
 .mc-live .material-symbols-outlined { font-size: 1em !important; color: var(--green) !important; }
