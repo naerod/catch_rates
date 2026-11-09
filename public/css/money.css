@@ -46,7 +46,10 @@
 
 /* ── Menu des methodes ── */
 .money-menu { display: flex; flex-direction: column; gap: 2rem; }
-.money-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 470px)); gap: 0.8rem; }
+.money-grid { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: 0.8rem; }   /* 4 tuiles egales par ligne ; .is-3 pour des tuiles chargees */
+.money-grid.is-3 { --cols: 3; }
+@media (max-width: 1199px) { .money-grid { --cols: 2; } }
+@media (max-width: 680px) { .money-grid { --cols: 1; } }
 /* Sous-section Event : boutons qui deplient les guides de chaque event */
 .mev-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0.8rem; }
 .mev-tab { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 1.1rem 1rem; font-size: 1.2rem !important; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--card); color: var(--text); font: 700 1rem var(--font-head); cursor: pointer; transition: border-color 0.2s, background 0.2s; }

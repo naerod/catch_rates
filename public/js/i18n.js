@@ -252,7 +252,7 @@ const i18n = {
 document.addEventListener('naerod:langchange', e => i18n.setLang(e.detail.lang));
 
 document.addEventListener('naerod:i18n', e => {
-  const v = translations[i18n.lang]?.[e.detail.key] ?? translations.en?.[e.detail.key];
+  const v = translations[e.detail.lang || i18n.lang]?.[e.detail.key] ?? translations.en?.[e.detail.key];
   if (v) e.detail.text = v;
 });
 
