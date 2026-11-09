@@ -54,12 +54,12 @@
     },
     {
       "req": {
-        "en": "High level, KO'd by Earthquake: no Flying, Levitate, Sturdy or Focus Sash",
-        "fr": "Haut niveau, K.O. par Séisme : ni Vol, ni Lévitation, ni Fermeté, ni Focus Sash"
+        "en": "High level, KO'd by Earthquake: no Sturdy or Focus Sash. Flying or Levitate is fine if it holds an Iron Ball.",
+        "fr": "Haut niveau, K.O. par Séisme : ni Fermeté, ni Focus Sash. Vol ou Lévitation : ça passe avec une Balle Fer."
       },
       "short": {
-        "en": "High level, EQ-killable",
-        "fr": "Haut niveau, tuable par Séisme"
+        "en": "High level, EQ-killable · Iron Ball if Flying",
+        "fr": "Haut niveau, Séisme · Balle Fer si Vol"
       }
     },
     {
@@ -100,7 +100,13 @@
           "{m:earthquake}",
           {
             "en": "{i:hyper_potion} as needed",
-            "fr": "{i:hyper_potion} au besoin"
+            "fr": "{i:hyper_potion} au besoin",
+            "alt": {
+              "en": "Most of the time, one {i:pumpkin_cookie} heals the party: only {honchkrow} and {krookodile} need to be close to full for phase 2. If all three are under 65 %: this turn is {m:assurance} + {m:earthquake} + {i:pumpkin_cookie}. Otherwise this turn is {m:assurance} + {m:earthquake} + {m:helping_hand} → {honchkrow} (one Earthquake KOs on T4). T4: {honchkrow} {i:pumpkin_cookie}, {krookodile} {m:earthquake}, {tropius} a small potion (+60 or +20, watch the HP) — or {m:helping_hand} → {krookodile} if the cookie already puts everyone above 90 %.",
+              "fr": "La plupart du temps, un {i:pumpkin_cookie} soigne toute l'équipe : seuls {honchkrow} et {krookodile} doivent être proches du plein pour la phase 2. Si les trois sont sous 65 % : ce tour est {m:assurance} + {m:earthquake} + {i:pumpkin_cookie}. Sinon ce tour est {m:assurance} + {m:earthquake} + {m:helping_hand} → {honchkrow} (un Séisme achève au T4). T4 : {honchkrow} {i:pumpkin_cookie}, {krookodile} {m:earthquake}, {tropius} une petite potion (+60 ou +20, à surveiller) — ou {m:helping_hand} → {krookodile} si le cookie met déjà tout le monde au-dessus de 90 %.",
+              "by": "Skan",
+              "src": null
+            }
           }
         ],
         [
@@ -154,8 +160,8 @@
             "en": "{m:crunch} ({m:sleep_talk} if asleep)",
             "fr": "{m:crunch} ({m:sleep_talk} si endormi)",
             "alt": {
-              "en": "{m:fling}: same result, also poisons the boss",
-              "fr": "{m:fling} : même résultat, empoisonne en plus le boss",
+              "en": "{m:fling} is better, not the same result. Both hit for about 29 %, but {m:fling} also poisons this turn (exact tick not measured), so it lands around 32 %, plus more damage next turn.",
+              "fr": "{m:fling} est meilleur, ce n'est pas le même résultat. Les deux tapent à environ 29 %, mais {m:fling} empoisonne dès ce tour (le montant exact n'est pas mesuré), donc plutôt autour de 32 %, plus des dégâts au tour suivant.",
               "by": "Skan",
               "src": null
             }
@@ -253,8 +259,8 @@
       "by": "Visos",
       "src": null,
       "alt": {
-        "en": "In P3: {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. At +2 alone, Krookodile can miss a OHKO.",
-        "fr": "En P3 : {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. À +2 seul, Crocorible peut rater un OHKO.",
+        "en": "P3 T3: the risk is a Pumprince next to the Pumpthief. That one takes about 86–90 % and does not die to {m:earthquake} at +2 Attack — then {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. If it is not a Pumprince, {m:assurance} + {m:earthquake} + {i:x_attack} on {krookodile} is fine, except Li'l Pump or Pumprincess ({m:wide_guard} or {i:max_potion}).",
+        "fr": "P3 T3 : le risque, c'est un Pumprince à côté du Pumpthief. Celui-là encaisse environ 86–90 % et ne meurt pas d'un {m:earthquake} à +2 Attaque — alors {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. Si ce n'est pas un Pumprince, {m:assurance} + {m:earthquake} + {i:x_attack} sur {krookodile} passe, sauf Li'l Pump ou Pumprincess ({m:wide_guard} ou {i:max_potion}).",
         "by": "Skan",
         "src": null
       }
@@ -271,9 +277,9 @@
       "by": "Visos",
       "src": null,
       "alt": {
-        "en": "Always do it: priority Vacuum Wave, sometimes aimed at Tropius. Who uses the potion isn't specified: {tropius} instead of Helping Hand keeps Honchkrow's Assurance.",
-        "fr": "Toujours le faire : Onde Vide prioritaire, parfois sur Tropius. Qui donne la potion n'est pas précisé : {tropius} à la place de Coup d'Main garde l'Assurance de Corboss.",
-        "by": "Skan · Claude",
+        "en": "Always {tropius} who uses it: {honchkrow} goes {m:assurance} for the damage, {krookodile} goes {m:earthquake}.",
+        "fr": "C'est toujours {tropius} qui l'utilise : {honchkrow} fait {m:assurance} pour les dégâts, {krookodile} fait {m:earthquake}.",
+        "by": "Skan",
         "src": null
       }
     },
@@ -311,8 +317,21 @@
         "fr": "Particule avec Cursed Body"
       },
       "do": {
-        "en": "Slot 3. Pumprincess spawning on the left: no Trace, safe. On the right: Earthquake can get disabled.",
-        "fr": "Slot 3. Pumprincess à gauche : pas de Trace, aucun risque. À droite : Séisme peut être bloqué."
+        "en": "Slot 3. Pumprincess on the left: no Trace, safe. On the right: she can Trace {s:2} or {s:3}. Tracing Cursed Body only has a chance to disable {m:earthquake} — it is not guaranteed. Keep playing.",
+        "fr": "Slot 3. Pumprincess à gauche : pas de Trace, aucun risque. À droite : elle peut copier le slot 2 ou le slot 3. Copier Cursed Body ne bloque {m:earthquake} que par chance, ce n'est pas garanti. Continue quand même."
+      },
+      "by": "Skan",
+      "src": null,
+      "mod": true
+    },
+    {
+      "when": {
+        "en": "Slot 4 is Flying or has Levitate",
+        "fr": "Le slot 4 est Vol ou a Lévitation"
+      },
+      "do": {
+        "en": "Give it an Iron Ball so {m:earthquake} can hit it.",
+        "fr": "Lui donner une Balle Fer pour que {m:earthquake} puisse le toucher."
       },
       "by": "Skan",
       "src": null,
@@ -342,6 +361,10 @@
     },
     {
       "item": "max_potion",
+      "qty": 1
+    },
+    {
+      "item": "pumpkin_cookie",
       "qty": 1
     }
   ],

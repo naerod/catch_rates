@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.23.2",
+      "date": "2026-11-09",
+      "title": { "fr": "Guide Pumpking : retours de Skan", "en": "Pumpking guide: Skan's notes" },
+      "fr": ["Cursed Body : à droite, Pumprincess peut copier le slot 2 ou le slot 3, et bloquer Séisme n'est qu'une chance.", "Phase 2 tour 2 : Dégommage est meilleur que Mâchouille (poison dès ce tour, environ 32 %, puis au tour suivant).", "Pumprincess en phase 3 : c'est toujours Tropius qui utilise la Potion Max.", "Pumpthief : le vrai risque est un Pumprince à côté (86–90 %, survit à Séisme +2). Sinon Assurance + Séisme + Attaque +.", "Slot 4 Vol ou Lévitation : une Balle Fer le rend touchable par Séisme.", "Phase 1 : Pumpkin Cookie pour soigner l'équipe d'un coup, selon les PV."],
+      "en": ["Cursed Body: on the right, Pumprincess can Trace slot 2 or slot 3, and disabling Earthquake is only a chance.", "Phase 2 turn 2: Fling is better than Crunch (poison this turn, around 32 %, then more next turn).", "Pumprincess in phase 3: Tropius is always the one who uses the Max Potion.", "Pumpthief: the real risk is a Pumprince beside it (86–90 %, survives Earthquake at +2). Otherwise Assurance + Earthquake + X Attack.", "Slot 4 Flying or Levitate: an Iron Ball makes it hittable by Earthquake.", "Phase 1: Pumpkin Cookie to heal the party in one action, depending on HP."]
+    },
+    {
       "v": "3.23.1",
       "date": "2026-11-09",
       "title": { "fr": "Calculateur : calcul des tours inchangé", "en": "Calculator: turn count unchanged" },
