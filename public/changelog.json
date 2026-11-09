@@ -5,8 +5,8 @@
       "v": "3.23.4",
       "date": "2026-11-10",
       "title": { "fr": "Tuiles alignées, connexion corrigée", "en": "Aligned tiles, sign-in fixed" },
-      "fr": ["Money making : quatre tuiles de même taille par ligne.", "Le bouton Connexion / Inscription s'affiche dans la bonne langue et ne change plus de largeur."],
-      "en": ["Money making: four equal tiles per row.", "The Log in / Sign up button shows the right language and no longer changes width."]
+      "fr": ["Money making : quatre tuiles de même taille par ligne.", "Le bouton Connexion / Inscription s'affiche dans la bonne langue et ne change plus de largeur ; la page ne bouge plus quand la barre de défilement apparaît."],
+      "en": ["Money making: four equal tiles per row.", "The Log in / Sign up button shows the right language and no longer changes width; the page no longer shifts when the scrollbar appears."]
     },
     {
       "v": "3.23.3",

@@ -91,7 +91,7 @@
   --nrd-nav-border-current: var(--accent);
 }
 
-html { font-size: 14px; scroll-behavior: smooth; }
+html { font-size: 14px; scroll-behavior: smooth; scrollbar-gutter: stable; }   /* la page ne saute pas quand la barre de defilement apparait */
 
 body {
   background: var(--bg);
