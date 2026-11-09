@@ -539,3 +539,6 @@ a.ev-by:hover { border-color: var(--accent); }
   .ev-table td { border-left: 0; padding: 0.1rem 0.3rem; }
   .ev-exc dl > div { grid-template-columns: 1fr; gap: 0.2rem; }
 }
+/* Largeurs fixes : la ligne ne se decale pas au changement de langue */
+.ev-order > h3 { flex: 0 0 9.5em; }
+.ev-order > .ev-legend { flex: 0 0 15rem; }
