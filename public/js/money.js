@@ -9,12 +9,6 @@ const Money = (() => {
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
     { id: 'pumpking-3', section: 'event', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['HALLOWEEN 2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
   ];
-  /* Raccourcis : sources deja couvertes par les guides (Google Docs et outils), ouvertes directement dans un nouvel onglet. */
-  const LINKS = [
-    { icon: 'description', nameKey: 'gr_name', tag: 'Google Docs', url: 'https://docs.google.com/document/d/1IGXFIme7KwcPT_MAq5ibbzs2nkJkAsoISEDRKQtfWuk/edit' },
-    { icon: 'description', nameKey: 'gr_tech_name', tag: 'Google Docs', url: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit' },
-    { icon: 'calculate', name: 'CharmCalc', tag: 'Tool', url: 'https://c4vv.github.io/CharmCalc/' },
-  ];
   const FAVS = 'money.favs';
   const isWip = m => m.wip && location.hostname === 'catchr.naerod.com';   // en construction : visible seulement en preprod
   const $ = id => document.getElementById(id);
@@ -233,11 +227,8 @@ const Money = (() => {
     const cards = list => list.map(m =>
       `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
     const guides = cards(sorted.filter(m => !m.section)), events = cards(sorted.filter(m => m.section === 'event'));
-    const links = LINKS.map(l =>
-      `<a class="money-card is-link" href="${l.url}" target="_blank" rel="noopener noreferrer">${icon(l.icon)}<span class="mc-text"><span class="mc-name">${esc(l.name || t(l.nameKey))}</span><span class="money-tags"><span class="tag">${esc(l.tag)}</span></span></span>${icon('open_in_new')}</a>`).join('');
     el.innerHTML = `<section class="money-section"><h2 class="money-section-title">${esc(t('money_guides'))}</h2><div class="money-grid">${guides}</div></section>` +
-      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2><div class="money-grid">${events}</div></section>` +
-      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_shortcuts'))}</h2><div class="money-grid">${links}</div></section>`;
+      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2><div class="money-grid">${events}</div></section>`;
     if (!animate) return;
     el.querySelectorAll('.money-item').forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
       const a = first.get(c.dataset.id), b = c.getBoundingClientRect();

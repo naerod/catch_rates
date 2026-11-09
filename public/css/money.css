@@ -47,7 +47,6 @@
 .money-menu { display: flex; flex-direction: column; gap: 2rem; }
 .money-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 470px)); gap: 0.8rem; }
 .money-section-title { margin-bottom: 0.75rem; font: 700 1.1rem var(--font-head); letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); }
-.money-card.is-link { text-decoration: none; }
 .mc-live { display: inline-flex; margin-left: 0.4rem; vertical-align: middle; color: var(--green); }
 .mc-live .material-symbols-outlined { font-size: 1em !important; color: var(--green) !important; }
 .tag.is-wip { color: var(--orange); border-color: var(--orange); }
