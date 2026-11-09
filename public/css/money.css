@@ -542,3 +542,5 @@ a.ev-by:hover { border-color: var(--accent); }
 /* Largeurs fixes : la ligne ne se decale pas au changement de langue */
 .ev-order > h3 { flex: 0 0 9.5em; }
 .ev-order > .ev-legend { flex: 0 0 15rem; }
+.pix-icon { width: 1.6em; height: 1.6em; object-fit: contain; image-rendering: pixelated; flex: none; }
+.money-card .pix-icon, .home-card .pix-icon { width: 40px; height: 40px; }

@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.23.6",
+      "date": "2026-11-10",
+      "title": { "fr": "Logo citrouille pour Halloween", "en": "Pumpkin logo for Halloween" },
+      "fr": ["La tête de mort de l'évènement Halloween est remplacée par une citrouille en pixel art."],
+      "en": ["The Halloween event skull is replaced by a pixel-art pumpkin."]
+    },
+    {
       "v": "3.23.5",
       "date": "2026-11-10",
       "title": { "fr": "Guides : plus de décalage au changement de langue", "en": "Guides: no shift when switching language" },

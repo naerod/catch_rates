@@ -7,18 +7,18 @@ const Money = (() => {
   const METHODS = [
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
-    { id: 'pumpking-3', section: 'event', event: 'halloween', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
-    { id: 'pumpking-5', section: 'event', event: 'halloween', icon: 'skull', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
+    { id: 'pumpking-3', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
+    { id: 'pumpking-5', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
   ];
   /* Sous-section Event : un bouton par event, qui deplie ses guides */
-  const EVENTS = [{ id: 'halloween', icon: 'skull' }, { id: 'christmas', icon: 'ac_unit' }, { id: 'lunar', icon: 'bedtime' }];
+  const EVENTS = [{ id: 'halloween', icon: '/img/event-halloween.png' }, { id: 'christmas', icon: 'ac_unit' }, { id: 'lunar', icon: 'bedtime' }];
   let openEvent = null;
   const FAVS = 'money.favs';
   const isWip = m => m.wip && location.hostname === 'catchr.naerod.com';   // en construction : visible seulement en preprod
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const t = k => i18n.t(k);
-  const icon = n => `<span class="material-symbols-outlined" aria-hidden="true">${n}</span>`;
+  const icon = n => n.startsWith('/') ? `<img class="pix-icon" src="${n}" alt="" aria-hidden="true">` : `<span class="material-symbols-outlined" aria-hidden="true">${n}</span>`;   // chemin = logo pixel art
 
   const datas = {};                                                   // donnees deja chargees, par methode
   let data = null;                                                    // donnees de la methode ouverte
