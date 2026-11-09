@@ -348,8 +348,8 @@ async function updateResults() {
  * Compute avg turns and avg cost for a result card.
  * Formula:
  *   - Quick Ball: turns = avgThrows (no setup, no sleep)
- *   - Others: turns = setup (Soak? + False Swipe if hp<100 + status move if any) + avgThrows + re_sleep_turns
- *             re_sleep_turns (sleep only) = max(0, ceil(avgThrows/2) - 1)
+ *   - Others: turns = 2 (False Swipe + Sleep) + avgThrows + re_sleep_turns
+ *             re_sleep_turns = max(0, ceil(avgThrows/2) - 1)
  *   - cost = r.avgCost (already = avgThrows × ball_price)
  */
 function computeAvgStats(r) {
@@ -361,12 +361,10 @@ function computeAvgStats(r) {
     return { turns: Math.round(avgBalls), cost: r.avgCost };
   }
 
-  // Setup turns only for what the technique really uses: Soak, False Swipe, status move
-  const t = r.technique || {};
-  const asleep        = t.status === 'sleep';
-  const setupTurns    = (t.soak ? 1 : 0) + (t.hp < 100 ? 1 : 0) + (t.status && t.status !== 'none' ? 1 : 0);
-  const reSleepTurns  = asleep ? Math.max(0, Math.ceil(avgBalls / 2) - 1) : 0;
-  const totalTurns    = setupTurns + avgBalls + reSleepTurns;
+  // Standard technique: 2 setup turns (False Swipe + Sleep) + throws + re-sleeps
+  const sleepCycles   = Math.ceil(avgBalls / 2);
+  const reSleepTurns  = Math.max(0, sleepCycles - 1);
+  const totalTurns    = 2 + avgBalls + reSleepTurns;
   return { turns: Math.round(totalTurns), cost: r.avgCost };
 }
 
