@@ -40,6 +40,7 @@ const Money = (() => {
   }
 
   /* ── Rendu des jetons ── */
+  const place = o => (i18n.lang === 'fr' && o.fr) || o.name;   // ville / region : nom francais officiel si dispo
   const name = (table, key) => (table[key] && (table[key][i18n.lang] || table[key].en)) || key;
 
   /* Icones de menu 8 bits (40x30, comme l'equipe et le PC du jeu), affichees en pixels nets. */
@@ -185,8 +186,8 @@ const Money = (() => {
       `<td>${money(r.gain)}</td><td class="net">${r.net == null ? '—' : money(r.net)}</td></tr>`).join('');
     const status = marketState === 'ok' ? `${esc(t('charm_updated'))} ${new Date(market.fetchedAt).toLocaleTimeString(i18n.lang, { hour: '2-digit', minute: '2-digit' })}`
       : marketState === 'error' ? esc(t('charm_error')) : esc(t('charm_loading'));
-    const gyms = data.regions.map(r => `<fieldset class="charm-region"><legend>${esc(r.name)}</legend>` +
-      r.gyms.map(g => `<label class="charm-gym"><input type="checkbox" data-gym="${gymKey(r, g)}"${gymOn(r, g) ? ' checked' : ''}><span>${esc(g.name)}</span><small>${money(g.profit)}</small></label>`).join('') + '</fieldset>').join('');
+    const gyms = data.regions.map(r => `<fieldset class="charm-region"><legend>${esc(place(r))}</legend>` +
+      r.gyms.map(g => `<label class="charm-gym"><input type="checkbox" data-gym="${gymKey(r, g)}"${gymOn(r, g) ? ' checked' : ''}><span>${esc(place(g))}</span><small>${money(g.profit)}</small></label>`).join('') + '</fieldset>').join('');
     panel.innerHTML =
       `<div class="charm-head"><h3>${icon('savings')}${esc(t('charm_title'))}</h3>` +
       `<button type="button" class="btn-icon-sm" popovertarget="money-charm" popovertargetaction="hide" aria-label="${esc(t('charm_close'))}">${icon('close')}</button></div>` +
@@ -303,8 +304,8 @@ const Money = (() => {
     const compact = !exc.length && !endNote && (expanded[0]?.s.match(/[a-z]+\.[a-z_0-9]+|~[a-z]+/g) || []).length <= 2;
     return `<article class="gym${g.bonus ? ' is-bonus' : ''}" style="--n:${i}">` +
       (g.charm ? `<span class="gym-charm" data-tip="${esc(t('gr_charm_start'))}" tabindex="0"><img src="/gym-rerun/items/riches-charm.png" alt="${esc(t('gr_charm_start'))}" width="32" height="32"></span>` : '') +
-      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(g.name)}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
-      `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(g.name)}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
+      `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(place(g))}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
+      `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(place(g))}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
       `${note}${lead.join('')}${compact ? between(g.after) : ''}</div>` +
       (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div>`) + `</article>`;
   }
@@ -351,7 +352,7 @@ const Money = (() => {
     const el = $('money-stage');
     if (data.phases) { el.innerHTML = `<div class="ev-stage">${phasesStage()}</div>`; if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); } return; }
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
-    el.innerHTML = [].concat(data.note || []).map(k => `<p class="gym-note guide-note">${icon('info')}<span>${esc(t('gr_' + k))}</span></p>`).join('') + data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
+    el.innerHTML = [].concat(data.note || []).map(k => `<p class="gym-note guide-note">${icon('info')}<span>${esc(t('gr_' + k))}</span></p>`).join('') + data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(place(r))}</h2>` +
       `<div class="stage-body">${r.gyms.map((g, i) => card(g, i, r)).join('')}</div></section>`).join('');
     if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); }
   }
@@ -373,7 +374,7 @@ const Money = (() => {
         (m.hm ? `<span class="tp-i" data-tip="${esc(t('tp_hm_tip'))}" tabindex="0">${icon('info')}</span>` : m.rec ? `<span class="tp-i is-rec" data-tip="${esc(t('tp_rec_tip'))}" tabindex="0">${icon('info')}</span>` : '') + '</li>').join('')}</ol></div>` : '') + '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li>${itemImg(x.item.replace('_extra', ''))}<b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
-    const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
+    const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(place(data.regions.flatMap(r => r.gyms).find(g => g.name === a.gym) || { name: a.gym }))}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
     const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
       `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';

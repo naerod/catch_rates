@@ -32,6 +32,14 @@ test('Routes admin refusees sans session', async () => {
   assert.strictEqual((await s.req('/api/admin/users')).status, 401);
 });
 
+test('recherche en francais, sans accents, et nom FR joint aux reponses', async () => {
+  const fr = await (await s.req('/api/pokemon/search?q=' + encodeURIComponent('nosferapti'))).json();
+  assert.deepStrictEqual(fr.map(p => [p.id, p.name, p.name_fr]), [[41, 'Zubat', 'Nosferapti']]);
+  const accent = await (await s.req('/api/pokemon/search?q=dracaufeu')).json();
+  assert.ok(accent.some(p => p.name === 'Charizard'));
+  assert.strictEqual((await (await s.req('/api/pokemon/25')).json()).name_fr, 'Pikachu');
+});
+
 test('recherche : jokers LIKE traites comme du texte, q borne', async () => {
   const all = await (await s.req('/api/pokemon/search?q=%25')).json();
   assert.strictEqual(all.length, 0);

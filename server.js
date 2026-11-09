@@ -211,9 +211,11 @@ app.get('/auth/callback', async (req, res) => {
   }
 });
 
-app.get('/auth/logout', async (req, res) => {
-  const endSession = `${(await oidcEndpoints()).end_session_endpoint}?redirect_uri=${encodeURIComponent(APP_ORIGIN)}`;
-  req.session.destroy(() => res.redirect(endSession));
+// Deconnexion locale : on ferme la session CatchR et on reste sur la page (la session naerod.com/Authentik reste ouverte,
+// comme sur les autres applis SSO ; son flux d'invalidation affichait une page « deconnecte de catchr » sans retour).
+app.get('/auth/logout', (req, res) => {
+  const rd = safeRedirect(req.query.rd);
+  req.session.destroy(() => res.redirect(rd));
 });
 
 // Photo de profil : service central naerod-profile (auth.naerod.com, ou preprod-auth.naerod.com depuis une preprod).
@@ -238,24 +240,27 @@ app.get('/api/auth/me', (req, res) => {
 });
 
 // ─── Pokémon ───────────────────────────────────────────────────────────────────
+// Noms francais (numero du Pokedex -> nom officiel), joints aux reponses : la base ne stocke que l'anglais
+const NAMES_FR = JSON.parse(fs.readFileSync(path.join(__dirname, 'pokemon_names_fr.json'), 'utf8'));
+const withFr = p => ({ ...p, name_fr: NAMES_FR[p.id] || p.name });
+const fold = v => String(v).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();   // recherche sans accents ni casse
+
 app.get('/api/pokemon/search', (req, res) => {
-  // q borne et jokers LIKE (% _) echappes : la recherche porte sur le texte saisi, rien d'autre
-  const q = (typeof req.query.q === 'string' ? req.query.q : '').slice(0, 50).replace(/[\\%_]/g, c => '\\' + c);
-  const rows = dbAll(
-    "SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon WHERE name LIKE ? ESCAPE '\\' LIMIT 20",
-    [`%${q}%`]
-  );
+  // Recherche en anglais OU en francais, sur la liste complete (651 lignes) : pas de LIKE, donc rien a echapper
+  const q = fold(typeof req.query.q === 'string' ? req.query.q.slice(0, 50) : '');
+  const rows = dbAll('SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon ORDER BY id').map(withFr)
+    .filter(p => fold(p.name).includes(q) || fold(p.name_fr).includes(q)).slice(0, 20);
   res.json(rows);
 });
 
 app.get('/api/pokemon', (req, res) => {
-  res.json(dbAll('SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon ORDER BY id'));
+  res.json(dbAll('SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon ORDER BY id').map(withFr));
 });
 
 app.get('/api/pokemon/:id', (req, res) => {
   const row = dbGet('SELECT id, name, catch_rate, generation, type1, type2 FROM pokemon WHERE id = ?', [req.params.id]);
   if (!row) return res.status(404).json({ error: 'Not found' });
-  res.json(row);
+  res.json(withFr(row));
 });
 
 // ─── Recoil Warnings ──────────────────────────────────────────────────────────
@@ -302,7 +307,7 @@ app.get('/api/events/:slug', (req, res) => {
     JOIN pokemon p ON ep.pokemon_id = p.id
     WHERE ep.event_id = ?
     ORDER BY p.id
-  `, [event.id]);
+  `, [event.id]).map(withFr);
   res.json({ ...event, pokemon });
 });
 

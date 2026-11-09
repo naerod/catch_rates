@@ -402,7 +402,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 9360
+          "profit": 9360,
+          "fr": "Atalanopolis"
         },
         {
           "id": "lavaridge",
@@ -429,7 +430,8 @@
               }
             ]
           },
-          "profit": 8944
+          "profit": 8944,
+          "fr": "Vermilava"
         },
         {
           "id": "mauville",
@@ -459,7 +461,8 @@
               }
             ]
           },
-          "profit": 8840
+          "profit": 8840,
+          "fr": "Lavandia"
         },
         {
           "id": "dewford",
@@ -482,7 +485,8 @@
               }
             ]
           },
-          "profit": 8736
+          "profit": 8736,
+          "fr": "Myokara"
         },
         {
           "id": "fortree",
@@ -510,7 +514,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 9152
+          "profit": 9152,
+          "fr": "Cimetronelle"
         },
         {
           "id": "rustboro",
@@ -525,7 +530,8 @@
               "s": "blastoise.water_spout + weezing.assurance"
             }
           ],
-          "profit": 8632
+          "profit": 8632,
+          "fr": "Mérouville"
         },
         {
           "id": "petalburg",
@@ -553,7 +559,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 9048
+          "profit": 9048,
+          "fr": "Clémenti-Ville"
         }
       ]
     },
@@ -586,7 +593,8 @@
               "s": "@vs #407 , typhlosion.eruption + togekiss.hyper_voice"
             }
           ],
-          "profit": 8736
+          "profit": 8736,
+          "fr": "Vestigion"
         },
         {
           "id": "veilstone",
@@ -609,7 +617,8 @@
               "s": "@vs #620 , typhlosion.incinerate + togekiss.hyper_voice"
             }
           ],
-          "profit": 8944
+          "profit": 8944,
+          "fr": "Voilaroc"
         },
         {
           "id": "oreburgh",
@@ -633,7 +642,8 @@
               "s": "@vs #248 @and #530 @lead , @if #346 @and #80 @sent_together , @use weezing.assurance @on #346 @turns4"
             }
           ],
-          "profit": 8632
+          "profit": 8632,
+          "fr": "Charbourg"
         },
         {
           "id": "canalave",
@@ -666,7 +676,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 9152
+          "profit": 9152,
+          "fr": "Joliberges"
         },
         {
           "id": "pastoria",
@@ -683,7 +694,8 @@
               "s": "blastoise.fake_out ( @prioritize #319 ) + weezing.explosion @into togekiss.hyper_voice + garchomp.earthquake"
             }
           ],
-          "profit": 9048
+          "profit": 9048,
+          "fr": "Verchamps"
         }
       ]
     },
@@ -730,7 +742,8 @@
               }
             ]
           },
-          "profit": 8840
+          "profit": 8840,
+          "fr": "Carmin sur Mer"
         },
         {
           "id": "pewter",
@@ -768,7 +781,8 @@
               }
             ]
           },
-          "profit": 8632
+          "profit": 8632,
+          "fr": "Argenta"
         },
         {
           "id": "cinnabar",
@@ -796,7 +810,8 @@
               }
             ]
           },
-          "profit": 9256
+          "profit": 9256,
+          "fr": "Cramois'Île"
         },
         {
           "id": "celadon",
@@ -826,7 +841,8 @@
               }
             ]
           },
-          "profit": 8944
+          "profit": 8944,
+          "fr": "Céladopole"
         },
         {
           "id": "saffron",
@@ -859,7 +875,8 @@
               }
             ]
           },
-          "profit": 9152
+          "profit": 9152,
+          "fr": "Safrania"
         },
         {
           "id": "cerulean",
@@ -883,7 +900,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 8736
+          "profit": 8736,
+          "fr": "Azuria"
         }
       ]
     },
@@ -921,7 +939,8 @@
               }
             ]
           },
-          "profit": 9152
+          "profit": 9152,
+          "fr": "Oliville"
         },
         {
           "id": "azalea",
@@ -949,7 +968,8 @@
               }
             ]
           },
-          "profit": 8736
+          "profit": 8736,
+          "fr": "Écorcia"
         },
         {
           "id": "violet",
@@ -972,7 +992,8 @@
               }
             ]
           },
-          "profit": 8632
+          "profit": 8632,
+          "fr": "Mauville"
         },
         {
           "id": "blackthorn",
@@ -993,7 +1014,8 @@
               "s": "@vs #9 , blastoise.fake_out @on #9"
             }
           ],
-          "profit": 9360
+          "profit": 9360,
+          "fr": "Ébènelle"
         },
         {
           "id": "cianwood",
@@ -1008,7 +1030,8 @@
               "s": "togekiss.hyper_voice + garchomp.earthquake"
             }
           ],
-          "profit": 9048
+          "profit": 9048,
+          "fr": "Irisia"
         },
         {
           "id": "goldenrod",
@@ -1034,7 +1057,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 8840
+          "profit": 8840,
+          "fr": "Doublonville"
         },
         {
           "id": "mahogany",
@@ -1080,7 +1104,8 @@
               }
             ]
           },
-          "profit": 9256
+          "profit": 9256,
+          "fr": "Acajou"
         }
       ]
     },
@@ -1108,7 +1133,8 @@
           "after": {
             "heal": "maybe"
           },
-          "profit": 8840
+          "profit": 8840,
+          "fr": "Volucité"
         },
         {
           "id": "nimbasa",
@@ -1126,7 +1152,8 @@
           "after": {
             "heal": "yes"
           },
-          "profit": 8944
+          "profit": 8944,
+          "fr": "Méanville"
         },
         {
           "id": "mistralton",
@@ -1156,7 +1183,8 @@
               }
             ]
           },
-          "profit": 9152
+          "profit": 9152,
+          "fr": "Parsemille"
         },
         {
           "id": "driftveil",
@@ -1182,7 +1210,8 @@
               }
             ]
           },
-          "profit": 9048
+          "profit": 9048,
+          "fr": "Port Yoneuve"
         },
         {
           "id": "opelucid",
@@ -1208,7 +1237,8 @@
           "after": {
             "heal": "maybe"
           },
-          "profit": 9360
+          "profit": 9360,
+          "fr": "Janusia"
         },
         {
           "id": "striaton",
@@ -1241,7 +1271,8 @@
             "heal": "maybe"
           },
           "profit": 25896,
-          "tip": "tip_heal_230"
+          "tip": "tip_heal_230",
+          "fr": "Ogoesse"
         },
         {
           "id": "nacrene",
@@ -1270,7 +1301,8 @@
             "heal": "maybe"
           },
           "profit": 8736,
-          "optional": true
+          "optional": true,
+          "fr": "Maillard"
         },
         {
           "id": "undella",
@@ -1279,9 +1311,11 @@
           "tip": "tip_route13",
           "lines": [],
           "profit": 10800,
-          "optional": true
+          "optional": true,
+          "fr": "Vaguelone"
         }
-      ]
+      ],
+      "fr": "Unys"
     }
   ],
   "size": {

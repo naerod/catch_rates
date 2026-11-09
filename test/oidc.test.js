@@ -158,10 +158,15 @@ test('rd externe neutralise sur le flux complet', async () => {
   assert.strictEqual(cb.headers.get('location'), '/');
 });
 
-test('logout : session detruite, redirection vers end-session du fournisseur', async () => {
+test('logout : session detruite, retour sur la page d\'origine du site', async () => {
   await loginAs({ sub: '1', preferred_username: 'dorian', groups: ['catchr-admins'] });
-  const r = await s.req('/auth/logout');
+  const r = await s.req('/auth/logout?rd=' + encodeURIComponent('/#money/pumpking-3'));
   assert.strictEqual(r.status, 302);
-  assert.match(r.headers.get('location'), /\/application\/o\/catchr\/end-session\/\?redirect_uri=http%3A%2F%2F127\.0\.0\.1$/);
+  assert.strictEqual(r.headers.get('location'), '/#money/pumpking-3');
   assert.strictEqual((await (await s.req('/api/auth/me')).json()).authenticated, false);
+});
+
+test('logout : rd externe neutralise', async () => {
+  const r = await s.req('/auth/logout?rd=' + encodeURIComponent('//evil.example/x'));
+  assert.strictEqual(r.headers.get('location'), '/');
 });

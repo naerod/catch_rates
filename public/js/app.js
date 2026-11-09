@@ -21,6 +21,12 @@ const state = {
 const HP_VALUES = [1, 25, 50, 75, 100];
 
 const $ = id => document.getElementById(id);
+/* Messages d'erreur du serveur (en anglais) : traduits s'ils sont connus, sinon affiches tels quels */
+const srvErr = e => (e && translations[i18n.lang]?.['srv_' + e]) || e;
+
+/* Nom du Pokemon dans la langue du site (name_fr fourni par l'API) */
+const pname = p => (i18n.lang === 'fr' && p.name_fr) || p.name;
+
 // Echappement HTML de toute donnee venant du serveur ou du stockage local avant interpolation dans innerHTML (XSS)
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sprite = id => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;   // grande image : fiche du resultat uniquement
@@ -158,9 +164,9 @@ function renderDropdown(pokemon) {
   activeSearchIndex = -1;
   searchDropdown.innerHTML = pokemon.map(p => `
     <div class="search-item" data-id="${esc(p.id)}">
-      <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(p.name)}" loading="lazy" />
+      <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(pname(p))}" loading="lazy" />
       <span class="search-item-id">#${esc(String(p.id).padStart(3,'0'))}</span>
-      <span class="search-item-name">${esc(p.name)}</span>
+      <span class="search-item-name">${esc(pname(p))}</span>
       <span class="search-item-rate">${esc(p.catch_rate)}</span>
     </div>
   `).join('');
@@ -184,13 +190,13 @@ async function selectPokemonById(id) {
 async function selectPokemon(p, recoilWarnings = { suicideMoves: [], recoilMoves: [] }) {
   state.pokemon = p;
   state.recoilWarnings = recoilWarnings;
-  searchInput.value = p.name;
+  searchInput.value = pname(p);
   searchDropdown.style.display = 'none';
 
   // Update Pokémon card
   $('pokemon-sprite').src = sprite(p.id);
   $('pokemon-id-display').textContent = String(p.id).padStart(3,'0');
-  $('pokemon-name-display').textContent = p.name;
+  $('pokemon-name-display').textContent = pname(p);
   $('pokemon-gen-badge').textContent = `${i18n.t('gen_label')} ${p.generation}`;
   $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${effPokemon().catch_rate}`;
   $('pokemon-card').style.display = '';
@@ -342,8 +348,8 @@ async function updateResults() {
  * Compute avg turns and avg cost for a result card.
  * Formula:
  *   - Quick Ball: turns = avgThrows (no setup, no sleep)
- *   - Others: turns = 2 (False Swipe + Sleep) + avgThrows + re_sleep_turns
- *             re_sleep_turns = max(0, ceil(avgThrows/2) - 1)
+ *   - Others: turns = setup (Soak? + False Swipe if hp<100 + status move if any) + avgThrows + re_sleep_turns
+ *             re_sleep_turns (sleep only) = max(0, ceil(avgThrows/2) - 1)
  *   - cost = r.avgCost (already = avgThrows × ball_price)
  */
 function computeAvgStats(r) {
@@ -355,10 +361,12 @@ function computeAvgStats(r) {
     return { turns: Math.round(avgBalls), cost: r.avgCost };
   }
 
-  // Standard technique: 2 setup turns (False Swipe + Sleep) + throws + re-sleeps
-  const sleepCycles   = Math.ceil(avgBalls / 2);
-  const reSleepTurns  = Math.max(0, sleepCycles - 1);
-  const totalTurns    = 2 + avgBalls + reSleepTurns;
+  // Setup turns only for what the technique really uses: Soak, False Swipe, status move
+  const t = r.technique || {};
+  const asleep        = t.status === 'sleep';
+  const setupTurns    = (t.soak ? 1 : 0) + (t.hp < 100 ? 1 : 0) + (t.status && t.status !== 'none' ? 1 : 0);
+  const reSleepTurns  = asleep ? Math.max(0, Math.ceil(avgBalls / 2) - 1) : 0;
+  const totalTurns    = setupTurns + avgBalls + reSleepTurns;
   return { turns: Math.round(totalTurns), cost: r.avgCost };
 }
 
@@ -455,8 +463,8 @@ function renderAllBallsGrid(results, best, cheap) {
     // State parameter chips (only for non-unavailable balls)
     const stateChips = !unavailable ? buildGridStateChips(r) : '';
 
-    const bestTag = showBestTag ? `<span class="ball-tag ball-tag-best">BEST</span>` : '';
-    const cheapTag = showCheapTag ? `<span class="ball-tag ball-tag-cheap">CHEAP</span>` : '';
+    const bestTag = showBestTag ? `<span class="ball-tag ball-tag-best">${esc(i18n.t('tag_best'))}</span>` : '';
+    const cheapTag = showCheapTag ? `<span class="ball-tag ball-tag-cheap">${esc(i18n.t('tag_cheap'))}</span>` : '';
 
     return `
       <div class="${itemClass}">
@@ -519,6 +527,8 @@ function getCondLabel(r, pokemon) {
 /* ── Re-apply on lang change ── */
 document.addEventListener('langchange', () => {
   if (state.pokemon) {
+    $('pokemon-name-display').textContent = pname(state.pokemon);
+    searchInput.value = pname(state.pokemon);
     $('pokemon-gen-badge').textContent = `${i18n.t('gen_label')} ${state.pokemon.generation}`;
     $('pokemon-rate-display').textContent = `${i18n.t('catch_rate_label')}: ${effPokemon().catch_rate}`;
     updateResults();
@@ -566,7 +576,7 @@ function eventCard(ev, { edit = false } = {}) {
         <span class="event-name">${esc(ev.name_en)}</span>
         ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
         ${ev.unverified ? `<span class="ev-tag" data-tip="${i18n.t('ev_unverified_tip')}">${i18n.t('ev_unverified')}</span>` : ''}
-        ${edit ? '<button class="btn btn-sm btn-outline event-edit-btn">Edit</button>' : ''}
+        ${edit ? `<button class="btn btn-sm btn-outline event-edit-btn">${esc(i18n.t('btn_edit'))}</button>` : ''}
         <button type="button" class="fav-btn" data-evfav="${esc(ev.slug)}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
       </div>
       ${(ev.pokemon || []).length ? '' : `<p class="ev-empty">${i18n.t('ev_empty')}</p>`}
@@ -577,14 +587,14 @@ function eventCard(ev, { edit = false } = {}) {
           // Conditions pour atteindre ce taux : PV (y compris "PV pleins"), statut, nuit, attente du Timer Ball...
           const conds = best ? [...(best.technique.hp >= 100 ? [{ label: i18n.t('technique_fullhp'), cls: 'chip-1hp' }] : []), ...techniqueLabels(best.technique).map(c => c.label === i18n.t('technique_wait10') ? { ...c, label: i18n.t('ev_turns10') } : c)] : [];
           // Tout le detail est au survol : taux de capture, Pokeball, chance et conditions (PV, statut, nuit, attente)
-          const tip = [p.name, `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? ['#' + conds.map(c => `${c.cls}:${c.label}`).join('|')] : [])] : [])].join('\n');
+          const tip = [pname(p), `${i18n.t('catch_rate_label')} : ${p.catch_rate}`, ...(best ? [`${ball} — ${Calc.formatPercent(best.probability)}`, ...(conds.length ? ['#' + conds.map(c => `${c.cls}:${c.label}`).join('|')] : [])] : [])].join('\n');
           return `
           <div class="event-pokemon-item" data-id="${esc(p.id)}" data-tip="${esc(tip)}" aria-label="${esc(tip.replace(/#?chip-\w+:/g, '').replace(/[#\n]/g, ', '))}" tabindex="0" role="button">
             <span class="ep-icon">
               <img width="80" height="60" src="${miniIcon(p.id)}" alt="" loading="lazy" />
               ${best ? `<img class="ep-ball" src="${Calc.ballSprite(best.key)}" alt="" width="28" height="28" loading="lazy" />` : ''}
             </span>
-            <span class="ep-name">${p.name}</span>
+            <span class="ep-name">${esc(pname(p))}</span>
           </div>`;
         }).join('')}
       </div>
@@ -785,11 +795,11 @@ async function loadUsersList() {
   const res = await fetch('/api/admin/users');
   if (!res.ok) {
     const d = await res.json().catch(() => ({}));
-    $('users-list').innerHTML = `<p style="color:var(--red)">Error ${res.status}: ${esc(d.error || 'Failed to load users')}</p>`;
+    $('users-list').innerHTML = `<p style="color:var(--red)">${esc(i18n.t('admin_error'))} ${res.status} : ${esc(srvErr(d.error) || i18n.t('admin_users_load_error'))}</p>`;
     return;
   }
   const users = await res.json();
-  const roleLabel = r => r === 'admin' ? 'Administrator' : 'Manager';
+  const roleLabel = r => i18n.t(r === 'admin' ? 'role_admin' : 'role_manager');
   $('users-list').innerHTML = users.map(u => `
     <div class="admin-user-row" data-uid="${esc(u.id)}">
       <div class="aur-info">
@@ -797,35 +807,35 @@ async function loadUsersList() {
         <span class="aur-role ${u.role === 'admin' ? 'role-admin' : 'role-manager'}">${roleLabel(u.role)}</span>
       </div>
       <div class="aur-actions">
-        <button class="btn btn-sm btn-outline edit-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}" data-role="${esc(u.role)}">Edit</button>
-        <button class="btn btn-sm btn-danger delete-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}">Delete</button>
+        <button class="btn btn-sm btn-outline edit-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}" data-role="${esc(u.role)}">${esc(i18n.t('btn_edit'))}</button>
+        <button class="btn btn-sm btn-danger delete-user-btn" data-id="${esc(u.id)}" data-username="${esc(u.username)}">${esc(i18n.t('btn_delete'))}</button>
       </div>
       <div class="aur-edit-form" id="edit-form-${esc(u.id)}" style="display:none">
         <div class="aur-edit-fields">
           <div class="form-group">
-            <label>Username</label>
+            <label>${esc(i18n.t('label_username'))}</label>
             <input type="text" class="ef-username" value="${esc(u.username)}" autocomplete="off" />
           </div>
           <div class="form-group">
-            <label>New Password <span style="color:var(--text-muted);font-size:.8em">(leave empty to keep)</span></label>
+            <label>${esc(i18n.t('label_new_password'))} <span style="color:var(--text-muted);font-size:.8em">${esc(i18n.t('admin_pw_keep'))}</span></label>
             <input type="password" class="ef-password" autocomplete="new-password" />
           </div>
           <div class="form-group">
-            <label>Role</label>
+            <label>${esc(i18n.t('label_role'))}</label>
             <select class="ef-role input-select">
-              <option value="manager" ${u.role === 'manager' ? 'selected' : ''}>Manager</option>
-              <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Administrator</option>
+              <option value="manager" ${u.role === 'manager' ? 'selected' : ''}>${esc(i18n.t('role_manager'))}</option>
+              <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>${esc(i18n.t('role_admin'))}</option>
             </select>
           </div>
           <div class="aur-edit-actions">
-            <button class="btn btn-sm btn-primary save-edit-btn" data-id="${esc(u.id)}">Save</button>
-            <button class="btn btn-sm btn-outline cancel-edit-btn" data-id="${esc(u.id)}">Cancel</button>
+            <button class="btn btn-sm btn-primary save-edit-btn" data-id="${esc(u.id)}">${esc(i18n.t('btn_save'))}</button>
+            <button class="btn btn-sm btn-outline cancel-edit-btn" data-id="${esc(u.id)}">${esc(i18n.t('btn_cancel'))}</button>
           </div>
           <div class="ef-error alert alert-error" style="display:none"></div>
         </div>
       </div>
     </div>
-  `).join('') || '<p style="color:var(--text-muted)">No users.</p>';
+  `).join('') || `<p style="color:var(--text-muted)">${esc(i18n.t('admin_no_users'))}</p>`;
 
   $('users-list').querySelectorAll('.edit-user-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -855,16 +865,16 @@ async function loadUsersList() {
         body: JSON.stringify({ username, role, password: password || undefined })
       });
       if (r.ok) { loadUsersList(); }
-      else { const d = await r.json(); errEl.textContent = d.error; errEl.style.display = ''; }
+      else { const d = await r.json(); errEl.textContent = srvErr(d.error); errEl.style.display = ''; }
     });
   });
 
   $('users-list').querySelectorAll('.delete-user-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
-      if (!confirm(`Delete user "${btn.dataset.username}"?`)) return;
+      if (!confirm(i18n.t('admin_confirm_delete_user').replace('{user}', btn.dataset.username))) return;
       const r = await fetch(`/api/admin/users/${btn.dataset.id}`, { method: 'DELETE' });
       if (r.ok) { loadUsersList(); }
-      else { const d = await r.json(); alert(d.error); }
+      else { const d = await r.json(); alert(srvErr(d.error)); }
     });
   });
 }
@@ -899,7 +909,7 @@ $('add-user-btn').addEventListener('click', async () => {
     loadUsersList();
   } else {
     const d = await res.json();
-    $('users-form-error').textContent = d.error;
+    $('users-form-error').textContent = srvErr(d.error);
     $('users-form-error').style.display = '';
   }
 });
@@ -926,7 +936,7 @@ $('save-pw-btn').addEventListener('click', async () => {
     setTimeout(() => { $('change-pw-modal').style.display = 'none'; }, 1500);
   } else {
     const d = await res.json();
-    $('pw-error').textContent = d.error || i18n.t('pw_error');
+    $('pw-error').textContent = srvErr(d.error) || i18n.t('pw_error');
     $('pw-error').style.display = '';
   }
 });
@@ -938,7 +948,7 @@ $('create-event-btn').addEventListener('click', async () => {
   const starts_at = $('event-start').value, ends_at = $('event-end').value;
   $('event-form-error').style.display = 'none';
   if (!slug || !name_en) {
-    $('event-form-error').textContent = 'All fields required.';
+    $('event-form-error').textContent = i18n.t('admin_fields_required');
     $('event-form-error').style.display = '';
     return;
   }
@@ -954,7 +964,7 @@ $('create-event-btn').addEventListener('click', async () => {
     loadAdminEvents();
   } else {
     const d = await res.json();
-    $('event-form-error').textContent = d.error;
+    $('event-form-error').textContent = srvErr(d.error);
     $('event-form-error').style.display = '';
   }
 });
@@ -965,7 +975,7 @@ async function loadAdminEvents() {
 
 function renderAdminEvents(events) {
   const container = $('admin-events-list');
-  if (!events.length) { container.innerHTML = '<p style="color:var(--text-muted)">No events yet.</p>'; return; }
+  if (!events.length) { container.innerHTML = `<p style="color:var(--text-muted)">${esc(i18n.t('admin_no_events'))}</p>`; return; }
 
   container.innerHTML = events.map((ev, idx) => `
     <div class="admin-event-row" data-event-id="${esc(ev.id)}">
@@ -988,8 +998,8 @@ function renderAdminEvents(events) {
         ${(ev.pokemon || []).map(p => `
           <div class="admin-pokemon-chip">
             <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="" />
-            <span>${esc(p.name)}</span>
-            <button type="button" class="remove-pokemon-btn" data-pid="${esc(p.id)}" data-eid="${esc(ev.id)}" aria-label="${esc(i18n.t('btn_delete'))} ${esc(p.name)}">✕</button>
+            <span>${esc(pname(p))}</span>
+            <button type="button" class="remove-pokemon-btn" data-pid="${esc(p.id)}" data-eid="${esc(ev.id)}" aria-label="${esc(i18n.t('btn_delete'))} ${esc(pname(p))}">✕</button>
           </div>
         `).join('')}
       </div>
@@ -1051,9 +1061,9 @@ function renderAdminEvents(events) {
         if (!data.length) { dropdown.style.display = 'none'; return; }
         dropdown.innerHTML = data.slice(0, 8).map(p => `
           <div class="search-item" data-id="${esc(p.id)}">
-            <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(p.name)}" loading="lazy" />
+            <img width="40" height="30" src="${miniIcon(esc(p.id))}" alt="${esc(pname(p))}" loading="lazy" />
             <span class="search-item-id">#${esc(String(p.id).padStart(3,'0'))}</span>
-            <span class="search-item-name">${esc(p.name)}</span>
+            <span class="search-item-name">${esc(pname(p))}</span>
           </div>
         `).join('');
         dropdown.style.display = '';
@@ -1125,6 +1135,7 @@ function addToHistory(pokemon, bestResult) {
   const entry = {
     id: pokemon.id,
     name: pokemon.name,
+    name_fr: pokemon.name_fr,
     spriteUrl: sprite(pokemon.id),
     bestBallKey: bestResult ? bestResult.key : null,
     bestBallPercent: bestResult ? bestResult.probability : null,
@@ -1160,7 +1171,7 @@ function renderHistory() {
       <div class="history-item" data-id="${esc(h.id)}">
         <img class="history-item-sprite" src="${miniIcon(esc(h.id))}" width="40" height="30" alt="" />
         <div class="history-item-info">
-          <div class="history-item-name">${esc(h.name)}</div>
+          <div class="history-item-name">${esc(pname(h))}</div>
           ${badgeHtml}
         </div>
       </div>`;

@@ -386,7 +386,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "fr": "Vermilava"
         },
         {
           "id": "dewford",
@@ -405,7 +406,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "fr": "Myokara"
         },
         {
           "id": "fortree",
@@ -428,7 +430,8 @@
               "i": 2,
               "s": "@t2 vanilluxe.blizzard + togekiss.hyper_voice"
             }
-          ]
+          ],
+          "fr": "Cimetronelle"
         },
         {
           "id": "mauville",
@@ -446,7 +449,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "fr": "Lavandia"
         },
         {
           "id": "rustboro",
@@ -457,7 +461,8 @@
               "s": "blastoise.water_spout + weezing.assurance",
               "lead": true
             }
-          ]
+          ],
+          "fr": "Mérouville"
         }
       ]
     },
@@ -508,7 +513,8 @@
                 "item": "black_glasses"
               }
             ]
-          }
+          },
+          "fr": "Carmin sur Mer"
         },
         {
           "id": "cinnabar",
@@ -543,7 +549,8 @@
                 "item": "choice_band"
               }
             ]
-          }
+          },
+          "fr": "Cramois'Île"
         },
         {
           "id": "celadon",
@@ -558,7 +565,8 @@
               "i": 1,
               "s": "@vs #71 , @follow_up_with typhlosion.eruption + garchomp.dragon_claw"
             }
-          ]
+          ],
+          "fr": "Céladopole"
         },
         {
           "id": "saffron",
@@ -580,7 +588,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "fr": "Safrania"
         },
         {
           "id": "pewter",
@@ -616,7 +625,8 @@
             "heal": "maybe"
           },
           "badge": "optional",
-          "optional": true
+          "optional": true,
+          "fr": "Argenta"
         }
       ]
     },
@@ -657,7 +667,8 @@
               "i": 2,
               "s": "@t2 typhlosion.eruption + weezing.incinerate"
             }
-          ]
+          ],
+          "fr": "Vestigion"
         },
         {
           "id": "veilstone",
@@ -681,7 +692,8 @@
             "heal": "maybe",
             "healMon": "typhlosion"
           },
-          "tip": "tip_channel"
+          "tip": "tip_channel",
+          "fr": "Voilaroc"
         },
         {
           "id": "oreburgh",
@@ -712,7 +724,8 @@
           "after": {
             "heal": "maybe",
             "healMon": "typhlosion"
-          }
+          },
+          "fr": "Charbourg"
         },
         {
           "id": "pastoria",
@@ -727,7 +740,8 @@
           "after": {
             "heal": "maybe",
             "healMon": "garchomp"
-          }
+          },
+          "fr": "Verchamps"
         }
       ]
     },
@@ -748,7 +762,8 @@
               "s": "togekiss.hyper_voice + garchomp.earthquake",
               "lead": true
             }
-          ]
+          ],
+          "fr": "Irisia"
         },
         {
           "id": "goldenrod",
@@ -770,7 +785,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "fr": "Doublonville"
         },
         {
           "id": "olivine",
@@ -798,7 +814,8 @@
                 "item": "choice_specs"
               }
             ]
-          }
+          },
+          "fr": "Oliville"
         },
         {
           "id": "azalea",
@@ -821,7 +838,8 @@
                 "item": "choice_scarf"
               }
             ]
-          }
+          },
+          "fr": "Écorcia"
         },
         {
           "id": "violet",
@@ -840,7 +858,8 @@
               "i": 1,
               "s": "@vs #145 , @use togekiss.hyper_voice @instead_of .blizzard"
             }
-          ]
+          ],
+          "fr": "Mauville"
         },
         {
           "id": "blackthorn",
@@ -858,7 +877,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "fr": "Ébènelle"
         },
         {
           "id": "mahogany",
@@ -910,7 +930,8 @@
               "s": "@t2 blastoise.water_spout + typhlosion.eruption"
             }
           ],
-          "tip": "tn_mahogany_req"
+          "tip": "tn_mahogany_req",
+          "fr": "Acajou"
         }
       ]
     },
@@ -931,7 +952,8 @@
               "s": "@lead_with ~blastoise @and ~vanilluxe , blastoise.water_spout + vanilluxe.blizzard",
               "lead": true
             }
-          ]
+          ],
+          "fr": "Volucité"
         },
         {
           "id": "striaton",
@@ -966,7 +988,8 @@
               "i": 2,
               "s": "@t2 @double_hv"
             }
-          ]
+          ],
+          "fr": "Ogoesse"
         },
         {
           "id": "mistralton",
@@ -993,7 +1016,8 @@
               "i": 2,
               "s": "@t2 vanilluxe.blizzard + weezing.assurance"
             }
-          ]
+          ],
+          "fr": "Parsemille"
         },
         {
           "id": "nimbasa",
@@ -1023,7 +1047,8 @@
           ],
           "after": {
             "heal": "yes"
-          }
+          },
+          "fr": "Méanville"
         },
         {
           "id": "opelucid",
@@ -1049,7 +1074,8 @@
           ],
           "after": {
             "heal": "maybe"
-          }
+          },
+          "fr": "Janusia"
         },
         {
           "id": "driftveil",
@@ -1072,7 +1098,8 @@
               "i": 1,
               "s": "@vs #389 , weezing.assurance"
             }
-          ]
+          ],
+          "fr": "Port Yoneuve"
         },
         {
           "id": "nacrene",
@@ -1093,9 +1120,11 @@
             }
           ],
           "tip": "tn_nacrene_req",
-          "optional": true
+          "optional": true,
+          "fr": "Maillard"
         }
-      ]
+      ],
+      "fr": "Unys"
     }
   ],
   "size": {

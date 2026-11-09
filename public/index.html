@@ -48,9 +48,9 @@
             <span class="search-icon material-symbols-outlined" aria-hidden="true">search</span>
             <input type="text" id="pokemon-search" autocomplete="off"
               data-i18n-placeholder="search_placeholder" placeholder="Search Pokemon..." />
-            <button class="search-clear" id="search-clear" style="display:none" aria-label="Clear">✕</button>
+            <button class="search-clear" id="search-clear" style="display:none" data-i18n-label="search_clear" aria-label="Clear">✕</button>
           </div>
-          <button class="btn-icon history-toggle-btn" id="history-toggle" title="History" aria-label="Toggle history">
+          <button class="btn-icon history-toggle-btn" id="history-toggle" title="History" aria-label="Toggle history" data-i18n-label="history_title">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12 6 12 12 16 14"/>
@@ -208,9 +208,9 @@
         <h1 data-i18n="events_title">PokeMMO Events</h1>
         <p class="subtitle" data-i18n="events_subtitle">Swarm Pokemon by event</p>
       </div>
-      <div class="events-toolbar"><button type="button" id="event-add-btn" class="btn-icon" hidden data-tip="Add an event" aria-label="Add an event"><span class="material-symbols-outlined" aria-hidden="true">add</span></button></div>
+      <div class="events-toolbar"><button type="button" id="event-add-btn" class="btn-icon" hidden data-tip="Add an event" aria-label="Add an event" data-i18n-label="ev_add"><span class="material-symbols-outlined" aria-hidden="true">add</span></button></div>
       <div id="events-list" class="events-list">
-        <div class="loading-spinner">Loading...</div>
+        <div class="loading-spinner" data-i18n="loading">Loading...</div>
       </div>
     </section>
 
@@ -220,7 +220,7 @@
       <div class="page-title">
         <h1 data-i18n="money_title">Money making</h1>
       </div>
-      <nav id="money-menu" class="money-menu" aria-label="Methods"></nav>
+      <nav id="money-menu" class="money-menu" aria-label="Methods" data-i18n-label="money_methods"></nav>
       <div id="money-method" hidden>
         <div class="money-head">
           <div class="money-head-left">
@@ -267,7 +267,7 @@
         <div class="admin-header">
           <h2 data-i18n="admin_title">Admin Dashboard</h2>
           <div class="admin-header-actions">
-            <button class="btn btn-outline" id="manage-users-btn" style="display:none">Manage Users</button>
+            <button class="btn btn-outline" id="manage-users-btn" style="display:none" data-i18n="admin_manage_users">Manage Users</button>
             <button class="btn btn-outline" id="change-pw-btn" data-i18n="btn_change_pw">Change Password</button>
             <button class="btn btn-danger-outline" id="logout-btn" data-i18n="btn_logout">Logout</button>
           </div>
@@ -293,33 +293,33 @@
         <div id="admin-users-section" style="display:none">
           <div class="admin-section">
             <div class="admin-section-header">
-              <h3>User Management</h3>
-              <button class="btn btn-sm btn-outline" id="back-to-events-btn">← Back</button>
+              <h3 data-i18n="admin_users_title">User Management</h3>
+              <button class="btn btn-sm btn-outline" id="back-to-events-btn" data-i18n="admin_back">← Back</button>
             </div>
             <div id="users-list"></div>
             <div id="users-form-error" class="alert alert-error" style="display:none;margin-top:.75rem"></div>
             <div id="add-user-form" style="display:none" class="admin-inline-form">
               <div class="form-group">
-                <label>Username</label>
+                <label data-i18n="label_username">Username</label>
                 <input type="text" id="new-user-username" autocomplete="off" />
               </div>
               <div class="form-group">
-                <label>Password</label>
+                <label data-i18n="label_password">Password</label>
                 <input type="password" id="new-user-password" autocomplete="new-password" />
               </div>
               <div class="form-group">
-                <label>Role</label>
+                <label data-i18n="label_role">Role</label>
                 <select id="new-user-role" class="input-select">
-                  <option value="manager">Manager</option>
-                  <option value="admin">Administrator</option>
+                  <option value="manager" data-i18n="role_manager">Manager</option>
+                  <option value="admin" data-i18n="role_admin">Administrator</option>
                 </select>
               </div>
               <div style="display:flex;gap:.5rem;margin-top:.25rem">
-                <button class="btn btn-primary btn-sm" id="add-user-btn">Add User</button>
-                <button class="btn btn-outline btn-sm" id="cancel-add-user-btn">Cancel</button>
+                <button class="btn btn-primary btn-sm" id="add-user-btn" data-i18n="admin_add_user">Add User</button>
+                <button class="btn btn-outline btn-sm" id="cancel-add-user-btn" data-i18n="btn_cancel">Cancel</button>
               </div>
             </div>
-            <button class="btn btn-outline btn-sm" id="show-add-user-btn" style="margin-top:.75rem">+ Add User</button>
+            <button class="btn btn-outline btn-sm" id="show-add-user-btn" style="margin-top:.75rem" data-i18n="admin_add_user_plus">+ Add User</button>
           </div>
         </div>
 
@@ -329,11 +329,11 @@
             <div id="event-form-error" class="alert alert-error" style="display:none"></div>
             <div class="admin-form">
               <div class="form-group">
-                <label>Slug</label>
+                <label data-i18n="label_slug">Slug</label>
                 <input type="text" id="event-slug" placeholder="xmas-2025" />
               </div>
               <div class="form-group">
-                <label>Name</label>
+                <label data-i18n="label_name">Name</label>
                 <input type="text" id="event-name-en" placeholder="XMAS 2025" />
               </div>
               <div class="form-group">
@@ -365,7 +365,7 @@
         <h3 class="history-title" data-i18n="history_title">History</h3>
         <div class="history-header-actions">
           <button class="btn btn-sm btn-danger-outline" id="history-clear-btn" data-i18n="history_clear">Clear history</button>
-          <button class="btn-icon history-close-btn" id="history-close-btn" aria-label="Close">
+          <button class="btn-icon history-close-btn" id="history-close-btn" aria-label="Close" data-i18n-label="history_close">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
@@ -381,7 +381,7 @@
   </div><!-- /.layout-grid -->
 
   <footer>
-    <p>CatchR — PokeMMO community tool — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span>
+    <p>CatchR — <span data-i18n="footer_tool">PokeMMO community tool</span> — <span data-i18n="footer_disclaimer">not affiliated with PokeMMO</span>
       · <naerod-version src="/changelog.json"></naerod-version></p>
   </footer>
 
