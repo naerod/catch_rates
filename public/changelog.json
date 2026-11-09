@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.20.0",
+      "date": "2026-11-09",
+      "title": { "fr": "Money making : section Event", "en": "Money making: Event section" },
+      "fr": ["Nouvelle section Event avec le guide Pumpking Hard Mode à 3 particules (Halloween 2026) : ordre de l'équipe, phases tour par tour, seuils de PV, imprévus, équipe et sac à préparer.", "Les modifications suggérées par la communauté sont mises en avant à côté de la stratégie de base, avec leur auteur."],
+      "en": ["New Event section with the Pumpking Hard Mode 3-particle guide (Halloween 2026): party order, turn-by-turn phases, HP lines, exceptions, team and bag to prepare.", "Community tweaks are highlighted next to the base strategy, with their author."]
+    },
+    {
       "v": "3.19.0",
       "date": "2026-11-05",
       "title": { "fr": "Fiabilité et accessibilité", "en": "Reliability and accessibility" },

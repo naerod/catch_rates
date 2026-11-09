@@ -1,0 +1,434 @@
+{
+  "_comment": "Pumpking Hard Mode, 3 particules (Visos / UUEE, trad. Xanarchy, retouches Skan). Textes : chaine neutre ou {en, fr}. Jetons : {mon} sprite+nom, {i:objet} icone+nom (it_*), {m:attaque} (mv_*), {s:N} slot d'equipe. Attribution : by (auteur), src (lien du message Discord, null tant qu'inconnu), mod: true = modification suggeree par rapport a la strat de base de Visos. alt = variante suggeree d'une case.",
+  "charm": false,
+  "credits": {
+    "en": "Strategy by Visos (UUEE guild), translation by Xanarchy (The Council), tweaks by Skan.",
+    "fr": "Stratégie de Visos (guilde UUEE), traduction de Xanarchy (The Council), ajustements de Skan."
+  },
+  "source": "https://www.bilibili.com/video/BV1cz4769Ecq/",
+  "team": [
+    "honchkrow",
+    "krookodile",
+    "tropius"
+  ],
+  "mons": {
+    "honchkrow": {
+      "dex": 430,
+      "en": "Honchkrow",
+      "fr": "Corboss"
+    },
+    "krookodile": {
+      "dex": 553,
+      "en": "Krookodile",
+      "fr": "Crocorible"
+    },
+    "tropius": {
+      "dex": 357,
+      "en": "Tropius",
+      "fr": "Tropius"
+    }
+  },
+  "slots": [
+    {
+      "mon": "honchkrow"
+    },
+    {
+      "req": {
+        "en": "Not weak to Fighting",
+        "fr": "Pas faible au Combat"
+      }
+    },
+    {
+      "req": {
+        "en": "Anything (Cursed Body goes here)",
+        "fr": "Libre (Cursed Body ici)"
+      }
+    },
+    {
+      "req": {
+        "en": "High level, KO'd by Earthquake: no Flying, Levitate, Sturdy or Focus Sash",
+        "fr": "Haut niveau, K.O. par Séisme : ni Vol, ni Lévitation, ni Fermeté, ni Focus Sash"
+      }
+    },
+    {
+      "mon": "krookodile"
+    },
+    {
+      "mon": "tropius"
+    }
+  ],
+  "phases": [
+    {
+      "cols": [
+        "{honchkrow}",
+        "{s:2} → {krookodile}",
+        "{s:3} → {tropius}"
+      ],
+      "turns": [
+        [
+          "{m:captivate}",
+          {
+            "en": "Switch to {krookodile}",
+            "fr": "Switch {krookodile}"
+          },
+          {
+            "en": "Switch to {tropius}",
+            "fr": "Switch {tropius}"
+          }
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          "{i:x_attack} → {krookodile}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          {
+            "en": "{i:hyper_potion} whoever needs it",
+            "fr": "{i:hyper_potion} à qui en a besoin"
+          }
+        ],
+        [
+          "{i:hyper_potion}",
+          "{m:earthquake}",
+          "{i:hyper_potion} / {m:wide_guard}"
+        ]
+      ],
+      "hp": {
+        "honchkrow": "100 %",
+        "krookodile": "100 %",
+        "tropius": "≥ 60 %"
+      },
+      "notes": [
+        {
+          "icon": "healing",
+          "en": "Turn 4 is only there to heal up to the HP line.",
+          "fr": "Le tour 4 sert seulement à soigner jusqu'aux seuils de PV.",
+          "by": "Visos",
+          "src": null
+        }
+      ]
+    },
+    {
+      "cols": [
+        "{s:4} → {honchkrow}",
+        "{krookodile}",
+        "{tropius}"
+      ],
+      "turns": [
+        [
+          "{i:x_attack} → {krookodile}",
+          {
+            "en": "{m:earthquake} (KOs {s:4}, Moxie)",
+            "fr": "{m:earthquake} (met {s:4} K.O., Moxie)"
+          },
+          "{m:sunny_day}"
+        ],
+        [
+          "{i:revive} → {s:4}",
+          {
+            "en": "{m:crunch} ({m:sleep_talk} if asleep)",
+            "fr": "{m:crunch} ({m:sleep_talk} si endormi)",
+            "alt": {
+              "en": "{m:fling}: same result, also poisons the boss",
+              "fr": "{m:fling} : même résultat, empoisonne en plus le boss",
+              "by": "Skan",
+              "src": null
+            }
+          },
+          "{m:tailwind}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          {
+            "en": "{i:full_heal} if status, else {m:helping_hand}",
+            "fr": "{i:full_heal} si statut, sinon {m:helping_hand}"
+          }
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          "{i:full_heal} / {m:helping_hand}"
+        ]
+      ],
+      "hp": {
+        "honchkrow": "≥ 90 %",
+        "krookodile": "≥ 78 %",
+        "tropius": "≥ 60 %"
+      },
+      "notes": [
+        {
+          "icon": "dangerous",
+          "en": "Only real fail: {honchkrow} and {krookodile} asleep at the same time, everyone gets forced out. Aim for 4 turns.",
+          "fr": "Seul vrai échec : {honchkrow} et {krookodile} endormis en même temps, tout le monde est éjecté. Vise 4 tours.",
+          "by": "Visos",
+          "src": null
+        },
+        {
+          "icon": "schedule",
+          "en": "Turn 5 or more is fine if you are not too unlucky.",
+          "fr": "Un tour 5 ou plus, ça passe si tu n'es pas trop malchanceux.",
+          "by": "Visos",
+          "src": null
+        },
+        {
+          "icon": "bedtime",
+          "en": "{honchkrow} or {tropius} still asleep at the end: no problem, their berry is back and cures them at the end of P3 T1.",
+          "fr": "{honchkrow} ou {tropius} encore endormi à la fin : aucun souci, leur baie revient et les réveille à la fin de P3 T1.",
+          "by": "Skan",
+          "src": null,
+          "mod": true
+        }
+      ]
+    },
+    {
+      "cols": [
+        "{honchkrow}",
+        "{krookodile}",
+        "{tropius}"
+      ],
+      "turns": [
+        [
+          "{i:x_attack} → {krookodile}",
+          "{m:earthquake}",
+          {
+            "en": "{i:cat_cookie} (sets Tailwind)",
+            "fr": "{i:cat_cookie} (pose Vent Arrière)"
+          }
+        ],
+        [
+          "{m:assurance}",
+          "{m:fling}",
+          "{i:x_attack} → {honchkrow}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          "{m:helping_hand} → {honchkrow}"
+        ]
+      ],
+      "notes": [
+        {
+          "icon": "coronavirus",
+          "en": "Boss still standing: stall a few turns, the poison finishes it.",
+          "fr": "Boss encore debout : temporise quelques tours, le poison l'achève.",
+          "by": "Visos",
+          "src": null
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "icon": "warning",
+      "when": {
+        "en": "Pumpthief",
+        "fr": "Pumpthief"
+      },
+      "do": "{tropius} {i:x_attack} → {krookodile}",
+      "by": "Visos",
+      "src": null,
+      "alt": {
+        "en": "In P3: {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. At +2 alone, Krookodile can miss a OHKO.",
+        "fr": "En P3 : {honchkrow} {i:x_attack} → {krookodile}, {krookodile} {m:earthquake}, {tropius} {m:helping_hand} → {krookodile}. À +2 seul, Crocorible peut rater un OHKO.",
+        "by": "Skan",
+        "src": null
+      }
+    },
+    {
+      "icon": "priority_high",
+      "when": {
+        "en": "Pumprincess in P3 T3",
+        "fr": "Pumprincess en P3 T3"
+      },
+      "do": {
+        "en": "{i:max_potion} → {krookodile}",
+        "fr": "{i:max_potion} → {krookodile}"
+      },
+      "by": "Visos",
+      "src": null,
+      "alt": {
+        "en": "Always do it: priority Vacuum Wave, sometimes aimed at Tropius. Who uses the potion isn't specified: {tropius} instead of Helping Hand keeps Honchkrow's Assurance.",
+        "fr": "Toujours le faire : Onde Vide prioritaire, parfois sur Tropius. Qui donne la potion n'est pas précisé : {tropius} à la place de Coup d'Main garde l'Assurance de Corboss.",
+        "by": "Skan · Claude",
+        "src": null
+      }
+    },
+    {
+      "icon": "shield",
+      "when": "Li'l Pump",
+      "do": "{tropius} {m:wide_guard}",
+      "by": "Council",
+      "src": null
+    },
+    {
+      "icon": "bedtime",
+      "when": {
+        "en": "{krookodile} asleep",
+        "fr": "{krookodile} endormi"
+      },
+      "do": "{m:sleep_talk}",
+      "by": "Visos",
+      "src": null
+    },
+    {
+      "icon": "auto_awesome",
+      "when": {
+        "en": "Pumpthief in P3 T3 (one more turn, Honchkrow can't attack)",
+        "fr": "Pumpthief en P3 T3 (un tour de plus, Corboss ne peut pas attaquer)"
+      },
+      "do": {
+        "en": "Keep a special attacker with Shadow Ball among the particle mons.",
+        "fr": "Garder un attaquant spécial avec Ball'Ombre parmi les particules."
+      },
+      "by": "Skan",
+      "src": null,
+      "mod": true
+    },
+    {
+      "icon": "visibility_off",
+      "when": {
+        "en": "Cursed Body particle mon",
+        "fr": "Particule avec Cursed Body"
+      },
+      "do": {
+        "en": "Slot 3. Pumprincess spawning on the left: no Trace, safe. On the right: Earthquake can get disabled.",
+        "fr": "Slot 3. Pumprincess à gauche : pas de Trace, aucun risque. À droite : Séisme peut être bloqué."
+      },
+      "by": "Skan",
+      "src": null,
+      "mod": true
+    }
+  ],
+  "stock": [
+    {
+      "item": "x_attack",
+      "qty": 6
+    },
+    {
+      "item": "hyper_potion",
+      "qty": 4
+    },
+    {
+      "item": "revive",
+      "qty": 2
+    },
+    {
+      "item": "full_heal",
+      "qty": 4
+    },
+    {
+      "item": "cat_cookie",
+      "qty": 1
+    },
+    {
+      "item": "max_potion",
+      "qty": 1
+    }
+  ],
+  "teamGuide": {
+    "types": {
+      "honchkrow": [
+        "dark",
+        "flying"
+      ],
+      "krookodile": [
+        "ground",
+        "dark"
+      ],
+      "tropius": [
+        "grass",
+        "flying"
+      ]
+    },
+    "start": {
+      "honchkrow": "chesto_berry",
+      "krookodile": "poison_barb",
+      "tropius": "lum_berry"
+    },
+    "attention": [
+      {
+        "icon": "female",
+        "key": "pk_att_female"
+      },
+      {
+        "icon": "speed",
+        "key": "pk_att_speed"
+      },
+      {
+        "icon": "autorenew",
+        "key": "pk_att_items"
+      }
+    ],
+    "mons": {
+      "honchkrow": {
+        "ability": "Super Luck",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 252 Def",
+        "note": {
+          "en": "Female. Speed 178: must stay slower than Krookodile.",
+          "fr": "Femelle. Vitesse 178 : doit rester plus lent que Crocorible."
+        },
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "captivate"
+          },
+          null,
+          null
+        ]
+      },
+      "krookodile": {
+        "ability": "Moxie",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 132 Def / 126 Spe",
+        "note": {
+          "en": "Speed 251: outspeeds the Phase 1 Pumpthief.",
+          "fr": "Vitesse 251 : plus rapide que le Pumpthief de la phase 1."
+        },
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "crunch"
+          },
+          {
+            "m": "sleep_talk"
+          },
+          {
+            "m": "fling",
+            "rec": true
+          }
+        ]
+      },
+      "tropius": {
+        "ability": "Harvest",
+        "nature": "Bold / Impish",
+        "evs": "252 HP / 252 Def",
+        "note": {
+          "en": "Sunny Day + Harvest: Lum Berry back every turn.",
+          "fr": "Zénith + Harvest : Baie Prine récupérée à chaque tour."
+        },
+        "moves": [
+          {
+            "m": "helping_hand"
+          },
+          {
+            "m": "wide_guard"
+          },
+          {
+            "m": "tailwind"
+          },
+          {
+            "m": "sunny_day"
+          }
+        ]
+      }
+    }
+  }
+}

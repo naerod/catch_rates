@@ -7,6 +7,7 @@ const Money = (() => {
   const METHODS = [
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
+    { id: 'pumpking-3', section: 'event', icon: 'skull', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['HALLOWEEN 2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
   ];
   /* Raccourcis : sources deja couvertes par les guides (Google Docs et outils), ouvertes directement dans un nouvel onglet. */
   const LINKS = [
@@ -32,7 +33,7 @@ const Money = (() => {
     if (seg[0] === state.method) seg.shift();
     state.view = seg[0] === 'team' ? 'team' : 'route';
     if (state.view === 'team') seg.shift();
-    state.region = data.regions.find(r => r.id === seg[0])?.id || null;
+    state.region = data.regions?.find(r => r.id === seg[0])?.id || null;
   }
   /* Historique : chaque changement d'ecran est une entree, le retour arriere du navigateur reste dans le site. */
   const push = h => { if (location.hash !== h) history.pushState({ m: 1 }, '', h); };
@@ -49,7 +50,9 @@ const Money = (() => {
     return `<span class="sprite-box"><img class="sprite icon ${cls}" src="/gym-rerun/icons/${dex}.png" alt="${esc(label)}" width="40" height="30" decoding="async"></span>`;
   }
   let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
-  const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs' };
+  const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs',
+    chesto_berry: 'chesto-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion' };
+  const itemImg = it => ITEM_ICON[it] ? `<img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">` : icon('cookie');   // objet d'event sans sprite
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
   function itemBadge(id) {
     const it = gymItems[id];
@@ -175,7 +178,7 @@ const Money = (() => {
 
   function charmPanel() {
     const panel = $('money-charm');
-    if (!panel || !data) return;
+    if (!panel || !data?.regions) return;
     const c = charmCalc();
     const rows = c.rows.map(r => `<tr class="${c.best && c.best.id === r.id ? 'is-best' : ''}">` +
       `<th scope="row">${charmImg(r)}${esc(t(r.nameKey))}${c.best && c.best.id === r.id ? `<span class="best-chip">${icon('check_circle')}${esc(t('charm_best'))}</span>` : ''}</th>` +
@@ -227,11 +230,13 @@ const Money = (() => {
     const el = $('money-menu');
     const first = new Map([...el.querySelectorAll('.money-item')].map(c => [c.dataset.id, c.getBoundingClientRect()]));
     const sorted = [...METHODS].sort((a, b) => isFav(b.id) - isFav(a.id));        // tri stable : favoris d'abord
-    const guides = sorted.map(m =>
+    const cards = list => list.map(m =>
       `<div class="money-item" data-id="${m.id}"><button type="button" class="money-card" data-method="${m.id}">${icon(m.icon)}<span class="mc-text"><span class="mc-name">${esc(t(m.nameKey))}${m.live ? `<span class="mc-live" title="${esc(t('money_live'))}" aria-label="${esc(t('money_live'))}">${icon('check_circle')}</span>` : ''}</span>${tagsHTML(m)}</span>${icon('arrow_forward')}</button>${favBtn(m.id)}</div>`).join('');
+    const guides = cards(sorted.filter(m => !m.section)), events = cards(sorted.filter(m => m.section === 'event'));
     const links = LINKS.map(l =>
       `<a class="money-card is-link" href="${l.url}" target="_blank" rel="noopener noreferrer">${icon(l.icon)}<span class="mc-text"><span class="mc-name">${esc(l.name || t(l.nameKey))}</span><span class="money-tags"><span class="tag">${esc(l.tag)}</span></span></span>${icon('open_in_new')}</a>`).join('');
     el.innerHTML = `<section class="money-section"><h2 class="money-section-title">${esc(t('money_guides'))}</h2><div class="money-grid">${guides}</div></section>` +
+      `<section class="money-section"><h2 class="money-section-title">${esc(t('money_events'))}</h2><div class="money-grid">${events}</div></section>` +
       `<section class="money-section"><h2 class="money-section-title">${esc(t('money_shortcuts'))}</h2><div class="money-grid">${links}</div></section>`;
     if (!animate) return;
     el.querySelectorAll('.money-item').forEach(c => {                                // FLIP : les cartes glissent vers leur nouvelle place
@@ -272,7 +277,7 @@ const Money = (() => {
       ? `<button type="button" class="start-panel" data-view="team" title="${label}" aria-label="${label}"><ul>${Object.keys(st).map(id => `<li>${monSprite(id)}</li>`).join('')}</ul>${icon('chevron_right')}</button>`
       : `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${label}">${icon('groups')}<span class="lbl">${label}</span></button>`;
     gymItems = {};
-    $('money-charm-slot').innerHTML = charmButton();
+    $('money-charm-slot').innerHTML = data.charm === false ? '' : charmButton();
   }
 
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
@@ -301,8 +306,35 @@ const Money = (() => {
       (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div>`) + `</article>`;
   }
 
+  /* ── Guides d'event : phases de combat tour par tour (tableau Pokemon x tours) ── */
+  const txt = v => (v && typeof v === 'object' ? v[i18n.lang] || v.en : v ?? '');
+  const rich = v => esc(txt(v)).replace(/\{(?:([mis]):)?(\w+)\}/g, (_, k, id) =>
+    k === 'm' ? `<b class="tk-move">${esc(t('mv_' + id))}</b>`
+    : k === 'i' ? `<span class="ev-item">${itemImg(id)}<b>${esc(t('it_' + id))}</b></span>`
+    : k === 's' ? `<span class="ev-slot">${icon('auto_awesome')}${esc(t('pk_slot'))} ${id}</span>`
+    : `<span class="tk-act" data-mon="${id}">${monSprite(id, false)}<b>${esc(name(data.mons, id))}</b></span>`);
+  /* Qui le dit : auteur (+ lien du message source s'il est connu) ; mod = suggestion par rapport a la strategie de base */
+  const by = x => !x?.by ? '' : x.src ? `<a class="ev-by" href="${esc(x.src)}" target="_blank" rel="noopener noreferrer">${icon('link')}${esc(x.by)}</a>` : `<span class="ev-by">${esc(x.by)}</span>`;
+  const alt = x => x?.alt ? `<span class="ev-alt">${icon('tips_and_updates')}<span>${rich(x.alt)}</span>${by(x.alt)}</span>` : '';
+  const cell = x => rich(x) + alt(x);
+  const colMon = c => [...txt(c).matchAll(/\{(\w+)\}/g)].pop()?.[1];   // Pokemon de la colonne (le dernier cite) : repere des cases sur mobile
+  function phasesStage() {
+    const slots = `<section class="ev-card ev-slots"><h3>${icon('format_list_numbered')}${esc(t('pk_order'))}</h3><ol>${data.slots.map(s => s.mon
+      ? `<li data-mon="${s.mon}">${monSprite(s.mon, false)}<b>${esc(name(data.mons, s.mon))}</b></li>`
+      : `<li class="is-particle">${icon('auto_awesome')}<b>${esc(t('pk_particle'))}</b><span>${esc(txt(s.req))}</span></li>`).join('')}</ol></section>`;
+    const phases = data.phases.map((p, n) => `<article class="ev-card ev-phase" style="--n:${n}"><h3><span class="gym-num">${n + 1}.</span>${esc(t('pk_phase'))} ${n + 1}</h3>` +
+      `<div class="ev-table-wrap"><table class="ev-table"><thead><tr><th scope="col">${esc(t('pk_turn'))}</th>${p.cols.map(c => `<th scope="col">${rich(c)}</th>`).join('')}</tr></thead>` +
+      `<tbody>${p.turns.map((row, i) => `<tr><th scope="row">${i + 1}</th>${row.map((c, k) => `<td${c?.alt ? ' class="has-alt"' : ''}><span class="ev-col" data-mon="${colMon(p.cols[k])}">${monSprite(colMon(p.cols[k]), false)}</span>${cell(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` +
+      (p.hp ? `<p class="ev-hp">${icon('favorite')}<span class="tp-label">${esc(t('pk_hp_line'))}</span>${Object.entries(p.hp).map(([m, v]) => `<span class="tk-act" data-mon="${m}">${monSprite(m, false)}<b>${esc(v)}</b></span>`).join('')}</p>` : '') +
+      (p.notes || []).map(x => `<p class="gym-note${x.mod ? ' is-mod' : ''}">${icon(x.mod ? 'tips_and_updates' : x.icon)}<span>${rich(x)} ${by(x)}</span></p>`).join('') + '</article>').join('');
+    const exc = `<section class="ev-card ev-exc"><h3>${icon('report')}${esc(t('pk_exceptions'))}</h3><p class="ev-legend">${icon('tips_and_updates')}${esc(t('pk_suggested'))}</p><dl>${data.exceptions.map(x =>
+      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${icon(x.mod ? 'tips_and_updates' : x.icon)}${rich(x.when)}</dt><dd>${rich(x.do)} ${by(x)}${alt(x)}</dd></div>`).join('')}</dl></section>`;
+    return slots + phases + exc + `<p class="ev-credits">${icon('groups')}<span>${esc(txt(data.credits))} <a href="${data.source}" target="_blank" rel="noopener noreferrer">Bilibili</a></span></p>`;
+  }
+
   function stage(animate) {
     const el = $('money-stage');
+    if (data.phases) { el.innerHTML = `<div class="ev-stage">${phasesStage()}</div>`; if (animate) { el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering'); } return; }
     // Ordre de lecture d'un livre : de gauche a droite, puis de haut en bas (1 2 / 3 4 / 5 6 ...).
     el.innerHTML = [].concat(data.note || []).map(k => `<p class="gym-note guide-note">${icon('info')}<span>${esc(t('gr_' + k))}</span></p>`).join('') + data.regions.map(r => `<section class="region" id="region-${r.id}" aria-labelledby="rt-${r.id}"><h2 class="region-title" id="rt-${r.id}">${esc(r.name)}</h2>` +
       `<div class="stage-body">${r.gyms.map((g, i) => card(g, i, r)).join('')}</div></section>`).join('');
@@ -312,19 +344,20 @@ const Money = (() => {
   /* ── Page "Team building guide" : l'equipe a construire et les points d'attention, tires des donnees de la methode ── */
   function teamPage() {
     const tg = data.teamGuide || {};
-    const itemChip = it => `<span class="tp-item"><img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">${esc(t('it_' + it))}</span>`;
+    const itemChip = it => `<span class="tp-item">${itemImg(it)}${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
-    const order = tg.start ? Object.keys(tg.start) : data.team;      // meme ordre que le bandeau de l'en-tete
+    const order = tg.start ? Object.keys(tg.start) : data.team;
+    const lv = tg.level ?? 100;      // meme ordre que le bandeau de l'en-tete
     const mons = order.map(id => {
       const x = (tg.mons || {})[id] || {};
-      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(x[k])}</span></div>`).join('');
+      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
-        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} 100</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
+        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
         extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" data-tip="${esc(t('tp_free_slot'))}" tabindex="0">${icon('add')}</li>` :
         `<li class="${m.opt || m.rec ? 'is-opt' : 'is-req'}"><b class="tk-move">${esc(t('mv_' + m.m))}</b>` +
         (m.hm ? `<span class="tp-i" data-tip="${esc(t('tp_hm_tip'))}" tabindex="0">${icon('info')}</span>` : m.rec ? `<span class="tp-i is-rec" data-tip="${esc(t('tp_rec_tip'))}" tabindex="0">${icon('info')}</span>` : '') + '</li>').join('')}</ol></div>` : '') + '</article>';
     }).join('');
-    const stock = data.stock.map(x => `<li><img src="/gym-rerun/items/${ITEM_ICON[x.item.replace('_extra', '')] || ITEM_ICON[x.item]}.png" alt="" width="30" height="30"><b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
+    const stock = data.stock.map(x => `<li>${itemImg(x.item.replace('_extra', ''))}<b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(a.gym)}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
     const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
