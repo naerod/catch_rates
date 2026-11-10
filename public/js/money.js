@@ -284,6 +284,7 @@ const Money = (() => {
       : `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${label}">${icon('groups')}<span class="lbl">${label}</span></button>`;
     gymItems = {};
     $('money-charm-slot').innerHTML = data.charm === false ? '' : charmButton();
+    $('money-src-slot').innerHTML = data.source ? `<a class="btn btn-outline guide-link" href="${esc(data.source)}" target="_blank" rel="noopener">${icon('open_in_new')}<span class="lbl">${esc(t('money_source'))}</span></a>` : '';   // source d'origine du guide
   }
 
   /* Une carte d'arene (sans le bandeau "entre deux cartes"). */
