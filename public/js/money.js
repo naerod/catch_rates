@@ -9,6 +9,7 @@ const Money = (() => {
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
     { id: 'pumpking-3', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
     { id: 'pumpking-5', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
+    { id: 'pumpking-cncl', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'cn_name', shortKey: 'cn_short', tags: ['2026', 'HARD MODE', 'CNcl'], live: true, src: '/data/pumpking-cncl.json' },
   ];
   /* Sous-section Event : un bouton par event, qui deplie ses guides */
   const EVENTS = [{ id: 'halloween', icon: '/img/event-halloween.png' }, { id: 'christmas', icon: 'ac_unit' }, { id: 'lunar', icon: 'bedtime' }];

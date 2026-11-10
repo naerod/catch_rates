@@ -1,0 +1,384 @@
+{
+  "_comment": "Pumpking Hard Mode, 5 Pokémon, stratégie de CNcl (doc + PokePaste 2026). Textes : {en, fr}. Jetons : {mon}, {i:objet}, {m:attaque}, {s:N}.",
+  "charm": false,
+  "credits": {
+    "en": "Strategy by CNcl (2026). Builds from CNcl's PokePaste.",
+    "fr": "Stratégie de CNcl (2026). Sets tirés du PokePaste de CNcl."
+  },
+  "source": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub",
+  "links": [
+    {
+      "href": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub",
+      "label": {
+        "en": "CNcl guide",
+        "fr": "Guide CNcl"
+      }
+    },
+    {
+      "href": "https://pokepast.es/6fc25cdab51a6384",
+      "label": "PokePaste"
+    }
+  ],
+  "team": [
+    "smeargle",
+    "excadrill",
+    "tyranitar",
+    "krookodile",
+    "hydreigon"
+  ],
+  "mons": {
+    "smeargle": {
+      "dex": 235,
+      "en": "Smeargle",
+      "fr": "Queulorior"
+    },
+    "excadrill": {
+      "dex": 530,
+      "en": "Excadrill",
+      "fr": "Minotaupe"
+    },
+    "tyranitar": {
+      "dex": 248,
+      "en": "Tyranitar",
+      "fr": "Tyranocif"
+    },
+    "krookodile": {
+      "dex": 553,
+      "en": "Krookodile",
+      "fr": "Crocorible"
+    },
+    "hydreigon": {
+      "dex": 635,
+      "en": "Hydreigon",
+      "fr": "Trioxhydre"
+    }
+  },
+  "slots": [
+    {
+      "mon": "smeargle"
+    },
+    {
+      "mon": "excadrill"
+    },
+    {
+      "mon": "tyranitar"
+    },
+    {
+      "req": {
+        "en": "Ditto Lv. 50, or any Pokémon that does not resist Ground and is 2HKOed by Excadrill. Flying: give it an Iron Ball.",
+        "fr": "Métamorph N.50, ou tout Pokémon qui ne résiste pas au Sol et tombe en 2 coups de Minotaupe. Type Vol : une Balle Fer."
+      },
+      "short": {
+        "en": "Ditto Lv. 50 or any",
+        "fr": "Métamorph N.50 ou libre"
+      }
+    },
+    {
+      "mon": "krookodile"
+    },
+    {
+      "mon": "hydreigon"
+    }
+  ],
+  "phases": [
+    {
+      "cols": [
+        "{smeargle} → {s:4} → {hydreigon}",
+        "{excadrill}",
+        "{tyranitar}"
+      ],
+      "turns": [
+        [
+          {
+            "who": "smeargle",
+            "en": "{m:protect}",
+            "fr": "{m:protect}"
+          },
+          "{m:swords_dance}",
+          "{m:leer}"
+        ],
+        [
+          {
+            "who": "s4",
+            "en": "Switch to the particle. If it faints, send {hydreigon}.",
+            "fr": "Switch sur la particule. Si elle tombe, envoie {hydreigon}."
+          },
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          {
+            "who": "hydreigon",
+            "en": "{m:assurance}",
+            "fr": "{m:assurance}"
+          },
+          "{m:earthquake}",
+          "{m:leer}"
+        ]
+      ],
+      "notes": [
+        {
+          "en": "Speed order: {excadrill}, {krookodile} > {hydreigon} > {tyranitar} > 213.",
+          "fr": "Ordre de vitesse : {excadrill}, {krookodile} > {hydreigon} > {tyranitar} > 213.",
+          "by": "CNcl",
+          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+        }
+      ]
+    },
+    {
+      "cols": [
+        "{smeargle} → {tyranitar}",
+        "{krookodile}",
+        "{hydreigon}"
+      ],
+      "turns": [
+        [
+          {
+            "who": "smeargle",
+            "en": "{m:heal_block}",
+            "fr": "{m:heal_block}"
+          },
+          "{m:protect}",
+          "{i:x_attack} → {krookodile}"
+        ],
+        [
+          {
+            "who": "tyranitar",
+            "en": "{m:taunt}",
+            "fr": "{m:taunt}"
+          },
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        "{tyranitar}",
+        "{krookodile}",
+        "{excadrill} → {hydreigon}"
+      ],
+      "turns": [
+        [
+          "{m:leer}",
+          "{m:leer}",
+          {
+            "who": "excadrill",
+            "en": "{i:revive} the particle, then send {hydreigon}",
+            "fr": "{i:revive} la particule, puis envoie {hydreigon}"
+          }
+        ],
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          {
+            "who": "hydreigon",
+            "en": "{m:assurance}",
+            "fr": "{m:assurance}"
+          }
+        ],
+        [
+          "{m:assurance}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
+      ],
+      "notes": [
+        {
+          "en": "Pick order: {tyranitar}, then {krookodile}, then {excadrill}.",
+          "fr": "Ordre d'envoi : {tyranitar}, puis {krookodile}, puis {excadrill}.",
+          "by": "CNcl",
+          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "when": {
+        "en": "Particle is Flying",
+        "fr": "La particule est de type Vol"
+      },
+      "do": {
+        "en": "Give it an {i:iron_ball} so {m:earthquake} can hit it.",
+        "fr": "Lui donner une {i:iron_ball} pour que {m:earthquake} puisse la toucher."
+      },
+      "by": "CNcl",
+      "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+    },
+    {
+      "when": {
+        "en": "Excadrill takes a crit",
+        "fr": "Minotaupe prend un coup critique"
+      },
+      "do": {
+        "en": "{i:figy_berry} heals it back from red HP. Any berry of a flavor it does not dislike works.",
+        "fr": "La {i:figy_berry} le remonte depuis les PV rouges. N'importe quelle baie d'un goût qu'il n'aime pas moins convient."
+      },
+      "by": "CNcl",
+      "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+    }
+  ],
+  "stock": [
+    {
+      "item": "x_attack",
+      "qty": 1
+    },
+    {
+      "item": "revive",
+      "qty": 1
+    },
+    {
+      "item": "shuca_berry",
+      "qty": 1
+    }
+  ],
+  "teamGuide": {
+    "types": {
+      "smeargle": [
+        "normal"
+      ],
+      "excadrill": [
+        "ground",
+        "steel"
+      ],
+      "tyranitar": [
+        "rock",
+        "dark"
+      ],
+      "krookodile": [
+        "ground",
+        "dark"
+      ],
+      "hydreigon": [
+        "dark",
+        "dragon"
+      ]
+    },
+    "start": {
+      "smeargle": "chilan_berry",
+      "excadrill": "figy_berry",
+      "tyranitar": "air_balloon",
+      "krookodile": "soft_sand",
+      "hydreigon": "choice_band"
+    },
+    "attention": [
+      {
+        "icon": "speed",
+        "key": "cn_att_speed"
+      },
+      {
+        "icon": "shield",
+        "key": "cn_att_iv"
+      },
+      {
+        "icon": "inventory_2",
+        "key": "cn_att_items"
+      }
+    ],
+    "mons": {
+      "smeargle": {
+        "level": 78,
+        "ability": "Technician",
+        "nature": "Naive",
+        "evs": "82 HP / 252 Spe",
+        "ivs": "0 HP / 0 SpD / 31 Spe",
+        "moves": [
+          {
+            "m": "heal_block"
+          },
+          {
+            "m": "protect"
+          },
+          null,
+          null
+        ]
+      },
+      "excadrill": {
+        "ability": "Sand Force",
+        "nature": "Adamant / Jolly",
+        "evs": "252 Atk / 252 Spe",
+        "ivs": "5x31 recommended, min. 31 Atk",
+        "note": {
+          "en": "Figy Berry: a crit puts it in red HP, the berry heals it back.",
+          "fr": "Baie Figuy : un critique le met en PV rouges, la baie le remonte."
+        },
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "swords_dance"
+          },
+          null,
+          null
+        ]
+      },
+      "tyranitar": {
+        "ability": "Sand Stream",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "244 Atk / 40 SpD / 222 Spe",
+        "ivs": "5x31 recommended, min. 31 Atk / 31 Spe",
+        "note": {
+          "en": "Final speed must be 214 or more. You can move Attack EVs into SpD (CNcl runs 140 Atk / 140 SpD).",
+          "fr": "Vitesse finale de 214 ou plus. Tu peux déplacer des EV d'Attaque en Déf. Spé. (CNcl joue 140 Atk / 140 Déf. Spé.)."
+        },
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "taunt"
+          },
+          {
+            "m": "leer"
+          },
+          null
+        ]
+      },
+      "krookodile": {
+        "ability": "Moxie",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 140 Def",
+        "ivs": "5x31 recommended, min. 31 Atk",
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "crunch"
+          },
+          {
+            "m": "leer"
+          },
+          {
+            "m": "protect"
+          }
+        ]
+      },
+      "hydreigon": {
+        "ability": "Levitate",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 252 Def",
+        "ivs": "4x31 + 13 Spe, min. 31 Atk",
+        "note": {
+          "en": "Speed IV 13: it must stay slower than Krookodile and faster than Tyranitar.",
+          "fr": "IV Vitesse 13 : il doit rester plus lent que Crocorible et plus rapide que Tyranocif."
+        },
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          null,
+          null,
+          null
+        ]
+      }
+    }
+  }
+}
