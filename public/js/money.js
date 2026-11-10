@@ -368,9 +368,9 @@ const Money = (() => {
     const itemChip = it => `<span class="tp-item">${itemImg(it)}${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
     const order = tg.start ? Object.keys(tg.start) : data.team;
-    const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
     const mons = order.map(id => {
       const x = (tg.mons || {})[id] || {};
+      const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
       const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
