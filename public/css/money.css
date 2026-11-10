@@ -544,3 +544,17 @@ a.ev-by:hover { border-color: var(--accent); }
 .ev-order > .ev-legend { flex: 0 0 15rem; }
 .pix-icon { width: 1.6em; height: 1.6em; object-fit: contain; image-rendering: pixelated; flex: none; }
 .money-card .pix-icon, .home-card .pix-icon { width: 40px; height: 40px; }
+/* Page equipe : tient dans un ecran 1080p (barre d'objets sur une ligne, equipe sur une rangee) */
+.tp-start { display: flex; align-items: center; gap: 1.5rem; padding: 0.4rem 1rem; margin-bottom: 0.75rem; }
+.tp-start h3 { margin: 0; font-size: 1rem; white-space: nowrap; }
+.tp-start ul { flex: 1; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
+.tp-start li { flex-direction: row; justify-content: center; gap: 0.4rem; text-align: left; }
+.tp-start li > :is(.tp-item, b) { font-size: 0.85rem; }
+.tp-start li b { order: 2; }
+.tp-start .sprite-box { --k: 1; }
+.tp-team { grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 0.6rem; }
+.tp-mon { gap: 0.35rem; padding: 0.6rem 0.75rem; }
+.tp-mon .sprite-box { --k: 1.5; }
+.tp-mon-head h3 { font-size: 1.1rem; }
+.tp-slots li { min-height: 0; padding-block: 0.25rem; }
+@media (max-width: 899px) { .tp-start { flex-direction: column; align-items: stretch; } }
