@@ -5,8 +5,8 @@
       "v": "3.23.7",
       "date": "2026-11-10",
       "title": { "fr": "Favoris : un seul bouton d'ajout", "en": "Favourites: a single add button" },
-      "fr": ["Accueil : un seul « + » dès qu'il y a un favori, plus aucun à partir de trois.", "Money making : toutes les tuiles ont la même hauteur.", "Une seule police sur tout le site (Google Sans Flex, comme la barre du haut)."],
-      "en": ["Home: a single \"+\" once you have a favourite, none from three on.", "Money making: all tiles have the same height.", "One font across the whole site (Google Sans Flex, like the top bar)."]
+      "fr": ["Accueil : un seul « + » dès qu'il y a un favori, plus aucun à partir de trois.", "Money making : toutes les tuiles ont la même hauteur.", "Une seule police sur tout le site (Google Sans Flex, comme la barre du haut).", "La barre du haut (langue, thème, connexion) reste bleue sur toutes les pages ; le doré reste réservé au contenu de Money making."],
+      "en": ["Home: a single \"+\" once you have a favourite, none from three on.", "Money making: all tiles have the same height.", "One font across the whole site (Google Sans Flex, like the top bar).", "The top bar (language, theme, sign-in) stays blue on every page; gold is kept for Money making content."]
     },
     {
       "v": "3.23.6",
