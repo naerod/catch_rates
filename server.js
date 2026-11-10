@@ -236,6 +236,7 @@ app.get('/api/auth/me', (req, res) => {
     authenticated: true, username, name, email, avatar: avatarUrl(req, username),
     role: isAdmin ? 'admin' : isEventManager ? 'event-manager' : isUser ? 'user' : 'none',
     isAdmin, isEventManager, isUser,
+    preprod: groups.some(g => ['_preprod-access', 'hub-admins', 'authentik Admins'].includes(g)),   // bouton Preprod de <naerod-header>
   });
 });
 
