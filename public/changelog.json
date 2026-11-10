@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.23.8",
+      "date": "2026-11-10",
+      "title": { "fr": "Accueil : suggestions et évènement en cours", "en": "Home: suggestions and running event" },
+      "fr": ["Sans compte, « Favoris » devient « Suggestions », sans l'étiquette Exemple.", "Nouvelle section « Évènement en cours » : visible de 3 jours avant le début à 3 jours après la fin (Halloween, Noël, Nouvel An lunaire), absente sinon."],
+      "en": ["Without an account, \"Favourites\" becomes \"Suggested\", without the Example tag.", "New \"Event running\" section: shown from 3 days before the start to 3 days after the end (Halloween, Christmas, Lunar New Year), hidden otherwise."]
+    },
+    {
       "v": "3.23.7",
       "date": "2026-11-10",
       "title": { "fr": "Favoris : un seul bouton d'ajout", "en": "Favourites: a single add button" },

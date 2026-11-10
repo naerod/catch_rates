@@ -643,8 +643,8 @@ document.addEventListener('keydown', e => {
 
 /* ══════════════ ACCUEIL : raccourcis ══════════════ */
 /* Explorer ; Favoris (methodes Money making + boites d'evenements + "+" pour en ajouter) ;
-   Suggestions : evenements d'actualite (5 jours avant le debut -> 5 jours apres la fin), un a la fois, en rotation. */
-const DAY = 86400000, SUGGEST_BEFORE = 5, SUGGEST_AFTER = 5, EVENT_DAYS = 15, ROTATE_MS = 8000;
+   Evenement en cours : 3 jours avant le debut -> fin (ou debut + 2 semaines) + 3 jours ; section absente sinon, un a la fois, en rotation. */
+const DAY = 86400000, SUGGEST_BEFORE = 3, SUGGEST_AFTER = 3, EVENT_DAYS = 14, ROTATE_MS = 8000;
 const dayStart = iso => new Date(`${iso}T00:00:00`).getTime();
 const inSuggestWindow = ev => {
   if (!ev.starts_at) return false;
@@ -672,7 +672,7 @@ async function renderHome() {
     const adds = nFav >= 3 ? '' : nFav ? addCard('#money', 'add', 'home_add_method') : addCard('#money', 'add', 'home_add_method') + addCard('#events', 'add', 'home_add_event');
     el.innerHTML =
       sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
-      sec('home_favs', `<div class="home-grid">${methods}${adds}</div>` +
+      sec(currentOidcUser ? 'home_favs' : 'home_suggested', `<div class="home-grid">${methods}${adds}</div>` +
         (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
       sec('home_suggest', suggest.length ? `<div class="home-suggest">${suggest.map((ev, i) => `<div class="hs-slide${i ? '' : ' is-on'}">${eventCard(ev)}</div>`).join('')}${
         suggest.length > 1 ? `<div class="hs-dots">${suggest.map((_, i) => `<button type="button" class="hs-dot${i ? '' : ' is-on'}" data-slide="${i}" aria-label="${i + 1}/${suggest.length}"></button>`).join('')}</div>` : ''}</div>` : '');
