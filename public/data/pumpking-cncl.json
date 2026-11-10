@@ -222,6 +222,18 @@
       },
       "by": "CNcl",
       "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
+    },
+    {
+      "when": {
+        "en": "Particle too bulky (e.g. Shaymin survives)",
+        "fr": "Particule trop tanky (ex. : Shaymin survit)"
+      },
+      "do": {
+        "en": "Phase 1 turn 1: {tyranitar} uses {i:x_attack} → {excadrill} instead of {m:leer}. At +4 Attack it should go down. Bring a second {i:x_attack}.",
+        "fr": "Phase 1 tour 1 : {tyranitar} utilise {i:x_attack} → {excadrill} à la place de {m:leer}. À +4 en Attaque, elle devrait tomber. Prévois une 2e {i:x_attack}."
+      },
+      "by": "Waldoman22 (TheYDad)",
+      "mod": true
     }
   ],
   "stock": [

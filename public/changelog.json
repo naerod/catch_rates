@@ -5,8 +5,8 @@
       "v": "3.24.0",
       "date": "2026-11-10",
       "title": { "fr": "Guide Pumpking 5 Pokémon de CNcl", "en": "CNcl's Pumpking 5-Pokemon guide" },
-      "fr": ["Nouvelle page Halloween : la stratégie Pumpking Hard Mode à 5 Pokémon de CNcl, avec lien vers son guide et son PokePaste.", "Accueil : un évènement déjà en favori n'apparaît plus deux fois.", "Guides Pumpking : la ligne d'en-tête des colonnes est retirée."],
-      "en": ["New Halloween page: CNcl's 5-Pokemon Pumpking Hard Mode strategy, with links to the original guide and PokePaste.", "Home: an event already in your favourites is no longer shown twice.", "Pumpking guides: the column header row is removed."]
+      "fr": ["Nouvelle page Halloween : la stratégie Pumpking Hard Mode à 5 Pokémon de CNcl, avec lien vers son guide et son PokePaste.", "Accueil : un évènement déjà en favori n'apparaît plus deux fois.", "Guides Pumpking : la ligne d'en-tête des colonnes est retirée.", "Guide CNcl : nouvel imprévu pour une particule trop tanky (Attaque + sur Minotaupe, conseil de Waldoman22)."],
+      "en": ["New Halloween page: CNcl's 5-Pokemon Pumpking Hard Mode strategy, with links to the original guide and PokePaste.", "Home: an event already in your favourites is no longer shown twice.", "Pumpking guides: the column header row is removed.", "CNcl guide: new exception for a too bulky particle (X Attack on Excadrill, tip from Waldoman22)."]
     },
     {
       "v": "3.23.9",
