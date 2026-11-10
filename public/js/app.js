@@ -667,9 +667,12 @@ async function renderHome() {
   const paint = evs => {
     const slugs = evFavs(), methods = Money.homeFavCards(!currentOidcUser), favEvents = evs.filter(ev => slugs.includes(ev.slug));
     const suggest = evs.filter(inSuggestWindow);
+    // Aucun favori : les deux « + » ; 1 ou 2 : un seul ; 3 et plus : plus d'ajout.
+    const nFav = (methods.match(/class="home-card/g) || []).length + favEvents.length;
+    const adds = nFav >= 3 ? '' : nFav ? addCard('#money', 'add', 'home_add_method') : addCard('#money', 'add', 'home_add_method') + addCard('#events', 'add', 'home_add_event');
     el.innerHTML =
       sec('home_explore', `<div class="home-grid">${Money.homeCard('#events', 'event', i18n.t('nav_events'), '', '', 'events')}${Money.homeCard('#money', 'paid', i18n.t('nav_money'), '', '', 'money')}</div>`) +
-      sec('home_favs', `<div class="home-grid">${methods}${addCard('#money', 'add', 'home_add_method')}${addCard('#events', 'add', 'home_add_event')}</div>` +
+      sec('home_favs', `<div class="home-grid">${methods}${adds}</div>` +
         (favEvents.length ? `<div class="home-events">${favEvents.map(ev => eventCard(ev)).join('')}</div>` : '')) +
       sec('home_suggest', suggest.length ? `<div class="home-suggest">${suggest.map((ev, i) => `<div class="hs-slide${i ? '' : ' is-on'}">${eventCard(ev)}</div>`).join('')}${
         suggest.length > 1 ? `<div class="hs-dots">${suggest.map((_, i) => `<button type="button" class="hs-dot${i ? '' : ' is-on'}" data-slide="${i}" aria-label="${i + 1}/${suggest.length}"></button>`).join('')}</div>` : ''}</div>` : '');

@@ -2,6 +2,13 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.23.7",
+      "date": "2026-11-10",
+      "title": { "fr": "Favoris : un seul bouton d'ajout", "en": "Favourites: a single add button" },
+      "fr": ["Accueil : un seul « + » dès qu'il y a un favori, plus aucun à partir de trois."],
+      "en": ["Home: a single \"+\" once you have a favourite, none from three on."]
+    },
+    {
       "v": "3.23.6",
       "date": "2026-11-10",
       "title": { "fr": "Logo citrouille pour Halloween", "en": "Pumpkin logo for Halloween" },
