@@ -371,7 +371,7 @@ const Money = (() => {
     const mons = order.map(id => {
       const x = (tg.mons || {})[id] || {};
       const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
-      const extra = ['ability', 'nature', 'ivs', 'evs', 'note'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
+      const extra = ['ability', 'nature', 'ivs', 'evs'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
         extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" data-tip="${esc(t('tp_free_slot'))}" tabindex="0">${icon('add')}</li>` :
@@ -379,7 +379,9 @@ const Money = (() => {
         (m.hm ? `<span class="tp-i" data-tip="${esc(t('tp_hm_tip'))}" tabindex="0">${icon('info')}</span>` : m.rec ? `<span class="tp-i is-rec" data-tip="${esc(t('tp_rec_tip'))}" tabindex="0">${icon('info')}</span>` : '') + '</li>').join('')}</ol></div>` : '') + '</article>';
     }).join('');
     const stock = data.stock.map(x => `<li>${itemImg(x.item.replace('_extra', ''))}<b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
-    const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(place(data.regions.flatMap(r => r.gyms).find(g => g.name === a.gym) || { name: a.gym }))}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('');
+    // Notes par Pokemon : dans la colonne de droite, apres les points d'attention.
+    const monNotes = order.filter(id => tg.mons?.[id]?.note).map(id => `<li data-mon="${id}">${monSprite(id, false)}<span><b class="tp-note-mon">${esc(name(data.mons, id))}</b> ${esc(txt(tg.mons[id].note))}</span></li>`).join('');
+    const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(place(data.regions.flatMap(r => r.gyms).find(g => g.name === a.gym) || { name: a.gym }))}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('') + monNotes;
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
     const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
       `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';
