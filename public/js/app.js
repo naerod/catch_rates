@@ -666,7 +666,7 @@ async function renderHome() {
   };
   const paint = evs => {
     const slugs = evFavs(), methods = Money.homeFavCards(!currentOidcUser), favEvents = evs.filter(ev => slugs.includes(ev.slug));
-    const suggest = evs.filter(inSuggestWindow);
+    const suggest = evs.filter(ev => inSuggestWindow(ev) && !slugs.includes(ev.slug));   // deja affiche dans les favoris : pas en double
     // Aucun favori : les deux « + » ; 1 ou 2 : un seul ; 3 et plus : plus d'ajout.
     const nFav = (methods.match(/class="home-card/g) || []).length + favEvents.length;
     const adds = nFav >= 3 ? '' : nFav ? addCard('#money', 'add', 'home_add_method') : addCard('#money', 'add', 'home_add_method') + addCard('#events', 'add', 'home_add_event');
