@@ -53,11 +53,11 @@
 /* Sous-section Event : boutons qui deplient les guides de chaque event */
 .mev-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0.8rem; }
 .mev-tab { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 1.1rem 1rem; font-size: 1.2rem !important; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--card); color: var(--text); font: 700 1rem var(--font-head); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-.mev-tab > .material-symbols-outlined:first-child { color: var(--accent); font-size: 32px; }
+.mev-tab > .material-symbols-outlined:first-child { color: var(--ev); font-size: 32px; }
 .mev-tab > .material-symbols-outlined:last-child { transition: transform 0.2s; }
-.mev-tab:hover, .mev-tab[aria-expanded="true"] { border-color: var(--accent); background: var(--accent-glow); }
+.mev-tab:hover, .mev-tab[aria-expanded="true"] { border-color: var(--ev); background: color-mix(in srgb, var(--ev) 14%, transparent); }
 .mev-tab[aria-expanded="true"] > .material-symbols-outlined:last-child { transform: rotate(180deg); }
-.mev-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mev-tab:focus-visible { outline: 2px solid var(--ev); outline-offset: 2px; }
 .mev-empty { display: flex; align-items: center; gap: 0.4rem; margin: 0; color: var(--text-muted); }
 .money-section-title { margin-bottom: 0.75rem; font: 700 1.1rem var(--font-head); letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-dim); }
 .mc-live { display: inline-flex; margin-left: 0.4rem; vertical-align: middle; color: var(--green); }
@@ -561,3 +561,8 @@ a.ev-by:hover { border-color: var(--accent); }
 @media (max-width: 899px) { .tp-start { flex-direction: column; align-items: stretch; } }
 .tp-notes .sprite-box { --k: 1; flex: none; margin-top: -4px; }
 .tp-note-mon { color: var(--mon, var(--text)); }
+/* Une couleur par evenement : Halloween orange, Noel bleu, Nouvel An lunaire rouge */
+.mev-tab { --ev: var(--accent); }
+[data-theme="dark"] .mev-tab[data-event="halloween"] { --ev: #f08a24; } [data-theme="light"] .mev-tab[data-event="halloween"] { --ev: #b35400; }
+[data-theme="dark"] .mev-tab[data-event="christmas"] { --ev: #5aaef0; } [data-theme="light"] .mev-tab[data-event="christmas"] { --ev: #0b62a8; }
+[data-theme="dark"] .mev-tab[data-event="lunar"] { --ev: #ef5350; } [data-theme="light"] .mev-tab[data-event="lunar"] { --ev: #c62828; }
