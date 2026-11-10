@@ -342,7 +342,7 @@ const Money = (() => {
       }).join('')}</tr>`).join('');
       const hp = p.hp ? `<div class="ev-hp"><span class="tp-label">${esc(t('pk_hp_line'))}</span><ul>${Object.entries(p.hp).map(([m, v]) => `<li data-mon="${m}">${monSprite(m, false)}<b>${esc(v)}</b></li>`).join('')}</ul></div>` : '';
       return `<article class="ev-phase" style="--n:${n}"><div class="ev-left"><h3><span class="gym-num">${n + 1}.</span>${esc(t('pk_phase'))} ${n + 1}</h3>${hp}</div>` +
-        `<table class="ev-table"><colgroup><col class="ev-c-turn"><col><col><col></colgroup><thead><tr><th scope="col"></th>${p.cols.map((c, k) => `<th scope="col" data-mon="${mons[k]}"><span class="ev-cell">${monSprite(mons[k], false)}<span>${rich(c)}</span></span></th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>` +
+        `<table class="ev-table"><colgroup><col class="ev-c-turn"><col><col><col></colgroup><tbody>${rows}</tbody></table>` +
         `<div class="ev-right">${(p.notes || []).map(x => note(x)).join('')}${alts.join('')}</div></article>`;
     }).join('');
     const exc = `<section class="ev-exc"><h3>${esc(t('pk_exceptions'))}</h3><dl>${data.exceptions.map(x =>
