@@ -218,11 +218,11 @@ app.get('/auth/logout', (req, res) => {
   req.session.destroy(() => res.redirect(rd));
 });
 
-// Photo de profil : service central naerod-profile (auth.naerod.com, ou preprod-auth.naerod.com depuis une preprod).
+// Photo de profil : service central naerod-profile (naerod.com, ou preprod-auth.naerod.com depuis une preprod).
 // Si le profil n'a pas de photo (404) ou si le service n'est pas encore en prod, la barre retombe sur l'initiale.
 const avatarUrl = (req, username) => {
   const host = String(req.get('x-forwarded-host') || req.hostname || '').split(',')[0];
-  const base = host.startsWith('preprod-') ? 'https://preprod-auth.naerod.com' : 'https://auth.naerod.com';
+  const base = host.startsWith('preprod-') ? 'https://preprod-auth.naerod.com' : 'https://naerod.com';   // profil prod servi par le hub (auth.naerod.com ne proxifie pas /avatar)
   return `${base}/avatar/${encodeURIComponent(username)}?w=160`;
 };
 

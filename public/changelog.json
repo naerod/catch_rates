@@ -5,8 +5,8 @@
       "v": "3.23.8",
       "date": "2026-11-10",
       "title": { "fr": "Accueil : suggestions et évènement en cours", "en": "Home: suggestions and running event" },
-      "fr": ["Sans compte, « Favoris » devient « Suggestions », sans l'étiquette Exemple.", "Nouvelle section « Évènement en cours » : visible de 3 jours avant le début à 3 jours après la fin (Halloween, Noël, Nouvel An lunaire), absente sinon."],
-      "en": ["Without an account, \"Favourites\" becomes \"Suggested\", without the Example tag.", "New \"Event running\" section: shown from 3 days before the start to 3 days after the end (Halloween, Christmas, Lunar New Year), hidden otherwise."]
+      "fr": ["Sans compte, « Favoris » devient « Suggestions », sans l'étiquette Exemple.", "Nouvelle section « Évènement en cours » : visible de 3 jours avant le début à 3 jours après la fin (Halloween, Noël, Nouvel An lunaire), absente sinon.", "La photo de profil s'affiche de nouveau dans la barre du haut."],
+      "en": ["Without an account, \"Favourites\" becomes \"Suggested\", without the Example tag.", "New \"Event running\" section: shown from 3 days before the start to 3 days after the end (Halloween, Christmas, Lunar New Year), hidden otherwise.", "Your profile photo shows up again in the top bar."]
     },
     {
       "v": "3.23.7",
