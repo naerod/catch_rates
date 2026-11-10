@@ -323,16 +323,14 @@ const Money = (() => {
     : k === 's' ? `<span class="ev-slot">${esc(t('pk_slot'))} ${id}</span>`
     : `<b class="ev-mon" data-mon="${id}">${esc(name(data.mons, id))}</b>`);
   /* Qui le dit : auteur (+ lien du message source s'il est connu) */
-  const by = x => !x?.by ? '' : x.src ? `<a class="ev-by" href="${esc(x.src)}" target="_blank" rel="noopener noreferrer">${esc(x.by)}</a>` : `<span class="ev-by">${esc(x.by)}</span>`;
   const colMon = c => [...txt(c).matchAll(/\{(\w+)\}/g)].pop()?.[1];   // Pokemon de la colonne : le dernier cite dans l'en-tete
   const actor = who => /^s\d$/.test(who) ? `<span class="ev-actor is-particle" data-tip="${esc(t('pk_particle'))} · ${esc(t('pk_slot'))} ${who.slice(1)}">${icon('auto_awesome')}</span>` : `<span class="ev-actor">${monSprite(who, false)}</span>`;
-  const note = (x, turn) => `<p class="ev-note${x.mod || turn ? ' is-mod' : ''}${x.warn ? ' is-warn' : ''}">${turn ? `<b class="ev-turn">${turn}</b> ` : ''}${rich(x)} ${by(x)}</p>`;
+  const note = (x, turn) => `<p class="ev-note${x.mod || turn ? ' is-mod' : ''}${x.warn ? ' is-warn' : ''}">${turn ? `<b class="ev-turn">${turn}</b> ` : ''}${rich(x)}</p>`;
 
   function phasesStage() {
     const order = `<section class="ev-order"><h3>${esc(t('pk_order'))}</h3><ol>${data.slots.map((x, i) => x.mon
       ? `<li data-mon="${x.mon}"><b class="ev-n">${i + 1}</b>${monSprite(x.mon, false)}<b class="ev-mon">${esc(name(data.mons, x.mon))}</b></li>`
-      : `<li class="is-particle" data-tip="${esc(t('pk_particle'))}&#10;${esc(txt(x.req))}" tabindex="0"><b class="ev-n">${i + 1}</b>${icon('auto_awesome')}<span>${esc(txt(x.short))}</span></li>`).join('')}</ol>` +
-      `<span class="ev-legend"><span class="ev-note is-mod">${esc(t('pk_suggested'))}</span></span></section>`;
+      : `<li class="is-particle" data-tip="${esc(t('pk_particle'))}&#10;${esc(txt(x.req))}" tabindex="0"><b class="ev-n">${i + 1}</b>${icon('auto_awesome')}<span>${esc(txt(x.short))}</span></li>`).join('')}</ol></section>`;
     const phases = data.phases.map((p, n) => {
       const mons = p.cols.map(colMon);
       const alts = [];
@@ -347,7 +345,7 @@ const Money = (() => {
         `<div class="ev-right">${(p.notes || []).map(x => note(x)).join('')}${alts.join('')}</div></article>`;
     }).join('');
     const exc = `<section class="ev-exc"><h3>${esc(t('pk_exceptions'))}</h3><dl>${data.exceptions.map(x =>
-      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${rich(x.when)}</dt><dd><span>${rich(x.do)} ${by(x)}</span>${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
+      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${rich(x.when)}</dt><dd><span>${rich(x.do)}</span>${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
     const links = (data.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer">${esc(txt(l.label))}</a>`).join(" · ");
     const src = links || (data.source ? `<a href="${esc(data.source)}" target="_blank" rel="noopener noreferrer">Bilibili</a>` : "");
     return order + phases + exc + `<p class="ev-credits">${esc(txt(data.credits))}${src ? " " + src : ""}</p>`;
