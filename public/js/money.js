@@ -279,7 +279,7 @@ const Money = (() => {
   function infoBar() {
     const st = data.teamGuide?.start, label = esc(t('gr_team_guide'));
     gymItems = st || {};
-    $('money-guide').innerHTML = st
+    if (state.view !== 'team') $('money-guide').innerHTML = st   // page equipe : la tete affiche les objets de depart (teamPage)
       ? `<button type="button" class="start-panel" data-view="team" title="${label}" aria-label="${label}"><ul>${Object.keys(st).map(id => `<li>${monSprite(id)}</li>`).join('')}</ul>${icon('chevron_right')}</button>`
       : `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${label}">${icon('groups')}<span class="lbl">${label}</span></button>`;
     gymItems = {};
@@ -383,7 +383,8 @@ const Money = (() => {
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
     const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
       `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';
-    $('money-stage').innerHTML = startSet +
+    $('money-guide').innerHTML = startSet;   // objets de depart dans la ligne du titre : place gagnee
+    $('money-stage').innerHTML =
       `<div class="tp"><section class="tp-team" aria-label="${esc(t('tp_team'))}">${mons}</section>` +
       `<aside class="tp-side"><section class="tp-card"><h3>${icon('inventory_2')}${esc(t('tp_stock'))}</h3><ul class="tp-stock">${stock}</ul></section>` +
       (notes ? `<section class="tp-card"><ul class="tp-notes">${notes}</ul></section>` : '') + `</aside></div>`;
