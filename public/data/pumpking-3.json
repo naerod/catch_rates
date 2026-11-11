@@ -2,10 +2,10 @@
   "_comment": "Pumpking Hard Mode, 3 particules (Visos / UUEE, trad. Xanarchy, retouches Skan). Textes : chaine neutre ou {en, fr}. Jetons : {mon} sprite+nom, {i:objet} icone+nom (it_*), {m:attaque} (mv_*), {s:N} slot d'equipe. Attribution : by (auteur), src (lien du message Discord, null tant qu'inconnu), mod: true = modification suggeree par rapport a la strat de base de Visos. alt = variante suggeree d'une case. who = acteur de la case s'il differe du Pokemon de la colonne (sN = particule du slot N) ; short = libelle court du slot ; warn = note d'echec.",
   "charm": false,
   "credits": {
-    "en": "Strategy by Visos (UUEE guild), translation by Xanarchy (The Council), tweaks by Skan.",
-    "fr": "Stratégie de Visos (guilde UUEE), traduction de Xanarchy (The Council), ajustements de Skan."
+    "en": "Strategy by UUEE, translation by [Mr] Xanarchy (The Council), tweaks by Skan.",
+    "fr": "Stratégie de UUEE, traduction de [Mr] Xanarchy (The Council), ajustements de Skan."
   },
-  "source": "https://www.bilibili.com/video/BV1cz4769Ecq/",
+  "source": "https://docs.google.com/document/d/16Wn67uHdUN68KBXluhQsnOWiSVeTw4jscsI0liK2YJA/edit",
   "team": [
     "honchkrow",
     "krookodile",
@@ -34,8 +34,8 @@
     },
     {
       "req": {
-        "en": "Not weak to Fighting",
-        "fr": "Pas faible au Combat"
+        "en": "Not weak to Fighting (better if not weak to Grass either)",
+        "fr": "Pas faible au Combat (mieux s'il n'est pas faible à Plante non plus)"
       },
       "short": {
         "en": "Not weak to Fighting",
@@ -157,14 +157,8 @@
         [
           "{i:revive} → {s:4}",
           {
-            "en": "{m:crunch} ({m:sleep_talk} if asleep)",
-            "fr": "{m:crunch} ({m:sleep_talk} si endormi)",
-            "alt": {
-              "en": "{m:fling} is better, not the same result. Both hit for about 29 %, but {m:fling} also poisons this turn (exact tick not measured), so it lands around 32 %, plus more damage next turn.",
-              "fr": "{m:fling} est meilleur, ce n'est pas le même résultat. Les deux tapent à environ 29 %, mais {m:fling} empoisonne dès ce tour (le montant exact n'est pas mesuré), donc plutôt autour de 32 %, plus des dégâts au tour suivant.",
-              "by": "Skan",
-              "src": null
-            }
+            "en": "{m:fling} ({m:sleep_talk} if asleep)",
+            "fr": "{m:fling} ({m:sleep_talk} si endormi)"
           },
           "{m:tailwind}"
         ],
@@ -285,7 +279,10 @@
     },
     {
       "when": "Li'l Pump",
-      "do": "{tropius} {m:wide_guard}",
+      "do": {
+        "en": "{tropius} {m:wide_guard} (especially without Tailwind)",
+        "fr": "{tropius} {m:wide_guard} (surtout sans Vent Arrière)"
+      },
       "by": "Council",
       "src": null
     },
@@ -404,12 +401,12 @@
     ],
     "mons": {
       "honchkrow": {
-        "ability": "Super Luck",
+        "ability": "Super Luck / Moxie",
         "nature": "Adamant [+Atk|-SpA]",
         "evs": "252 Atk / 252 Def",
         "note": {
-          "en": "Female. Speed 178: must stay slower than Krookodile.",
-          "fr": "Femelle. Vitesse 178 : doit rester plus lent que Crocorible."
+          "en": "Female, Defense maxed. Speed 178: must stay slower than Krookodile. Enter phase 3 at 90 % or more.",
+          "fr": "Femelle, Défense au max. Vitesse 178 : doit rester plus lent que Crocorible. Entrer en phase 3 à 90 % ou plus."
         },
         "moves": [
           {
@@ -427,28 +424,27 @@
         "nature": "Adamant [+Atk|-SpA]",
         "evs": "252 Atk / 132 Def / 126 Spe",
         "note": {
-          "en": "Speed 251: outspeeds the Phase 1 Pumpthief.",
-          "fr": "Vitesse 251 : plus rapide que le Pumpthief de la phase 1."
+          "en": "Speed 251: outspeeds the Phase 1 Pumpthief. Some Sp. Def helps: it often eats Vacuum Wave at -3/-4 Sp. Def in P3 T3.",
+          "fr": "Vitesse 251 : plus rapide que le Pumpthief de la phase 1. Un peu de Déf. Spé aide : il prend souvent Onde Vide à -3/-4 Déf. Spé en P3 T3."
         },
         "moves": [
           {
             "m": "earthquake"
           },
           {
-            "m": "crunch"
+            "m": "fling"
           },
           {
             "m": "sleep_talk"
           },
           {
-            "m": "fling",
-            "rec": true
+            "m": "crunch"
           }
         ]
       },
       "tropius": {
         "ability": "Harvest",
-        "nature": "Bold / Impish",
+        "nature": "Impish / Bold",
         "evs": "252 HP / 252 Def",
         "note": {
           "en": "Sunny Day + Harvest: Lum Berry back every turn.",
