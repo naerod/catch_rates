@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.24.1",
+      "date": "2026-11-11",
+      "title": {
+        "fr": "Page équipe Halloween",
+        "en": "Halloween team page"
+      },
+      "fr": [
+        "Guides Halloween : objets dans les cartes des Pokémon, plus de bandeau d'équipement de départ.",
+        "Guide 3 particules : les particules apparaissent dans l'équipe (Bulbizarre faibles, Florizarre fort)."
+      ],
+      "en": [
+        "Halloween guides: held items shown in the Pokémon cards, starting-set bar removed.",
+        "3-particle guide: particle slots shown in the team (Bulbasaur weak, Venusaur strong)."
+      ]
+    },
+    {
       "v": "3.24.0",
       "date": "2026-11-10",
       "title": {

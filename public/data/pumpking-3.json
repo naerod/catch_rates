@@ -26,6 +26,16 @@
       "dex": 357,
       "en": "Tropius",
       "fr": "Tropius"
+    },
+    "bulbasaur": {
+      "dex": 1,
+      "en": "Bulbasaur",
+      "fr": "Bulbizarre"
+    },
+    "venusaur": {
+      "dex": 3,
+      "en": "Venusaur",
+      "fr": "Florizarre"
     }
   },
   "slots": [
@@ -40,7 +50,9 @@
       "short": {
         "en": "Not weak to Fighting",
         "fr": "Pas faible au Combat"
-      }
+      },
+      "fodder": "bulbasaur",
+      "level": 1
     },
     {
       "req": {
@@ -50,7 +62,9 @@
       "short": {
         "en": "Free · Cursed Body here",
         "fr": "Libre · Cursed Body ici"
-      }
+      },
+      "fodder": "bulbasaur",
+      "level": 50
     },
     {
       "req": {
@@ -60,7 +74,9 @@
       "short": {
         "en": "High level, EQ-killable · Iron Ball if Flying",
         "fr": "Haut niveau, Séisme · Balle Fer si Vol"
-      }
+      },
+      "fodder": "venusaur",
+      "level": 100
     },
     {
       "mon": "krookodile"

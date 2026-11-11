@@ -365,11 +365,19 @@ const Money = (() => {
     const tg = data.teamGuide || {};
     const itemChip = it => `<span class="tp-item">${itemImg(it)}${esc(t('it_' + it))}</span>`;
     const typeChip = ty => `<span class="type-chip" style="--t:var(--type-${ty})">${esc(t('ty_' + ty))}</span>`;
-    const order = tg.start ? Object.keys(tg.start) : data.team;
-    const mons = order.map(id => {
+    // Event : les particules de l'ordre d'equipe sont montrees (sprite fodder, carte grise) a leur place.
+    const slots = data.slots?.some(s => s.fodder) ? data.slots : null;
+    const order = slots ? slots.map(s => s.mon || s.fodder) : tg.start ? Object.keys(tg.start) : data.team;
+    const isEvent = !!METHODS.find(m => m.id === state.method)?.event;
+    const mons = order.map((id, i) => {
+      const sl = slots?.[i];
+      if (sl && !sl.mon) return `<article class="tp-mon is-fodder"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(txt(sl.short))}</h3>` +
+        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${sl.level}</span></div></div></header>` +
+        `<div class="tp-row"><span class="tp-label">${esc(t('tp_note'))}</span><span>${esc(txt(sl.req))}</span></div></article>`;
       const x = (tg.mons || {})[id] || {};
       const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
-      const extra = ['ability', 'nature', 'ivs', 'evs'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
+      const item = isEvent && tg.start?.[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_item'))}</span>${itemChip(tg.start[id])}</div>` : '';
+      const extra = item + ['ability', 'nature', 'ivs', 'evs'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
         `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
         extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" data-tip="${esc(t('tp_free_slot'))}" tabindex="0">${icon('add')}</li>` :
@@ -378,10 +386,10 @@ const Money = (() => {
     }).join('');
     const stock = data.stock.map(x => `<li>${itemImg(x.item.replace('_extra', ''))}<b>${x.qty}</b>${esc(t('it_' + x.item))}</li>`).join('');
     // Notes par Pokemon : dans la colonne de droite, apres les points d'attention.
-    const monNotes = order.filter(id => tg.mons?.[id]?.note).map(id => `<li data-mon="${id}">${monSprite(id, false)}<span><b class="tp-note-mon">${esc(name(data.mons, id))}</b> ${esc(txt(tg.mons[id].note))}</span></li>`).join('');
+    const monNotes = [...new Set(order)].filter(id => tg.mons?.[id]?.note).map(id => `<li data-mon="${id}">${monSprite(id, false)}<span><b class="tp-note-mon">${esc(name(data.mons, id))}</b> ${esc(txt(tg.mons[id].note))}</span></li>`).join('');
     const notes = (data.teamGuide?.attention || []).map(a => `<li>${icon(a.icon)}<span>${a.gym ? `<b class="tp-gym">${esc(place(data.regions.flatMap(r => r.gyms).find(g => g.name === a.gym) || { name: a.gym }))}</b> ` : ''}${esc(t(a.key))}</span></li>`).join('') + monNotes;
     // Equipement de depart : en tete, c'est la premiere chose a preparer avant de lancer la course.
-    const startSet = tg.start ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
+    const startSet = tg.start && !isEvent ? `<section class="tp-start"><h3>${icon('backpack')}${esc(t('tp_start_set'))}</h3><ul>${order.map(id =>
       `<li data-mon="${id}">${monSprite(id, false)}${itemChip(tg.start[id])}<b>${esc(name(data.mons, id))}</b></li>`).join('')}</ul></section>` : '';
     $('money-guide').innerHTML = startSet;   // objets de depart dans la ligne du titre : place gagnee
     $('money-stage').innerHTML =
