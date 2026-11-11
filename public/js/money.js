@@ -377,10 +377,11 @@ const Money = (() => {
         `<div class="tp-row"><span class="tp-label">${esc(t('tp_note'))}</span><span>${esc(txt(sl.req))}</span></div></article>`;
       const x = (tg.mons || {})[id] || {};
       const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)
-      const item = isEvent && tg.start?.[id] ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_item'))}</span>${itemChip(tg.start[id])}</div>` : '';
-      const extra = item + ['ability', 'nature', 'ivs', 'evs'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
+      // Objet tenu : en grand en haut a droite (nom au survol), les cartes sont deja chargees.
+      const held = isEvent && tg.start?.[id] ? `<span class="tp-held" data-tip="${esc(t('it_' + tg.start[id]))}" tabindex="0" role="img" aria-label="${esc(t('it_' + tg.start[id]))}">${itemImg(tg.start[id])}</span>` : '';
+      const extra = ['ability', 'nature', 'ivs', 'evs'].filter(k => x[k]).map(k => `<div class="tp-row${k === 'ivs' ? ' is-ivs' : ''}"><span class="tp-label">${esc(t('tp_' + k))}</span><span>${esc(txt(x[k]))}</span></div>`).join('');
       return `<article class="tp-mon" data-mon="${id}"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(name(data.mons, id))}</h3>` +
-        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div></header>` +
+        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${lv}</span>${(tg.types?.[id] || []).map(typeChip).join('')}</div></div>${held}</header>` +
         extra + (x.moves ? `<div class="tp-row"><span class="tp-label">${esc(t('tp_moves'))}</span><ol class="tp-slots">${x.moves.map(m => !m ? `<li class="is-empty" data-tip="${esc(t('tp_free_slot'))}" tabindex="0">${icon('add')}</li>` :
         `<li class="${m.opt || m.rec ? 'is-opt' : 'is-req'}"><b class="tk-move">${esc(t('mv_' + m.m))}</b>` +
         (m.hm ? `<span class="tp-i" data-tip="${esc(t('tp_hm_tip'))}" tabindex="0">${icon('info')}</span>` : m.rec ? `<span class="tp-i is-rec" data-tip="${esc(t('tp_rec_tip'))}" tabindex="0">${icon('info')}</span>` : '') + '</li>').join('')}</ol></div>` : '') + '</article>';

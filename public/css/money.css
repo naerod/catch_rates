@@ -7,11 +7,13 @@
   --mon-typhlosion: #ff6b6b; --mon-togekiss: var(--text); --mon-blastoise: #5b9bff;
   --mon-vanilluxe: #8fc8ff; --mon-weezing: #e07bc8; --mon-garchomp: #b983ff;
   --mon-honchkrow: #a68cff; --mon-krookodile: #ff8a5c; --mon-tropius: #6fd17a;
+  --mon-smeargle: #e3cf8a; --mon-excadrill: #d0a57c; --mon-tyranitar: #9ccc5a; --mon-hydreigon: #8f9bff;
 }
 [data-theme="light"] {
   --mon-typhlosion: #c21f1f; --mon-togekiss: var(--text); --mon-blastoise: #1d4ed8;
   --mon-vanilluxe: #0b6fa8; --mon-weezing: #a3238e; --mon-garchomp: #7c2dd1;
   --mon-honchkrow: #5b3fb8; --mon-krookodile: #b4401c; --mon-tropius: #237a32;
+  --mon-smeargle: #7f6512; --mon-excadrill: #7a4a24; --mon-tyranitar: #4a7314; --mon-hydreigon: #3b45b5;
 }
 [data-mon="typhlosion"] { --mon: var(--mon-typhlosion); }
 [data-mon="togekiss"]   { --mon: var(--mon-togekiss); }
@@ -22,6 +24,8 @@
 [data-mon="honchkrow"]  { --mon: var(--mon-honchkrow); }
 [data-mon="krookodile"] { --mon: var(--mon-krookodile); }
 [data-mon="tropius"]    { --mon: var(--mon-tropius); }
+[data-mon="smeargle"] { --mon: var(--mon-smeargle); } [data-mon="excadrill"] { --mon: var(--mon-excadrill); }
+[data-mon="tyranitar"] { --mon: var(--mon-tyranitar); } [data-mon="hydreigon"] { --mon: var(--mon-hydreigon); }
 
 /* Ligne de lead : fond legerement plus fonce que la carte */
 :root, [data-theme="dark"] { --lead-bg: rgba(0, 0, 0, 0.35); }
@@ -314,6 +318,9 @@
 .tp-mon[data-mon="blastoise"] { --mon: var(--mon-blastoise); } .tp-mon[data-mon="vanilluxe"] { --mon: var(--mon-vanilluxe); }
 .tp-mon[data-mon="weezing"] { --mon: var(--mon-weezing); } .tp-mon[data-mon="garchomp"] { --mon: var(--mon-garchomp); }
 .tp-mon[data-mon="honchkrow"] { --mon: var(--mon-honchkrow); } .tp-mon[data-mon="krookodile"] { --mon: var(--mon-krookodile); } .tp-mon[data-mon="tropius"] { --mon: var(--mon-tropius); }
+.tp-mon[data-mon="smeargle"] { --mon: var(--mon-smeargle); } .tp-mon[data-mon="excadrill"] { --mon: var(--mon-excadrill); } .tp-mon[data-mon="tyranitar"] { --mon: var(--mon-tyranitar); } .tp-mon[data-mon="hydreigon"] { --mon: var(--mon-hydreigon); }
+.tp-held { margin-left: auto; align-self: flex-start; }
+.tp-held img { width: 48px; height: 48px; image-rendering: pixelated; }
 .tp-mon-head { display: flex; align-items: center; gap: 0.75rem; }
 .tp-mon-head h3 { font: 700 1.35rem var(--font-head); color: var(--mon); }
 .tp-mon .sprite-box { --k: 2; }
