@@ -564,7 +564,8 @@ a.ev-by:hover { border-color: var(--accent); }
 .tp-mon { gap: 0.35rem; padding: 0.6rem 0.75rem; }
 .tp-mon .sprite-box { --k: 1.5; }
 .tp-mon-head h3 { font-size: 1.1rem; }
-.tp-slots li { min-height: 0; padding-block: 0.25rem; }
+.tp-slots li { min-height: 0; height: 2rem; padding-block: 0; }      /* hauteur fixe : pleine, vide ou en face d une vide, toutes pareilles */
+.tp-slots .is-empty .material-symbols-outlined { font-size: 1.25rem; }
 @media (max-width: 899px) { .tp-start { flex-direction: column; align-items: stretch; } }
 .tp-notes .sprite-box { --k: 1; flex: none; margin-top: -4px; }
 .tp-note-mon { color: var(--mon, var(--text)); }
