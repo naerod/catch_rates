@@ -7,22 +7,71 @@
   },
   "source": "https://youtu.be/vBsp-ZxMhPY",
   "links": [
-    { "href": "https://pokepast.es/9681f891b101eff1", "label": "PokePaste" },
-    { "href": "https://youtu.be/vBsp-ZxMhPY", "label": { "en": "Video", "fr": "Vidéo" } },
-    { "href": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub", "label": "CNcl" }
+    {
+      "href": "https://pokepast.es/9681f891b101eff1",
+      "label": "PokePaste"
+    },
+    {
+      "href": "https://youtu.be/vBsp-ZxMhPY",
+      "label": {
+        "en": "Video",
+        "fr": "Vidéo"
+      }
+    },
+    {
+      "href": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub",
+      "label": "CNcl"
+    }
   ],
-  "team": ["smeargle", "excadrill", "tyranitar", "krookodile", "hydreigon"],
+  "team": [
+    "smeargle",
+    "excadrill",
+    "tyranitar",
+    "krookodile",
+    "hydreigon"
+  ],
   "mons": {
-    "smeargle": { "dex": 235, "en": "Smeargle", "fr": "Queulorior" },
-    "excadrill": { "dex": 530, "en": "Excadrill", "fr": "Minotaupe" },
-    "tyranitar": { "dex": 248, "en": "Tyranitar", "fr": "Tyranocif" },
-    "krookodile": { "dex": 553, "en": "Krookodile", "fr": "Crocorible" },
-    "hydreigon": { "dex": 635, "en": "Hydreigon", "fr": "Trioxhydre" }
+    "smeargle": {
+      "dex": 235,
+      "en": "Smeargle",
+      "fr": "Queulorior"
+    },
+    "excadrill": {
+      "dex": 530,
+      "en": "Excadrill",
+      "fr": "Minotaupe"
+    },
+    "tyranitar": {
+      "dex": 248,
+      "en": "Tyranitar",
+      "fr": "Tyranocif"
+    },
+    "krookodile": {
+      "dex": 553,
+      "en": "Krookodile",
+      "fr": "Crocorible"
+    },
+    "hydreigon": {
+      "dex": 635,
+      "en": "Hydreigon",
+      "fr": "Trioxhydre"
+    },
+    "venusaur": {
+      "dex": 3,
+      "en": "Venusaur",
+      "fr": "Florizarre"
+    }
   },
   "slots": [
-    { "mon": "smeargle" },
-    { "mon": "excadrill" },
-    { "mon": "tyranitar" },
+    {
+      "mon": "smeargle"
+    },
+    {
+      "mon": "excadrill"
+    },
+    {
+      "mon": "tyranitar"
+    },
     {
       "req": {
         "en": "Any particle. Flying or Levitate: give it an Iron Ball so Earthquake can hit it.",
@@ -31,17 +80,31 @@
       "short": {
         "en": "Any · Iron Ball if Flying",
         "fr": "Libre · Balle Fer si Vol"
-      }
+      },
+      "fodder": "venusaur",
+      "level": 100
     },
-    { "mon": "krookodile" },
-    { "mon": "hydreigon" }
+    {
+      "mon": "krookodile"
+    },
+    {
+      "mon": "hydreigon"
+    }
   ],
   "phases": [
     {
-      "cols": ["{smeargle} → {s:4} → {hydreigon}", "{excadrill}", "{tyranitar}"],
+      "cols": [
+        "{smeargle} → {s:4} → {hydreigon}",
+        "{excadrill}",
+        "{tyranitar}"
+      ],
       "turns": [
         [
-          { "who": "smeargle", "en": "{m:protect}", "fr": "{m:protect}" },
+          {
+            "who": "smeargle",
+            "en": "{m:protect}",
+            "fr": "{m:protect}"
+          },
           "{m:swords_dance}",
           "{m:protect}"
         ],
@@ -54,7 +117,11 @@
           "{m:earthquake}",
           "{m:assurance}"
         ],
-        ["{m:outrage}", "{m:double_edge}", "{m:assurance}"]
+        [
+          "{m:outrage}",
+          "{m:double_edge}",
+          "{m:assurance}"
+        ]
       ],
       "notes": [
         {
@@ -72,10 +139,18 @@
       ]
     },
     {
-      "cols": ["{smeargle} → {tyranitar}", "{krookodile}", "{hydreigon}"],
+      "cols": [
+        "{smeargle} → {tyranitar}",
+        "{krookodile}",
+        "{hydreigon}"
+      ],
       "turns": [
         [
-          { "who": "smeargle", "en": "{m:heal_block}", "fr": "{m:heal_block}" },
+          {
+            "who": "smeargle",
+            "en": "{m:heal_block}",
+            "fr": "{m:heal_block}"
+          },
           "{m:protect}",
           "{i:x_attack} → {krookodile}"
         ],
@@ -100,7 +175,11 @@
       ]
     },
     {
-      "cols": ["{tyranitar}", "{krookodile}", "{excadrill} → {hydreigon}"],
+      "cols": [
+        "{tyranitar}",
+        "{krookodile}",
+        "{excadrill} → {hydreigon}"
+      ],
       "turns": [
         [
           "{m:leer}",
@@ -111,8 +190,16 @@
             "fr": "{i:revive} la particule, puis envoie {hydreigon}"
           }
         ],
-        ["{m:assurance}", "{m:earthquake}", "{m:assurance}"],
-        ["{m:assurance}", "{m:crunch}", "{m:assurance}"]
+        [
+          "{m:assurance}",
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
       ],
       "notes": [
         {
@@ -178,16 +265,36 @@
     }
   ],
   "stock": [
-    { "item": "x_attack", "qty": 1 },
-    { "item": "revive", "qty": 1 }
+    {
+      "item": "x_attack",
+      "qty": 1
+    },
+    {
+      "item": "revive",
+      "qty": 1
+    }
   ],
   "teamGuide": {
     "types": {
-      "smeargle": ["normal"],
-      "excadrill": ["ground", "steel"],
-      "tyranitar": ["rock", "dark"],
-      "krookodile": ["ground", "dark"],
-      "hydreigon": ["dark", "dragon"]
+      "smeargle": [
+        "normal"
+      ],
+      "excadrill": [
+        "ground",
+        "steel"
+      ],
+      "tyranitar": [
+        "rock",
+        "dark"
+      ],
+      "krookodile": [
+        "ground",
+        "dark"
+      ],
+      "hydreigon": [
+        "dark",
+        "dragon"
+      ]
     },
     "start": {
       "smeargle": "chilan_berry",
@@ -197,9 +304,18 @@
       "hydreigon": "choice_band"
     },
     "attention": [
-      { "icon": "speed", "key": "pk5_att_speed" },
-      { "icon": "shield", "key": "pk5_att_iv" },
-      { "icon": "inventory_2", "key": "pk5_att_items" }
+      {
+        "icon": "speed",
+        "key": "pk5_att_speed"
+      },
+      {
+        "icon": "shield",
+        "key": "pk5_att_iv"
+      },
+      {
+        "icon": "inventory_2",
+        "key": "pk5_att_items"
+      }
     ],
     "mons": {
       "smeargle": {
@@ -208,7 +324,16 @@
         "nature": "Naive",
         "evs": "82 HP / 252 Spe",
         "ivs": "0 HP / 0 SpD / 31 Spe",
-        "moves": [{ "m": "heal_block" }, { "m": "protect" }, null, null]
+        "moves": [
+          {
+            "m": "heal_block"
+          },
+          {
+            "m": "protect"
+          },
+          null,
+          null
+        ]
       },
       "excadrill": {
         "ability": "Sand Force",
@@ -219,7 +344,18 @@
           "en": "SpD is there to live crits.",
           "fr": "La Déf. Spé. sert à encaisser les critiques."
         },
-        "moves": [{ "m": "earthquake" }, { "m": "swords_dance" }, { "m": "double_edge" }, null]
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "swords_dance"
+          },
+          {
+            "m": "double_edge"
+          },
+          null
+        ]
       },
       "tyranitar": {
         "ability": "Sand Stream",
@@ -230,7 +366,20 @@
           "en": "SpD lowers the chance Leaf Storm targets it. Final speed must stay above 213.",
           "fr": "La Déf. Spé. réduit la chance que Tempête Verte le vise. La vitesse finale doit rester au-dessus de 213."
         },
-        "moves": [{ "m": "assurance" }, { "m": "taunt" }, { "m": "leer" }, { "m": "protect" }]
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "taunt"
+          },
+          {
+            "m": "leer"
+          },
+          {
+            "m": "protect"
+          }
+        ]
       },
       "krookodile": {
         "ability": "Moxie",
@@ -241,7 +390,20 @@
           "en": "Most forgiving on IVs: missing EVs can cover a weak stat. Do not go too low or Pumpking's AI can change.",
           "fr": "Le plus tolérant en IV : les EV manquants compensent un stat faible. Ne descends pas trop, l'IA de Pumpking peut changer."
         },
-        "moves": [{ "m": "earthquake" }, { "m": "crunch" }, { "m": "leer" }, { "m": "protect" }]
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "crunch"
+          },
+          {
+            "m": "leer"
+          },
+          {
+            "m": "protect"
+          }
+        ]
       },
       "hydreigon": {
         "ability": "Levitate",
@@ -252,7 +414,16 @@
           "en": "Speed IV floor is 13+. Choice Band: only Assurance and Outrage.",
           "fr": "Plancher d'IV Vitesse : 13+. Bandeau Choix : seulement Assurance et Colère."
         },
-        "moves": [{ "m": "assurance" }, { "m": "outrage" }, null, null]
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "outrage"
+          },
+          null,
+          null
+        ]
       }
     }
   }

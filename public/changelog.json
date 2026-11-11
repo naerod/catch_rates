@@ -11,12 +11,14 @@
       "fr": [
         "Guides Halloween : objets dans les cartes des Pokémon, plus de bandeau d'équipement de départ.",
         "Guide 3 particules : les particules apparaissent dans l'équipe (Bulbizarre faibles, Florizarre fort).",
-        "Guide CNcl archivé (obsolète) : on utilise le guide 5 Pokémon de base."
+        "Guide CNcl archivé (obsolète) : on utilise le guide 5 Pokémon de base.",
+        "Guide 5 Pokémon : la particule apparaît dans l'équipe (Florizarre)."
       ],
       "en": [
         "Halloween guides: held items shown in the Pokémon cards, starting-set bar removed.",
         "3-particle guide: particle slots shown in the team (Bulbasaur weak, Venusaur strong).",
-        "CNcl guide archived (outdated): use the base 5-Pokemon guide."
+        "CNcl guide archived (outdated): use the base 5-Pokemon guide.",
+        "5-Pokemon guide: the particle slot is shown in the team (Venusaur)."
       ]
     },
     {
