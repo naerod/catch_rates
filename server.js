@@ -276,7 +276,8 @@ app.get('/api/pokemon/:id/recoil-warnings', (req, res) => {
 
   try {
     const rows = dbAll(
-      'SELECT move_name, level FROM pokemon_recoil_moves WHERE dex_number = ? ORDER BY level ASC',
+      // level 0 = CT / tuteur : un Pokemon sauvage ne les a jamais, on les ignore.
+      'SELECT move_name, level FROM pokemon_recoil_moves WHERE dex_number = ? AND level > 0 ORDER BY level ASC',
       [req.params.id]
     );
     const suicideMoves = rows.filter(r => SUICIDE_MOVES.has(r.move_name));

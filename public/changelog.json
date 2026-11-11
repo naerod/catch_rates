@@ -14,7 +14,8 @@
         "Guide CNcl archivé (obsolète) : on utilise le guide 5 Pokémon de base.",
         "Guide 5 Pokémon : la particule apparaît dans l'équipe (Florizarre).",
         "Guide 5 Pokémon : chaque Pokémon a sa couleur, IV mises en avant pour tous.",
-        "Page équipe : toutes les cases d'attaque ont la même hauteur."
+        "Page équipe : toutes les cases d'attaque ont la même hauteur.",
+        "Alertes suicide / contrecoup : les CT et attaques de tuteur ne comptent plus (un Pokémon sauvage ne les a pas)."
       ],
       "en": [
         "Halloween guides: held item shown large in the top-right corner of each card, starting-set bar removed.",
@@ -22,7 +23,8 @@
         "CNcl guide archived (outdated): use the base 5-Pokemon guide.",
         "5-Pokemon guide: the particle slot is shown in the team (Venusaur).",
         "5-Pokemon guide: each Pokemon has its own colour, IVs highlighted for all.",
-        "Team page: all move slots have the same height."
+        "Team page: all move slots have the same height.",
+        "Suicide / recoil warnings: TM and tutor moves no longer count (wild Pokemon never have them)."
       ]
     },
     {
