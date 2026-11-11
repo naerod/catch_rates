@@ -82,7 +82,8 @@
         "fr": "Libre · Balle Fer si Vol"
       },
       "fodder": "venusaur",
-      "level": 100
+      "level": 100,
+      "item": "iron_ball"
     },
     {
       "mon": "krookodile"
@@ -129,12 +130,6 @@
           "fr": "Tour 1 : {tyranitar} fait {m:protect} pour que Tempête Verte ne touche pas le ballon.",
           "by": "JinxedBoon",
           "src": "https://pokepast.es/9681f891b101eff1"
-        },
-        {
-          "en": "Turn 3 {m:outrage} is {hydreigon}, covering the Leer that this line no longer uses.",
-          "fr": "Tour 3 : {m:outrage} est {hydreigon}. Ça remplace le Groz'Yeux que cette ligne ne fait plus.",
-          "by": "JinxedBoon",
-          "src": "https://pokepast.es/9681f891b101eff1"
         }
       ]
     },
@@ -164,14 +159,6 @@
           "{m:crunch}",
           "{m:assurance}"
         ]
-      ],
-      "notes": [
-        {
-          "en": "Turn 1 is still {smeargle}. From turn 2 the first slot is {tyranitar}.",
-          "fr": "Le tour 1 est encore {smeargle}. À partir du tour 2, le premier slot est {tyranitar}.",
-          "by": "CNcl",
-          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
-        }
       ]
     },
     {
@@ -200,14 +187,6 @@
           "{m:crunch}",
           "{m:assurance}"
         ]
-      ],
-      "notes": [
-        {
-          "en": "Send order for this phase: {tyranitar}, then {krookodile}, then {excadrill}.",
-          "fr": "Ordre d'envoi de cette phase : {tyranitar}, puis {krookodile}, puis {excadrill}.",
-          "by": "CNcl",
-          "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub"
-        }
       ]
     }
   ],
@@ -218,8 +197,8 @@
         "fr": "La particule est Vol ou a Lévitation"
       },
       "do": {
-        "en": "Give it an {i:iron_ball} so {m:earthquake} can hit it.",
-        "fr": "Lui donner une {i:iron_ball} pour que {m:earthquake} puisse la toucher."
+        "en": "Give it an {i:iron_ball}",
+        "fr": "Lui donner une {i:iron_ball}"
       },
       "by": "JinxedBoon",
       "src": "https://pokepast.es/9681f891b101eff1"
@@ -229,38 +208,81 @@
         "en": "Particle is very bulky",
         "fr": "La particule est très tanky"
       },
-      "do": {
-        "en": "Phase 1: {tyranitar} {m:leer} on turn 1, or {i:x_attack} → {excadrill} if it is extra bulky. Turn 2: {i:x_attack} → {excadrill} instead of {m:assurance}. Turn 3 stays {m:outrage} / {m:double_edge} / {m:assurance}.",
-        "fr": "Phase 1 : {tyranitar} fait {m:leer} au tour 1, ou {i:x_attack} → {excadrill} si elle est encore plus tanky. Tour 2 : {i:x_attack} → {excadrill} à la place d'{m:assurance}. Le tour 3 reste {m:outrage} / {m:double_edge} / {m:assurance}."
-      },
+      "turns": [
+        {
+          "p": 1,
+          "t": 1,
+          "row": [
+            null,
+            null,
+            {
+              "en": "{m:leer} (extra bulky: {i:x_attack} → {excadrill})",
+              "fr": "{m:leer} (très tanky : {i:x_attack} → {excadrill})"
+            }
+          ]
+        },
+        {
+          "p": 1,
+          "t": 2,
+          "row": [
+            null,
+            null,
+            "{i:x_attack} → {excadrill}"
+          ]
+        },
+        {
+          "p": 1,
+          "t": 3,
+          "row": [
+            null,
+            null,
+            null
+          ]
+        }
+      ],
       "by": "JinxedBoon",
       "src": "https://pokepast.es/9681f891b101eff1",
       "mod": true
     },
     {
       "when": {
-        "en": "Leaf Storm pops the Air Balloon",
-        "fr": "Tempête Verte crève le Ballon"
+        "en": "Old line: no Protect on turn 1",
+        "fr": "Ancienne ligne : pas d'Abri au tour 1"
       },
-      "do": {
-        "en": "Old line, if turn 1 Protect was not used. Phase 1 turn 1: {m:leer} instead of {m:protect}. Turn 2: {m:protect} instead of {m:assurance}. Phase 3 turn 1: heal {tyranitar} instead of {m:leer}.",
-        "fr": "Ancienne ligne, si le tour 1 n'a pas fait Abri. Phase 1 tour 1 : {m:leer} à la place d'{m:protect}. Tour 2 : {m:protect} à la place d'{m:assurance}. Phase 3 tour 1 : soigner {tyranitar} à la place de {m:leer}."
-      },
+      "turns": [
+        {
+          "p": 1,
+          "t": 1,
+          "row": [
+            null,
+            null,
+            "{m:leer}"
+          ]
+        },
+        {
+          "p": 1,
+          "t": 2,
+          "row": [
+            null,
+            null,
+            "{m:protect}"
+          ]
+        },
+        {
+          "p": 3,
+          "t": 1,
+          "row": [
+            {
+              "en": "Heal {tyranitar}",
+              "fr": "Soigner {tyranitar}"
+            },
+            null,
+            null
+          ]
+        }
+      ],
       "by": "JinxedBoon",
       "src": "https://pokepast.es/9681f891b101eff1",
-      "mod": true
-    },
-    {
-      "when": {
-        "en": "CNcl sheet",
-        "fr": "Feuille CNcl"
-      },
-      "do": {
-        "en": "Same idea, older turns: phase 1 turn 1 {tyranitar} {m:leer}, turn 3 {hydreigon} {m:assurance} / {excadrill} {m:earthquake} / {tyranitar} {m:leer}. No {m:outrage} or {m:double_edge}.",
-        "fr": "Même idée, tours plus anciens : phase 1 tour 1 {tyranitar} {m:leer}, tour 3 {hydreigon} {m:assurance} / {excadrill} {m:earthquake} / {tyranitar} {m:leer}. Pas de {m:outrage} ni de {m:double_edge}."
-      },
-      "by": "CNcl",
-      "src": "https://docs.google.com/document/d/e/2PACX-1vQ4925ZJ-XVccnKWtL4t3GtwiUU7cSp6bTjrEA1XHFzozu_xHOlKDGITr898Pf1TXSbvpOSiINpYxNr/pub",
       "mod": true
     }
   ],

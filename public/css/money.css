@@ -497,6 +497,7 @@ a.ev-by:hover { border-color: var(--accent); }
 /* Tableau : 3 slots separes par des barres verticales */
 .ev-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.92rem; }
 .ev-c-turn { width: 2.6rem; }
+.ev-exc-table .ev-c-turn { width: 4rem; }
 .ev-table th, .ev-table td { padding: 0.12rem 0.55rem; text-align: left; vertical-align: middle; }
 .ev-table thead th { padding-bottom: 0.3rem; font-weight: 600; border-bottom: 1px solid var(--card-border); }
 .ev-table tbody tr + tr > * { border-top: 1px solid color-mix(in srgb, var(--card-border) 35%, transparent); }
@@ -521,6 +522,11 @@ a.ev-by:hover { border-color: var(--accent); }
 /* Imprevus */
 .ev-exc { padding: 0.55rem 0.8rem; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); }
 .ev-exc h3 { margin-bottom: 0.4rem; }
+.ev-exc dl > [data-wide] { grid-column: 1 / -1; }
+.ev-exc-table { margin-top: 0.25rem; }
+.ev-exc-table td.is-same { opacity: 0.4; }                                  /* inchange : grise, la case modifiee ressort */
+.ev-exc-table tbody th { white-space: nowrap; font-size: 0.85rem; }
+.ev-exc-rest { margin-top: 0.3rem; color: var(--text-muted); font-size: 0.82rem; }
 .ev-exc dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 640px), 1fr)); gap: 0.5rem 1.5rem; font-size: 0.88rem; line-height: 1.45; }
 .ev-exc dl > div { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 0.6rem; padding: 0.3rem 0 0.3rem 0.6rem; border-left: 3px solid var(--card-border); }
 .ev-exc dl > div.is-mod { border-left: 3px dashed var(--accent); }

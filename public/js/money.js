@@ -333,7 +333,7 @@ const Money = (() => {
   function phasesStage() {
     const order = `<section class="ev-order"><h3>${esc(t('pk_order'))}</h3><ol>${data.slots.map((x, i) => x.mon
       ? `<li data-mon="${x.mon}"><b class="ev-n">${i + 1}</b>${monSprite(x.mon, false)}<b class="ev-mon">${esc(name(data.mons, x.mon))}</b></li>`
-      : `<li class="is-particle" data-tip="${esc(t('pk_particle'))}&#10;${esc(txt(x.req))}" tabindex="0"><b class="ev-n">${i + 1}</b>${icon('auto_awesome')}<span>${esc(txt(x.short))}</span></li>`).join('')}</ol></section>`;
+      : `<li class="is-particle" data-tip="${esc(t('pk_particle'))}&#10;${esc(txt(x.req))}" tabindex="0"><b class="ev-n">${i + 1}</b>${icon('auto_awesome')}<span>${esc(txt(x.short))}</span>${x.item ? itemImg(x.item) : ''}</li>`).join('')}</ol></section>`;
     const phases = data.phases.map((p, n) => {
       const mons = p.cols.map(colMon);
       const alts = [];
@@ -347,8 +347,14 @@ const Money = (() => {
         `<table class="ev-table"><colgroup><col class="ev-c-turn"><col><col><col></colgroup><tbody>${rows}</tbody></table>` +
         `<div class="ev-right">${(p.notes || []).map(x => note(x)).join('')}${alts.join('')}</div></article>`;
     }).join('');
+    // Imprevu avec turns : lignes du tableau de base (Px Tx), case modifiee en evidence, le reste grise (null = inchange).
+    const excTable = x => `<table class="ev-table ev-exc-table"><colgroup><col class="ev-c-turn"><col><col><col></colgroup><tbody>${x.turns.map(r => {
+      const ph = data.phases[r.p - 1], mons = ph.cols.map(colMon), base = ph.turns[r.t - 1];
+      return `<tr><th scope="row">P${r.p} T${r.t}</th>${r.row.map((c, k) => { const v = c ?? base[k], who = v?.who || mons[k];
+        return `<td data-mon="${who}"${c == null ? ' class="is-same"' : ''}><span class="ev-cell">${actor(who)}<span class="ev-act">${rich(v)}</span></span></td>`; }).join('')}</tr>`; }).join('')}</tbody></table>` +
+      `<p class="ev-exc-rest">${esc(t('pk_exc_rest'))}</p>`;
     const exc = `<section class="ev-exc"><h3>${esc(t('pk_exceptions'))}</h3><dl>${data.exceptions.map(x =>
-      `<div${x.mod ? ' class="is-mod"' : ''}><dt>${rich(x.when)}</dt><dd><span>${rich(x.do)}</span>${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
+      `<div${x.mod ? ' class="is-mod"' : ''}${x.turns ? ' data-wide' : ''}><dt>${rich(x.when)}</dt><dd>${x.turns ? excTable(x) : `<span>${rich(x.do)}</span>`}${x.alt ? note(x.alt) : ''}</dd></div>`).join('')}</dl></section>`;
     const links = (data.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer">${esc(txt(l.label))}</a>`).join(" · ");
     const src = links || (data.source ? `<a href="${esc(data.source)}" target="_blank" rel="noopener noreferrer">Bilibili</a>` : "");
     return order + phases + exc + `<p class="ev-credits">${esc(txt(data.credits))}${src ? " " + src : ""}</p>`;
