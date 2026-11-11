@@ -243,47 +243,6 @@
       "by": "JinxedBoon",
       "src": "https://pokepast.es/9681f891b101eff1",
       "mod": true
-    },
-    {
-      "when": {
-        "en": "Old line: no Protect on turn 1",
-        "fr": "Ancienne ligne : pas d'Abri au tour 1"
-      },
-      "turns": [
-        {
-          "p": 1,
-          "t": 1,
-          "row": [
-            null,
-            null,
-            "{m:leer}"
-          ]
-        },
-        {
-          "p": 1,
-          "t": 2,
-          "row": [
-            null,
-            null,
-            "{m:protect}"
-          ]
-        },
-        {
-          "p": 3,
-          "t": 1,
-          "row": [
-            {
-              "en": "Heal {tyranitar}",
-              "fr": "Soigner {tyranitar}"
-            },
-            null,
-            null
-          ]
-        }
-      ],
-      "by": "JinxedBoon",
-      "src": "https://pokepast.es/9681f891b101eff1",
-      "mod": true
     }
   ],
   "stock": [
