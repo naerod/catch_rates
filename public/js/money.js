@@ -203,18 +203,20 @@ const Money = (() => {
   function charmRefresh() { saveCharm(); infoBar(); charmPanel(); }
 
   /* ── Rendu des blocs ── */
-  /* ── Favoris : memorises dans le navigateur ; les favoris passent en tete du menu ── */
-  let favs = [];
-  try { favs = JSON.parse(localStorage.getItem(FAVS)) || []; } catch { /* stockage indisponible */ }
-  const isFav = id => favs.includes(id);
+  /* ── Favoris : lies au compte (app.js les charge et les enregistre) ; null = pas de compte, pas d'etoile ── */
+  let favs = null;
+  try { localStorage.removeItem(FAVS); } catch { /* anciens favoris du navigateur : abandonnes */ }
+  const isFav = id => !!favs?.includes(id);
+  function setFavs(list) { favs = list; if ($('page-money')?.offsetParent) state.method ? renderAll(false) : menu(true); }
   function toggleFav(id) {
+    if (!favs) return;
     favs = isFav(id) ? favs.filter(f => f !== id) : [...favs, id];
-    try { localStorage.setItem(FAVS, JSON.stringify(favs)); } catch { /* idem */ }
+    saveFavs();
     favButtons();
     if (!state.method) menu(true);
   }
   const favLabel = id => t(isFav(id) ? 'money_fav_remove' : 'money_fav_add');
-  const favBtn = id => `<button type="button" class="fav-btn" data-fav="${id}" aria-pressed="${isFav(id)}" aria-label="${esc(favLabel(id))}" title="${esc(favLabel(id))}">${icon('star')}</button>`;
+  const favBtn = id => !favs ? '' : `<button type="button" class="fav-btn" data-fav="${id}" aria-pressed="${isFav(id)}" aria-label="${esc(favLabel(id))}" title="${esc(favLabel(id))}">${icon('star')}</button>`;
   function favButtons() {                                          // met a jour les etoiles deja affichees
     document.querySelectorAll('[data-fav]').forEach(b => {
       const id = b.dataset.fav, l = favLabel(id);
@@ -517,7 +519,7 @@ const Money = (() => {
 
   /* Accueil : cartes de raccourci (la page d'accueil, dans app.js, les assemble en sections). */
   const homeCard = (go, ic, label, tags = '', cls = '', tone = '') => `<button type="button" class="home-card${cls}${tone ? ' tone-' + tone : ''}" data-go="${go}">${icon(ic)}<span class="hc-text"><span class="hc-name">${esc(label)}</span>${tags}</span>${icon('arrow_forward')}</button>`;
-  const homeFavCards = guest => METHODS.filter(m => isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav', 'money')).join('');   // guest : pas de compte, les favoris servent de suggestions
+  const homeFavCards = guest => METHODS.filter(m => guest ? m.live && !m.section : isFav(m.id)).map(m => homeCard(`#money/${m.id}`, m.icon, t(m.nameKey), tagsHTML(m), ' is-fav', 'money')).join('');   // guest : pas de compte, suggestions = guides disponibles hors event
 
-  return { open, homeCard, homeFavCards };
+  return { open, homeCard, homeFavCards, setFavs, getFavs: () => favs || [] };
 })();

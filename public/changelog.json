@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.25.0",
+      "date": "2026-11-11",
+      "title": {
+        "fr": "Favoris liés au compte",
+        "en": "Favourites tied to your account"
+      },
+      "fr": [
+        "Les favoris sont enregistrés sur ton compte et te suivent sur tous tes appareils.",
+        "Sans compte : pas de favoris ; l'accueil suggère les guides disponibles."
+      ],
+      "en": [
+        "Favourites are saved to your account and follow you on every device.",
+        "Without an account: no favourites; the home page suggests the available guides."
+      ]
+    },
+    {
       "v": "3.24.1",
       "date": "2026-11-11",
       "title": {

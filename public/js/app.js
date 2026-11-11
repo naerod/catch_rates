@@ -348,8 +348,8 @@ async function updateResults() {
  * Compute avg turns and avg cost for a result card.
  * Formula:
  *   - Quick Ball: turns = avgThrows (no setup, no sleep)
- *   - Others: turns = 2 (False Swipe + Sleep) + avgThrows + re_sleep_turns
- *             re_sleep_turns = max(0, ceil(avgThrows/2) - 1)
+ *   - Others: turns = setup (Soak? + False Swipe if hp<100 + status move if any) + avgThrows + re_sleep_turns
+ *             re_sleep_turns (sleep only) = max(0, ceil(avgThrows/2) - 1)
  *   - cost = r.avgCost (already = avgThrows × ball_price)
  */
 function computeAvgStats(r) {
@@ -538,14 +538,28 @@ document.addEventListener('langchange', () => {
 
 /* ══════════════ EVENTS PAGE ══════════════ */
 /* Donnees partagees entre la page Events, l'accueil et l'admin (une seule source). */
-const EV_FAVS = 'catchr.favEvents';
-const evFavs = () => { try { return JSON.parse(localStorage.getItem(EV_FAVS)) || []; } catch { return []; } };
+// Favoris lies au compte (serveur) : sans compte, aucun favori ni etoile. Anciens favoris du navigateur abandonnes.
+try { localStorage.removeItem('catchr.favEvents'); } catch { /* stockage indisponible */ }
+let evFavList = [];
+const evFavs = () => evFavList;
+function saveFavs() {
+  fetch('/api/me/favs', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ money: Money.getFavs(), events: evFavList }) }).catch(() => {});
+}
 const toggleEvFav = slug => {
-  const f = evFavs(), n = f.includes(slug) ? f.filter(x => x !== slug) : [...f, slug];
-  try { localStorage.setItem(EV_FAVS, JSON.stringify(n)); } catch { /* stockage indisponible */ }
+  if (!currentOidcUser) return;
+  evFavList = evFavList.includes(slug) ? evFavList.filter(x => x !== slug) : [...evFavList, slug];
+  saveFavs();
 };
 let eventsData = null;
 async function getEvents(fresh = false) {
+async function loadFavs() {
+  let d = null;
+  if (currentOidcUser) try { const r = await fetch('/api/me/favs'); if (r.ok) d = await r.json(); } catch { /* hors ligne : pas de favoris */ }
+  evFavList = d?.events || [];
+  Money.setFavs(d ? d.money : null);
+  if (state.page === 'calc') renderHome();
+  if (state.page === 'events') loadEvents();
+}
   if (eventsData && !fresh) return eventsData;
   const list = await (await fetch('/api/events')).json();          // deja trie du plus recent au plus ancien
   eventsData = await Promise.all(list.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json())));
@@ -575,7 +589,7 @@ function eventCard(ev, { edit = false } = {}) {
         ${ev.forecast ? `<span class="ev-tag">${i18n.t('ev_forecast')}</span>` : ''}
         ${ev.unverified ? `<span class="ev-tag" data-tip="${i18n.t('ev_unverified_tip')}">${i18n.t('ev_unverified')}</span>` : ''}
         ${edit ? `<button class="btn btn-sm btn-outline event-edit-btn">${esc(i18n.t('btn_edit'))}</button>` : ''}
-        <button type="button" class="fav-btn" data-evfav="${esc(ev.slug)}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>
+        ${currentOidcUser ? `<button type="button" class="fav-btn" data-evfav="${esc(ev.slug)}" aria-pressed="${fav}" aria-label="${favLabel}" title="${favLabel}"><span class="material-symbols-outlined" aria-hidden="true">star</span></button>` : ''}
       </div>
       ${(ev.pokemon || []).length ? '' : `<p class="ev-empty">${i18n.t('ev_empty')}</p>`}
       <div class="event-pokemon-grid"${(ev.pokemon || []).length ? '' : ' hidden'}>
@@ -702,6 +716,7 @@ document.addEventListener('naerod:user', e => {
   currentOidcUser = e.detail.user;
   if (state.page === 'calc') renderHome();                         // la pastille « Exemple » des favoris depend du compte, connu apres coup
   if (state.page === 'events') loadEvents();                       // le bouton Edit depend du compte, connu apres coup
+  loadFavs();
   // L utilisateur arrive de façon asynchrone : si la page Admin est deja
   // ouverte, on la reevalue avec la session maintenant connue.
   if (state.page === 'admin') initAdmin();

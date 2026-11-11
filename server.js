@@ -240,6 +240,22 @@ app.get('/api/auth/me', (req, res) => {
   });
 });
 
+// ─── Favoris (lies au compte, jamais au navigateur) ───────────────────────────
+const favList = v => Array.isArray(v) && v.length <= 50 && v.every(x => typeof x === 'string' && /^[a-z0-9-]{1,64}$/.test(x)) ? [...new Set(v)] : null;
+app.get('/api/me/favs', (req, res) => {
+  const u = req.session?.oidcUser?.username; if (!u) return res.status(401).json({ error: 'Unauthorized' });
+  const r = dbGet('SELECT money, events FROM user_favs WHERE username = ?', [u]);
+  res.json({ money: JSON.parse(r?.money || '[]'), events: JSON.parse(r?.events || '[]') });
+});
+app.put('/api/me/favs', (req, res) => {
+  const u = req.session?.oidcUser?.username; if (!u) return res.status(401).json({ error: 'Unauthorized' });
+  const money = favList(req.body?.money), events = favList(req.body?.events);
+  if (!money || !events) return res.status(400).json({ error: 'Bad request' });
+  dbRun('INSERT INTO user_favs (username, money, events) VALUES (?, ?, ?) ON CONFLICT(username) DO UPDATE SET money = excluded.money, events = excluded.events', [u, JSON.stringify(money), JSON.stringify(events)]);
+  saveDb();
+  res.json({ money, events });
+});
+
 // ─── Pokémon ───────────────────────────────────────────────────────────────────
 // Noms francais (numero du Pokedex -> nom officiel), joints aux reponses : la base ne stocke que l'anglais
 const NAMES_FR = JSON.parse(fs.readFileSync(path.join(__dirname, 'pokemon_names_fr.json'), 'utf8'));
@@ -552,6 +568,7 @@ async function init() {
     db.run("UPDATE admin_users SET role = 'admin' WHERE id = (SELECT MIN(id) FROM admin_users)");   // compte d'amorcage = admin (cf. db/seed.js)
   }
   if (!auCols.includes('created_at')) db.run('ALTER TABLE admin_users ADD COLUMN created_at TEXT');
+  db.run('CREATE TABLE IF NOT EXISTS user_favs (username TEXT PRIMARY KEY, money TEXT NOT NULL DEFAULT \'[]\', events TEXT NOT NULL DEFAULT \'[]\')');   // favoris lies au compte
   seedEvents();
   saveDb();
   return app;
