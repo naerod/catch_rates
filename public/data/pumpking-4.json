@@ -46,10 +46,10 @@
       "en": "Hydreigon",
       "fr": "Trioxhydre"
     },
-    "bulbasaur": {
-      "dex": 1,
-      "en": "Bulbasaur",
-      "fr": "Bulbizarre"
+    "venusaur": {
+      "dex": 3,
+      "en": "Venusaur",
+      "fr": "Florizarre"
     }
   },
   "slots": [
@@ -67,27 +67,27 @@
     },
     {
       "req": {
-        "en": "Any particle that dies in Phase 1: not bulky, no Sturdy. Flying or Levitate: Iron Ball.",
-        "fr": "N'importe quelle particule qui meurt en phase 1 : pas tanky, pas de Fermeté. Vol ou Lévitation : Balle Fer."
+        "en": "Any particle that dies to Krookodile's Earthquake in Phase 1 (no Sturdy). Flying or Levitate: Iron Ball.",
+        "fr": "N'importe quelle particule qui meurt au Séisme de Crocorible en phase 1 (pas de Fermeté). Vol ou Lévitation : Balle Fer."
       },
       "short": {
-        "en": "Not bulky · Iron Ball if Flying",
-        "fr": "Pas tanky · Balle Fer si Vol"
+        "en": "Dies to Krook's EQ · Iron Ball if Flying",
+        "fr": "Meurt au Séisme de Croco · Balle Fer si Vol"
       },
       "item": "iron_ball",
-      "fodder": "bulbasaur"
+      "fodder": "venusaur"
     },
     {
       "req": {
-        "en": "Any particle that dies in Phase 1: not bulky, no Sturdy. Flying or Levitate: Iron Ball.",
-        "fr": "N'importe quelle particule qui meurt en phase 1 : pas tanky, pas de Fermeté. Vol ou Lévitation : Balle Fer."
+        "en": "Any particle that dies to Krookodile's Earthquake in Phase 1 (no Sturdy). Flying or Levitate: Iron Ball.",
+        "fr": "N'importe quelle particule qui meurt au Séisme de Crocorible en phase 1 (pas de Fermeté). Vol ou Lévitation : Balle Fer."
       },
       "short": {
-        "en": "Not bulky · Iron Ball if Flying",
-        "fr": "Pas tanky · Balle Fer si Vol"
+        "en": "Dies to Krook's EQ · Iron Ball if Flying",
+        "fr": "Meurt au Séisme de Croco · Balle Fer si Vol"
       },
       "item": "iron_ball",
-      "fodder": "bulbasaur"
+      "fodder": "venusaur"
     }
   ],
   "phases": [
