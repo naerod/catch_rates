@@ -8,6 +8,7 @@ const Money = (() => {
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
     { id: 'pumpking-3', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
+    { id: 'pumpking-4', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk4_name', shortKey: 'pk4_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-4.json' },
     { id: 'pumpking-5', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
     // Archive 2026-11-11 (obsolete, remplace par pumpking-5). Donnees gardees dans data/pumpking-cncl.json.
     // { id: 'pumpking-cncl', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'cn_name', shortKey: 'cn_short', tags: ['2026', 'HARD MODE', 'CNcl'], live: true, src: '/data/pumpking-cncl.json' },
@@ -52,7 +53,7 @@ const Money = (() => {
   }
   let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs',
-    chesto_berry: 'chesto-berry', figy_berry: 'figy-berry', chilan_berry: 'chilan-berry', shuca_berry: 'shuca-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion', air_balloon: 'air-balloon', soft_sand: 'soft-sand', iron_ball: 'iron-ball' };
+    chesto_berry: 'chesto-berry', figy_berry: 'figy-berry', chilan_berry: 'chilan-berry', shuca_berry: 'shuca-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion', air_balloon: 'air-balloon', soft_sand: 'soft-sand', iron_ball: 'iron-ball', full_restore: 'full-restore', safety_goggles: 'safety-goggles' };
   const itemImg = it => ITEM_ICON[it] ? `<img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">` : icon('cookie');   // objet d'event sans sprite
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
   function itemBadge(id) {
@@ -381,7 +382,7 @@ const Money = (() => {
     const mons = order.map((id, i) => {
       const sl = slots?.[i];
       if (sl && !sl.mon) return `<article class="tp-mon is-fodder"><header class="tp-mon-head">${monSprite(id, false)}<div><h3>${esc(txt(sl.short))}</h3>` +
-        `<div class="tp-meta"><span class="tp-lv">${esc(t('tp_level'))} ${sl.level}</span></div></div></header>` +
+        `<div class="tp-meta">${sl.level ? `<span class="tp-lv">${esc(t('tp_level'))} ${sl.level}</span>` : ''}</div></div></header>` +
         `<div class="tp-row"><span class="tp-label">${esc(t('tp_note'))}</span><span>${esc(txt(sl.req))}</span></div></article>`;
       const x = (tg.mons || {})[id] || {};
       const lv = x.level ?? tg.level ?? 100;      // un mon peut avoir son niveau (Smeargle 78)

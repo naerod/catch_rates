@@ -1,0 +1,351 @@
+{
+  "_comment": "Pumpking Hard Mode, 4 Pokemon (42 Scorpio, trad. Devi). Seule la variante sure (move table #1) est affichee. Meme format que pumpking-5.json.",
+  "charm": false,
+  "credits": {
+    "en": "Strategy by 42 Scorpio (Bilibili), translated and maintained by Devi (Discord: vinn16).",
+    "fr": "Stratégie de 42 Scorpio (Bilibili), traduite et maintenue par Devi (Discord : vinn16)."
+  },
+  "source": "https://docs.google.com/document/d/1LrPIoBMdlyLOvxit9hbrLfbqwo53Iqm_JZJCAQFVeDU/edit",
+  "links": [
+    {
+      "href": "https://pokepast.es/df36c1e93a259277",
+      "label": "PokePaste"
+    },
+    {
+      "href": "https://www.bilibili.com/en/video/BV1TA4z6ZEce/",
+      "label": {
+        "en": "Video",
+        "fr": "Vidéo"
+      }
+    }
+  ],
+  "team": [
+    "smeargle",
+    "krookodile",
+    "tyranitar",
+    "hydreigon"
+  ],
+  "mons": {
+    "smeargle": {
+      "dex": 235,
+      "en": "Smeargle",
+      "fr": "Queulorior"
+    },
+    "krookodile": {
+      "dex": 553,
+      "en": "Krookodile",
+      "fr": "Crocorible"
+    },
+    "tyranitar": {
+      "dex": 248,
+      "en": "Tyranitar",
+      "fr": "Tyranocif"
+    },
+    "hydreigon": {
+      "dex": 635,
+      "en": "Hydreigon",
+      "fr": "Trioxhydre"
+    },
+    "bulbasaur": {
+      "dex": 1,
+      "en": "Bulbasaur",
+      "fr": "Bulbizarre"
+    }
+  },
+  "slots": [
+    {
+      "mon": "smeargle"
+    },
+    {
+      "mon": "krookodile"
+    },
+    {
+      "mon": "tyranitar"
+    },
+    {
+      "mon": "hydreigon"
+    },
+    {
+      "req": {
+        "en": "Any particle that dies in Phase 1: not bulky, no Sturdy. Flying or Levitate: Iron Ball.",
+        "fr": "N'importe quelle particule qui meurt en phase 1 : pas tanky, pas de Fermeté. Vol ou Lévitation : Balle Fer."
+      },
+      "short": {
+        "en": "Not bulky · Iron Ball if Flying",
+        "fr": "Pas tanky · Balle Fer si Vol"
+      },
+      "item": "iron_ball",
+      "fodder": "bulbasaur"
+    },
+    {
+      "req": {
+        "en": "Any particle that dies in Phase 1: not bulky, no Sturdy. Flying or Levitate: Iron Ball.",
+        "fr": "N'importe quelle particule qui meurt en phase 1 : pas tanky, pas de Fermeté. Vol ou Lévitation : Balle Fer."
+      },
+      "short": {
+        "en": "Not bulky · Iron Ball if Flying",
+        "fr": "Pas tanky · Balle Fer si Vol"
+      },
+      "item": "iron_ball",
+      "fodder": "bulbasaur"
+    }
+  ],
+  "phases": [
+    {
+      "cols": [
+        "{smeargle} → {s:5}",
+        "{krookodile}",
+        "{tyranitar}"
+      ],
+      "turns": [
+        [
+          "{m:protect}",
+          "{i:x_attack} → {krookodile}",
+          "{m:leer}"
+        ],
+        [
+          {
+            "who": "s5",
+            "en": "Switch to the particle (the next one if it dies)",
+            "fr": "Switch sur la particule (la suivante si elle meurt)"
+          },
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          {
+            "who": "s5",
+            "en": "Heal {krookodile} to full HP",
+            "fr": "Soigner {krookodile} au max"
+          },
+          "{m:earthquake}",
+          "{m:assurance}"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        "{smeargle} → {tyranitar}",
+        "{krookodile}",
+        "{hydreigon}"
+      ],
+      "turns": [
+        [
+          {
+            "who": "smeargle",
+            "en": "{m:heal_block}",
+            "fr": "{m:heal_block}"
+          },
+          "{m:protect}",
+          "{i:werewolf_cookie}"
+        ],
+        [
+          "{m:taunt}",
+          "{m:earthquake}",
+          "{m:crunch}"
+        ],
+        [
+          "{m:assurance}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
+      ]
+    },
+    {
+      "cols": [
+        "{hydreigon}",
+        "{krookodile}",
+        "{tyranitar}"
+      ],
+      "turns": [
+        [
+          "{m:tailwind}",
+          {
+            "en": "{i:revive} a particle",
+            "fr": "{i:revive} une particule"
+          },
+          {
+            "en": "{i:revive} a particle",
+            "fr": "{i:revive} une particule"
+          }
+        ],
+        [
+          "{i:werewolf_cookie}",
+          "{m:earthquake}",
+          "{m:assurance}"
+        ],
+        [
+          "{m:crunch}",
+          "{m:crunch}",
+          "{m:assurance}"
+        ]
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "when": {
+        "en": "{tyranitar} or {krookodile} asleep at the end of Phase 2",
+        "fr": "{tyranitar} ou {krookodile} endormi à la fin de la phase 2"
+      },
+      "turns": [
+        {
+          "p": 3,
+          "t": 2,
+          "row": [
+            null,
+            null,
+            {
+              "en": "1 asleep: {i:full_heal} on it · 2 asleep: {i:ghost_cookie}",
+              "fr": "1 endormi : {i:full_heal} dessus · 2 endormis : {i:ghost_cookie}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "when": {
+        "en": "Hyper Voice in Phase 1",
+        "fr": "Hyper Voice en phase 1"
+      },
+      "do": {
+        "en": "A bit more Sp. Def EVs on {krookodile} / {tyranitar}",
+        "fr": "Un peu plus d'EV Déf. Spé sur {krookodile} / {tyranitar}"
+      }
+    }
+  ],
+  "stock": [
+    {
+      "item": "werewolf_cookie",
+      "qty": 2
+    },
+    {
+      "item": "revive",
+      "qty": 2
+    },
+    {
+      "item": "full_restore",
+      "qty": 1
+    },
+    {
+      "item": "x_attack",
+      "qty": 1
+    },
+    {
+      "item": "ghost_cookie",
+      "qty": 1
+    }
+  ],
+  "teamGuide": {
+    "types": {
+      "smeargle": [
+        "normal"
+      ],
+      "krookodile": [
+        "ground",
+        "dark"
+      ],
+      "tyranitar": [
+        "rock",
+        "dark"
+      ],
+      "hydreigon": [
+        "dark",
+        "dragon"
+      ]
+    },
+    "start": {
+      "smeargle": "chilan_berry",
+      "krookodile": "soft_sand",
+      "tyranitar": "air_balloon",
+      "hydreigon": "safety_goggles"
+    },
+    "attention": [
+      {
+        "icon": "format_list_numbered",
+        "key": "pk4_att_order"
+      },
+      {
+        "icon": "skull",
+        "key": "pk4_att_particles"
+      },
+      {
+        "icon": "inventory_2",
+        "key": "pk4_att_items"
+      }
+    ],
+    "mons": {
+      "smeargle": {
+        "level": 78,
+        "ability": "Technician",
+        "nature": "Naive",
+        "evs": "82 HP / 252 Spe",
+        "ivs": "0 HP / 0 SpD / 31 Spe",
+        "moves": [
+          {
+            "m": "heal_block"
+          },
+          {
+            "m": "protect"
+          },
+          null,
+          null
+        ]
+      },
+      "krookodile": {
+        "ability": "Moxie",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 140 Def / 52 Spe",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "moves": [
+          {
+            "m": "earthquake"
+          },
+          {
+            "m": "crunch"
+          },
+          {
+            "m": "protect"
+          },
+          null
+        ]
+      },
+      "tyranitar": {
+        "ability": "Sand Stream",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "252 Atk / 34 SpD / 224 Spe",
+        "ivs": "25+ HP / 31 Atk / 25+ Def / 25+ SpD / 31 Spe",
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "taunt"
+          },
+          {
+            "m": "leer"
+          },
+          null
+        ]
+      },
+      "hydreigon": {
+        "ability": "Levitate",
+        "nature": "Adamant [+Atk|-SpA]",
+        "evs": "6 HP / 252 Atk / 252 Def",
+        "ivs": "31 HP / 31 Atk / 31 Def",
+        "moves": [
+          {
+            "m": "assurance"
+          },
+          {
+            "m": "crunch"
+          },
+          {
+            "m": "tailwind"
+          },
+          null
+        ]
+      }
+    }
+  }
+}
