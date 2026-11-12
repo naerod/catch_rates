@@ -550,8 +550,6 @@ const toggleEvFav = slug => {
   evFavList = evFavList.includes(slug) ? evFavList.filter(x => x !== slug) : [...evFavList, slug];
   saveFavs();
 };
-let eventsData = null;
-async function getEvents(fresh = false) {
 async function loadFavs() {
   let d = null;
   if (currentOidcUser) try { const r = await fetch('/api/me/favs'); if (r.ok) d = await r.json(); } catch { /* hors ligne : pas de favoris */ }
@@ -560,6 +558,8 @@ async function loadFavs() {
   if (state.page === 'calc') renderHome();
   if (state.page === 'events') loadEvents();
 }
+let eventsData = null;
+async function getEvents(fresh = false) {
   if (eventsData && !fresh) return eventsData;
   const list = await (await fetch('/api/events')).json();          // deja trie du plus recent au plus ancien
   eventsData = await Promise.all(list.map(ev => fetch(`/api/events/${ev.slug}`).then(r => r.json())));
