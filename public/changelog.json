@@ -12,13 +12,15 @@
         "Les favoris sont enregistrés sur ton compte et te suivent sur tous tes appareils.",
         "Sans compte : pas de favoris ; l'accueil suggère les guides disponibles.",
         "Guide 5 Pokémon : imprévus présentés comme les lignes du guide (case modifiée en évidence), Balle Fer dans l'ordre de l'équipe, notes inutiles retirées.",
-        "Guide 5 Pokémon : imprévu « ancienne ligne » retiré."
+        "Guide 5 Pokémon : imprévu « ancienne ligne » retiré.",
+        "Statistiques : la preprod a son propre compteur de visites."
       ],
       "en": [
         "Favourites are saved to your account and follow you on every device.",
         "Without an account: no favourites; the home page suggests the available guides.",
         "5-Pokemon guide: exceptions shown as guide rows (changed cell highlighted), Iron Ball in the party order, needless notes removed.",
-        "5-Pokemon guide: 'old line' exception removed."
+        "5-Pokemon guide: 'old line' exception removed.",
+        "Analytics: the preprod has its own visit counter."
       ]
     },
     {

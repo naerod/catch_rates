@@ -89,7 +89,9 @@ const APP_V = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'changel
 const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8')
   .replace(/((?:src|href)="\/(?:js|css)\/[^"]+\.(?:js|css))"/g, `$1?v=${APP_V}"`)
   .replace('</head>', `  <meta name="app-version" content="${APP_V}" />\n</head>`);
-app.get(['/', '/index.html'], (req, res) => res.type('html').send(INDEX_HTML));
+// La preprod compte ses visites dans son propre site Umami (sinon les tests gonflent la prod)
+const INDEX_HTML_PP = INDEX_HTML.replace('73848ced-9a37-46a4-b294-0f54b56f505e', '70965d58-5f61-4e31-88ca-8496e3d6df93');
+app.get(['/', '/index.html'], (req, res) => res.type('html').send((req.hostname || '').startsWith('preprod-') ? INDEX_HTML_PP : INDEX_HTML));
 app.use('/gym-rerun', express.static(path.join(__dirname, 'public', 'gym-rerun'), { maxAge: '1d' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ball-images', express.static(path.join(__dirname, 'db', 'images')));
