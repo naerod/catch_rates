@@ -9,10 +9,12 @@
         "en": "4-Pokemon guide: particles"
       },
       "fr": [
-        "Particules : la seule condition est de mourir au Séisme de Crocorible."
+        "Particules : la seule condition est de mourir au Séisme de Crocorible.",
+        "Correctif : un texte mal formé empêchait le site de s'afficher."
       ],
       "en": [
-        "Particles: the only requirement is dying to Krookodile's Earthquake."
+        "Particles: the only requirement is dying to Krookodile's Earthquake.",
+        "Fix: a malformed text prevented the site from loading."
       ]
     },
     {
