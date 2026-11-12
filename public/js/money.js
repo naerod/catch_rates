@@ -53,7 +53,7 @@ const Money = (() => {
   }
   let gymItems = {}, curItems = {}, leadMode = false;     // leadMode : ligne principale, le sprite se place au-dessus de son attaque                                              // objets de la carte en cours de rendu
   const ITEM_ICON = { black_glasses: 'black-glasses', choice_band: 'choice-band', choice_scarf: 'choice-scarf', choice_specs: 'choice-specs',
-    chesto_berry: 'chesto-berry', figy_berry: 'figy-berry', chilan_berry: 'chilan-berry', shuca_berry: 'shuca-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion', air_balloon: 'air-balloon', soft_sand: 'soft-sand', iron_ball: 'iron-ball', full_restore: 'full-restore', safety_goggles: 'safety-goggles' };
+    chesto_berry: 'chesto-berry', figy_berry: 'figy-berry', chilan_berry: 'chilan-berry', shuca_berry: 'shuca-berry', poison_barb: 'poison-barb', lum_berry: 'lum-berry', x_attack: 'x-attack', hyper_potion: 'hyper-potion', revive: 'revive', full_heal: 'full-heal', max_potion: 'max-potion', air_balloon: 'air-balloon', soft_sand: 'soft-sand', iron_ball: 'iron-ball', full_restore: 'full-restore', safety_goggles: 'safety-goggles', werewolf_cookie: 'werewolf-cookie', ghost_cookie: 'ghost-cookie', cat_cookie: 'cat-cookie', pumpkin_cookie: 'pumpkin-cookie' };
   const itemImg = it => ITEM_ICON[it] ? `<img src="/gym-rerun/items/${ITEM_ICON[it]}.png" alt="" width="30" height="30">` : icon('cookie');   // objet d'event sans sprite
   /* Petite bulle (coin bas-droit) : l'objet a faire tenir au Pokemon avant ce combat. */
   function itemBadge(id) {
