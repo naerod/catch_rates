@@ -14,17 +14,17 @@
     return list.filter(([, d]) => d > now).sort((a, b) => a[1] - b[1])[0];
   };
   const t = k => (typeof i18n !== 'undefined' ? i18n.t(k) : k);
-  const pad = n => String(n).padStart(2, '0');
-  function paint() {
+    function paint() {
     const els = document.querySelectorAll('[data-countdown]'); if (!els.length) return;
     const [id, at] = next(), s = Math.max(0, Math.floor((at - Date.now()) / 1000));
-    const parts = [[Math.floor(s / 86400), 'cd_d'], [Math.floor(s / 3600) % 24, 'cd_h'], [Math.floor(s / 60) % 60, 'cd_m'], [s % 60, 'cd_s']];
+    // Jamais a l'heure pile (parfois la veille, parfois le lendemain) : ~jours, puis ~heures le dernier jour
+    const d = Math.floor(s / 86400), h = Math.max(1, Math.ceil(s / 3600));
     const ic = ICON[id].startsWith('<') ? ICON[id] : `<span class="material-symbols-outlined" aria-hidden="true">${ICON[id]}</span>`;
-    const html = `${ic}<span class="cd-label">${t('cd_next')}<b>${t('mev_' + id)}</b></span><span class="cd-time">${parts.map(([v, k], i) => `<span class="cd-part"><b>${i ? pad(v) : v}</b>${t(k)}</span>`).join('')}</span>`;
+    const html = `${ic}<span class="cd-label">${t('cd_next')}<b>${t('mev_' + id)}</b></span><span class="cd-time"><span class="cd-part"><b>~${d ? d : h}</b>${t(d ? (d > 1 ? 'cd_days' : 'cd_day') : (h > 1 ? 'cd_hours' : 'cd_hour'))}</span></span>`;
     els.forEach(el => { el.dataset.event = id; el.innerHTML = html; });
   }
   paint();
-  setInterval(paint, 1000);
+  setInterval(paint, 60000);
   document.addEventListener('naerod:i18n', () => setTimeout(paint));
   window.Countdown = { next };
 })();

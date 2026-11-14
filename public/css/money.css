@@ -592,6 +592,7 @@ a.ev-by:hover { border-color: var(--accent); }
 .cd-time { display: flex; gap: 0.6rem; font-variant-numeric: tabular-nums; }
 .cd-part { display: flex; align-items: baseline; gap: 0.15rem; color: var(--text-muted); font-size: 0.8rem; }
 .cd-part b { min-width: 2ch; text-align: right; color: var(--text); font: 700 1.5rem var(--font-head); font-variant-numeric: tabular-nums; }
-.cd-part:first-child b { min-width: 3ch; }
+.cd-part { gap: 0.35rem; font-size: 0.95rem; }
+.cd-part b { min-width: 0; font-size: 1.6rem; }
 .tag.is-rec { color: var(--green, #3fb950); border-color: currentColor; }
 .tag.is-untested { color: var(--orange); border-color: currentColor; border-style: dashed; }
