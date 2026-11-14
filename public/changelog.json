@@ -2,6 +2,22 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.27.0",
+      "date": "2026-11-14",
+      "title": {
+        "fr": "Compte à rebours du prochain event",
+        "en": "Next event countdown"
+      },
+      "fr": [
+        "Accueil et Money making : compte à rebours permanent jusqu'au prochain event (Halloween, Noël, Nouvel An lunaire).",
+        "Guides Halloween : 4 Pokémon « Recommandé », 3 particules « Non testé »."
+      ],
+      "en": [
+        "Home and Money making: always-on countdown to the next event (Halloween, Christmas, Lunar New Year).",
+        "Halloween guides: 4 Pokemon 'Recommended', 3 particles 'Untested'."
+      ]
+    },
+    {
       "v": "3.26.3",
       "date": "2026-11-13",
       "title": {

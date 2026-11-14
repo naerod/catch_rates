@@ -7,8 +7,8 @@ const Money = (() => {
   const METHODS = [
     { id: 'gym-rerun', icon: 'account_balance', nameKey: 'gr_name', shortKey: 'gr_short', tags: ['ITEM SWAP', 'X.ITEMLESS'], live: true, src: '/data/gym-rerun.json' },
     { id: 'technical-route', icon: 'route', nameKey: 'gr_tech_name', shortKey: 'gr_tech_short', tags: [], wip: true, doc: 'https://docs.google.com/document/d/19DmT92aXud24xmeedQCtlQWO8snRN7hE1qYm50p5lBA/edit', src: '/data/technical-route.json' },
-    { id: 'pumpking-3', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk_name', shortKey: 'pk_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
-    { id: 'pumpking-4', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk4_name', shortKey: 'pk4_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-4.json' },
+    { id: 'pumpking-3', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk_name', shortKey: 'pk_short', badge: 'untested', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-3.json' },
+    { id: 'pumpking-4', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk4_name', shortKey: 'pk4_short', badge: 'rec', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-4.json' },
     { id: 'pumpking-5', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'pk5_name', shortKey: 'pk5_short', tags: ['2026', 'HARD MODE'], live: true, src: '/data/pumpking-5.json' },
     // Archive 2026-11-11 (obsolete, remplace par pumpking-5). Donnees gardees dans data/pumpking-cncl.json.
     // { id: 'pumpking-cncl', section: 'event', event: 'halloween', icon: '/img/event-halloween.png', nameKey: 'cn_name', shortKey: 'cn_short', tags: ['2026', 'HARD MODE', 'CNcl'], live: true, src: '/data/pumpking-cncl.json' },
@@ -226,7 +226,7 @@ const Money = (() => {
   }
 
   const tagsHTML = (m, guest = false) => {
-    const tags = [...(guest ? [`<span class="tag is-example">${icon('auto_awesome')}${esc(t('money_example'))}</span>`] : []), ...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
+    const tags = [...(guest ? [`<span class="tag is-example">${icon('auto_awesome')}${esc(t('money_example'))}</span>`] : []), ...(m.wip ? [`<span class="tag is-wip">${esc(t('money_wip_label'))}</span>`] : []), ...(m.badge ? [`<span class="tag is-${m.badge}">${esc(t('money_badge_' + m.badge))}</span>`] : []), ...m.tags.map(x => `<span class="tag">${esc(x)}</span>`)];
     return tags.length ? `<span class="money-tags">${tags.join('')}</span>` : '';
   };
 

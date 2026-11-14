@@ -577,7 +577,21 @@ a.ev-by:hover { border-color: var(--accent); }
 .tp-notes .sprite-box { --k: 1; flex: none; margin-top: -4px; }
 .tp-note-mon { color: var(--mon, var(--text)); }
 /* Une couleur par evenement : Halloween orange, Noel bleu, Nouvel An lunaire rouge */
-.mev-tab { --ev: var(--accent); }
-[data-theme="dark"] .mev-tab[data-event="halloween"] { --ev: #f08a24; } [data-theme="light"] .mev-tab[data-event="halloween"] { --ev: #b35400; }
-[data-theme="dark"] .mev-tab[data-event="christmas"] { --ev: #5aaef0; } [data-theme="light"] .mev-tab[data-event="christmas"] { --ev: #0b62a8; }
-[data-theme="dark"] .mev-tab[data-event="lunar"] { --ev: #ef5350; } [data-theme="light"] .mev-tab[data-event="lunar"] { --ev: #c62828; }
+.mev-tab, .ev-countdown { --ev: var(--accent); }
+[data-theme="dark"] :is(.mev-tab, .ev-countdown)[data-event="halloween"] { --ev: #f08a24; } [data-theme="light"] :is(.mev-tab, .ev-countdown)[data-event="halloween"] { --ev: #b35400; }
+[data-theme="dark"] :is(.mev-tab, .ev-countdown)[data-event="christmas"] { --ev: #5aaef0; } [data-theme="light"] :is(.mev-tab, .ev-countdown)[data-event="christmas"] { --ev: #0b62a8; }
+[data-theme="dark"] :is(.mev-tab, .ev-countdown)[data-event="lunar"] { --ev: #ef5350; } [data-theme="light"] :is(.mev-tab, .ev-countdown)[data-event="lunar"] { --ev: #c62828; }
+
+/* ── Compte a rebours du prochain event (accueil + Money making) : largeurs fixes, la page ne bouge pas chaque seconde ── */
+.ev-countdown { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1rem; margin: 0 auto 1.2rem; padding: 0.7rem 1.2rem; max-width: 640px; border: 1px solid var(--ev); border-radius: var(--radius); background: color-mix(in srgb, var(--ev) 12%, var(--card)); }
+.ev-countdown:empty { display: none; }
+.ev-countdown > .material-symbols-outlined { color: var(--ev); font-size: 30px; }
+.ev-countdown > .pix-icon { width: 32px; height: 32px; }
+.cd-label { display: flex; flex-direction: column; font: 600 0.75rem var(--font-head); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.cd-label b { font-size: 1.1rem; letter-spacing: 0; text-transform: none; color: var(--ev); }
+.cd-time { display: flex; gap: 0.6rem; font-variant-numeric: tabular-nums; }
+.cd-part { display: flex; align-items: baseline; gap: 0.15rem; color: var(--text-muted); font-size: 0.8rem; }
+.cd-part b { min-width: 2ch; text-align: right; color: var(--text); font: 700 1.5rem var(--font-head); font-variant-numeric: tabular-nums; }
+.cd-part:first-child b { min-width: 3ch; }
+.tag.is-rec { color: var(--green, #3fb950); border-color: currentColor; }
+.tag.is-untested { color: var(--orange); border-color: currentColor; border-style: dashed; }
