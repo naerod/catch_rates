@@ -1287,8 +1287,8 @@ footer {
 .ep-best { font-size: 0.68rem; font-weight: 700; color: var(--green); }
 
 /* Couleurs permanentes des boutons de la barre (jetons lus par <naerod-header> >= 1.6.5) : Event swarms = bleu, Money making = dore, sur toutes les pages */
-[data-theme="dark"]  { --nrd-nav-tone-events: #5aaef0; --nrd-nav-tone-money: #f5b942; --site-accent: #5aaef0; --site-on-accent: #00121f; }
-[data-theme="light"] { --nrd-nav-tone-events: #0b62a8; --nrd-nav-tone-money: #8a5a00; --site-accent: #0b62a8; --site-on-accent: #ffffff; }
+[data-theme="dark"]  { --nrd-nav-tone-events: #5aaef0; --nrd-nav-tone-money: #f5b942; --nrd-nav-tone-market: #4ade80; --site-accent: #5aaef0; --site-on-accent: #00121f; }
+[data-theme="light"] { --nrd-nav-tone-events: #0b62a8; --nrd-nav-tone-money: #8a5a00; --nrd-nav-tone-market: #166534; --site-accent: #0b62a8; --site-on-accent: #ffffff; }
 
 /* ces regles gardent l'icone de la balle petite : la regle generale des tuiles s'applique sinon a toutes les images */
 .event-pokemon-item .ep-icon .ep-ball { width: 28px; height: 28px; }

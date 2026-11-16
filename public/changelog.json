@@ -2,6 +2,26 @@
   "_comment": "SOURCE DE VÉRITÉ UNIQUE du changelog CatchR : servi à /changelog.json, rendu par /changelog, lu par le badge de version du pied de page. À chaque mise à jour du site, AJOUTER une entrée EN TÊTE de 'versions' (fr + en ; les autres langues du site retombent sur l'anglais). Imposé par changelog-guard (push et déploiement).",
   "versions": [
     {
+      "v": "3.28.0",
+      "date": "2026-11-16",
+      "title": {
+        "fr": "Marché du GTL",
+        "en": "GTL market"
+      },
+      "fr": [
+        "Nouvel onglet Market : prix le plus bas et quantité en vente de tous les objets du GTL, recherche, tri, filtre « Nouveaux objets ».",
+        "Courbe de prix par objet, complétée chaque jour par CatchR quand l'historique de la source s'arrête.",
+        "Mes investissements : quantité et prix d'achat, valeur actuelle et gain, liés au compte.",
+        "Les gestionnaires peuvent nommer les objets récents que la liste communautaire ne connaît pas encore."
+      ],
+      "en": [
+        "New Market tab: lowest price and listed quantity for every GTL item, search, sort and a New items filter.",
+        "Price chart per item, completed daily by CatchR when the source history stops.",
+        "My investments: quantity and buy price, current value and gain, tied to your account.",
+        "Managers can name recent items the community list does not know yet."
+      ]
+    },
+    {
       "v": "3.27.1",
       "date": "2026-11-16",
       "title": {

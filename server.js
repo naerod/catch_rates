@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 const { hashPassword, verifyPassword, needsRehash } = require('./lib/passwords');
+const market = require('./lib/market');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -534,6 +535,9 @@ app.get('/api/prices', async (req, res) => {
   res.json({ fetchedAt: priceCache.at, stale: !fresh && Date.now() - priceCache.at >= 10 * 60 * 1000, prices: priceCache.prices });
 });
 
+// ─── Market (prix GTL, historique, investissements) ───────────────────────────
+const marketSetup = market.mount(app, { dbAll, dbGet, dbRun, saveDb, requireAuth });
+
 // ─── Serve SPA ─────────────────────────────────────────────────────────────────
 // Journal des versions (pas de .html dans les URL publiques)
 app.get('/changelog', (req, res) => {
@@ -571,6 +575,7 @@ async function init() {
   }
   if (!auCols.includes('created_at')) db.run('ALTER TABLE admin_users ADD COLUMN created_at TEXT');
   db.run('CREATE TABLE IF NOT EXISTS user_favs (username TEXT PRIMARY KEY, money TEXT NOT NULL DEFAULT \'[]\', events TEXT NOT NULL DEFAULT \'[]\')');   // favoris lies au compte
+  marketSetup();
   seedEvents();
   saveDb();
   return app;

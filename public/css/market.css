@@ -1,0 +1,75 @@
+/* ════════════════════════════════════════════
+   Market — prix GTL et investissements
+   ════════════════════════════════════════════ */
+.mk-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* bascule segmentee (onglets Prix / Investissements, filtre Tous / Nouveaux) */
+.mk-seg { display: inline-flex; border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.mk-seg button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 0; background: transparent; color: var(--text-dim); font: inherit; cursor: pointer; transition: background .15s, color .15s; }
+.mk-seg button + button { border-left: 1px solid var(--card-border); }
+.mk-seg button[aria-pressed="true"] { background: rgba(var(--accent-rgb), .14); color: var(--accent); font-weight: 700; }
+.mk-seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.mk-tabs { display: flex; width: max-content; max-width: 100%; margin: 0 auto 24px; }
+
+.market-body { max-width: 960px; margin: 0 auto; }
+.mk-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
+.mk-search { flex: 1 1 240px; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border: 1px solid var(--card-border); border-radius: var(--radius); background: var(--input-bg); color: var(--text-muted); }
+.mk-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--text); font: inherit; outline: none; }
+.mk-search:focus-within { border-color: var(--accent); }
+.mk-sort { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); }
+.mk-sort select { min-height: 44px; padding: 0 8px; border: 1px solid var(--card-border); border-radius: var(--radius); background: var(--input-bg); color: var(--text); font: inherit; }
+
+/* liste : nom | prix | quantite | mise a jour */
+.mk-head, .mk-row { display: grid; grid-template-columns: minmax(0, 1fr) 128px 96px 96px; gap: 12px; align-items: center; }
+.mk-head { padding: 0 16px 8px; color: var(--text-muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+.mk-head span:not(:first-child), .mk-price, .mk-qty, .mk-age { text-align: right; }
+.mk-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--card-border); border-radius: var(--radius-lg); background: var(--card); overflow: hidden; }
+.mk-list li + li { border-top: 1px solid var(--card-border); }
+.mk-row { width: 100%; min-height: 48px; padding: 8px 16px; border: 0; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: background .15s; }
+.mk-row:hover, .mk-row.is-open { background: var(--bg3); }
+.mk-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.mk-name { display: flex; align-items: center; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.mk-price { font-weight: 700; font-variant-numeric: tabular-nums; }
+.mk-qty, .mk-age { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.mk-new { flex: none; padding: 2px 8px; border-radius: 999px; background: rgba(var(--accent-rgb), .16); color: var(--accent); font-size: .7rem; font-weight: 700; letter-spacing: .04em; }
+.mk-more { display: block; margin: 16px auto 0; }
+
+/* detail d'un objet */
+.mk-detail { padding: 16px; background: var(--bg2); border-top: 1px solid var(--card-border); animation: mk-in .2s ease-out; }
+@keyframes mk-in { from { opacity: 0; transform: translateY(-4px); } }
+.mk-chart { min-height: 184px; }
+.mk-chart svg { display: block; width: 100%; height: 160px; }
+.mk-chart path { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.mk-chart-legend { display: flex; justify-content: space-between; gap: 8px; color: var(--text-muted); font-size: .8rem; }
+.mk-skel-chart { height: 160px; border-radius: var(--radius); background: var(--bg3); animation: mk-pulse 1.2s ease-in-out infinite alternate; }
+.mk-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin-top: 16px; }
+.mk-form label { display: grid; gap: 4px; color: var(--text-muted); font-size: .85rem; }
+.mk-form input { min-height: 44px; width: 180px; max-width: 100%; padding: 0 12px; border: 1px solid var(--card-border); border-radius: var(--radius); background: var(--input-bg); color: var(--text); font: inherit; }
+.mk-form .btn { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; }
+.mk-hint, .mk-empty { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; color: var(--text-muted); }
+.mk-empty { padding: 48px 16px; text-align: center; }
+
+/* investissements */
+.mk-total { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-bottom: 16px; color: var(--text-muted); }
+.mk-total b { color: var(--text); }
+.mk-table-wrap { overflow-x: auto; border: 1px solid var(--card-border); border-radius: var(--radius-lg); background: var(--card); }
+.mk-table { width: 100%; border-collapse: collapse; }
+.mk-table th, .mk-table td { padding: 8px 16px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mk-table th:first-child { text-align: left; white-space: normal; }
+.mk-table thead th { color: var(--text-muted); font-size: .8rem; font-weight: 400; text-transform: uppercase; }
+.mk-table tbody tr + tr { border-top: 1px solid var(--card-border); }
+.is-up, .is-up b { color: var(--green); }
+.is-down, .is-down b { color: var(--red); }
+.is-up .material-symbols-outlined, .is-down .material-symbols-outlined { vertical-align: -4px; font-size: 1.1em; margin-right: 4px; }
+
+.mk-skel { display: grid; gap: 8px; }
+.mk-skel div { height: 48px; border-radius: var(--radius); background: var(--card); animation: mk-pulse 1.2s ease-in-out infinite alternate; }
+@keyframes mk-pulse { to { opacity: .5; } }
+
+@media (max-width: 640px) {
+  .mk-head, .mk-row { grid-template-columns: minmax(0, 1fr) 96px; }
+  .mk-head span:nth-child(n+3), .mk-qty, .mk-age { display: none; }
+  .mk-tabs { width: 100%; }
+  .mk-tabs button { flex: 1; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .mk-detail, .mk-skel div, .mk-skel-chart { animation: none; } }

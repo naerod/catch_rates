@@ -87,12 +87,13 @@ function showPage(page, fresh = false) {
     const url = page === 'calc' ? location.pathname + location.search : '#' + page;
     if (url !== location.pathname + location.search + location.hash) history.pushState(null, '', url);
   }
-  document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money');
+  document.querySelector('.layout-grid').classList.toggle('is-wide', page === 'money' || page === 'market');
   document.querySelector('.layout-grid').classList.toggle('is-events', page === 'events');
 
   if (page === 'calc') renderHome();                              // favoris a jour
   if (page === 'money') Money.open(fresh);
   if (page === 'events') loadEvents();
+  if (page === 'market') Market.open();
   if (page === 'admin') initAdmin();
 }
 

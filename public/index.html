@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/money.css" />
+  <link rel="stylesheet" href="/css/market.css" />
   <!-- Umami analytics (self-hosted, sans cookie) -->
   <script defer src="https://umami.naerod.com/s.js" data-website-id="73848ced-9a37-46a4-b294-0f54b56f505e"></script>
 </head>
@@ -214,6 +215,18 @@
       </div>
     </section>
 
+    <!-- ══════════════ MARKET PAGE ══════════════ -->
+    <section id="page-market" class="page">
+      <div class="page-title">
+        <h1 data-i18n="mk_title">GTL market</h1>
+      </div>
+      <div id="market-tabs" class="mk-seg mk-tabs" role="group">
+        <button type="button" data-view="prices" aria-pressed="true"><span class="material-symbols-outlined" aria-hidden="true">sell</span><span data-i18n="mk_tab_prices">Prices</span></button>
+        <button type="button" data-view="invest" aria-pressed="false"><span class="material-symbols-outlined" aria-hidden="true">savings</span><span data-i18n="mk_tab_invest">My investments</span></button>
+      </div>
+      <div id="market-body" class="market-body"></div>
+    </section>
+
     <!-- ══════════════ ADMIN PAGE ══════════════ -->
     <!-- ══════════════ MONEY MAKING PAGE ══════════════ -->
     <section id="page-money" class="page">
@@ -395,6 +408,7 @@
   <script src="/js/warnings.js"></script>
   <script src="/js/countdown.js"></script>
   <script src="/js/money.js"></script>
+  <script src="/js/market.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>
