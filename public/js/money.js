@@ -295,7 +295,7 @@ const Money = (() => {
   function card(g, i, r) {
     const endTip = g.tip === 'tip_channel';                       // info de fin de combat : tout en bas de la carte
     const tip = g.tip && !g.bonus && !endTip ? `<span class="gym-tip">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></span>` : '';
-    const chips = (g.badge ? `<span class="gym-chip is-optional">${icon('flag')}${esc(t('gr_' + g.badge))}</span>` : '') + (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
+    const chips = (g.badge ? `<span class="gym-chip is-optional">${icon('flag')}${esc(t('gr_' + g.badge))}</span>` : '') + (g.untested ? `<span class="gym-chip is-warn">${icon('warning')}${esc(t('gr_untested'))}</span>` : '') + (g.skip ? `<span class="gym-chip is-warn">${icon('help')}${esc(t('gr_skip'))}</span>` : '') +
       (g.time != null ? `<span class="gym-chip is-time">${icon('timer')}${g.time} ${esc(t('gr_min'))}</span>` : '');
     const endNote = endTip ? `<p class="gym-note is-end">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';
     const note = g.bonus ? `<p class="gym-note">${icon('info')}<span>${esc(t('gr_' + g.tip))}</span></p>` : '';

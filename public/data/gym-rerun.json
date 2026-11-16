@@ -392,7 +392,7 @@
             },
             {
               "i": 1,
-              "s": "@vs #130 , @follow_with typhlosion.swift + garchomp.earthquake @instead"
+              "s": "@vs #130 , @follow_with typhlosion.swift + garchomp.earthquake @instead @into togekiss.hyper_voice + garchomp.earthquake"
             },
             {
               "i": 1,
@@ -408,6 +408,7 @@
         {
           "id": "lavaridge",
           "name": "Lavaridge",
+          "untested": true,
           "time": 57,
           "items": {
             "blastoise": "choice_specs",
