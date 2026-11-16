@@ -597,9 +597,9 @@ a.ev-by:hover { border-color: var(--accent); }
 .tag.is-rec { color: var(--green, #3fb950); border-color: currentColor; }
 .tag.is-untested { color: var(--orange); border-color: currentColor; border-style: dashed; }
 /* Trio de Striaton : une couleur par dresseur (type de son starter) */
-.tk-trainer.is-chili { color: var(--type-fire); }
+.tk-trainer.is-chili { color: var(--red); }
 .tk-trainer.is-cress { color: var(--type-water); }
-.tk-trainer.is-cilan { color: var(--type-grass); }
+.tk-trainer.is-cilan { color: var(--green); }
 /* Cases « temps » et « gains » : masquage sans deplacer le reste de la carte */
 .money-view-opts { display: inline-flex; gap: 0.9rem; }
 .after-chip.is-reward { order: 3; gap: 0.3em; height: 36px; box-sizing: border-box; padding: 0 0.9em; font-size: 0.64em; font-weight: 700; color: var(--text); }
