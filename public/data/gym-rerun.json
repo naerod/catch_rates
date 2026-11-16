@@ -1088,8 +1088,12 @@
               "s": "@vs #362 , weezing.explosion + @switch_out ~garchomp @into ~blastoise"
             },
             {
-              "i": 1,
-              "s": "@follow_up_with typhlosion.eruption + garchomp.earthquake @into togekiss.hyper_voice + garchomp.earthquake"
+              "i": 2,
+              "s": "@t2 typhlosion.eruption + garchomp.earthquake"
+            },
+            {
+              "i": 2,
+              "s": "@t3 togekiss.hyper_voice + garchomp.earthquake"
             },
             {
               "i": 1,

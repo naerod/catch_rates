@@ -89,11 +89,11 @@ const Money = (() => {
     return leadMode ? `<span class="tk-act tk-stack" data-mon="${mon}">${monSprite(mon)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>` : `<span class="tk-act" data-mon="${mon}">${monSprite(mon, false)}<b class="tk-move">${esc(t('mv_' + move))}</b></span>`;
   }
   /* Variante « vs. X , Pokemon.attaque » ou « T2 Pokemon.attaque » : on insere « use » pour faire une vraie phrase. */
-  const MARKERS = new Set(['@vs', '@vs_rest', '@t1', '@t2', '#', ',', '/', '?', '@lead']);
+  const MARKERS = new Set(['@vs', '@vs_rest', '@t1', '@t2', '@t3', '#', ',', '/', '?', '@lead']);
   function withUse(l) {
     if (!l.i) return l.s;
     const tk = l.s.split(' '), k = tk.findIndex(x => /^[a-z]+\.[a-z_0-9]+$/.test(x) || x[0] === '~');
-    if (k < 1 || !tk.slice(0, k).every(x => MARKERS.has(x) || /^[#=]/.test(x)) || !tk.slice(0, k).some(x => /^@(vs|vs_rest|t1|t2)$/.test(x))) return l.s;
+    if (k < 1 || !tk.slice(0, k).every(x => MARKERS.has(x) || /^[#=]/.test(x)) || !tk.slice(0, k).some(x => /^@(vs|vs_rest|t1|t2|t3)$/.test(x))) return l.s;
     return [...tk.slice(0, k), '@use', ...tk.slice(k)].join(' ');
   }
   /* Exception a deux tours : « vs. X , A + B @into C + D » devient deux lignes, « T1 use A + B » puis « → T2 use C + D » (comme la Technical route). */
