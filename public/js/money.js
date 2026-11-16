@@ -28,6 +28,17 @@ const Money = (() => {
   let loading = false;
   const state = { method: null, region: null, view: 'route' };   // region : region a faire defiler en vue (lien profond)
 
+  /* Affichage des temps et des gains : prefere par le visiteur, garde dans le navigateur */
+  const VIEW_OPTS = ['time', 'reward'], VIEW_STORE = 'catchr-gym-view';
+  const viewOpts = { time: true, reward: true };
+  try { Object.assign(viewOpts, JSON.parse(localStorage.getItem(VIEW_STORE)) || {}); } catch { /* stockage indisponible */ }
+  const applyViewOpts = () => VIEW_OPTS.forEach(k => $('money-stage').classList.toggle('hide-' + k, !viewOpts[k]));
+  document.addEventListener('change', e => {
+    const k = e.target.dataset?.viewopt; if (!k) return;
+    viewOpts[k] = e.target.checked; applyViewOpts();
+    try { localStorage.setItem(VIEW_STORE, JSON.stringify(viewOpts)); } catch { /* idem */ }
+  });
+
   /* ── Persistance : hash (#money/gym-rerun[/kanto]) puis localStorage ── */
   function restore() {
     const seg = location.hash.slice(1).split('/').slice(1);
@@ -76,7 +87,7 @@ const Money = (() => {
     if (tk === '(' || tk === ')') return `<span class="tk-raw ${tk === '(' ? 'tk-open' : 'tk-close'}">${tk}</span>`;                 // parentheses du guide
     const c = tk[0], rest = tk.slice(1);
     if (c === '@') return `<span class="tk-word">${esc(t('gr_' + rest))}</span>`;
-    if (c === '=') return `<b class="tk-trainer">${esc(rest)}</b>`;                 // nom propre (dresseur)
+    if (c === '=') return `<b class="tk-trainer is-${esc(rest.toLowerCase())}">${esc(rest)}</b>`;                 // nom propre (dresseur)
     if (c === '~') return leadMode ? `<span class="tk-act tk-stack" data-mon="${rest}">${monSprite(rest)}<b>${esc(name(data.mons, rest))}</b></span>` : `<span class="tk-act" data-mon="${rest}">${monSprite(rest, false)}<b>${esc(name(data.mons, rest))}</b></span>`;
     if (c === '.') return `<b class="tk-move">${esc(t('mv_' + rest))}</b>`;
     if (c === '$') return `<img class="sprite-inline" src="/gym-rerun/sprites/${rest}.png" alt="${esc(name(data.opponents, rest))}" width="96" height="96" decoding="async">`;   // grand sprite dans une phrase
@@ -115,8 +126,9 @@ const Money = (() => {
   };
 
   /* Entre deux cartes : soin conseille apres le combat, puis les objets a changer avant le suivant. */
-  function between(a) {
-    if (!a) return '';
+  function between(a, g) {
+    if (!a && !g.profit) return '';
+    a ||= {};
     const healTip = a.heal ? esc(`${t('gr_heal_' + a.heal)}\n${t('gr_heal_hint_' + a.heal)}`) : '';
     const heal = a.heal ? `<span class="after-chip is-heal" data-tip="${healTip}" tabindex="0">${icon('local_hospital')}${esc(t('gr_heal_' + a.heal))}${a.healMon ? monSprite(a.healMon, false) : ''}</span>` : '';
     const swaps = (a.switch || []).map(s => {
@@ -125,7 +137,8 @@ const Money = (() => {
       return `<span class="after-chip is-swap" data-item="${s.item}" data-tip="${tip}" aria-label="${label}" tabindex="0">${icon('swap_horiz')}${monSprite(s.mon, false)}` +
         `<img class="swap-item" src="/gym-rerun/items/${ITEM_ICON[s.item]}.png" alt="" width="30" height="30">${s.exit ? icon('logout') : ''}</span>`;
     }).join('');
-    return `<div class="gym-between">${heal}${swaps}</div>`;
+    const reward = g.profit ? `<span class="after-chip is-reward" data-tip="${esc(t('gr_reward'))}" tabindex="0">${icon('paid')}${money(g.profit)}</span>` : '';
+    return `<div class="gym-between">${heal}${swaps}${reward}</div>`;
   }
 
   /* ── Calculateur de charm : quel objet de gains choisir selon les prix du marche ── */
@@ -287,6 +300,8 @@ const Money = (() => {
       ? `<button type="button" class="start-panel" data-view="team" title="${label}" aria-label="${label}"><ul>${Object.keys(st).map(id => `<li>${monSprite(id)}</li>`).join('')}</ul>${icon('chevron_right')}</button>`
       : `<button type="button" class="btn btn-outline guide-link" data-view="team" title="${label}">${icon('groups')}<span class="lbl">${label}</span></button>`;
     gymItems = {};
+    $('money-view-slot').innerHTML = data.regions?.length ? VIEW_OPTS.map(k => `<label class="tc-toggle"><input type="checkbox" data-viewopt="${k}"${viewOpts[k] ? ' checked' : ''}><span>${esc(t('gr_show_' + k))}</span></label>`).join('') : '';
+    applyViewOpts();
     $('money-charm-slot').innerHTML = data.charm === false ? '' : charmButton();
     $('money-src-slot').innerHTML = data.source ? `<a class="btn btn-outline guide-link" href="${esc(data.source)}" target="_blank" rel="noopener">${icon('open_in_new')}<span class="lbl">${esc(t('money_source'))}</span></a>` : '';   // source d'origine du guide
   }
@@ -313,8 +328,8 @@ const Money = (() => {
       (g.charm ? `<span class="gym-charm" data-tip="${esc(t('gr_charm_start'))}" tabindex="0"><img src="/gym-rerun/items/riches-charm.png" alt="${esc(t('gr_charm_start'))}" width="32" height="32"></span>` : '') +
       `<img class="gym-map" src="/gym-rerun/maps/${r.id}-${g.id}.webp" alt="${esc(t('gr_map_of'))} ${esc(place(g))}" width="${r.mapSize[0]}" height="${r.mapSize[1]}" decoding="async"${r === data.regions[0] ? '' : ' loading="lazy"'}>` +
       `<div class="gym-head"><div class="gym-top"><h3 class="gym-title"><span class="gym-num">${g.bonus ? icon('add_circle') : i + 1 + '.'}</span>${esc(place(g))}</h3>${tip}<span class="gym-chips">${chips}</span></div>` +
-      `${note}${lead.join('')}${compact ? between(g.after) : ''}</div>` +
-      (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after)}</div>`) + `</article>`;
+      `${note}${lead.join('')}${compact ? between(g.after, g) : ''}</div>` +
+      (compact ? '' : `<div class="gym-exc">${exc.join('')}${endNote}${between(g.after, g)}</div>`) + `</article>`;
   }
 
   /* ── Guides d'event : phases de combat tour par tour ──
@@ -441,7 +456,7 @@ const Money = (() => {
   function enter(method) {
     view(method);
     if (isWip(METHODS.find(m => m.id === method))) {
-      data = null; $('money-guide').innerHTML = ''; $('money-charm-slot').innerHTML = '';
+      data = null; $('money-guide').innerHTML = ''; $('money-charm-slot').innerHTML = ''; $('money-view-slot').innerHTML = '';
       $('money-stage').innerHTML = `<div class="money-state">${icon('construction')}<p>${esc(t('money_wip'))}</p><a class="btn btn-outline" href="${METHODS.find(m => m.id === method).doc}" target="_blank" rel="noopener noreferrer">${icon('open_in_new')}${esc(t('money_wip_cta'))}</a></div>`;
       return;
     }
