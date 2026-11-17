@@ -1,4 +1,4 @@
-/* Compte a rebours vers le prochain event PokeMMO (accueil + Money making).
+/* Compte a rebours vers le prochain event PokeMMO (accueil uniquement).
    Dates habituelles de debut : Halloween 31/10, Noel 25/12, Nouvel An lunaire (date variable, table).
    Toujours affiche : des qu'un event commence, on passe au suivant. */
 (() => {
